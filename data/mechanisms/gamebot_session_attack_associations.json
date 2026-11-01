@@ -1,0 +1,2728 @@
+{
+  "format": "isaac-gamebot-existing-log-boss-attack-associations-v1",
+  "generated_at": "2026-10-30",
+  "scope": "offline validation of existing original-engine session/validation logs; no new game run",
+  "policy": {
+    "exact_identity": true,
+    "source_link_required": true,
+    "maximum_object_delay_frames": 1,
+    "minimum_observations_for_strict_recognition": 1,
+    "strict_prediction_requires_two_distinct_run_seeds": true,
+    "same_seed_runs_are_provisional_only": true,
+    "static_candidates_only": true
+  },
+  "sources": {
+    "files": 205,
+    "sessions": 140,
+    "validation_windows": 65,
+    "scan_seconds": 73.9
+  },
+  "counts": {
+    "candidate_identities": 119,
+    "identities_seen": 17,
+    "association_groups": 40,
+    "strict_recognition_identities": 11,
+    "strict_prediction_identities": 5,
+    "provisional_identities": 6
+  },
+  "seen_identities": {
+    "101.0.0": 120,
+    "19.0.0": 9395,
+    "266.0.0": 1177,
+    "268.0.0": 2738,
+    "273.0.0": 8,
+    "43.0.0": 2360,
+    "43.1.0": 388,
+    "45.0.0": 480,
+    "48.1.0": 418,
+    "51.0.0": 535,
+    "52.0.0": 359,
+    "52.1.0": 1803,
+    "62.3.0": 2756,
+    "67.0.0": 4467,
+    "905.0.0": 2193,
+    "916.0.0": 1622,
+    "917.0.0": 503
+  },
+  "records": [
+    {
+      "key": "101.0.0",
+      "state": 4,
+      "animation": "Down",
+      "mechanism": "projectile_emission",
+      "object": {
+        "type": 9,
+        "variant": 0,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        7.0
+      ],
+      "frame_counts": {
+        "7.0": 16
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 16,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-opt-v4-windows-20261030/101.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": true,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/101.0.0-windows.jsonl",
+          "room": 27247020,
+          "clock": 253,
+          "boss_frame": 7.0,
+          "object_birth": 253,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/101.0.0-windows.jsonl",
+          "room": 27247020,
+          "clock": 253,
+          "boss_frame": 7.0,
+          "object_birth": 253,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/101.0.0-windows.jsonl",
+          "room": 27247020,
+          "clock": 253,
+          "boss_frame": 7.0,
+          "object_birth": 253,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "266.0.0",
+      "state": 8,
+      "animation": "Shoot",
+      "mechanism": "projectile_emission",
+      "object": {
+        "type": 9,
+        "variant": 0,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        32.0,
+        34.0,
+        35.0,
+        36.0,
+        37.0,
+        38.0,
+        40.0,
+        42.0,
+        44.0,
+        48.0
+      ],
+      "frame_counts": {
+        "32.0": 88,
+        "34.0": 10,
+        "35.0": 10,
+        "36.0": 10,
+        "37.0": 10,
+        "38.0": 10,
+        "40.0": 10,
+        "42.0": 20,
+        "44.0": 10,
+        "48.0": 6
+      },
+      "object_delay_frames": [
+        0,
+        1
+      ],
+      "observations": 184,
+      "runs": 5,
+      "run_ids": [
+        "validation/boss-opt-baseline-windows-20261030/266.0.0-windows.jsonl",
+        "validation/boss-opt-v1-windows-20261030/266.0.0-windows.jsonl",
+        "validation/boss-opt-v2-windows-20261030/266.0.0-windows.jsonl",
+        "validation/boss-opt-v3-windows-20261030/266.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/266.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 5,
+      "association_bases": [
+        "parent",
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/266.0.0-windows.jsonl",
+          "room": 27246980,
+          "clock": 382,
+          "boss_frame": 32.0,
+          "object_birth": 382,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/266.0.0-windows.jsonl",
+          "room": 27246980,
+          "clock": 382,
+          "boss_frame": 32.0,
+          "object_birth": 382,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/266.0.0-windows.jsonl",
+          "room": 27246980,
+          "clock": 382,
+          "boss_frame": 32.0,
+          "object_birth": 382,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "266.0.0",
+      "state": 10,
+      "animation": "Puke",
+      "mechanism": "projectile_emission",
+      "object": {
+        "type": 9,
+        "variant": 0,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        1.0,
+        44.0,
+        46.0,
+        48.0,
+        50.0,
+        52.0,
+        54.0,
+        56.0,
+        58.0,
+        60.0,
+        62.0,
+        64.0,
+        66.0
+      ],
+      "frame_counts": {
+        "1.0": 6,
+        "44.0": 21,
+        "46.0": 24,
+        "48.0": 24,
+        "50.0": 30,
+        "52.0": 30,
+        "54.0": 30,
+        "56.0": 30,
+        "58.0": 30,
+        "60.0": 27,
+        "62.0": 27,
+        "64.0": 27,
+        "66.0": 33
+      },
+      "object_delay_frames": [
+        0,
+        1
+      ],
+      "observations": 339,
+      "runs": 5,
+      "run_ids": [
+        "validation/boss-opt-baseline-windows-20261030/266.0.0-windows.jsonl",
+        "validation/boss-opt-v1-windows-20261030/266.0.0-windows.jsonl",
+        "validation/boss-opt-v2-windows-20261030/266.0.0-windows.jsonl",
+        "validation/boss-opt-v3-windows-20261030/266.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/266.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 5,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/266.0.0-windows.jsonl",
+          "room": 27246980,
+          "clock": 750,
+          "boss_frame": 44.0,
+          "object_birth": 750,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/266.0.0-windows.jsonl",
+          "room": 27246980,
+          "clock": 750,
+          "boss_frame": 44.0,
+          "object_birth": 750,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/266.0.0-windows.jsonl",
+          "room": 27246980,
+          "clock": 750,
+          "boss_frame": 44.0,
+          "object_birth": 750,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "268.0.0",
+      "state": 8,
+      "animation": "Attack2Down",
+      "mechanism": "laser_emission",
+      "object": {
+        "type": 7,
+        "variant": 1,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        27.0
+      ],
+      "frame_counts": {
+        "27.0": 1
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 1,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-opt-v4-windows-20261030/268.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "parent"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/268.0.0-windows.jsonl",
+          "room": 27245316,
+          "clock": 1646,
+          "boss_frame": 27.0,
+          "object_birth": 1646,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "268.0.0",
+      "state": 8,
+      "animation": "Attack2Left",
+      "mechanism": "laser_emission",
+      "object": {
+        "type": 7,
+        "variant": 1,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        27.0
+      ],
+      "frame_counts": {
+        "27.0": 6
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 6,
+      "runs": 3,
+      "run_ids": [
+        "validation/boss-opt-baseline-windows-20261030/268.0.0-windows.jsonl",
+        "validation/boss-opt-v2-windows-20261030/268.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/268.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 3,
+      "association_bases": [
+        "parent"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/268.0.0-windows.jsonl",
+          "room": 27247332,
+          "clock": 296,
+          "boss_frame": 27.0,
+          "object_birth": 296,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/268.0.0-windows.jsonl",
+          "room": 27247332,
+          "clock": 956,
+          "boss_frame": 27.0,
+          "object_birth": 956,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-v2-windows-20261030/268.0.0-windows.jsonl",
+          "room": 27246948,
+          "clock": 896,
+          "boss_frame": 27.0,
+          "object_birth": 896,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "268.0.0",
+      "state": 8,
+      "animation": "Attack2Right",
+      "mechanism": "laser_emission",
+      "object": {
+        "type": 7,
+        "variant": 1,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        27.0
+      ],
+      "frame_counts": {
+        "27.0": 2
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 2,
+      "runs": 2,
+      "run_ids": [
+        "validation/boss-opt-baseline-windows-20261030/268.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/268.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 2,
+      "association_bases": [
+        "parent"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": true,
+      "examples": [
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/268.0.0-windows.jsonl",
+          "room": 27247332,
+          "clock": 536,
+          "boss_frame": 27.0,
+          "object_birth": 536,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/268.0.0-windows.jsonl",
+          "room": 27245316,
+          "clock": 296,
+          "boss_frame": 27.0,
+          "object_birth": 296,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "268.0.0",
+      "state": 8,
+      "animation": "Attack2Up",
+      "mechanism": "laser_emission",
+      "object": {
+        "type": 7,
+        "variant": 1,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        27.0
+      ],
+      "frame_counts": {
+        "27.0": 6
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 6,
+      "runs": 2,
+      "run_ids": [
+        "validation/boss-second-seed-20261030/268.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/268.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "SWGF G7WV"
+      ],
+      "seed_count": 1,
+      "rooms": 2,
+      "association_bases": [
+        "parent"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": true,
+      "examples": [
+        {
+          "run": "validation/boss-second-seed-20261030/268.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 1436,
+          "boss_frame": 27.0,
+          "object_birth": 1436,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-second-seed-20261030/268.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 1676,
+          "boss_frame": 27.0,
+          "object_birth": 1676,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/268.0.0-windows.jsonl",
+          "room": 27247028,
+          "clock": 1166,
+          "boss_frame": 27.0,
+          "object_birth": 1166,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "268.0.0",
+      "state": 13,
+      "animation": "Attack1",
+      "mechanism": "summon_or_split_relation",
+      "object": {
+        "type": 85,
+        "variant": 0,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        27.0
+      ],
+      "frame_counts": {
+        "27.0": 17
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 17,
+      "runs": 3,
+      "run_ids": [
+        "validation/boss-opt-v3-windows-20261030/268.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/268.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/268.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 3,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/268.0.0-windows.jsonl",
+          "room": 27247148,
+          "clock": 176,
+          "boss_frame": 27.0,
+          "object_birth": 176,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/268.0.0-windows.jsonl",
+          "room": 27247148,
+          "clock": 176,
+          "boss_frame": 27.0,
+          "object_birth": 176,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/268.0.0-windows.jsonl",
+          "room": 27247148,
+          "clock": 176,
+          "boss_frame": 27.0,
+          "object_birth": 176,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "43.0.0",
+      "state": 7,
+      "animation": "JumpDown",
+      "mechanism": "projectile_emission",
+      "object": {
+        "type": 9,
+        "variant": 0,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        35.0
+      ],
+      "frame_counts": {
+        "35.0": 48
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 48,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-second-seed-allframes-20261030/43.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "SWGF G7WV"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": true,
+      "examples": [
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/43.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 73,
+          "boss_frame": 35.0,
+          "object_birth": 73,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/43.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 73,
+          "boss_frame": 35.0,
+          "object_birth": 73,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/43.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 73,
+          "boss_frame": 35.0,
+          "object_birth": 73,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "43.0.0",
+      "state": 7,
+      "animation": "JumpDown",
+      "mechanism": "summon_or_split_relation",
+      "object": {
+        "type": 61,
+        "variant": 0,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        35.0
+      ],
+      "frame_counts": {
+        "35.0": 52
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 52,
+      "runs": 7,
+      "run_ids": [
+        "validation/boss-opt-baseline-windows-20261030/43.0.0-windows.jsonl",
+        "validation/boss-opt-v1-windows-20261030/43.0.0-windows.jsonl",
+        "validation/boss-opt-v2-windows-20261030/43.0.0-windows.jsonl",
+        "validation/boss-opt-v3-windows-20261030/43.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/43.0.0-windows.jsonl",
+        "validation/boss-second-seed-20261030/43.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/43.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 7,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/43.0.0-windows.jsonl",
+          "room": 27245100,
+          "clock": 977,
+          "boss_frame": 35.0,
+          "object_birth": 977,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/43.0.0-windows.jsonl",
+          "room": 27245100,
+          "clock": 977,
+          "boss_frame": 35.0,
+          "object_birth": 977,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/43.0.0-windows.jsonl",
+          "room": 27245100,
+          "clock": 977,
+          "boss_frame": 35.0,
+          "object_birth": 977,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "43.0.0",
+      "state": 8,
+      "animation": "Taunt",
+      "mechanism": "laser_emission",
+      "object": {
+        "type": 7,
+        "variant": 1,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        22.0
+      ],
+      "frame_counts": {
+        "22.0": 7
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 7,
+      "runs": 2,
+      "run_ids": [
+        "validation/boss-opt-baseline-windows-20261030/43.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/43.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 2,
+      "association_bases": [
+        "parent"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/43.0.0-windows.jsonl",
+          "room": 27245100,
+          "clock": 813,
+          "boss_frame": 22.0,
+          "object_birth": 813,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/43.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 199,
+          "boss_frame": 22.0,
+          "object_birth": 199,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/43.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 312,
+          "boss_frame": 22.0,
+          "object_birth": 312,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "43.1.0",
+      "state": 7,
+      "animation": "JumpDown",
+      "mechanism": "attack_effect",
+      "object": {
+        "type": 1000,
+        "variant": 26,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        35.0
+      ],
+      "frame_counts": {
+        "35.0": 1
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 1,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-opt-v3-windows-20261030/43.1.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "parent"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/43.1.0-windows.jsonl",
+          "room": 27247100,
+          "clock": 654,
+          "boss_frame": 35.0,
+          "object_birth": 654,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "45.0.0",
+      "state": 10,
+      "animation": "Fat01",
+      "mechanism": "summon_or_split_relation",
+      "object": {
+        "type": 18,
+        "variant": 0,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        8.0
+      ],
+      "frame_counts": {
+        "8.0": 1
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 1,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-opt-v4-windows-20261030/45.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/45.0.0-windows.jsonl",
+          "room": 27246884,
+          "clock": 107,
+          "boss_frame": 8.0,
+          "object_birth": 107,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "45.0.0",
+      "state": 10,
+      "animation": "Fat01",
+      "mechanism": "summon_or_split_relation",
+      "object": {
+        "type": 21,
+        "variant": 0,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        8.0
+      ],
+      "frame_counts": {
+        "8.0": 1
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 1,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-opt-v4-windows-20261030/45.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/45.0.0-windows.jsonl",
+          "room": 27246884,
+          "clock": 110,
+          "boss_frame": 8.0,
+          "object_birth": 110,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "52.0.0",
+      "state": 8,
+      "animation": "Attack01",
+      "mechanism": "laser_emission",
+      "object": {
+        "type": 7,
+        "variant": 4,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        21.0
+      ],
+      "frame_counts": {
+        "21.0": 4
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 4,
+      "runs": 1,
+      "run_ids": [
+        "sessions/native-20261030-145137-732/frames-0006.jsonl"
+      ],
+      "seeds": [],
+      "seed_count": 0,
+      "rooms": 1,
+      "association_bases": [
+        "parent"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": true,
+      "examples": [
+        {
+          "run": "sessions/native-20261030-145137-732/frames-0006.jsonl",
+          "room": 2105807972,
+          "clock": 3345,
+          "boss_frame": 21.0,
+          "object_birth": 3345,
+          "source_basis": "parent"
+        },
+        {
+          "run": "sessions/native-20261030-145137-732/frames-0006.jsonl",
+          "room": 2105807972,
+          "clock": 3345,
+          "boss_frame": 21.0,
+          "object_birth": 3345,
+          "source_basis": "parent"
+        },
+        {
+          "run": "sessions/native-20261030-145137-732/frames-0006.jsonl",
+          "room": 2105807972,
+          "clock": 3345,
+          "boss_frame": 21.0,
+          "object_birth": 3345,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "52.0.0",
+      "state": 9,
+      "animation": "Attack02",
+      "mechanism": "bomb_emission",
+      "object": {
+        "type": 4,
+        "variant": 3,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        7.0,
+        12.0,
+        17.0,
+        22.0
+      ],
+      "frame_counts": {
+        "7.0": 2,
+        "12.0": 2,
+        "17.0": 2,
+        "22.0": 2
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 8,
+      "runs": 1,
+      "run_ids": [
+        "sessions/native-20261030-145137-732/frames-0006.jsonl"
+      ],
+      "seeds": [],
+      "seed_count": 0,
+      "rooms": 1,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "sessions/native-20261030-145137-732/frames-0006.jsonl",
+          "room": 2105807972,
+          "clock": 3410,
+          "boss_frame": 7.0,
+          "object_birth": 3410,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "sessions/native-20261030-145137-732/frames-0006.jsonl",
+          "room": 2105807972,
+          "clock": 3415,
+          "boss_frame": 12.0,
+          "object_birth": 3415,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "sessions/native-20261030-145137-732/frames-0006.jsonl",
+          "room": 2105807972,
+          "clock": 3420,
+          "boss_frame": 17.0,
+          "object_birth": 3420,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "52.1.0",
+      "state": 8,
+      "animation": "Attack01",
+      "mechanism": "laser_emission",
+      "object": {
+        "type": 7,
+        "variant": 4,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        21.0
+      ],
+      "frame_counts": {
+        "21.0": 40
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 40,
+      "runs": 6,
+      "run_ids": [
+        "validation/boss-opt-baseline-windows-20261030/52.1.0-windows.jsonl",
+        "validation/boss-opt-v1-windows-20261030/52.1.0-windows.jsonl",
+        "validation/boss-opt-v2-windows-20261030/52.1.0-windows.jsonl",
+        "validation/boss-opt-v3-windows-20261030/52.1.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/52.1.0-windows.jsonl",
+        "validation/boss-second-seed-52b-20261030/52.1.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "7W3L P1Z9"
+      ],
+      "seed_count": 2,
+      "rooms": 6,
+      "association_bases": [
+        "parent"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/52.1.0-windows.jsonl",
+          "room": 27247060,
+          "clock": 329,
+          "boss_frame": 21.0,
+          "object_birth": 329,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/52.1.0-windows.jsonl",
+          "room": 27247060,
+          "clock": 329,
+          "boss_frame": 21.0,
+          "object_birth": 329,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/52.1.0-windows.jsonl",
+          "room": 27247060,
+          "clock": 329,
+          "boss_frame": 21.0,
+          "object_birth": 329,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "52.1.0",
+      "state": 8,
+      "animation": "Attack01",
+      "mechanism": "projectile_emission",
+      "object": {
+        "type": 9,
+        "variant": 0,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        21.0
+      ],
+      "frame_counts": {
+        "21.0": 60
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 60,
+      "runs": 6,
+      "run_ids": [
+        "validation/boss-opt-baseline-windows-20261030/52.1.0-windows.jsonl",
+        "validation/boss-opt-v1-windows-20261030/52.1.0-windows.jsonl",
+        "validation/boss-opt-v2-windows-20261030/52.1.0-windows.jsonl",
+        "validation/boss-opt-v3-windows-20261030/52.1.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/52.1.0-windows.jsonl",
+        "validation/boss-second-seed-52b-20261030/52.1.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "7W3L P1Z9"
+      ],
+      "seed_count": 2,
+      "rooms": 6,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/52.1.0-windows.jsonl",
+          "room": 27247060,
+          "clock": 329,
+          "boss_frame": 21.0,
+          "object_birth": 329,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/52.1.0-windows.jsonl",
+          "room": 27247060,
+          "clock": 329,
+          "boss_frame": 21.0,
+          "object_birth": 329,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/52.1.0-windows.jsonl",
+          "room": 27247060,
+          "clock": 329,
+          "boss_frame": 21.0,
+          "object_birth": 329,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "52.1.0",
+      "state": 9,
+      "animation": "Attack02",
+      "mechanism": "bomb_emission",
+      "object": {
+        "type": 4,
+        "variant": 4,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        7.0,
+        12.0
+      ],
+      "frame_counts": {
+        "7.0": 6,
+        "12.0": 6
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 12,
+      "runs": 3,
+      "run_ids": [
+        "validation/boss-opt-v2-windows-20261030/52.1.0-windows.jsonl",
+        "validation/boss-second-seed-52b-20261030/52.1.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/52.1.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "7W3L P1Z9",
+        "SWGF G7WV"
+      ],
+      "seed_count": 3,
+      "rooms": 3,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v2-windows-20261030/52.1.0-windows.jsonl",
+          "room": 27246956,
+          "clock": 286,
+          "boss_frame": 7.0,
+          "object_birth": 286,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v2-windows-20261030/52.1.0-windows.jsonl",
+          "room": 27246956,
+          "clock": 291,
+          "boss_frame": 12.0,
+          "object_birth": 291,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-52b-20261030/52.1.0-windows.jsonl",
+          "room": 27247228,
+          "clock": 202,
+          "boss_frame": 7.0,
+          "object_birth": 202,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "905.0.0",
+      "state": 6,
+      "animation": "Summoning",
+      "mechanism": "summon_or_split_relation",
+      "object": {
+        "type": 832,
+        "variant": 1,
+        "subtype": 1,
+        "variant_name": null
+      },
+      "animation_frames": [
+        2.0
+      ],
+      "frame_counts": {
+        "2.0": 4
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 4,
+      "runs": 4,
+      "run_ids": [
+        "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 4,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247036,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+          "room": 27247260,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "905.0.0",
+      "state": 6,
+      "animation": "Summoning",
+      "mechanism": "summon_or_split_relation",
+      "object": {
+        "type": 832,
+        "variant": 1,
+        "subtype": 2,
+        "variant_name": null
+      },
+      "animation_frames": [
+        2.0
+      ],
+      "frame_counts": {
+        "2.0": 4
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 4,
+      "runs": 4,
+      "run_ids": [
+        "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 4,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247036,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+          "room": 27247260,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "905.0.0",
+      "state": 6,
+      "animation": "Summoning",
+      "mechanism": "summon_or_split_relation",
+      "object": {
+        "type": 832,
+        "variant": 1,
+        "subtype": 3,
+        "variant_name": null
+      },
+      "animation_frames": [
+        2.0
+      ],
+      "frame_counts": {
+        "2.0": 4
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 4,
+      "runs": 4,
+      "run_ids": [
+        "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 4,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247036,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+          "room": 27247260,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "905.0.0",
+      "state": 6,
+      "animation": "Summoning",
+      "mechanism": "summon_or_split_relation",
+      "object": {
+        "type": 832,
+        "variant": 1,
+        "subtype": 4,
+        "variant_name": null
+      },
+      "animation_frames": [
+        2.0
+      ],
+      "frame_counts": {
+        "2.0": 4
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 4,
+      "runs": 4,
+      "run_ids": [
+        "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 4,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247036,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+          "room": 27247260,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "905.0.0",
+      "state": 6,
+      "animation": "Summoning",
+      "mechanism": "summon_or_split_relation",
+      "object": {
+        "type": 832,
+        "variant": 1,
+        "subtype": 5,
+        "variant_name": null
+      },
+      "animation_frames": [
+        2.0
+      ],
+      "frame_counts": {
+        "2.0": 4
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 4,
+      "runs": 4,
+      "run_ids": [
+        "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 4,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247036,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+          "room": 27247260,
+          "clock": 0,
+          "boss_frame": 2.0,
+          "object_birth": 0,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "905.0.0",
+      "state": 8,
+      "animation": "Attack1",
+      "mechanism": "laser_emission",
+      "object": {
+        "type": 7,
+        "variant": 1,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        27.0
+      ],
+      "frame_counts": {
+        "27.0": 25
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 25,
+      "runs": 4,
+      "run_ids": [
+        "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 4,
+      "association_bases": [
+        "parent"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247036,
+          "clock": 1492,
+          "boss_frame": 27.0,
+          "object_birth": 1492,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247036,
+          "clock": 1492,
+          "boss_frame": 27.0,
+          "object_birth": 1492,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247036,
+          "clock": 1492,
+          "boss_frame": 27.0,
+          "object_birth": 1492,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "905.0.0",
+      "state": 10,
+      "animation": "ChargeEndLeft",
+      "mechanism": "summon_or_split_relation",
+      "object": {
+        "type": 905,
+        "variant": 0,
+        "subtype": 1,
+        "variant_name": null
+      },
+      "animation_frames": [
+        17.0
+      ],
+      "frame_counts": {
+        "17.0": 3
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 3,
+      "runs": 2,
+      "run_ids": [
+        "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "SWGF G7WV"
+      ],
+      "seed_count": 1,
+      "rooms": 2,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": true,
+      "examples": [
+        {
+          "run": "validation/boss-second-seed-20261030/905.0.0-windows.jsonl",
+          "room": 27247260,
+          "clock": 1465,
+          "boss_frame": 17.0,
+          "object_birth": 1465,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 1465,
+          "boss_frame": 17.0,
+          "object_birth": 1465,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 1519,
+          "boss_frame": 17.0,
+          "object_birth": 1519,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "905.0.0",
+      "state": 10,
+      "animation": "ChargeEndRight",
+      "mechanism": "summon_or_split_relation",
+      "object": {
+        "type": 905,
+        "variant": 0,
+        "subtype": 1,
+        "variant_name": null
+      },
+      "animation_frames": [
+        17.0
+      ],
+      "frame_counts": {
+        "17.0": 1
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 1,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "SWGF G7WV"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 1484,
+          "boss_frame": 17.0,
+          "object_birth": 1484,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "905.0.0",
+      "state": 14,
+      "animation": "Attack2",
+      "mechanism": "projectile_emission",
+      "object": {
+        "type": 9,
+        "variant": 0,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        13.0
+      ],
+      "frame_counts": {
+        "13.0": 7
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 7,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "SWGF G7WV"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": true,
+      "examples": [
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 1110,
+          "boss_frame": 13.0,
+          "object_birth": 1110,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 1130,
+          "boss_frame": 13.0,
+          "object_birth": 1130,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl",
+          "room": 27247044,
+          "clock": 1150,
+          "boss_frame": 13.0,
+          "object_birth": 1150,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "905.0.0",
+      "state": 15,
+      "animation": "Divebomb",
+      "mechanism": "attack_effect",
+      "object": {
+        "type": 1000,
+        "variant": 148,
+        "subtype": 1,
+        "variant_name": null
+      },
+      "animation_frames": [
+        46.0
+      ],
+      "frame_counts": {
+        "46.0": 16
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 16,
+      "runs": 2,
+      "run_ids": [
+        "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 2,
+      "association_bases": [
+        "parent"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 1523,
+          "boss_frame": 46.0,
+          "object_birth": 1523,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 1523,
+          "boss_frame": 46.0,
+          "object_birth": 1523,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 1523,
+          "boss_frame": 46.0,
+          "object_birth": 1523,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "905.0.0",
+      "state": 15,
+      "animation": "Divebomb",
+      "mechanism": "attack_effect",
+      "object": {
+        "type": 1000,
+        "variant": 147,
+        "subtype": 1,
+        "variant_name": null
+      },
+      "animation_frames": [
+        48.0,
+        50.0,
+        52.0,
+        54.0,
+        56.0,
+        58.0,
+        60.0,
+        62.0,
+        64.0,
+        66.0,
+        68.0,
+        70.0,
+        72.0
+      ],
+      "frame_counts": {
+        "48.0": 15,
+        "50.0": 13,
+        "52.0": 13,
+        "54.0": 12,
+        "56.0": 11,
+        "58.0": 7,
+        "60.0": 7,
+        "62.0": 6,
+        "64.0": 1,
+        "66.0": 1,
+        "68.0": 1,
+        "70.0": 1,
+        "72.0": 1
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 89,
+      "runs": 2,
+      "run_ids": [
+        "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/905.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 2,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 1525,
+          "boss_frame": 48.0,
+          "object_birth": 1525,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 1525,
+          "boss_frame": 48.0,
+          "object_birth": 1525,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v4-windows-20261030/905.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 1525,
+          "boss_frame": 48.0,
+          "object_birth": 1525,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "916.0.0",
+      "state": 5,
+      "animation": "Dizzy",
+      "mechanism": "projectile_emission",
+      "object": {
+        "type": 9,
+        "variant": 9,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        2.0,
+        4.0,
+        6.0,
+        8.0,
+        10.0,
+        12.0,
+        14.0,
+        16.0,
+        18.0,
+        20.0,
+        22.0,
+        24.0,
+        26.0
+      ],
+      "frame_counts": {
+        "2.0": 2,
+        "4.0": 2,
+        "6.0": 2,
+        "8.0": 2,
+        "10.0": 2,
+        "12.0": 2,
+        "14.0": 2,
+        "16.0": 2,
+        "18.0": 2,
+        "20.0": 2,
+        "22.0": 2,
+        "24.0": 2,
+        "26.0": 2
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 26,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-second-seed-allframes-20261030/916.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "SWGF G7WV"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/916.0.0-windows.jsonl",
+          "room": 27245260,
+          "clock": 410,
+          "boss_frame": 2.0,
+          "object_birth": 410,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/916.0.0-windows.jsonl",
+          "room": 27245260,
+          "clock": 412,
+          "boss_frame": 4.0,
+          "object_birth": 412,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-second-seed-allframes-20261030/916.0.0-windows.jsonl",
+          "room": 27245260,
+          "clock": 414,
+          "boss_frame": 6.0,
+          "object_birth": 414,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "916.0.0",
+      "state": 5,
+      "animation": "WallImpact",
+      "mechanism": "projectile_emission",
+      "object": {
+        "type": 9,
+        "variant": 9,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        1.0,
+        3.0,
+        5.0,
+        7.0,
+        9.0,
+        11.0,
+        13.0,
+        15.0,
+        17.0,
+        19.0,
+        21.0,
+        22.0
+      ],
+      "frame_counts": {
+        "1.0": 40,
+        "3.0": 5,
+        "5.0": 4,
+        "7.0": 3,
+        "9.0": 2,
+        "11.0": 2,
+        "13.0": 2,
+        "15.0": 2,
+        "17.0": 2,
+        "19.0": 2,
+        "21.0": 2,
+        "22.0": 2
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 68,
+      "runs": 3,
+      "run_ids": [
+        "validation/boss-opt-v3-windows-20261030/916.0.0-windows.jsonl",
+        "validation/boss-second-seed-20261030/916.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/916.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 3,
+      "association_bases": [
+        "parent",
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/916.0.0-windows.jsonl",
+          "room": 27246940,
+          "clock": 246,
+          "boss_frame": 1.0,
+          "object_birth": 246,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/916.0.0-windows.jsonl",
+          "room": 27246940,
+          "clock": 246,
+          "boss_frame": 1.0,
+          "object_birth": 246,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-v3-windows-20261030/916.0.0-windows.jsonl",
+          "room": 27246940,
+          "clock": 246,
+          "boss_frame": 1.0,
+          "object_birth": 246,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "916.0.0",
+      "state": 9,
+      "animation": "GroundSlam",
+      "mechanism": "attack_effect",
+      "object": {
+        "type": 1000,
+        "variant": 72,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        21.0
+      ],
+      "frame_counts": {
+        "21.0": 60
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 60,
+      "runs": 6,
+      "run_ids": [
+        "validation/boss-opt-followup-30s-20261030/916.0.0-windows.jsonl",
+        "validation/boss-opt-v1-windows-20261030/916.0.0-windows.jsonl",
+        "validation/boss-opt-v3-windows-20261030/916.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/916.0.0-windows.jsonl",
+        "validation/boss-second-seed-20261030/916.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/916.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 5,
+      "association_bases": [
+        "parent"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-followup-30s-20261030/916.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 151,
+          "boss_frame": 21.0,
+          "object_birth": 151,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-followup-30s-20261030/916.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 151,
+          "boss_frame": 21.0,
+          "object_birth": 151,
+          "source_basis": "parent"
+        },
+        {
+          "run": "validation/boss-opt-followup-30s-20261030/916.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 151,
+          "boss_frame": 21.0,
+          "object_birth": 151,
+          "source_basis": "parent"
+        }
+      ]
+    },
+    {
+      "key": "916.0.0",
+      "state": 9,
+      "animation": "GroundSlam",
+      "mechanism": "projectile_emission",
+      "object": {
+        "type": 9,
+        "variant": 9,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        21.0
+      ],
+      "frame_counts": {
+        "21.0": 120
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 120,
+      "runs": 6,
+      "run_ids": [
+        "validation/boss-opt-followup-30s-20261030/916.0.0-windows.jsonl",
+        "validation/boss-opt-v1-windows-20261030/916.0.0-windows.jsonl",
+        "validation/boss-opt-v3-windows-20261030/916.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/916.0.0-windows.jsonl",
+        "validation/boss-second-seed-20261030/916.0.0-windows.jsonl",
+        "validation/boss-second-seed-allframes-20261030/916.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "seed_count": 2,
+      "rooms": 5,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": true,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-followup-30s-20261030/916.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 151,
+          "boss_frame": 21.0,
+          "object_birth": 151,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-followup-30s-20261030/916.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 151,
+          "boss_frame": 21.0,
+          "object_birth": 151,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-followup-30s-20261030/916.0.0-windows.jsonl",
+          "room": 27247052,
+          "clock": 151,
+          "boss_frame": 21.0,
+          "object_birth": 151,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "917.0.0",
+      "state": 8,
+      "animation": "ChargeEndHori",
+      "mechanism": "attack_effect",
+      "object": {
+        "type": 1000,
+        "variant": 141,
+        "subtype": 1,
+        "variant_name": null
+      },
+      "animation_frames": [
+        1.0
+      ],
+      "frame_counts": {
+        "1.0": 1
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 1,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27246956,
+          "clock": 170,
+          "boss_frame": 1.0,
+          "object_birth": 170,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "917.0.0",
+      "state": 8,
+      "animation": "ChargeEndHori",
+      "mechanism": "projectile_emission",
+      "object": {
+        "type": 9,
+        "variant": 3,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        1.0
+      ],
+      "frame_counts": {
+        "1.0": 2
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 2,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": true,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": true,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27246956,
+          "clock": 170,
+          "boss_frame": 1.0,
+          "object_birth": 170,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27246956,
+          "clock": 170,
+          "boss_frame": 1.0,
+          "object_birth": 170,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "917.0.0",
+      "state": 8,
+      "animation": "ChargeLoopHori",
+      "mechanism": "attack_effect",
+      "object": {
+        "type": 1000,
+        "variant": 141,
+        "subtype": 1,
+        "variant_name": null
+      },
+      "animation_frames": [
+        0.0,
+        1.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        7.0
+      ],
+      "frame_counts": {
+        "0.0": 4,
+        "1.0": 3,
+        "3.0": 1,
+        "4.0": 4,
+        "5.0": 4,
+        "6.0": 2,
+        "7.0": 2
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 20,
+      "runs": 4,
+      "run_ids": [
+        "validation/boss-opt-baseline-windows-20261030/917.0.0-windows.jsonl",
+        "validation/boss-opt-v1-windows-20261030/917.0.0-windows.jsonl",
+        "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/917.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 3,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27245204,
+          "clock": 425,
+          "boss_frame": 5.0,
+          "object_birth": 425,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27245204,
+          "clock": 429,
+          "boss_frame": 0.0,
+          "object_birth": 429,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27245204,
+          "clock": 433,
+          "boss_frame": 4.0,
+          "object_birth": 433,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "917.0.0",
+      "state": 8,
+      "animation": "ChargeLoopHori",
+      "mechanism": "projectile_emission",
+      "object": {
+        "type": 9,
+        "variant": 3,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        0.0,
+        1.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        7.0
+      ],
+      "frame_counts": {
+        "0.0": 8,
+        "1.0": 6,
+        "3.0": 2,
+        "4.0": 8,
+        "5.0": 8,
+        "6.0": 4,
+        "7.0": 4
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 40,
+      "runs": 4,
+      "run_ids": [
+        "validation/boss-opt-baseline-windows-20261030/917.0.0-windows.jsonl",
+        "validation/boss-opt-v1-windows-20261030/917.0.0-windows.jsonl",
+        "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl",
+        "validation/boss-opt-v4-windows-20261030/917.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 3,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27245204,
+          "clock": 425,
+          "boss_frame": 5.0,
+          "object_birth": 425,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27245204,
+          "clock": 425,
+          "boss_frame": 5.0,
+          "object_birth": 425,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-baseline-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27245204,
+          "clock": 429,
+          "boss_frame": 0.0,
+          "object_birth": 429,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "917.0.0",
+      "state": 8,
+      "animation": "ChargeLoopUp",
+      "mechanism": "attack_effect",
+      "object": {
+        "type": 1000,
+        "variant": 141,
+        "subtype": 1,
+        "variant_name": null
+      },
+      "animation_frames": [
+        1.0,
+        6.0
+      ],
+      "frame_counts": {
+        "1.0": 1,
+        "6.0": 1
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 2,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27246956,
+          "clock": 414,
+          "boss_frame": 6.0,
+          "object_birth": 414,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27246956,
+          "clock": 418,
+          "boss_frame": 1.0,
+          "object_birth": 418,
+          "source_basis": "spawner"
+        }
+      ]
+    },
+    {
+      "key": "917.0.0",
+      "state": 8,
+      "animation": "ChargeLoopUp",
+      "mechanism": "projectile_emission",
+      "object": {
+        "type": 9,
+        "variant": 3,
+        "subtype": 0,
+        "variant_name": null
+      },
+      "animation_frames": [
+        1.0,
+        6.0
+      ],
+      "frame_counts": {
+        "1.0": 2,
+        "6.0": 2
+      },
+      "object_delay_frames": [
+        0
+      ],
+      "observations": 4,
+      "runs": 1,
+      "run_ids": [
+        "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl"
+      ],
+      "seeds": [
+        "3JY1 6FLR"
+      ],
+      "seed_count": 1,
+      "rooms": 1,
+      "association_bases": [
+        "spawner"
+      ],
+      "timing_stable": false,
+      "strict_recognition": true,
+      "strict_prediction": false,
+      "provisional_prediction": false,
+      "examples": [
+        {
+          "run": "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27246956,
+          "clock": 414,
+          "boss_frame": 6.0,
+          "object_birth": 414,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27246956,
+          "clock": 414,
+          "boss_frame": 6.0,
+          "object_birth": 414,
+          "source_basis": "spawner"
+        },
+        {
+          "run": "validation/boss-opt-v2-windows-20261030/917.0.0-windows.jsonl",
+          "room": 27246956,
+          "clock": 418,
+          "boss_frame": 1.0,
+          "object_birth": 418,
+          "source_basis": "spawner"
+        }
+      ]
+    }
+  ]
+}

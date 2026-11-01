@@ -1,0 +1,7 @@
+node.exe : [isaac][boot] step 1/7  verify placed image
+At D:\Isaac\research\Run-OfflineRoom.ps1:40 char:5
++     & node $driver $image $engineStage *> $log
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ([isaac][boot] s...fy placed image:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 

@@ -1,0 +1,13 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 1,
+  "decompiledCount": 1,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x0096fc70", "name": "HELPER_Laser_WallEndpoint", "types": "7", "identities": "7.*", "entry": "0096fc70", "resolvedFunction": "HELPER_Laser_WallEndpoint", "ghidraEntry": "0096fc70", "instructions": 65, "incomingCalls": 6, "outgoingCalls": 1, "cFile": "HELPER_Laser_WallEndpoint_0096fc70.c", "asmFile": "HELPER_Laser_WallEndpoint_0096fc70.asm", "error": null}
+  ]
+}

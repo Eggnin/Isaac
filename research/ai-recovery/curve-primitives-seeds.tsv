@@ -1,0 +1,5 @@
+va	name	types	identity_keys	evidence
+0x009a0de0	HELPER_HomingLaser_CalculateSamples	7	7.*	Dirty curve sample generation
+0x009a0850	HELPER_HomingLaser_Ring	7	7.*	Circle ring primitive
+0x0099fa60	HELPER_HomingLaser_PrimitiveA	7	7.*	Laser sampled branch
+0x0099fed0	HELPER_HomingLaser_PrimitiveB	7	7.*	Laser sampled branch

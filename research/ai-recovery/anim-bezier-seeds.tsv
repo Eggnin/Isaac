@@ -1,0 +1,3 @@
+va	name	types	identity_keys	evidence
+0x0099e360	HELPER_HomingLaser_BezierSamples	7	7.*	Node-to-sample generation
+0x00409100	HELPER_ANM2_Update	0	*	SDK update signature

@@ -1,0 +1,1 @@
+{"pass":true,"steps":[180,180],"projectileFrames":[86,86],"directories":["D:\\Isaac\\research\\training-runs\\1793124073120-5124-0","D:\\Isaac\\research\\training-runs\\1793124081188-5124-1"]}

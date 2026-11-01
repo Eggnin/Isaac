@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x00431260	HELPER_Player_SlowFrictionFactor	1,1000	1.*,1000.*	Player Update 0x789314 slows velocity friction
+0x006ad750	HELPER_Entity_AddSlowing	1,1000	1.*,1000.*	Effect Update slow status
+0x00708250	HELPER_Entity_TimeScaleCore	1,1000	1.*,1000.*	Entity time scale core

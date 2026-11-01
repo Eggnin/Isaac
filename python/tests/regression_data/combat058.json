@@ -1,0 +1,1368 @@
+{
+  "1944": {
+    "source_file": "records\\research\\dodge-performance-20261026\\live057-20261026\\damage-snapshot-1-97-1944.json",
+    "source_frame": 1944,
+    "scope": "Dingle motion rule isolated from actual damage-observation snapshot; not damage-source attribution",
+    "snapshot": {
+      "profile": {
+        "file_sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+        "engine_version": "v1.9.7.17.J460",
+        "baseline": "user_reinstall_2026-10-23",
+        "preferred_base": 4194304,
+        "game_slot_rva": 8853112,
+        "isaac_slot_rva": 8853148,
+        "frame_offset": 156920,
+        "difficulty_offset": 158152,
+        "menu_manager_slot_rva": 8858144,
+        "room_clear_descriptor_offset": 68,
+        "entity_grid_contact_offset": 400,
+        "player_list_offset": 113320,
+        "source": "https://github.com/TeamREPENTOGON/REPENTOGON/tree/main/libzhl/functions",
+        "runtime_verified": false
+      },
+      "frame": 1944,
+      "room": 2142339092,
+      "grid_width": 15,
+      "grid_height": 16,
+      "local_player": {
+        "address": 2246318588,
+        "index": 0,
+        "type": 1,
+        "variant": 0,
+        "subtype": 15,
+        "seed": 2970036442,
+        "x": 251.84278869628906,
+        "y": 407.7713623046875,
+        "vx": 8.210472106933594,
+        "vy": 3.740537643432617,
+        "radius": 10.0,
+        "collision_class": 4,
+        "collision_damage": 0.0,
+        "health": 1.0,
+        "flags": 0,
+        "visible": true,
+        "dead": false,
+        "state": null,
+        "state_frame": null,
+        "controller_index": 0,
+        "player_index": 0,
+        "grid_colliding": false,
+        "parent": 0,
+        "spawner": 0,
+        "target": 0,
+        "spawner_type": 0,
+        "spawner_variant": 0,
+        "grid_collision_class": 5,
+        "max_health": 1.0,
+        "invulnerable": false,
+        "target_position": [
+          0.0,
+          0.0
+        ],
+        "position_offset": [
+          0.0,
+          0.0
+        ],
+        "size_multi": [
+          1.0,
+          1.0
+        ],
+        "sprite_flip_x": false,
+        "animation_frame": 0.0,
+        "animation": "Hit",
+        "controls_enabled": true,
+        "controls_cooldown": 0,
+        "character": 15,
+        "coop_ghost": false,
+        "damage_cooldown": 60,
+        "stats": {
+          "max_fire_delay": 10.0,
+          "shot_speed": 1.0,
+          "damage": 4.081666469573975,
+          "tear_range": 260.0,
+          "move_speed": 1.0,
+          "luck": 0.0,
+          "can_fly": false,
+          "can_shoot": true
+        },
+        "tear_flags": 0,
+        "collectibles": {
+          "193": 1,
+          "477": 1
+        },
+        "weapons": [
+          {
+            "address": 2232100012,
+            "slot": 1,
+            "owner": 2246318588,
+            "type": 1,
+            "fire_delay": 3.0,
+            "max_fire_delay": 10.0,
+            "charge": 0.0,
+            "max_charge": 0.0,
+            "modifiers": 0,
+            "num_fired": 128,
+            "direction": [
+              0.0,
+              0.0
+            ],
+            "main_entity": 0,
+            "class": ".?AVWeapon_Tears@IsaacRepentancePlus@@",
+            "max_charge_exact": true
+          }
+        ],
+        "health_parts": {
+          "max_red": 6,
+          "red": 5,
+          "eternal": 0,
+          "soul": 0,
+          "bone": 0,
+          "broken": 0,
+          "rotten": 0
+        },
+        "marked_target": 0,
+        "active_charges": [
+          4,
+          0,
+          0,
+          0
+        ],
+        "age": 1944
+      },
+      "enums": {
+        "EntityType": {
+          "ENTITY_DINGLE": 261
+        }
+      },
+      "entities": [
+        {
+          "address": 2238754340,
+          "index": 1033,
+          "type": 220,
+          "variant": 0,
+          "subtype": 0,
+          "seed": 513914055,
+          "x": 262.0921630859375,
+          "y": 530.34375,
+          "vx": -2.154750347137451,
+          "vy": 2.75287127494812,
+          "radius": 13.0,
+          "collision_class": 4,
+          "collision_damage": 1.0,
+          "health": 16.918333053588867,
+          "flags": 549755813892,
+          "visible": true,
+          "dead": false,
+          "state": 4,
+          "state_frame": 0,
+          "controller_index": null,
+          "player_index": null,
+          "grid_colliding": false,
+          "npc_identity": {
+            "key": "220.0.0",
+            "type_name": "ENTITY_SQUIRT",
+            "name_zh": "粪团",
+            "display_name": "粪团",
+            "category": "monster",
+            "role": "monster",
+            "variant": 0,
+            "subtype": 0,
+            "entity_config_key": "220.0.0",
+            "entity_config_name": "#SQUIRT",
+            "local_entity_catalog_match_basis": "exact_identity",
+            "resolution": "wiki_exact"
+          },
+          "parent": 0,
+          "spawner": 0,
+          "target": 0,
+          "spawner_type": 0,
+          "spawner_variant": 0,
+          "grid_collision_class": 5,
+          "max_health": 21.0,
+          "invulnerable": false,
+          "target_position": [
+            0.0,
+            0.0
+          ],
+          "position_offset": [
+            0.0,
+            0.0
+          ],
+          "size_multi": [
+            1.0,
+            1.0
+          ],
+          "sprite_flip_x": true,
+          "animation_frame": 0.0,
+          "animation": "Slide",
+          "champion_color": -1,
+          "is_boss": false,
+          "projectile_cooldown": 0,
+          "projectile_delay": -1,
+          "v1": [
+            36.0,
+            0.0
+          ],
+          "v2": [
+            0.0,
+            0.0
+          ],
+          "i1": 0,
+          "i2": 0,
+          "age": 186
+        },
+        {
+          "address": 2238758276,
+          "index": 1034,
+          "type": 220,
+          "variant": 0,
+          "subtype": 0,
+          "seed": 1368208669,
+          "x": 236.2972412109375,
+          "y": 396.6087951660156,
+          "vx": -1.1061100959777832,
+          "vy": 14.322421073913574,
+          "radius": 13.0,
+          "collision_class": 4,
+          "collision_damage": 1.0,
+          "health": 21.0,
+          "flags": 549755813892,
+          "visible": true,
+          "dead": false,
+          "state": 4,
+          "state_frame": 0,
+          "controller_index": null,
+          "player_index": null,
+          "grid_colliding": false,
+          "npc_identity": {
+            "key": "220.0.0",
+            "type_name": "ENTITY_SQUIRT",
+            "name_zh": "粪团",
+            "display_name": "粪团",
+            "category": "monster",
+            "role": "monster",
+            "variant": 0,
+            "subtype": 0,
+            "entity_config_key": "220.0.0",
+            "entity_config_name": "#SQUIRT",
+            "local_entity_catalog_match_basis": "exact_identity",
+            "resolution": "wiki_exact"
+          },
+          "parent": 0,
+          "spawner": 0,
+          "target": 0,
+          "spawner_type": 0,
+          "spawner_variant": 0,
+          "grid_collision_class": 5,
+          "max_health": 21.0,
+          "invulnerable": false,
+          "target_position": [
+            0.0,
+            0.0
+          ],
+          "position_offset": [
+            0.0,
+            0.0
+          ],
+          "size_multi": [
+            1.0,
+            1.0
+          ],
+          "sprite_flip_x": false,
+          "animation_frame": 2.0,
+          "animation": "Slide",
+          "champion_color": -1,
+          "is_boss": false,
+          "projectile_cooldown": 0,
+          "projectile_delay": -1,
+          "v1": [
+            2.0,
+            0.0
+          ],
+          "v2": [
+            0.0,
+            0.0
+          ],
+          "i1": 0,
+          "i2": 0,
+          "age": 186
+        }
+      ]
+    }
+  },
+  "2123": {
+    "source_file": "records\\research\\dodge-performance-20261026\\live057-20261026\\damage-snapshot-1-97-2123.json",
+    "source_frame": 2123,
+    "scope": "Dingle motion rule isolated from actual damage-observation snapshot; not damage-source attribution",
+    "snapshot": {
+      "profile": {
+        "file_sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+        "engine_version": "v1.9.7.17.J460",
+        "baseline": "user_reinstall_2026-10-23",
+        "preferred_base": 4194304,
+        "game_slot_rva": 8853112,
+        "isaac_slot_rva": 8853148,
+        "frame_offset": 156920,
+        "difficulty_offset": 158152,
+        "menu_manager_slot_rva": 8858144,
+        "room_clear_descriptor_offset": 68,
+        "entity_grid_contact_offset": 400,
+        "player_list_offset": 113320,
+        "source": "https://github.com/TeamREPENTOGON/REPENTOGON/tree/main/libzhl/functions",
+        "runtime_verified": false
+      },
+      "frame": 2123,
+      "room": 2142339092,
+      "grid_width": 15,
+      "grid_height": 16,
+      "local_player": {
+        "address": 2246318588,
+        "index": 0,
+        "type": 1,
+        "variant": 0,
+        "subtype": 15,
+        "seed": 2970036442,
+        "x": 567.6751098632812,
+        "y": 230.17359924316406,
+        "vx": 1.628018856048584,
+        "vy": 0.060050707310438156,
+        "radius": 10.0,
+        "collision_class": 4,
+        "collision_damage": 0.0,
+        "health": 1.0,
+        "flags": 0,
+        "visible": true,
+        "dead": false,
+        "state": null,
+        "state_frame": null,
+        "controller_index": 0,
+        "player_index": 0,
+        "grid_colliding": false,
+        "parent": 0,
+        "spawner": 0,
+        "target": 0,
+        "spawner_type": 0,
+        "spawner_variant": 0,
+        "grid_collision_class": 5,
+        "max_health": 1.0,
+        "invulnerable": false,
+        "target_position": [
+          0.0,
+          0.0
+        ],
+        "position_offset": [
+          0.0,
+          0.0
+        ],
+        "size_multi": [
+          1.0,
+          1.0
+        ],
+        "sprite_flip_x": false,
+        "animation_frame": 1.0,
+        "animation": "Hit",
+        "controls_enabled": true,
+        "controls_cooldown": 0,
+        "character": 15,
+        "coop_ghost": false,
+        "damage_cooldown": 58,
+        "stats": {
+          "max_fire_delay": 10.0,
+          "shot_speed": 1.0,
+          "damage": 4.081666469573975,
+          "tear_range": 260.0,
+          "move_speed": 1.0,
+          "luck": 0.0,
+          "can_fly": false,
+          "can_shoot": true
+        },
+        "tear_flags": 0,
+        "collectibles": {
+          "193": 1,
+          "477": 1
+        },
+        "weapons": [
+          {
+            "address": 2232100012,
+            "slot": 1,
+            "owner": 2246318588,
+            "type": 1,
+            "fire_delay": 4.0,
+            "max_fire_delay": 10.0,
+            "charge": 0.0,
+            "max_charge": 0.0,
+            "modifiers": 0,
+            "num_fired": 144,
+            "direction": [
+              0.0,
+              0.0
+            ],
+            "main_entity": 0,
+            "class": ".?AVWeapon_Tears@IsaacRepentancePlus@@",
+            "max_charge_exact": true
+          }
+        ],
+        "health_parts": {
+          "max_red": 6,
+          "red": 4,
+          "eternal": 0,
+          "soul": 0,
+          "bone": 0,
+          "broken": 0,
+          "rotten": 0
+        },
+        "marked_target": 0,
+        "active_charges": [
+          4,
+          0,
+          0,
+          0
+        ],
+        "age": 2123
+      },
+      "enums": {
+        "EntityType": {
+          "ENTITY_DINGLE": 261
+        }
+      },
+      "entities": [
+        {
+          "address": 2238754340,
+          "index": 1033,
+          "type": 220,
+          "variant": 0,
+          "subtype": 0,
+          "seed": 513914055,
+          "x": 554.3526000976562,
+          "y": 256.55377197265625,
+          "vx": 3.370372772216797,
+          "vy": 8.841582298278809,
+          "radius": 13.0,
+          "collision_class": 4,
+          "collision_damage": 1.0,
+          "health": 4.673332691192627,
+          "flags": 549755813892,
+          "visible": true,
+          "dead": false,
+          "state": 4,
+          "state_frame": 0,
+          "controller_index": null,
+          "player_index": null,
+          "grid_colliding": false,
+          "npc_identity": {
+            "key": "220.0.0",
+            "type_name": "ENTITY_SQUIRT",
+            "name_zh": "粪团",
+            "display_name": "粪团",
+            "category": "monster",
+            "role": "monster",
+            "variant": 0,
+            "subtype": 0,
+            "entity_config_key": "220.0.0",
+            "entity_config_name": "#SQUIRT",
+            "local_entity_catalog_match_basis": "exact_identity",
+            "resolution": "wiki_exact"
+          },
+          "parent": 0,
+          "spawner": 0,
+          "target": 0,
+          "spawner_type": 0,
+          "spawner_variant": 0,
+          "grid_collision_class": 5,
+          "max_health": 21.0,
+          "invulnerable": false,
+          "target_position": [
+            0.0,
+            0.0
+          ],
+          "position_offset": [
+            0.0,
+            0.0
+          ],
+          "size_multi": [
+            1.0,
+            1.0
+          ],
+          "sprite_flip_x": false,
+          "animation_frame": 3.0,
+          "animation": "Slide",
+          "champion_color": -1,
+          "is_boss": false,
+          "projectile_cooldown": 0,
+          "projectile_delay": -1,
+          "v1": [
+            15.0,
+            0.0
+          ],
+          "v2": [
+            0.0,
+            0.0
+          ],
+          "i1": 0,
+          "i2": 0,
+          "age": 365
+        }
+      ]
+    }
+  },
+  "2528": {
+    "source_file": "records\\research\\dodge-performance-20261026\\live057-20261026\\damage-snapshot-1-97-2528.json",
+    "source_frame": 2528,
+    "scope": "Dingle motion rule isolated from actual damage-observation snapshot; not damage-source attribution",
+    "snapshot": {
+      "profile": {
+        "file_sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+        "engine_version": "v1.9.7.17.J460",
+        "baseline": "user_reinstall_2026-10-23",
+        "preferred_base": 4194304,
+        "game_slot_rva": 8853112,
+        "isaac_slot_rva": 8853148,
+        "frame_offset": 156920,
+        "difficulty_offset": 158152,
+        "menu_manager_slot_rva": 8858144,
+        "room_clear_descriptor_offset": 68,
+        "entity_grid_contact_offset": 400,
+        "player_list_offset": 113320,
+        "source": "https://github.com/TeamREPENTOGON/REPENTOGON/tree/main/libzhl/functions",
+        "runtime_verified": false
+      },
+      "frame": 2528,
+      "room": 2142339092,
+      "grid_width": 15,
+      "grid_height": 16,
+      "local_player": {
+        "address": 2246318588,
+        "index": 0,
+        "type": 1,
+        "variant": 0,
+        "subtype": 15,
+        "seed": 2970036442,
+        "x": 413.5347595214844,
+        "y": 593.3473510742188,
+        "vx": -4.5683112144470215,
+        "vy": 2.327476739883423,
+        "radius": 10.0,
+        "collision_class": 4,
+        "collision_damage": 0.0,
+        "health": 1.0,
+        "flags": 0,
+        "visible": true,
+        "dead": false,
+        "state": null,
+        "state_frame": null,
+        "controller_index": 0,
+        "player_index": 0,
+        "grid_colliding": false,
+        "parent": 0,
+        "spawner": 0,
+        "target": 0,
+        "spawner_type": 0,
+        "spawner_variant": 0,
+        "grid_collision_class": 5,
+        "max_health": 1.0,
+        "invulnerable": false,
+        "target_position": [
+          0.0,
+          0.0
+        ],
+        "position_offset": [
+          0.0,
+          0.0
+        ],
+        "size_multi": [
+          1.0,
+          1.0
+        ],
+        "sprite_flip_x": false,
+        "animation_frame": 0.0,
+        "animation": "Hit",
+        "controls_enabled": true,
+        "controls_cooldown": 0,
+        "character": 15,
+        "coop_ghost": false,
+        "damage_cooldown": 59,
+        "stats": {
+          "max_fire_delay": 10.0,
+          "shot_speed": 1.0,
+          "damage": 4.081666469573975,
+          "tear_range": 260.0,
+          "move_speed": 1.0,
+          "luck": 0.0,
+          "can_fly": false,
+          "can_shoot": true
+        },
+        "tear_flags": 0,
+        "collectibles": {
+          "193": 1,
+          "477": 1
+        },
+        "weapons": [
+          {
+            "address": 2232100012,
+            "slot": 1,
+            "owner": 2246318588,
+            "type": 1,
+            "fire_delay": 8.0,
+            "max_fire_delay": 10.0,
+            "charge": 0.0,
+            "max_charge": 0.0,
+            "modifiers": 0,
+            "num_fired": 181,
+            "direction": [
+              0.0,
+              0.0
+            ],
+            "main_entity": 0,
+            "class": ".?AVWeapon_Tears@IsaacRepentancePlus@@",
+            "max_charge_exact": true
+          }
+        ],
+        "health_parts": {
+          "max_red": 6,
+          "red": 3,
+          "eternal": 0,
+          "soul": 0,
+          "bone": 0,
+          "broken": 0,
+          "rotten": 0
+        },
+        "marked_target": 0,
+        "active_charges": [
+          4,
+          0,
+          0,
+          0
+        ],
+        "age": 2528
+      },
+      "enums": {
+        "EntityType": {
+          "ENTITY_DINGLE": 261
+        }
+      },
+      "entities": [
+        {
+          "address": 2238758276,
+          "index": 1034,
+          "type": 220,
+          "variant": 0,
+          "subtype": 0,
+          "seed": 1368208669,
+          "x": 433.1200256347656,
+          "y": 585.406005859375,
+          "vx": -12.951114654541016,
+          "vy": 4.306652545928955,
+          "radius": 13.0,
+          "collision_class": 4,
+          "collision_damage": 1.0,
+          "health": 8.754999160766602,
+          "flags": 549755813892,
+          "visible": true,
+          "dead": false,
+          "state": 4,
+          "state_frame": 0,
+          "controller_index": null,
+          "player_index": null,
+          "grid_colliding": false,
+          "npc_identity": {
+            "key": "220.0.0",
+            "type_name": "ENTITY_SQUIRT",
+            "name_zh": "粪团",
+            "display_name": "粪团",
+            "category": "monster",
+            "role": "monster",
+            "variant": 0,
+            "subtype": 0,
+            "entity_config_key": "220.0.0",
+            "entity_config_name": "#SQUIRT",
+            "local_entity_catalog_match_basis": "exact_identity",
+            "resolution": "wiki_exact"
+          },
+          "parent": 0,
+          "spawner": 0,
+          "target": 0,
+          "spawner_type": 0,
+          "spawner_variant": 0,
+          "grid_collision_class": 5,
+          "max_health": 21.0,
+          "invulnerable": false,
+          "target_position": [
+            0.0,
+            0.0
+          ],
+          "position_offset": [
+            0.0,
+            0.0
+          ],
+          "size_multi": [
+            1.0,
+            1.0
+          ],
+          "sprite_flip_x": true,
+          "animation_frame": 1.0,
+          "animation": "Slide",
+          "champion_color": -1,
+          "is_boss": false,
+          "projectile_cooldown": 0,
+          "projectile_delay": -1,
+          "v1": [
+            1.0,
+            0.0
+          ],
+          "v2": [
+            0.0,
+            0.0
+          ],
+          "i1": 0,
+          "i2": 0,
+          "age": 770
+        }
+      ]
+    }
+  },
+  "2780": {
+    "source_file": "records\\research\\dodge-performance-20261026\\live057-20261026\\damage-snapshot-1-97-2780.json",
+    "source_frame": 2780,
+    "scope": "Dingle motion rule isolated from actual damage-observation snapshot; not damage-source attribution",
+    "snapshot": {
+      "profile": {
+        "file_sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+        "engine_version": "v1.9.7.17.J460",
+        "baseline": "user_reinstall_2026-10-23",
+        "preferred_base": 4194304,
+        "game_slot_rva": 8853112,
+        "isaac_slot_rva": 8853148,
+        "frame_offset": 156920,
+        "difficulty_offset": 158152,
+        "menu_manager_slot_rva": 8858144,
+        "room_clear_descriptor_offset": 68,
+        "entity_grid_contact_offset": 400,
+        "player_list_offset": 113320,
+        "source": "https://github.com/TeamREPENTOGON/REPENTOGON/tree/main/libzhl/functions",
+        "runtime_verified": false
+      },
+      "frame": 2780,
+      "room": 2142339092,
+      "grid_width": 15,
+      "grid_height": 16,
+      "local_player": {
+        "address": 2246318588,
+        "index": 0,
+        "type": 1,
+        "variant": 0,
+        "subtype": 15,
+        "seed": 2970036442,
+        "x": 181.0923309326172,
+        "y": 516.83447265625,
+        "vx": -6.182097434997559,
+        "vy": -1.7571914196014404,
+        "radius": 10.0,
+        "collision_class": 4,
+        "collision_damage": 0.0,
+        "health": 1.0,
+        "flags": 0,
+        "visible": true,
+        "dead": false,
+        "state": null,
+        "state_frame": null,
+        "controller_index": 0,
+        "player_index": 0,
+        "grid_colliding": false,
+        "parent": 0,
+        "spawner": 0,
+        "target": 0,
+        "spawner_type": 0,
+        "spawner_variant": 0,
+        "grid_collision_class": 5,
+        "max_health": 1.0,
+        "invulnerable": false,
+        "target_position": [
+          0.0,
+          0.0
+        ],
+        "position_offset": [
+          0.0,
+          0.0
+        ],
+        "size_multi": [
+          1.0,
+          1.0
+        ],
+        "sprite_flip_x": false,
+        "animation_frame": 0.0,
+        "animation": "Hit",
+        "controls_enabled": true,
+        "controls_cooldown": 0,
+        "character": 15,
+        "coop_ghost": false,
+        "damage_cooldown": 60,
+        "stats": {
+          "max_fire_delay": 10.0,
+          "shot_speed": 1.0,
+          "damage": 4.081666469573975,
+          "tear_range": 260.0,
+          "move_speed": 1.0,
+          "luck": 0.0,
+          "can_fly": false,
+          "can_shoot": true
+        },
+        "tear_flags": 0,
+        "collectibles": {
+          "193": 1,
+          "477": 1
+        },
+        "weapons": [
+          {
+            "address": 2232100012,
+            "slot": 1,
+            "owner": 2246318588,
+            "type": 1,
+            "fire_delay": 9.0,
+            "max_fire_delay": 10.0,
+            "charge": 0.0,
+            "max_charge": 0.0,
+            "modifiers": 0,
+            "num_fired": 204,
+            "direction": [
+              0.0,
+              0.0
+            ],
+            "main_entity": 0,
+            "class": ".?AVWeapon_Tears@IsaacRepentancePlus@@",
+            "max_charge_exact": true
+          }
+        ],
+        "health_parts": {
+          "max_red": 6,
+          "red": 2,
+          "eternal": 0,
+          "soul": 0,
+          "bone": 0,
+          "broken": 0,
+          "rotten": 0
+        },
+        "marked_target": 0,
+        "active_charges": [
+          4,
+          0,
+          0,
+          0
+        ],
+        "age": 2780
+      },
+      "enums": {
+        "EntityType": {
+          "ENTITY_DINGLE": 261
+        }
+      },
+      "entities": [
+        {
+          "address": 2238758276,
+          "index": 1034,
+          "type": 220,
+          "variant": 0,
+          "subtype": 0,
+          "seed": 1368208669,
+          "x": 198.74703979492188,
+          "y": 529.2271118164062,
+          "vx": -3.018904685974121,
+          "vy": -9.28830623626709,
+          "radius": 13.0,
+          "collision_class": 4,
+          "collision_damage": 1.0,
+          "health": 4.673332691192627,
+          "flags": 549755813892,
+          "visible": true,
+          "dead": false,
+          "state": 4,
+          "state_frame": 0,
+          "controller_index": null,
+          "player_index": null,
+          "grid_colliding": false,
+          "npc_identity": {
+            "key": "220.0.0",
+            "type_name": "ENTITY_SQUIRT",
+            "name_zh": "粪团",
+            "display_name": "粪团",
+            "category": "monster",
+            "role": "monster",
+            "variant": 0,
+            "subtype": 0,
+            "entity_config_key": "220.0.0",
+            "entity_config_name": "#SQUIRT",
+            "local_entity_catalog_match_basis": "exact_identity",
+            "resolution": "wiki_exact"
+          },
+          "parent": 0,
+          "spawner": 0,
+          "target": 0,
+          "spawner_type": 0,
+          "spawner_variant": 0,
+          "grid_collision_class": 5,
+          "max_health": 21.0,
+          "invulnerable": false,
+          "target_position": [
+            0.0,
+            0.0
+          ],
+          "position_offset": [
+            0.0,
+            0.0
+          ],
+          "size_multi": [
+            1.0,
+            1.0
+          ],
+          "sprite_flip_x": true,
+          "animation_frame": 3.0,
+          "animation": "Slide",
+          "champion_color": -1,
+          "is_boss": false,
+          "projectile_cooldown": 0,
+          "projectile_delay": -1,
+          "v1": [
+            3.0,
+            0.0
+          ],
+          "v2": [
+            0.0,
+            0.0
+          ],
+          "i1": 0,
+          "i2": 0,
+          "age": 1022
+        }
+      ]
+    }
+  },
+  "2900": {
+    "source_file": "records\\research\\dodge-performance-20261026\\live057-20261026\\damage-snapshot-1-97-2900.json",
+    "source_frame": 2900,
+    "scope": "Dingle motion rule isolated from actual damage-observation snapshot; not damage-source attribution",
+    "snapshot": {
+      "profile": {
+        "file_sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+        "engine_version": "v1.9.7.17.J460",
+        "baseline": "user_reinstall_2026-10-23",
+        "preferred_base": 4194304,
+        "game_slot_rva": 8853112,
+        "isaac_slot_rva": 8853148,
+        "frame_offset": 156920,
+        "difficulty_offset": 158152,
+        "menu_manager_slot_rva": 8858144,
+        "room_clear_descriptor_offset": 68,
+        "entity_grid_contact_offset": 400,
+        "player_list_offset": 113320,
+        "source": "https://github.com/TeamREPENTOGON/REPENTOGON/tree/main/libzhl/functions",
+        "runtime_verified": false
+      },
+      "frame": 2900,
+      "room": 2142339092,
+      "grid_width": 15,
+      "grid_height": 16,
+      "local_player": {
+        "address": 2246318588,
+        "index": 0,
+        "type": 1,
+        "variant": 0,
+        "subtype": 15,
+        "seed": 2970036442,
+        "x": 118.81327056884766,
+        "y": 550.2515869140625,
+        "vx": 1.5124638080596924,
+        "vy": -2.3297057151794434,
+        "radius": 10.0,
+        "collision_class": 4,
+        "collision_damage": 0.0,
+        "health": 1.0,
+        "flags": 0,
+        "visible": true,
+        "dead": false,
+        "state": null,
+        "state_frame": null,
+        "controller_index": 0,
+        "player_index": 0,
+        "grid_colliding": false,
+        "parent": 0,
+        "spawner": 0,
+        "target": 0,
+        "spawner_type": 0,
+        "spawner_variant": 0,
+        "grid_collision_class": 5,
+        "max_health": 1.0,
+        "invulnerable": false,
+        "target_position": [
+          0.0,
+          0.0
+        ],
+        "position_offset": [
+          0.0,
+          0.0
+        ],
+        "size_multi": [
+          1.0,
+          1.0
+        ],
+        "sprite_flip_x": false,
+        "animation_frame": 0.0,
+        "animation": "Hit",
+        "controls_enabled": true,
+        "controls_cooldown": 0,
+        "character": 15,
+        "coop_ghost": false,
+        "damage_cooldown": 59,
+        "stats": {
+          "max_fire_delay": 10.0,
+          "shot_speed": 1.0,
+          "damage": 4.081666469573975,
+          "tear_range": 260.0,
+          "move_speed": 1.0,
+          "luck": 0.0,
+          "can_fly": false,
+          "can_shoot": true
+        },
+        "tear_flags": 0,
+        "collectibles": {
+          "193": 1,
+          "477": 1
+        },
+        "weapons": [
+          {
+            "address": 2232100012,
+            "slot": 1,
+            "owner": 2246318588,
+            "type": 1,
+            "fire_delay": 10.0,
+            "max_fire_delay": 10.0,
+            "charge": 0.0,
+            "max_charge": 0.0,
+            "modifiers": 0,
+            "num_fired": 215,
+            "direction": [
+              0.0,
+              0.0
+            ],
+            "main_entity": 0,
+            "class": ".?AVWeapon_Tears@IsaacRepentancePlus@@",
+            "max_charge_exact": true
+          }
+        ],
+        "health_parts": {
+          "max_red": 6,
+          "red": 1,
+          "eternal": 0,
+          "soul": 0,
+          "bone": 0,
+          "broken": 0,
+          "rotten": 0
+        },
+        "marked_target": 0,
+        "active_charges": [
+          4,
+          0,
+          0,
+          0
+        ],
+        "age": 2900
+      },
+      "enums": {
+        "EntityType": {
+          "ENTITY_DINGLE": 261
+        }
+      },
+      "entities": [
+        {
+          "address": 2238758276,
+          "index": 1034,
+          "type": 220,
+          "variant": 0,
+          "subtype": 0,
+          "seed": 1368208669,
+          "x": 152.9309539794922,
+          "y": 528.2864379882812,
+          "vx": 1.2533292770385742,
+          "vy": 9.944831848144531,
+          "radius": 13.0,
+          "collision_class": 4,
+          "collision_damage": 1.0,
+          "health": 0.5916662216186523,
+          "flags": 549755813892,
+          "visible": true,
+          "dead": false,
+          "state": 4,
+          "state_frame": 0,
+          "controller_index": null,
+          "player_index": null,
+          "grid_colliding": false,
+          "npc_identity": {
+            "key": "220.0.0",
+            "type_name": "ENTITY_SQUIRT",
+            "name_zh": "粪团",
+            "display_name": "粪团",
+            "category": "monster",
+            "role": "monster",
+            "variant": 0,
+            "subtype": 0,
+            "entity_config_key": "220.0.0",
+            "entity_config_name": "#SQUIRT",
+            "local_entity_catalog_match_basis": "exact_identity",
+            "resolution": "wiki_exact"
+          },
+          "parent": 0,
+          "spawner": 0,
+          "target": 0,
+          "spawner_type": 0,
+          "spawner_variant": 0,
+          "grid_collision_class": 5,
+          "max_health": 21.0,
+          "invulnerable": false,
+          "target_position": [
+            0.0,
+            0.0
+          ],
+          "position_offset": [
+            0.0,
+            0.0
+          ],
+          "size_multi": [
+            1.0,
+            1.0
+          ],
+          "sprite_flip_x": false,
+          "animation_frame": 2.0,
+          "animation": "Slide",
+          "champion_color": -1,
+          "is_boss": false,
+          "projectile_cooldown": 0,
+          "projectile_delay": -1,
+          "v1": [
+            8.0,
+            0.0
+          ],
+          "v2": [
+            0.0,
+            0.0
+          ],
+          "i1": 0,
+          "i2": 0,
+          "age": 1142
+        }
+      ]
+    }
+  },
+  "3004": {
+    "source_file": "records\\research\\dodge-performance-20261026\\live057-20261026\\damage-snapshot-1-97-3004.json",
+    "source_frame": 3004,
+    "scope": "Dingle motion rule isolated from actual damage-observation snapshot; not damage-source attribution",
+    "snapshot": {
+      "profile": {
+        "file_sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+        "engine_version": "v1.9.7.17.J460",
+        "baseline": "user_reinstall_2026-10-23",
+        "preferred_base": 4194304,
+        "game_slot_rva": 8853112,
+        "isaac_slot_rva": 8853148,
+        "frame_offset": 156920,
+        "difficulty_offset": 158152,
+        "menu_manager_slot_rva": 8858144,
+        "room_clear_descriptor_offset": 68,
+        "entity_grid_contact_offset": 400,
+        "player_list_offset": 113320,
+        "source": "https://github.com/TeamREPENTOGON/REPENTOGON/tree/main/libzhl/functions",
+        "runtime_verified": false
+      },
+      "frame": 3004,
+      "room": 2142339092,
+      "grid_width": 15,
+      "grid_height": 16,
+      "local_player": {
+        "address": 2246318588,
+        "index": 0,
+        "type": 1,
+        "variant": 0,
+        "subtype": 15,
+        "seed": 2970036442,
+        "x": 297.5600280761719,
+        "y": 455.6855773925781,
+        "vx": 0.0,
+        "vy": 0.0,
+        "radius": 10.0,
+        "collision_class": 4,
+        "collision_damage": 0.0,
+        "health": 1.0,
+        "flags": 0,
+        "visible": true,
+        "dead": true,
+        "state": null,
+        "state_frame": null,
+        "controller_index": 0,
+        "player_index": 0,
+        "grid_colliding": false,
+        "parent": 0,
+        "spawner": 0,
+        "target": 0,
+        "spawner_type": 0,
+        "spawner_variant": 0,
+        "grid_collision_class": 5,
+        "max_health": 1.0,
+        "invulnerable": false,
+        "target_position": [
+          0.0,
+          0.0
+        ],
+        "position_offset": [
+          0.0,
+          0.0
+        ],
+        "size_multi": [
+          1.0,
+          1.0
+        ],
+        "sprite_flip_x": false,
+        "animation_frame": 1.0,
+        "animation": "Death",
+        "controls_enabled": true,
+        "controls_cooldown": 0,
+        "character": 15,
+        "coop_ghost": false,
+        "damage_cooldown": 60,
+        "stats": {
+          "max_fire_delay": 10.0,
+          "shot_speed": 1.0,
+          "damage": 4.081666469573975,
+          "tear_range": 260.0,
+          "move_speed": 1.0,
+          "luck": 0.0,
+          "can_fly": false,
+          "can_shoot": true
+        },
+        "tear_flags": 0,
+        "collectibles": {
+          "193": 1,
+          "477": 1
+        },
+        "weapons": [
+          {
+            "address": 2232100012,
+            "slot": 1,
+            "owner": 2246318588,
+            "type": 1,
+            "fire_delay": 6.0,
+            "max_fire_delay": 10.0,
+            "charge": 0.0,
+            "max_charge": 0.0,
+            "modifiers": 0,
+            "num_fired": 224,
+            "direction": [
+              0.0,
+              0.0
+            ],
+            "main_entity": 0,
+            "class": ".?AVWeapon_Tears@IsaacRepentancePlus@@",
+            "max_charge_exact": true
+          }
+        ],
+        "health_parts": {
+          "max_red": 6,
+          "red": 0,
+          "eternal": 0,
+          "soul": 0,
+          "bone": 0,
+          "broken": 0,
+          "rotten": 0
+        },
+        "marked_target": 0,
+        "active_charges": [
+          4,
+          0,
+          0,
+          0
+        ],
+        "age": 3004
+      },
+      "enums": {
+        "EntityType": {
+          "ENTITY_DINGLE": 261
+        }
+      },
+      "entities": [
+        {
+          "address": 2238758276,
+          "index": 1034,
+          "type": 220,
+          "variant": 0,
+          "subtype": 0,
+          "seed": 1368208669,
+          "x": 277.87701416015625,
+          "y": 426.2265625,
+          "vx": 6.584319591522217,
+          "vy": -10.541595458984375,
+          "radius": 13.0,
+          "collision_class": 4,
+          "collision_damage": 1.0,
+          "health": 0.5916662216186523,
+          "flags": 549755813892,
+          "visible": true,
+          "dead": false,
+          "state": 4,
+          "state_frame": 0,
+          "controller_index": null,
+          "player_index": null,
+          "grid_colliding": false,
+          "npc_identity": {
+            "key": "220.0.0",
+            "type_name": "ENTITY_SQUIRT",
+            "name_zh": "粪团",
+            "display_name": "粪团",
+            "category": "monster",
+            "role": "monster",
+            "variant": 0,
+            "subtype": 0,
+            "entity_config_key": "220.0.0",
+            "entity_config_name": "#SQUIRT",
+            "local_entity_catalog_match_basis": "exact_identity",
+            "resolution": "wiki_exact"
+          },
+          "parent": 0,
+          "spawner": 0,
+          "target": 0,
+          "spawner_type": 0,
+          "spawner_variant": 0,
+          "grid_collision_class": 5,
+          "max_health": 21.0,
+          "invulnerable": false,
+          "target_position": [
+            0.0,
+            0.0
+          ],
+          "position_offset": [
+            0.0,
+            0.0
+          ],
+          "size_multi": [
+            1.0,
+            1.0
+          ],
+          "sprite_flip_x": false,
+          "animation_frame": 0.0,
+          "animation": "Slide",
+          "champion_color": -1,
+          "is_boss": false,
+          "projectile_cooldown": 0,
+          "projectile_delay": -1,
+          "v1": [
+            12.0,
+            0.0
+          ],
+          "v2": [
+            0.0,
+            0.0
+          ],
+          "i1": 0,
+          "i2": 0,
+          "age": 1246
+        }
+      ]
+    }
+  }
+}

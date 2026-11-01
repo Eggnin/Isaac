@@ -1,0 +1,14 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 2,
+  "decompiledCount": 2,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x007729d0", "name": "HELPER_Player_TakeDamage", "types": "1", "identities": "1.*", "entry": "007729d0", "resolvedFunction": "HELPER_Player_TakeDamage", "ghidraEntry": "007729d0", "instructions": 6692, "incomingCalls": 0, "outgoingCalls": 1082, "cFile": "HELPER_Player_TakeDamage_007729d0.c", "asmFile": "HELPER_Player_TakeDamage_007729d0.asm", "error": null},
+    {"va": "0x007dba30", "name": "HELPER_Player_SourceImmunity", "types": "1", "identities": "1.*", "entry": "007dba30", "resolvedFunction": "HELPER_Player_SourceImmunity", "ghidraEntry": "007dba30", "instructions": 59, "incomingCalls": 9, "outgoingCalls": 2, "cFile": "HELPER_Player_SourceImmunity_007dba30.c", "asmFile": "HELPER_Player_SourceImmunity_007dba30.asm", "error": null}
+  ]
+}

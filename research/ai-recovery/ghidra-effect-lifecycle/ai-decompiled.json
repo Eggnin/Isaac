@@ -1,0 +1,13 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 0,
+  "decompiledCount": 0,
+  "errorCounts": {},
+  "functions": [
+
+  ]
+}

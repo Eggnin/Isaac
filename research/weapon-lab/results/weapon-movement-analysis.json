@@ -1,0 +1,678 @@
+{
+  "created_utc": "2026-10-29T17:55:41.567Z",
+  "scope": "Native offline movement verification; no live-game controls or game-installation edits",
+  "weapon_types": 15,
+  "configurations": 17,
+  "paired_comparisons": 136,
+  "recorded_branch_frames": 5440,
+  "logic_fps": 30,
+  "exactly_identical_configurations": 15,
+  "source_files": [
+    "weapon-movement-paired-final.json",
+    "weapon-movement-supplement.json",
+    "urn-movement-clean-v2.json",
+    "dr-fetus-movement-collision.json"
+  ],
+  "engine_wasm_sha256": "a160fe0d2b147b2859d38cfe9296d7674f1f40195aa669241cbb49a001a09694",
+  "results": [
+    {
+      "name": "tears",
+      "label": "普通眼泪",
+      "weapon_type": 1,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295477771-27312-0"
+    },
+    {
+      "name": "brimstone",
+      "label": "硫磺火",
+      "weapon_type": 2,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295486853-27312-1",
+      "full_charge_cross_checks": [
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        }
+      ]
+    },
+    {
+      "name": "knife",
+      "label": "妈刀",
+      "weapon_type": 4,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295495992-27312-2",
+      "full_charge_cross_checks": [
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        }
+      ]
+    },
+    {
+      "name": "monstros-lung",
+      "label": "萌死戳的肺",
+      "weapon_type": 7,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295505074-27312-3",
+      "full_charge_cross_checks": [
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        }
+      ]
+    },
+    {
+      "name": "tech-x",
+      "label": "科技 X",
+      "weapon_type": 9,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295514148-27312-4",
+      "full_charge_cross_checks": [
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        }
+      ]
+    },
+    {
+      "name": "chocolate-milk",
+      "label": "巧克力牛奶",
+      "weapon_type": 1,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295523227-27312-5",
+      "full_charge_cross_checks": [
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        }
+      ]
+    },
+    {
+      "name": "cursed-eye",
+      "label": "诅咒之眼",
+      "weapon_type": 1,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295532280-27312-6",
+      "full_charge_cross_checks": [
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        }
+      ]
+    },
+    {
+      "name": "c-section",
+      "label": "C Section",
+      "weapon_type": 14,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295541450-27312-7"
+    },
+    {
+      "name": "technology",
+      "label": "科技",
+      "weapon_type": 3,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295550613-27312-8"
+    },
+    {
+      "name": "spirit-sword",
+      "label": "灵剑",
+      "weapon_type": 13,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295559681-27312-9",
+      "full_charge_cross_checks": [
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": -1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        }
+      ]
+    },
+    {
+      "name": "dr-fetus",
+      "label": "胎儿博士",
+      "weapon_type": 5,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": false,
+      "max_position_delta": 2.6517333984375,
+      "max_velocity_delta": 43.54140758514404,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793296386476-2368-0"
+    },
+    {
+      "name": "epic-fetus",
+      "label": "史诗胎儿博士",
+      "weapon_type": 6,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295577748-27312-11"
+    },
+    {
+      "name": "ludovico",
+      "label": "鲁多维科",
+      "weapon_type": 8,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295586802-27312-12"
+    },
+    {
+      "name": "bone-club",
+      "label": "骨棒",
+      "weapon_type": 10,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295765032-21968-0",
+      "full_charge_cross_checks": [
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "left",
+          "move": {
+            "moveX": 1,
+            "moveY": 1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": 0
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        },
+        {
+          "fire": "right",
+          "move": {
+            "moveX": 1,
+            "moveY": 1
+          },
+          "same_start_position_and_velocity": true,
+          "held_vs_neutral_max_position_delta": 0,
+          "held_vs_neutral_max_velocity_delta": 0,
+          "released_vs_neutral_max_position_delta": 0,
+          "released_vs_neutral_max_velocity_delta": 0
+        }
+      ]
+    },
+    {
+      "name": "umbilical-whip",
+      "label": "脐带鞭",
+      "weapon_type": 15,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295773883-21968-1"
+    },
+    {
+      "name": "notched-axe",
+      "label": "锯齿斧",
+      "weapon_type": 11,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": true,
+      "max_position_delta": 0,
+      "max_velocity_delta": 0,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295614733-27312-15"
+    },
+    {
+      "name": "urn-of-souls",
+      "label": "灵魂之瓮",
+      "weapon_type": 12,
+      "pairs": 8,
+      "recorded_branch_frames": 320,
+      "identical_movement": false,
+      "max_position_delta": 42.16553157396436,
+      "max_velocity_delta": 105.2665043150214,
+      "maximum_speed_stat_delta": 0,
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793296251719-16476-0"
+    }
+  ],
+  "brimstone_conclusion": "No movement reduction during initial charging, full-charge hold, or beam release in the tested original-engine configuration. Positions and velocities match the neutral movement trace exactly.",
+  "urn": {
+    "movement_speed_stat_changed": false,
+    "interpretation": "Directional recoil changes actual motion; no general charge/attack slowdown factor.",
+    "sample_window_logic_frames": 20,
+    "moving_right": [
+      {
+        "shoot": "left",
+        "displacement_without_attack": 139.90487670898438,
+        "displacement_with_attack": 162.71847534179688,
+        "displacement_ratio": 1.1630650708500103,
+        "speed_stat_delta": 0
+      },
+      {
+        "shoot": "right",
+        "displacement_without_attack": 139.90487670898438,
+        "displacement_with_attack": 117.0914306640625,
+        "displacement_ratio": 0.8369360198045416,
+        "speed_stat_delta": 0
+      }
+    ]
+  },
+  "dr_fetus": {
+    "first_velocity_difference_sample": 18,
+    "logic_clock": 19,
+    "native_bomb_player_collision_callback_same_clock": true,
+    "collision_callback_frames": [
+      2,
+      3,
+      4,
+      29,
+      30,
+      31,
+      56,
+      57,
+      58,
+      5,
+      19
+    ],
+    "displacement_ratio": 0.9810461689341011,
+    "interpretation": "The velocity difference starts at an observed bomb/player collision. Other directions and the frames before contact match neutral movement."
+  },
+  "limits": [
+    "Empty ordinary-floor room; no enemy contact or melee hit recoil.",
+    "Baseline character stats, listed weapons only; not every item combination or terrain.",
+    "Per-branch samples cover 20 logic frames; long charge preparation and fully charged comparisons are also retained.",
+    "The failed/blocked setup attempts remain in the original reports and run logs."
+  ],
+  "implementation_note": "The offline Notched Axe (type 11) uses the Bone weapon vtable, the same vtable as type 10. This test did not edit or validate the live Gamebot binary.",
+  "cleanup": {
+    "user_authorized": true,
+    "automatic_delete_completed": false,
+    "reason": "Execution environment rejected bulk and literal single-directory deletion with blocked by policy",
+    "manual_launcher": "D:/Isaac/research/weapon-lab/Run-Approved-Cleanup.cmd"
+  }
+}

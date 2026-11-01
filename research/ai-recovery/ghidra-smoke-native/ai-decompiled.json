@@ -1,0 +1,21 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 9,
+  "decompiledCount": 9,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00407270", "name": "HELPER_ColorAlpha", "types": "1000", "identities": "1000.141.*", "entry": "00407270", "resolvedFunction": "HELPER_ColorAlpha", "ghidraEntry": "00407270", "instructions": 2, "incomingCalls": 57, "outgoingCalls": 0, "cFile": "HELPER_ColorAlpha_00407270.c", "asmFile": "HELPER_ColorAlpha_00407270.asm", "error": null},
+    {"va": "0x00417200", "name": "HELPER_SpriteScale", "types": "1000", "identities": "1000.141.*", "entry": "00417200", "resolvedFunction": "HELPER_SpriteScale", "ghidraEntry": "00417200", "instructions": 2, "incomingCalls": 69, "outgoingCalls": 0, "cFile": "HELPER_SpriteScale_00417200.c", "asmFile": "HELPER_SpriteScale_00417200.asm", "error": null},
+    {"va": "0x004173b0", "name": "HELPER_IsPlayer", "types": "1000", "identities": "1000.141.*", "entry": "004173b0", "resolvedFunction": "HELPER_IsPlayer", "ghidraEntry": "004173b0", "instructions": 3, "incomingCalls": 52, "outgoingCalls": 0, "cFile": "HELPER_IsPlayer_004173b0.c", "asmFile": "HELPER_IsPlayer_004173b0.asm", "error": null},
+    {"va": "0x004173d0", "name": "HELPER_EntityClass", "types": "1000", "identities": "1000.141.*", "entry": "004173d0", "resolvedFunction": "HELPER_EntityClass", "ghidraEntry": "004173d0", "instructions": 3, "incomingCalls": 3, "outgoingCalls": 0, "cFile": "HELPER_EntityClass_004173d0.c", "asmFile": "HELPER_EntityClass_004173d0.asm", "error": null},
+    {"va": "0x00417340", "name": "HELPER_EntitySize", "types": "1000", "identities": "1000.141.*", "entry": "00417340", "resolvedFunction": "HELPER_EntitySize", "ghidraEntry": "00417340", "instructions": 2, "incomingCalls": 56, "outgoingCalls": 0, "cFile": "HELPER_EntitySize_00417340.c", "asmFile": "HELPER_EntitySize_00417340.asm", "error": null},
+    {"va": "0x00417380", "name": "HELPER_EntitySubtype", "types": "1000", "identities": "1000.141.*", "entry": "00417380", "resolvedFunction": "HELPER_EntitySubtype", "ghidraEntry": "00417380", "instructions": 2, "incomingCalls": 32, "outgoingCalls": 0, "cFile": "HELPER_EntitySubtype_00417380.c", "asmFile": "HELPER_EntitySubtype_00417380.asm", "error": null},
+    {"va": "0x00417220", "name": "HELPER_EntityMatches", "types": "1000", "identities": "1000.141.*", "entry": "00417220", "resolvedFunction": "HELPER_EntityMatches", "ghidraEntry": "00417220", "instructions": 21, "incomingCalls": 50, "outgoingCalls": 0, "cFile": "HELPER_EntityMatches_00417220.c", "asmFile": "HELPER_EntityMatches_00417220.asm", "error": null},
+    {"va": "0x006ac710", "name": "HELPER_EntityGate", "types": "1000", "identities": "1000.141.*", "entry": "006ac710", "resolvedFunction": "HELPER_EntityGate", "ghidraEntry": "006ac710", "instructions": 29, "incomingCalls": 272, "outgoingCalls": 1, "cFile": "HELPER_EntityGate_006ac710.c", "asmFile": "HELPER_EntityGate_006ac710.asm", "error": null},
+    {"va": "0x007c3320", "name": "HELPER_PlayerZeroDamageImmunity", "types": "1", "identities": "1.*", "entry": "007c3320", "resolvedFunction": "HELPER_PlayerZeroDamageImmunity", "ghidraEntry": "007c3320", "instructions": 33, "incomingCalls": 3, "outgoingCalls": 2, "cFile": "HELPER_PlayerZeroDamageImmunity_007c3320.c", "asmFile": "HELPER_PlayerZeroDamageImmunity_007c3320.asm", "error": null}
+  ]
+}

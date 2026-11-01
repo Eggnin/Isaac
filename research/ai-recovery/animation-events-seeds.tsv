@@ -1,0 +1,8 @@
+va	name	types	identity_keys	evidence
+0x00409030	HELPER_AnimationState_Update	0	*	ANM2 Update calls main and overlay state
+0x0040af10	HELPER_AnimationState_NextEventTrigger	0	*	SDK signature resolved against original J460
+0x00408d00	HELPER_AnimationState_AdvancePosition	0	*	SDK signature resolved against original J460
+0x0040add0	HELPER_AnimationState_IsEventTriggered	0	*	AI Slide and Shoot current event checks
+0x0040ae70	HELPER_AnimationState_WasEventTriggered	0	*	AI Slide and Shoot event history checks
+0x00408c90	HELPER_AnimationState_TriggerEvents	0	*	AdvancePosition trigger bitmask dispatch
+0x0040a1b0	HELPER_AnimationState_Loop	0	*	Animation Update loop branch

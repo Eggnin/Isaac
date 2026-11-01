@@ -1,0 +1,28 @@
+{
+ "schema": "isaac-shim-readiness/1",
+ "readyToLift": true,
+ "sourceExecutableSha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+ "importSymbols": 622,
+ "dynamicRows": 109,
+ "emittedRows": 731,
+ "dlls": 28,
+ "iatCallSites": 22513,
+ "iatSlotsIncludingTerminators": 650,
+ "unknownPurgeRows": 0,
+ "outputs": {
+  "imports": "D:\\Isaac\\research\\runtime-inputs\\census\\imports.json",
+  "functionBounds": "D:\\Isaac\\research\\runtime-inputs\\census\\functions.json",
+  "shimTable": "D:\\Isaac\\research\\runtime-inputs\\host\\shim-table.json",
+  "shimDecls": "D:\\Isaac\\research\\runtime-inputs\\generated\\shim_decls.h",
+  "shimTableC": "D:\\Isaac\\research\\runtime-inputs\\generated\\shim_table.c",
+  "shimWeakC": "D:\\Isaac\\research\\runtime-inputs\\generated\\shim_weak.c"
+ },
+ "hashes": {
+  "imports": "A5A0D59A544C8123301E665C3655E2C3584204D62DEFCFF4447E318C1B7B0E49",
+  "functionBounds": "4015144144D5B80C0494D8412A3EF348DA2BC26338435505F7C4D966BCD187F1",
+  "shimTable": "F7F5CF08DD0E8133C07E748F0208443A200DE96DD88BBA0492E9EEF55330ED0D",
+  "shim_decls.h": "6B320C33CE25E6C4CB0B977CB650D66D9673D06E37AF61591D5E24FDB26AE005",
+  "shim_table.c": "5B6E0F5BED58ECD9655B8693BBC8AE135915C22E8CD9B2F17C4CD211E0FF076F",
+  "shim_weak.c": "D5BA2088329400D550940DA731314F32BD12DB4AEED728EDB1226847E6606A49"
+ }
+}

@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 3,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00977cc0", "name": "HELPER_Laser_Update", "types": "7", "identities": "7.*", "entry": "00977cc0", "resolvedFunction": "HELPER_Laser_Update", "ghidraEntry": "00977cc0", "instructions": 602, "incomingCalls": 0, "outgoingCalls": 38, "cFile": "HELPER_Laser_Update_00977cc0.c", "asmFile": "HELPER_Laser_Update_00977cc0.asm", "error": null},
+    {"va": "0x0096f590", "name": "HELPER_Laser_Init", "types": "7", "identities": "7.*", "entry": "0096f590", "resolvedFunction": "HELPER_Laser_Init", "ghidraEntry": "0096f590", "instructions": 136, "incomingCalls": 0, "outgoingCalls": 5, "cFile": "HELPER_Laser_Init_0096f590.c", "asmFile": "HELPER_Laser_Init_0096f590.asm", "error": null},
+    {"va": "0x006a2030", "name": "HELPER_Bomb_ContactMode", "types": "4", "identities": "4.*", "entry": "006a2030", "resolvedFunction": "HELPER_Bomb_ContactMode", "ghidraEntry": "006a2030", "instructions": 9, "incomingCalls": 17, "outgoingCalls": 0, "cFile": "HELPER_Bomb_ContactMode_006a2030.c", "asmFile": "HELPER_Bomb_ContactMode_006a2030.asm", "error": null}
+  ]
+}

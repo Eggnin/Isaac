@@ -1,0 +1,14 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 2,
+  "decompiledCount": 2,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00782af0", "name": "HELPER_Player_Update", "types": "1", "identities": "1.*", "entry": "00782af0", "resolvedFunction": "HELPER_Player_Update", "ghidraEntry": "00782af0", "instructions": 8303, "incomingCalls": 0, "outgoingCalls": 1447, "cFile": "HELPER_Player_Update_00782af0.c", "asmFile": "HELPER_Player_Update_00782af0.asm", "error": null},
+    {"va": "0x00708250", "name": "HELPER_Entity_TimeScaleCore", "types": "1", "identities": "1.*", "entry": "00708250", "resolvedFunction": "HELPER_Entity_TimeScaleCore", "ghidraEntry": "00708250", "instructions": 85, "incomingCalls": 13, "outgoingCalls": 3, "cFile": "HELPER_Entity_TimeScaleCore_00708250.c", "asmFile": "HELPER_Entity_TimeScaleCore_00708250.asm", "error": null}
+  ]
+}

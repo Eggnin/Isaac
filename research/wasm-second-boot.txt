@@ -1,0 +1,19 @@
+Session: D:\Isaac\research\offline-runs\20261028-004410-530
+[isaac][ring] ---- last 64 executed guest VAs (oldest -> newest):
+[isaac][ring]   00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[isaac][ring]   00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[isaac][ring]   00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[isaac][ring]   00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[isaac][ring]   00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[isaac][ring]   00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[isaac][ring]   00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[isaac][ring]   00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000
+[isaac][ring] 1 distinct addresses in the ring
+[isaac][ring] no register image
+    at abort (file:///D:/Isaac/research/the-browsing-of-isaac/output/recomp/lift/boot-fast/boot.mjs:461:41)
+    at __abort_js (file:///D:/Isaac/research/the-browsing-of-isaac/output/recomp/lift/boot-fast/boot.mjs:4267:24)
+    at boot.wasm.abort (wasm://wasm/boot.wasm-0d7b8f32:wasm-function[24913]:0x33ffb8c)
+  isaac_boot_init -> null
+  guard after boot: intact
+
+RESULT: boot trapped

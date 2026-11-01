@@ -1,0 +1,13 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 1,
+  "decompiledCount": 1,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00682fb0", "name": "HELPER_ColorTint", "types": "1000", "identities": "1000.141.*", "entry": "00682fb0", "resolvedFunction": "HELPER_ColorTint", "ghidraEntry": "00682fb0", "instructions": 12, "incomingCalls": 15, "outgoingCalls": 0, "cFile": "HELPER_ColorTint_00682fb0.c", "asmFile": "HELPER_ColorTint_00682fb0.asm", "error": null}
+  ]
+}

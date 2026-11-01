@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x00977cc0	HELPER_Laser_Update	7	7.*	native laser vtable
+0x0096f590	HELPER_Laser_Init	7	7.*	native laser Init
+0x006a2030	HELPER_Bomb_ContactMode	4	4.*	Bomb collision early-fuse predicate

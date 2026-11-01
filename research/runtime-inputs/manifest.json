@@ -1,0 +1,90 @@
+{
+ "schema": "isaac-runtime-input-manifest/1",
+ "sourceExecutable": "D:\\Steam\\steamapps\\common\\The Binding of Isaac Rebirth\\isaac-ng.exe",
+ "sourceExecutableSha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+ "frozenShimInputs": true,
+ "readyForParentBuild": true,
+ "requiresNoLiftPatches": true,
+ "compatibilityReport": {
+  "requiresExplicitParentHandling": true,
+  "hostHeaderMismatches": []
+ },
+ "outputs": {
+  "shim-readiness.json": {
+   "bytes": 1362,
+   "sha256": "4E252EDC8F84AD403DFB79993C06339DBD03896AEA50A5D1C8E367A9B20CFEE3"
+  },
+  "compatibility-report.json": {
+   "bytes": 7706,
+   "sha256": "D7813D42B50C978CA0DAFE80D63AF3492E1F9B188470840ABCCB7309A1771DB1"
+  },
+  "census\\imports.json": {
+   "bytes": 257235,
+   "sha256": "A5A0D59A544C8123301E665C3655E2C3584204D62DEFCFF4447E318C1B7B0E49"
+  },
+  "census\\functions.json": {
+   "bytes": 961845,
+   "sha256": "4015144144D5B80C0494D8412A3EF348DA2BC26338435505F7C4D966BCD187F1"
+  },
+  "host\\shim-table.json": {
+   "bytes": 509804,
+   "sha256": "F7F5CF08DD0E8133C07E748F0208443A200DE96DD88BBA0492E9EEF55330ED0D"
+  },
+  "generated\\shim_decls.h": {
+   "bytes": 50686,
+   "sha256": "6B320C33CE25E6C4CB0B977CB650D66D9673D06E37AF61591D5E24FDB26AE005"
+  },
+  "generated\\shim_table.c": {
+   "bytes": 104203,
+   "sha256": "5B6E0F5BED58ECD9655B8693BBC8AE135915C22E8CD9B2F17C4CD211E0FF076F"
+  },
+  "generated\\shim_weak.c": {
+   "bytes": 153037,
+   "sha256": "D5BA2088329400D550940DA731314F32BD12DB4AEED728EDB1226847E6606A49"
+  },
+  "host\\boot-tables.json": {
+   "bytes": 201065,
+   "sha256": "D18314CC2895E0DD28BC2648407B16BA3DABD68F3071498932475115C32E257B"
+  },
+  "host\\iat-slots.csv": {
+   "bytes": 51593,
+   "sha256": "AA2A0DBD6676A6787B2F0EB7F529C228654A41276719E9BAFD8D2DA49AFDC093"
+  },
+  "host\\initializers.csv": {
+   "bytes": 6665,
+   "sha256": "F646C05901779D36A6282E517D74DC946D5EF3BAE82C3C16D5F8FF97E9776F81"
+  },
+  "host\\memimage.json": {
+   "bytes": 5665,
+   "sha256": "AB6E7878E8CCC4E5503B86246AEFFB13F48898747DEC91A570515AE0AD10E921"
+  },
+  "host\\memimage-verify.json": {
+   "bytes": 635,
+   "sha256": "F5808049CD20719E7FA3B897E0A8F960B24437C3CD2B361115D0E97D79111E36"
+  },
+  "host\\isaac.mem": {
+   "bytes": 9615368,
+   "sha256": "FB955576EE44DAF769D53186B42B569811CA15675D237F95395EFB0113BE7370"
+  },
+  "host\\isaac.segs.bin": {
+   "bytes": 8832889,
+   "sha256": "A15C0DEADD692850E9AE39F0B09432682C3478F307BE752570DF7DBC3F813C37"
+  },
+  "host\\isaac.data.wasm": {
+   "bytes": 8832937,
+   "sha256": "994FD956E3649AE342BE65959DAA155FFDA10FF9F80B35A4C0F8AB59B5561094"
+  },
+  "host\\isaac.mem.br": {
+   "bytes": 3153990,
+   "sha256": "A92CB39DDE30C0D0A6942E71C8CFE09FC44CDB188D886F99B6A91451C27363A2"
+  },
+  "host\\isaac.segs.bin.br": {
+   "bytes": 3152956,
+   "sha256": "7AC7800F513F8107C1EF9B7F0B2BAA3066B61EC2FEBAF70FAB503C370B6B60FA"
+  },
+  "host\\isaac.data.wasm.br": {
+   "bytes": 3152749,
+   "sha256": "482723C5C70B8CE09E947EB83CA3ED582BC09DCB8E49C0FCD8582EF557B5A2A1"
+  }
+ }
+}

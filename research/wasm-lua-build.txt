@@ -1,0 +1,29 @@
+emcc              : D:\Isaac\research\emsdk\upstream\emscripten\emcc.exe
+source directory  : D:\Isaac\research\the-browsing-of-isaac\tools\lua-5.3.3  present
+tarball           : D:\Isaac\research\the-browsing-of-isaac\tools\lua-5.3.3.tar.gz  ABSENT
+
+defines that MUST be set:
+   -DLUA_USE_POSIX      the DLL was built with LUA_USE_C89 semantics; POSIX is the closest emscripten equivalent for os/io
+   -DLUA_USE_LONGJMP    build as C, not C++: error handling must be longjmp, not exceptions
+defines that MUST NOT be set:
+   LUA_COMPAT_5_2      upstream's Makefile ships this ON; the DLL was built without it and it changes the exported surface
+   LUA_32BITS          would make lua_Integer int and lua_Number float; LUAL_NUMSIZES=136 proves both are 8 bytes
+   LUA_C89_NUMBERS     distinct from LUA_USE_C89; would change the numeric types
+
+ABI the build has to reproduce (measured from the shipped DLL):
+   LUAL_NUMSIZES          136
+   sizeof(lua_Number)     8
+   sizeof(lua_Integer)    8
+   sizeof(TValue)         16
+   sizeof(LG)             824
+   sizeof(lua_Debug)      100
+   LUAI_MAXSTACK          1000000
+   LUA_IDSIZE             60
+   LUA_EXTRASPACE         4
+
+The static assertions in src/host_lua.c enforce these at compile time, so a mismatched build fails to compile rather than corrupting values at runtime.
+
+built D:\Isaac\research\the-browsing-of-isaac\output\recomp\host\lua\liblua.a (33 objects, 278858 bytes)
+
+Now rebuild the host layer; host_lua.c picks up lua.h automatically:
+   EMCC_CFLAGS='-ID:\Isaac\research\the-browsing-of-isaac\tools\lua-5.3.3\src' python scripts/recomp/host/build_selftest.py

@@ -1,0 +1,62 @@
+{
+  "game_sha256": "7122ac28779925b24e23e2416f231322b1470388bd25e2c08665ad8d53b3ea4f",
+  "timings": {
+    "60.0.0:8:Shoot": {
+      "trigger_animation_frame": 12,
+      "samples": 36,
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "timing_verified": true,
+      "planning_validated": false,
+      "geometry_verified": false,
+      "duration_verified": false,
+      "evidence": "independent internal laser spawn aligned with external telegraph; two seeds",
+      "source": "validation/phase4-final-20261029/event-assertions.json"
+    },
+    "68.1.0:9:AttackAlt01": {
+      "trigger_animation_frame": 11,
+      "samples": 12,
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "timing_verified": true,
+      "planning_validated": false,
+      "geometry_verified": false,
+      "duration_verified": false,
+      "evidence": "independent internal laser spawn aligned with external telegraph; two seeds",
+      "source": "validation/phase4-final-20261029/event-assertions.json"
+    },
+    "68.1.0:10:AttackAlt02": {
+      "trigger_animation_frame": 11,
+      "samples": 6,
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "timing_verified": true,
+      "planning_validated": false,
+      "geometry_verified": false,
+      "duration_verified": false,
+      "evidence": "independent internal laser spawn aligned with external telegraph; two seeds",
+      "source": "validation/phase4-final-20261029/event-assertions.json"
+    },
+    "203.0.0:8:ShootLeft": {
+      "trigger_animation_frame": 27,
+      "samples": 44,
+      "seeds": [
+        "3JY1 6FLR",
+        "SWGF G7WV"
+      ],
+      "timing_verified": true,
+      "planning_validated": false,
+      "geometry_verified": false,
+      "duration_verified": false,
+      "evidence": "independent internal laser spawn aligned with external telegraph; two seeds",
+      "source": "validation/phase4-final-20261029/event-assertions.json"
+    }
+  },
+  "scope": "Sampled exact identity/state/animation only; no geometry/duration or other variants inferred."
+}

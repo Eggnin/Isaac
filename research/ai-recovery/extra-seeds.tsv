@@ -1,0 +1,42 @@
+va	name	types	identity_keys	evidence
+0x006c2990	HELPER_Entity_NPC_Update_dispatcher		dispatcher	Type-10 table dispatch at 0x006c45a4 and cases at 0x006c41dc
+0x004a5d10	HELPER_Delirium_ApplyFormAndState	412	delirium.form_transition	Called by Delirium attack/state setup
+0x004a84f0	HELPER_Delirium_StateSetupA	412	delirium.state_setup	Called at 0x004a6fa0
+0x004a8680	HELPER_Delirium_StateSetupB	412	delirium.state_setup	Called at 0x004a6f99
+0x004a8b70	HELPER_Delirium_AttackIDDispatchA	412	delirium.attack_id_dispatch	Decodes AttackID low/mid/high bytes and is called from Delirium AI
+0x004a9860	HELPER_Delirium_CycleAndAttackDispatchB	412	delirium.cycle_id_dispatch	Reads CycleID fields and AttackID; called from Delirium AI
+0x006ac560	HELPER_Entity_DamageFilter		common_damage_filter	Public pre-damage filter
+0x006ace60	HELPER_Entity_TakeDamage		common_damage_path	Public damage entry
+0x006d7010	HELPER_006d7010_DamageQueuePreprocessCandidate		common_damage_path	Called immediately before shield absorption at 0x006c507e
+0x006d7230	HELPER_006d7230_ShieldDamageAbsorption		common_damage_filter	Reads +0xC40 and rescales queued damage against MaxHealth
+0x006c4b30	HELPER_006c4b30_NPCUpdateCandidate		common_npc_update	Calls shield absorption and the 0x006c2990 AI dispatcher
+0x006b8b20	HELPER_006b8b20_EntityInitCandidate		entity_init	Initializes +0xC40/+0xC44 and AI fields
+0x006bb790	HELPER_006bb790_ConfigCopyCandidate		entity_init	Copies shield values from EntityConfig into entity fields
+0x006cb2e0	HELPER_Entity_NPC_FireProjectiles		common_attack	NPC projectile emitter
+0x006ccdd0	HELPER_Entity_NPC_FireBossProjectiles		common_boss_attack	Boss projectile emitter
+0x00428b20	HELPER_Entity_SpawnRelay		common_spawn	Shared entity spawn relay
+0x006fe410	HELPER_Entity_CreateDispatcher		common_spawn	Entity create dispatcher
+0x006bec40	HELPER_Entity_NPC_ProjectileHelper		common_attack	NPC projectile helper
+0x0059e4c0	HELPER_UltraGreed_Init	406	ultra_greed.init	Called from Ultra Greed AI
+0x00956110	HELPER_00956110_BossEventQuery		boss_event	Called with Ultra Greed event ids 4..11
+0x009562d0	HELPER_009562d0_BossEventMutation		boss_event	Paired with 0x00956110 across boss AI functions
+0x00a20940	HELPER_00a20940_BossEventQueryCallback		boss_event	Callback passed to PTR_vftable_00c57b18+0x74 by 0x00956110
+0x00a20ab0	HELPER_00a20ab0_BossEventMutationCallback		boss_event	Callback passed to PTR_vftable_00c57b18+0x74 by 0x009562d0
+0x0040a380	HELPER_0040a380_AnimationActionA		animation	Common string-guided animation action
+0x0040a550	HELPER_0040a550_AnimationPredicateB		animation	Common float-guided animation predicate
+0x0040a5d0	HELPER_0040a5d0_AnimationPredicateC		animation	Common string-guided animation predicate
+0x0040b030	HELPER_0040b030_AnimationEventPredicateD		animation	Common string event predicate
+0x0040b090	HELPER_0040b090_AnimationEventPredicateE		animation	Common string event predicate
+0x0096f310	HELPER_0096f310_EntityAttackObjectCandidate		entity_spawn	Creates an entity-like object with a Type 10 argument in attacks
+0x004c5980	HELPER_004c5980_MatriarchProjectileTailCandidate	413	matriarch.attack_helper	Called by Matriarch State 13 projectile branch
+0x00452c60	HELPER_00452c60_BigHornAttackHelperA	411	big_horn.attack_helper	Called during Big Horn State 13 discharge
+0x00452d40	HELPER_00452d40_BigHornAttackHelperB	411	big_horn.attack_helper	Called during Big Horn State 13 discharge
+0x00452eb0	HELPER_00452eb0_BigHornAttackHelperC	411	big_horn.attack_helper	Called on Big Horn State 13 Shoot event
+0x004530e0	HELPER_004530e0_BigHornAttackHelperD	411	big_horn.attack_helper	Called on Big Horn State 13 Shoot event
+0x004e8fa0	HELPER_004e8fa0_VisFattyCordCandidate	886	vis_fatty.attack_helper	Called from Entity 886 cord/child update
+0x0059e390	HELPER_0059e390_UltraGreedPhaseHelperA	406	ultra_greed.phase_helper	Called in Ultra Greed death/final states
+0x0059e730	HELPER_0059e730_UltraGreedSmashHelperB	406	ultra_greed.attack_helper	Called during Ultra Greed smash states
+0x00453140	REFERENCE_BigHorn_AI	411	reference_duplicate	Duplicate seed for focused helper export
+0x004ea3d0	REFERENCE_VisFatty_AI	886	reference_duplicate	Duplicate seed for focused helper export
+0x004c59d0	REFERENCE_Matriarch_AI	413	reference_duplicate	Duplicate seed for focused helper export
+0x004a6500	REFERENCE_Delirium_AI	412	reference_duplicate	Duplicate seed for focused helper export

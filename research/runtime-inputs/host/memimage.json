@@ -1,0 +1,361 @@
+{
+ "addressingModel": "identity: guest VA == wasm linear memory offset",
+ "imageBase": 4194304,
+ "imageBaseHex": "0x00400000",
+ "sizeOfImage": 9617408,
+ "imageSpanVa": [
+  "0x00400000",
+  "0x00d2c000"
+ ],
+ "minimumWasmMemoryPages": 211,
+ "minimumWasmMemoryBytes": 13828096,
+ "droppedSections": [
+  ".reloc"
+ ],
+ "zeroRunThreshold": 256,
+ "materialisedBytesNonZero": 7580935,
+ "flatTrimmedLength": 9615368,
+ "segmentCount": 50,
+ "segmentPayloadBytes": 8832473,
+ "placement": [
+  {
+   "name": "(headers)",
+   "rva": 0,
+   "bytes": 1024,
+   "zeroTail": 0
+  },
+  {
+   "name": ".text",
+   "rva": 4096,
+   "bytes": 7430656,
+   "zeroTail": 0,
+   "dropped": false
+  },
+  {
+   "name": ".rdata",
+   "rva": 7438336,
+   "bytes": 915968,
+   "zeroTail": 0,
+   "dropped": false
+  },
+  {
+   "name": ".data",
+   "rva": 8355840,
+   "bytes": 433664,
+   "zeroTail": 240804,
+   "dropped": false
+  },
+  {
+   "name": ".rsrc",
+   "rva": 9031680,
+   "bytes": 15360,
+   "zeroTail": 0,
+   "dropped": false
+  },
+  {
+   "name": ".reloc",
+   "rva": 9048064,
+   "bytes": 0,
+   "zeroTail": 379392,
+   "dropped": true
+  },
+  {
+   "name": ".bind",
+   "rva": 9428992,
+   "bytes": 186376,
+   "zeroTail": 0,
+   "dropped": false
+  }
+ ],
+ "placementWithReloc": [
+  {
+   "name": "(headers)",
+   "rva": 0,
+   "bytes": 1024,
+   "zeroTail": 0
+  },
+  {
+   "name": ".text",
+   "rva": 4096,
+   "bytes": 7430656,
+   "zeroTail": 0,
+   "dropped": false
+  },
+  {
+   "name": ".rdata",
+   "rva": 7438336,
+   "bytes": 915968,
+   "zeroTail": 0,
+   "dropped": false
+  },
+  {
+   "name": ".data",
+   "rva": 8355840,
+   "bytes": 433664,
+   "zeroTail": 240804,
+   "dropped": false
+  },
+  {
+   "name": ".rsrc",
+   "rva": 9031680,
+   "bytes": 15360,
+   "zeroTail": 0,
+   "dropped": false
+  },
+  {
+   "name": ".reloc",
+   "rva": 9048064,
+   "bytes": 379392,
+   "zeroTail": 0,
+   "dropped": false
+  },
+  {
+   "name": ".bind",
+   "rva": 9428992,
+   "bytes": 186376,
+   "zeroTail": 0,
+   "dropped": false
+  }
+ ],
+ "variants": {
+  "flat": {
+   "raw": 9615368,
+   "gzip": 3964722,
+   "brotli": 3153990,
+   "gzipRatio": 0.4123,
+   "brotliRatio": 0.328
+  },
+  "segmented": {
+   "raw": 8832889,
+   "gzip": 3962097,
+   "brotli": 3152956,
+   "gzipRatio": 0.4486,
+   "brotliRatio": 0.357
+  },
+  "data-wasm": {
+   "raw": 8832937,
+   "gzip": 3962354,
+   "brotli": 3152749,
+   "gzipRatio": 0.4486,
+   "brotliRatio": 0.3569
+  },
+  "flat-with-reloc": {
+   "raw": 9617408,
+   "gzip": 4226752,
+   "brotli": 3365401,
+   "gzipRatio": 0.4395,
+   "brotliRatio": 0.3499
+  }
+ },
+ "segments": [
+  {
+   "va": "0x00400000",
+   "len": 808
+  },
+  {
+   "va": "0x00401000",
+   "len": 7430452
+  },
+  {
+   "va": "0x00b18000",
+   "len": 7779
+  },
+  {
+   "va": "0x00b1a0a8",
+   "len": 159991
+  },
+  {
+   "va": "0x00b415ea",
+   "len": 20317
+  },
+  {
+   "va": "0x00b46800",
+   "len": 725316
+  },
+  {
+   "va": "0x00bf8000",
+   "len": 4259
+  },
+  {
+   "va": "0x00bf92e8",
+   "len": 107347
+  },
+  {
+   "va": "0x00c13747",
+   "len": 65273
+  },
+  {
+   "va": "0x00c237c0",
+   "len": 77102
+  },
+  {
+   "va": "0x00c36620",
+   "len": 3598
+  },
+  {
+   "va": "0x00c375e0",
+   "len": 64
+  },
+  {
+   "va": "0x00c378fc",
+   "len": 279
+  },
+  {
+   "va": "0x00c57b18",
+   "len": 101
+  },
+  {
+   "va": "0x00c57ce8",
+   "len": 3
+  },
+  {
+   "va": "0x00c57e60",
+   "len": 3
+  },
+  {
+   "va": "0x00c57fd8",
+   "len": 3
+  },
+  {
+   "va": "0x00c58150",
+   "len": 3
+  },
+  {
+   "va": "0x00c582c8",
+   "len": 3
+  },
+  {
+   "va": "0x00c58440",
+   "len": 3
+  },
+  {
+   "va": "0x00c585b8",
+   "len": 3
+  },
+  {
+   "va": "0x00c58730",
+   "len": 3
+  },
+  {
+   "va": "0x00c588a8",
+   "len": 3
+  },
+  {
+   "va": "0x00c58a20",
+   "len": 8
+  },
+  {
+   "va": "0x00c58b98",
+   "len": 8
+  },
+  {
+   "va": "0x00c58d10",
+   "len": 8
+  },
+  {
+   "va": "0x00c58e88",
+   "len": 8
+  },
+  {
+   "va": "0x00c59000",
+   "len": 8
+  },
+  {
+   "va": "0x00c59178",
+   "len": 8
+  },
+  {
+   "va": "0x00c592f0",
+   "len": 13
+  },
+  {
+   "va": "0x00c59468",
+   "len": 13
+  },
+  {
+   "va": "0x00c595e0",
+   "len": 13
+  },
+  {
+   "va": "0x00c59758",
+   "len": 13
+  },
+  {
+   "va": "0x00c598d1",
+   "len": 12
+  },
+  {
+   "va": "0x00c59a49",
+   "len": 12
+  },
+  {
+   "va": "0x00c59bc0",
+   "len": 13
+  },
+  {
+   "va": "0x00c59d38",
+   "len": 13
+  },
+  {
+   "va": "0x00c59eb0",
+   "len": 13
+  },
+  {
+   "va": "0x00c5a028",
+   "len": 13
+  },
+  {
+   "va": "0x00c5a1a0",
+   "len": 13
+  },
+  {
+   "va": "0x00c5a318",
+   "len": 13
+  },
+  {
+   "va": "0x00c5a490",
+   "len": 13
+  },
+  {
+   "va": "0x00c5a608",
+   "len": 9
+  },
+  {
+   "va": "0x00c5a780",
+   "len": 9
+  },
+  {
+   "va": "0x00c5a8f8",
+   "len": 13
+  },
+  {
+   "va": "0x00c5aa70",
+   "len": 8453
+  },
+  {
+   "va": "0x00c5cd84",
+   "len": 1
+  },
+  {
+   "va": "0x00c5cfe0",
+   "len": 19565
+  },
+  {
+   "va": "0x00c9d00e",
+   "len": 15119
+  },
+  {
+   "va": "0x00cfe000",
+   "len": 186376
+  }
+ ],
+ "sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+ "containsBindSection": true,
+ "provenance": {
+  "generator": "research/the-browsing-of-isaac/scripts/recomp/host/memimage.py",
+  "generatorSha256": "D452C22C08BD691035BF270F469D407D34B98CEDD3A6C53748364B8332D0F53B",
+  "sourceExecutable": "D:\\Steam\\steamapps\\common\\The Binding of Isaac Rebirth\\isaac-ng.exe",
+  "sourceExecutableSha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+  "readOnly": true
+ }
+}

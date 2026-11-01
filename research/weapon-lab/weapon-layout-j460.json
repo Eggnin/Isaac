@@ -1,0 +1,117 @@
+{
+  "game_sha256": "7122ac28779925b24e23e2416f231322b1470388bd25e2c08665ad8d53b3ea4f",
+  "method": "Read-only PE RTTI, trivial GetMainEntity getters, and GetCollectibleNum vector loads; no game execution",
+  "player_collectible_counts": {
+    "function_rva": "0x370ca0",
+    "begin_offset": "0x16c8",
+    "end_offset": "0x16cc",
+    "instructions": "558bec83e4f883ec0c53568b75088bd95785f60f88040400000f1f80000000008b83cc1600002b83c8160000c1f8023bf00f8de6030000837b2c01750f8bcbe8"
+  },
+  "classes": [
+    {
+      "type": 1,
+      "name": ".?AVWeapon_Tears@IsaacRepentancePlus@@",
+      "vtable_rva": "0x7815d0",
+      "main_entity_offset": null,
+      "getter": "33c0c3cccccccccccccccccccccccccc"
+    },
+    {
+      "type": 2,
+      "name": ".?AVWeapon_Brimstone@IsaacRepentancePlus@@",
+      "vtable_rva": "0x7812b8",
+      "main_entity_offset": 72,
+      "getter": "8b4148c3cccccccccccccccccccccccc"
+    },
+    {
+      "type": 3,
+      "name": ".?AVWeapon_Laser@IsaacRepentancePlus@@",
+      "vtable_rva": "0x7813d8",
+      "main_entity_offset": 68,
+      "getter": "8b4144c3cccccccccccccccccccccccc"
+    },
+    {
+      "type": 4,
+      "name": ".?AVWeapon_Knife@IsaacRepentancePlus@@",
+      "vtable_rva": "0x781420",
+      "main_entity_offset": 68,
+      "getter": "8b4144c3cccccccccccccccccccccccc"
+    },
+    {
+      "type": 5,
+      "name": ".?AVWeapon_Bombs@IsaacRepentancePlus@@",
+      "vtable_rva": "0x7811e0",
+      "main_entity_offset": 68,
+      "getter": "8b4144c3cccccccccccccccccccccccc"
+    },
+    {
+      "type": 6,
+      "name": ".?AVWeapon_Rockets@IsaacRepentancePlus@@",
+      "vtable_rva": "0x781540",
+      "main_entity_offset": 68,
+      "getter": "8b4144c3cccccccccccccccccccccccc"
+    },
+    {
+      "type": 7,
+      "name": ".?AVWeapon_MonstrosLung@IsaacRepentancePlus@@",
+      "vtable_rva": "0x781468",
+      "main_entity_offset": null,
+      "getter": "33c0c3cccccccccccccccccccccccccc"
+    },
+    {
+      "type": 8,
+      "name": ".?AVWeapon_Ludovico@IsaacRepentancePlus@@",
+      "vtable_rva": "0x7814b0",
+      "main_entity_offset": 68,
+      "getter": "8b4144c3cccccccccccccccccccccccc"
+    },
+    {
+      "type": 9,
+      "name": ".?AVWeapon_TechX@IsaacRepentancePlus@@",
+      "vtable_rva": "0x781588",
+      "main_entity_offset": null,
+      "getter": "33c0c3cccccccccccccccccccccccccc"
+    },
+    {
+      "type": 10,
+      "name": ".?AVWeapon_Bone@IsaacRepentancePlus@@",
+      "vtable_rva": "0x781228",
+      "main_entity_offset": 68,
+      "getter": "8b4144c3cccccccccccccccccccccccc"
+    },
+    {
+      "type": 11,
+      "name": ".?AVWeapon_Deathmatch@IsaacRepentancePlus@@",
+      "vtable_rva": "0x781390",
+      "main_entity_offset": null,
+      "getter": "33c0c3cccccccccccccccccccccccccc"
+    },
+    {
+      "type": 12,
+      "name": ".?AVWeapon_UrnOfSouls@IsaacRepentancePlus@@",
+      "vtable_rva": "0x781300",
+      "main_entity_offset": 76,
+      "getter": "8b414cc3cccccccccccccccccccccccc"
+    },
+    {
+      "type": 13,
+      "name": ".?AVWeapon_SpiritSword@IsaacRepentancePlus@@",
+      "vtable_rva": "0x7814f8",
+      "main_entity_offset": 68,
+      "getter": "8b4144c3cccccccccccccccccccccccc"
+    },
+    {
+      "type": 14,
+      "name": ".?AVWeapon_Fetus@IsaacRepentancePlus@@",
+      "vtable_rva": "0x781270",
+      "main_entity_offset": null,
+      "getter": "33c0c3cccccccccccccccccccccccccc"
+    },
+    {
+      "type": 15,
+      "name": ".?AVWeapon_UmbilicalWhip@IsaacRepentancePlus@@",
+      "vtable_rva": "0x781348",
+      "main_entity_offset": 68,
+      "getter": "8b4144c3cccccccccccccccccccccccc"
+    }
+  ]
+}

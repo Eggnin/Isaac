@@ -1,0 +1,10 @@
+va	name	types	identity_keys	evidence
+0x00407270	HELPER_ColorAlpha	1000	1000.141.*	Smoke lifetime and target gate
+0x00417200	HELPER_SpriteScale	1000	1000.141.*	Smoke interaction radius
+0x004173b0	HELPER_IsPlayer	1000	1000.141.*	Smoke target classification
+0x004173d0	HELPER_EntityClass	1000	1000.141.*	Smoke ignition candidates
+0x00417340	HELPER_EntitySize	1000	1000.141.*	Smoke ignition target radius
+0x00417380	HELPER_EntitySubtype	1000	1000.141.*	Smoke ignition target subtype
+0x00417220	HELPER_EntityMatches	1000	1000.141.*	Smoke ignition target identity
+0x006ac710	HELPER_EntityGate	1000	1000.141.*	Smoke ignition gate
+0x007c3320	HELPER_PlayerZeroDamageImmunity	1	1.*	Smoke player zero-damage branch immunity

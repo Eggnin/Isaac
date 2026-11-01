@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 3,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x006fed60", "name": "HELPER_AreaDamage", "types": "1000", "identities": "1000.147.*", "entry": "006fed60", "resolvedFunction": "HELPER_AreaDamage", "ghidraEntry": "006fed60", "instructions": 200, "incomingCalls": 17, "outgoingCalls": 6, "cFile": "HELPER_AreaDamage_006fed60.c", "asmFile": "HELPER_AreaDamage_006fed60.asm", "error": null},
+    {"va": "0x006a9c10", "name": "HELPER_Entity_RealAge", "types": "1000", "identities": "1000.147.*", "entry": "006a9c10", "resolvedFunction": "HELPER_Entity_RealAge", "ghidraEntry": "006a9c10", "instructions": 4, "incomingCalls": 81, "outgoingCalls": 0, "cFile": "HELPER_Entity_RealAge_006a9c10.c", "asmFile": "HELPER_Entity_RealAge_006a9c10.asm", "error": null},
+    {"va": "0x00417430", "name": "HELPER_Entity_HasFlag", "types": "1000", "identities": "1000.147.*", "entry": "00417430", "resolvedFunction": "HELPER_Entity_HasFlag", "ghidraEntry": "00417430", "instructions": 14, "incomingCalls": 583, "outgoingCalls": 0, "cFile": "HELPER_Entity_HasFlag_00417430.c", "asmFile": "HELPER_Entity_HasFlag_00417430.asm", "error": null}
+  ]
+}

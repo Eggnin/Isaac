@@ -1,0 +1,854 @@
+ok    render gate: no Game, the frame is drawn
+ok    render gate: a frame counter seen first is not a tick
+ok    render gate: a tick's own frame is drawn (update 10 ms)
+ok    render gate: the in-between frame is drawn when the next tick stays on time (53 - 40 + render 10 + update 10 = 33)
+ok    render gate: the next tick is drawn
+ok    render gate: an in-between frame that would make the next tick late is skipped (97 - 75 + 12.5 + 10 >= 33.3)
+ok    render gate: the skip's wait, 33.33 - (97 - 75 + 10) = 1.33 ms, is less than the 1.67 ms the tick at 75 came late (due 73.33): none
+ok    render gate: one skip per tick at most
+ok    render gate: a paused game (no tick) is always drawn
+ok    render gate: leaving and re-entering a Game forgets the last tick
+ok    render gate: a tick after a long frame
+ok    render gate: a tick already late is not waited for (283 - 241 + update > 33.3)
+ok    render gate: exactly two frames skipped
+ok    render gate (schedule): first sighting
+ok    render gate (schedule): a tick, due again at 138.33
+ok    render gate (schedule): skipped (122 - 105 + 15 + 5 = 37), waiting 138.33 - 122 - 5 = 11.33 ms
+ok    render gate (schedule): the tick at 142 came 3.67 ms after its due 138.33
+ok    render gate (schedule): so the next wait is 3.67 ms shorter (171.67 - 159 - 5 = 7.67, not 11.33)
+ok    render gate (schedule): a tick 33 ms late is made up by 8 ms at most
+ok    render gate (schedule): the capped catch-up still waits 230.33 - 222 - 5 = 3.33 ms
+ok    render gate (schedule): the tick at 228 came 2.33 ms before its due 230.33, which is not made up
+ok    render gate (schedule): so the next wait is the plain 261.33 - 245 - 5 = 11.33 ms
+ok    render gate (schedule): three tick intervals after a skip, 37, 63 and 23 ms (mean 41, max 63)
+ok    render gate (schedule): and the intervals are forgotten once read
+ok    render gate (pace): first sighting
+ok    render gate (pace): a tick, due again at 338.33
+ok    render gate (pace): a tick's own present does not pace
+ok    render gate (pace): the in-between frame is drawn (312 - 305 + 5 + 5 = 17)
+ok    render gate (pace): its present waits 338.33 - 5 - 318 = 15.33 ms for the next tick, asked once
+ok    render gate (pace): the tick at 339 came 0.67 ms late
+ok    render gate (pace): drawn again
+ok    render gate (pace): a tick drops the pace of an in-between frame that never presented
+ok    render gate (pace): drawn once more
+ok    render gate (pace): leaving the Game drops a pending pace
+ok    render gate (limiter): first sighting
+ok    render gate (limiter): a sleep before any resume measures no update
+ok    render gate (limiter): the tick's update is 1024 - 1010 - 9 slept = 5 ms, not 14
+ok    render gate (limiter): the in-between frame is drawn (1041 - 1024 + render 3 + update 5 = 25; with the sleep, 34: skipped)
+ok    yield (limiter): the main thread's sleeps since the last present add up to 9 ms, taken once
+ok    yield (limiter): the pass worked 120 - 100 - 9 slept = 11 ms, under 15: it waits for the browser's frame
+ok    yield: before any present resumed, a pass reads as long
+ok    thread naps: a job that never slept runs every frame
+ok    thread naps: a job whose Sleep ends at 150 sits out the frame at 100
+ok    thread naps: and runs on the frame its sleep ends
+ok    thread naps: or any frame after
+ok    lazy textures: a premultiplied white glyph page is gray, a colour sprite and noise are not
+ok    lazy textures: the glyph page and the sprite code under half their RGBA, noise does not
+ok    lazy textures: the glyph page comes back exactly (one byte per pixel)
+ok    lazy textures: the sprite comes back exactly (whole pixels)
+ok    lazy textures: noise comes back exactly too (literal runs)
+ok    lazy textures: short and long runs at both ends
+ok    lazy textures: the same as whole pixels
+ok    lazy textures: a cut code, or a code for another size, is refused
+ok    lazy textures: a code longer than the texture never writes past it
+ok    lazy textures: a 256 KB glyph page is kept
+ok    lazy textures: it is pending under its name
+ok    lazy textures: its code is what is held
+ok    lazy textures: noise is uploaded at once
+ok    lazy textures: under 64 KB too
+ok    lazy textures: another level, RGB, the default texture or no pixels are uploaded at once
+ok    lazy textures: on first use the upload is made once and the copy is freed
+ok    lazy textures: with the kept call's arguments and exactly its pixels
+ok    lazy textures: a second use uploads nothing
+ok    lazy textures: a name uploaded twice keeps the second
+ok    lazy textures: and holds only the second
+ok    lazy textures: whose pixels it gives back
+ok    lazy textures: kept again
+ok    lazy textures: a deleted texture's copy is dropped
+ok    lazy textures: a gray run of 63 codes in 2 bytes, of 64 in 3 (header 0x81 0x01, then the value)
+ok    lazy textures: runs of 8191 and 8193 take 2- and 3-byte headers and come back exactly
+ok    lazy textures: whole pixels in runs of 3 and literals come back exactly
+ok    lazy textures: the glyph page decoded 1,000 pixels at a time is the same, and the code is used up
+ok    lazy textures: a run of nothing (before a good run of 1), or a header cut short, is refused
+ok    lazy textures: a header wider than 32 bits (its low bits a good run of 1), or longer than 5 bytes, is refused
+ok    lazy textures: a literal of 5 with 3 bytes left is refused before it is read, even mid-stream
+ok    lazy textures: gray 1 1 1 2 9 9 4 is a repeat of 3 and a literal of 4 (7 bytes)
+ok    lazy textures: pixels A A B are a repeat of 2 and a literal (10 bytes), A B C one literal (13)
+ok    lazy textures: a code with a whole token left after the pixels asked for is refused
+ok    lazy textures: 16-row bands -- one allocation, 16 bands, exactly the pixels
+ok    lazy textures: 10-row bands over 256 rows -- 25 of 10 and the last of 6
+ok    lazy textures: a texture within the 4 MB band is one whole upload
+ok    lazy sound: a loaded sample's buffer is recorded with pass 1's size, and pass 2 reads the header only
+ok    lazy sound: ISAAC_SND_LAZY=0 reads the PCM at load, as the game does
+ok    lazy sound: ISAAC_SND_VERIFY=1 with lazy samples off remembers the sample but still reads it at load
+ok    lazy sound: an empty data chunk is read as the game does
+ok    lazy sound: a buffer overlapping a recorded one is refused
+ok    lazy sound: three recorded
+ok    lazy sound: its first upload fills it once, through the loader, from its path
+ok    lazy sound: in the fill the loader allocates the recorded buffer and reads the PCM; after it, no fill
+ok    lazy sound: a fill reads the archive through its windows, never a header overlay (round 99); outside one the overlay may answer
+ok    lazy sound: later uploads find it filled
+ok    lazy sound: an upload inside a recorded buffer fills it
+ok    lazy sound: a fill that fails leaves silence, not stale bytes, and is not tried again
+ok    lazy sound: a buffer freed unwritten is forgotten, its neighbour kept
+ok    lazy sound: and its reused address is not filled
+ok    lazy sound: an upload over two recorded buffers fills both
+ok    lazy sound: a path without its end within 1 KB is not recorded (its PCM is read at load)
+ok    eh: an __ehhandler thunk names its FuncInfo (jmp rel32 or jmp [slot])
+ok    eh: past the /GS cookie check this image's thunks open with
+ok    eh: anything else is not a C++ frame
+ok    eh: the third frame catches it
+ok    eh: by its second handler (the first is for another type)
+ok    eh: as std::exception, matched by the decorated name, at that base's displacement
+ok    eh: the try block covering state 1
+ok    eh: the thrower and the frame whose catch did not match are unwound first
+ok    eh: a catching frame outside the innermost guest call is not taken
+ok    eh: a frame in a state no try covers does not catch
+ok    eh: nor one past the try (state 3, the catch's own)
+ok    eh: catch (...) takes anything
+ok    eh: a catch by value is not carried out
+ok    eh: a frame that is not C++ stops the walk
+ok    eh: a FuncInfo without the magic is not read
+ok    eh: and with it, LuaException itself
+ok    eh: GetPill's continuation returns its local and pops 8
+ok    eh: and restores the registers its prologue saved
+ok    eh: and fs:[0] from [ebp-0xc]
+ok    eh: the bool action hook returns the byte it held, in AL only
+ok    eh: GetTrinket's aligned frame returns its local through mov esp,ebx
+ok    eh: GetShaderParams' continuation is not translated
+--- isaac host layer selftest ---
+      image: 9615368 bytes at 0x00400000, MZ=yes
+      host static 0x1c016904 | guest limit 0x1bf00000 | host base 0x1c000000
+ok    host static data is above the host base
+ok    host static data is outside the guest-reachable range
+      host malloc 0x1ce76a68
+ok    host malloc also lands above the host base
+ok    image, heap, stack and shim tokens are all below the guest limit
+ok    guest heap is above the image, so a .data overrun hits guest memory
+ok    the guard region abuts the host base with no gap
+ok    622 IAT + 109 dynamic imports linked
+ok    every shim token resolves to its import
+ok    shim tokens are strictly increasing (hence unique)
+ok    an ordinary guest VA does not resolve to a shim
+ok    a misaligned token does not resolve
+      622/622 IAT slots hold their shim token (109 dynamic exports unslotted)
+ok    IAT binding wrote every slotted import
+      _errno returned 0x1a000800
+ok    strong shim _errno overrode the weak trap
+ok    _set_errno(42) then _errno reads back 42
+ok    __acrt_iob_func returns 3 distinct non-null streams
+ok    stderr block carries fd 2 at +0x10
+ok    found a STUB import to exercise
+      exercising stub eossdk-win32-shipping.dll!_EOS_EResult_ToString@4 (purge 4)
+ok    isaac_indirect_call handled the shim token
+ok    stub returned 0
+ok    stub popped return address + its stdcall purge
+ok    stub returned to the caller VA
+ok    this layer's weak stub definitions are the ones linked in
+      guest malloc[0] 0x00e00008  peak 261248 bytes
+ok    guest malloc returns pointers inside the GUEST arena
+ok    guest malloc returns distinct blocks
+ok    heap high-water meter is recording
+ok    guest heap blocks do not overlap after writing all of them
+ok    arena is reusable after free (coalescing works)
+ok    peak is a high-water mark, not the live figure
+ok    three consecutive blocks come out ascending
+ok    freeing neighbours (ends first, middle last) coalesces both ways back to one block
+ok    4000-block churn: every surviving block still holds its own pattern (no overlap)
+ok    realloc to a larger block keeps the old bytes
+ok    after freeing everything the arena is one block again (no leaked fragments)
+ok    a double free is ignored and the block is reused exactly once
+ok    VirtualAlloc returns a guest address
+ok    VirtualAlloc zeroes its memory (malloc does not)
+ok    TEB ExceptionList is an empty SEH chain
+ok    TEB Self is correct
+ok    PEB ImageBaseAddress is the image base
+      RTTI cases: 6/6 upcasts, 6/6 correct nulls
+ok    __RTDynamicCast resolves real upcasts through real RTTI
+ok    __RTDynamicCast returns null for a type not in the hierarchy
+ok    __RTDynamicCast(nullptr) is nullptr
+      boot-critical: 16/16 present, 16 REAL/PROVIDED
+ok    all 16 boot-critical imports are in the table
+ok    all 16 are REAL or PROVIDED, none left a stub
+ok    IsDebuggerPresent returns 0 without trapping
+ok    __p__commode returns a guest-visible cell the CRT writes through
+ok    IsProcessorFeaturePresent reports SSE2 available
+ok    GetModuleHandleW(NULL) returns the image base
+ok    adjustor thunk 0x0069d1f0 decodes to add ecx,4; jmp 0x0040d040
+ok    jump thunk 0x007df3e0 decodes to jmp 0x00a2ab40
+ok    a push ebp prologue is not decoded as a thunk
+ok    allocate a guest object for chained adjustor thunks
+ok    chained adjustor thunks execute the real destructor vtable store
+ok    chained adjustor thunks apply signed imm8 and imm32 ECX adjustments
+ok    chained adjustor thunk callee RET pops exactly one stack word
+ok    chained adjustor thunk callee RET loads the guest return address
+ok    chained adjustor thunk destructor preserves adjacent guest words
+ok    adler32("Wikipedia") == 0x11E60398 (RFC 1950)
+ok    adler32 of a NULL buffer is 1, as zlib defines it
+ok    adler32 over 6000 bytes (past NMAX and the modulus) == 0x26A8AC6E
+ok    adler32 over 6000 x 0xff (s2 would overflow unchunked) == 0xA49759EA
+ok    PNG Sub filter
+ok    PNG Up filter
+ok    PNG Average filter
+ok    PNG Paeth filter
+ok    PNG Paeth tie-break prefers b over c
+ok    PNG Paeth (0,3,1) selects 3 in a guarded row update
+ok    PNG Paeth (3,0,2) selects 0 in a guarded row update
+ok    PNG Paeth (0,255,85) selects 255 in a guarded row update
+ok    PNG Paeth (255,0,170) selects 0 in a guarded row update
+ok    PNG Paeth (0,255,127) selects 127 in a guarded row update
+ok    PNG Paeth (255,0,128) selects 128 in a guarded row update
+ok    premultiply leaves alpha 0xff pixels alone
+ok    premultiply zeroes alpha 0 pixels
+ok    premultiply maps R,G,B through the alpha table and keeps alpha
+ok    audio pairs: interleaved source offset, left/right order and odd terminal index preserve all other bytes
+ok    audio pairs: equality with the signed loop limit stops before the trailing samples
+ok    audio pairs: the first positive-zero add is observable for negative-zero samples
+ok    audio pairs: halfway sums round to even in float32
+ok    audio pairs: subnormal sums retain gradual underflow
+ok    audio pairs: source SNaN priority and opposite infinities match scalar SSE
+ok    audio pairs: source QNaN priority and destination SNaN sign/payload match scalar SSE
+ok    audio pairs: finite overflow produces the correctly signed infinity
+ok    audio pairs: unaligned samples and an even starting index follow the x86 loads and stores
+ok    audio pairs: nonzero full-width XMM1 scalar rejects without writes
+ok    audio pairs: frame subtraction reaching zero rejects without writes
+ok    audio pairs: frame crossing the guest limit rejects without writes
+ok    audio pairs: null codebook rejects without writes
+ok    audio pairs: codebook crossing the guest limit rejects without writes
+ok    audio pairs: null sample table rejects without writes
+ok    audio pairs: wrapped sample-table addition rejects without writes
+ok    audio pairs: source span crossing the guest limit rejects without writes
+ok    audio pairs: right span crossing the guest limit rejects without writes
+ok    audio pairs: left span crossing the guest limit rejects without writes
+ok    audio pairs: negative starting index rejects without writes
+ok    audio pairs: negative signed limit rejects without writes
+ok    audio pairs: an already finished loop rejects without writes
+ok    audio pairs: zero loop limit rejects without writes
+ok    audio pairs: signed terminal-index wrap rejects without writes
+ok    audio pairs: source-byte-count overflow rejects without writes
+ok    audio pairs: partially overlapping channel outputs reject without writes
+ok    audio pairs: left output aliasing unread source rejects without writes
+ok    audio pairs: right output aliasing unread source rejects without writes
+ok    audio pairs: left output aliasing the frame rejects without writes
+ok    audio pairs: right output aliasing frame arguments rejects without writes
+ok    audio pairs: left output aliasing the codebook pointer rejects without writes
+ok    audio pairs: right output aliasing the codebook rejects without writes
+ok    audio pairs: null right output rejects without writes
+ok    audio pairs: null left output rejects without writes
+ok    audio pairs: negative-zero XMM1 rejects without writes
+ok    fast guest_range: inside the guest, straddling the limit, wrapping around
+ok    isaac(): a guest context is accepted
+ok    isaac(): r[], mm[], a, b and c match Jenkins' two-half-loop reference
+ok    isaac(): c is incremented once; the consumer's index word is untouched
+ok    isaac(): EDX is the last iteration's a after its xor step, as the lifted loop leaves it
+ok    isaac(): a context past the guest limit is refused untouched
+ok    keystream: a guest holder, context and buffer are accepted
+ok    keystream: each byte XORs r[idx], least significant byte first, across the refill
+ok    keystream: taking r[255] refills at once and the index goes on from 0 (eight words of the new block taken)
+ok    keystream: the refilled block is isaac() of the old one, c included
+ok    keystream: an index past r[] is left to the lifted body
+ok    keystream: a zero-length XOR consumes nothing
+ok    inflate: a guest window, tables and input are accepted
+ok    inflate: two literals, a length-3 distance-1 copy, end of block -> 1
+ok    inflate: the whole bytes left in the bit buffer go back to the input (bits 1, next +1, avail 15, total +1)
+ok    inflate: a distance past the window's start wraps to its end (one byte from the end, the rest from the start)
+ok    inflate: fewer than 10 input bytes after a symbol -> 0, the position and the bit buffer kept
+ok    inflate: an invalid literal/length code -> -3 with the engine's own message
+ok    inflate: more than 15 index bits is left to the lifted body
+ok    inflate: fewer than 10 input bytes is left to the lifted body
+ok    inflate: under 258 bytes of room before the reader is left to the lifted body
+ok    inflate: nonuniform disjoint length 3 preserves bytes, guards, status, state and input
+ok    inflate: nonuniform disjoint length 15 preserves bytes, guards, status, state and input
+ok    inflate: nonuniform disjoint length 16 preserves bytes, guards, status, state and input
+ok    inflate: nonuniform disjoint length 17 preserves bytes, guards, status, state and input
+ok    inflate: nonuniform disjoint length 257 preserves bytes, guards, status, state and input
+ok    inflate: nonuniform disjoint length 258 preserves bytes, guards, status, state and input
+ok    inflate: exact adjacency length 3 preserves bytes, guards, status, state and input
+ok    inflate: exact adjacency length 15 preserves bytes, guards, status, state and input
+ok    inflate: exact adjacency length 16 preserves bytes, guards, status, state and input
+ok    inflate: exact adjacency length 17 preserves bytes, guards, status, state and input
+ok    inflate: exact adjacency length 257 preserves bytes, guards, status, state and input
+ok    inflate: exact adjacency length 258 preserves bytes, guards, status, state and input
+ok    inflate: distance-one repeat length 3 preserves bytes, guards, status, state and input
+ok    inflate: distance-one repeat length 15 preserves bytes, guards, status, state and input
+ok    inflate: distance-one repeat length 16 preserves bytes, guards, status, state and input
+ok    inflate: distance-one repeat length 17 preserves bytes, guards, status, state and input
+ok    inflate: distance-one repeat length 257 preserves bytes, guards, status, state and input
+ok    inflate: distance-one repeat length 258 preserves bytes, guards, status, state and input
+ok    inflate: short-period overlap length 3 preserves bytes, guards, status, state and input
+ok    inflate: short-period overlap length 15 preserves bytes, guards, status, state and input
+ok    inflate: short-period overlap length 16 preserves bytes, guards, status, state and input
+ok    inflate: short-period overlap length 17 preserves bytes, guards, status, state and input
+ok    inflate: short-period overlap length 257 preserves bytes, guards, status, state and input
+ok    inflate: short-period overlap length 258 preserves bytes, guards, status, state and input
+ok    inflate: source wrap split length 3 preserves bytes, guards, status, state and input
+ok    inflate: source wrap split length 15 preserves bytes, guards, status, state and input
+ok    inflate: source wrap split length 16 preserves bytes, guards, status, state and input
+ok    inflate: source wrap split length 17 preserves bytes, guards, status, state and input
+ok    inflate: source wrap split length 257 preserves bytes, guards, status, state and input
+ok    inflate: source wrap split length 258 preserves bytes, guards, status, state and input
+ok    inflate: source wrap contiguous length 3 preserves bytes, guards, status, state and input
+ok    inflate: source wrap contiguous length 15 preserves bytes, guards, status, state and input
+ok    inflate: source wrap contiguous length 16 preserves bytes, guards, status, state and input
+ok    inflate: source wrap contiguous length 17 preserves bytes, guards, status, state and input
+ok    inflate: source wrap contiguous length 257 preserves bytes, guards, status, state and input
+ok    inflate: source wrap contiguous length 258 preserves bytes, guards, status, state and input
+ok    inflate: distance-one wrap length 3 preserves bytes, guards, status, state and input
+ok    inflate: distance-one wrap length 15 preserves bytes, guards, status, state and input
+ok    inflate: distance-one wrap length 16 preserves bytes, guards, status, state and input
+ok    inflate: distance-one wrap length 17 preserves bytes, guards, status, state and input
+ok    inflate: distance-one wrap length 257 preserves bytes, guards, status, state and input
+ok    inflate: distance-one wrap length 258 preserves bytes, guards, status, state and input
+ok    tinfl: a guest decompressor, input and output are accepted
+ok    tinfl: a stored block copies through (DONE, the input consumed whole)
+ok    tinfl: a fixed-Huffman block with a run decodes (DONE)
+ok    tinfl: a dynamic-Huffman block over a 2880-byte text decodes byte for byte (DONE)
+ok    tinfl: the decompressor rests in state 34 with the final block's header
+ok    tinfl: the same stream a byte at a time resumes at every state and ends DONE
+ok    tinfl: a 512-byte-window stream through a 512-byte ring (out_start == out_next) reassembles byte for byte over HAS_MORE_OUTPUT rounds
+ok    tinfl: a ring that is not a power of two is left to the lifted body
+ok    tinfl: out_next before out_start is left to the lifted body
+ok    tinfl: a power-of-two ring is accepted
+ok    read: a request inside the window is taken whole
+ok    read: the window bytes at pos are copied; pos and the stream position advance by the byte count
+ok    read: one byte past the fill with no eof is a refill, left to the lifted body
+ok    read: a request that exactly drains the window needs no refill
+ok    read: at eof a larger request is cut to what the window holds
+ok    read: pos past fill at eof serves zero bytes
+ok    read: pos past fill without eof is a refill
+ok    read: a zero-byte request is served without a refill
+ok    mutex: initialised, free, and the engine's own Lock/Unlock in its vtable
+ok    mutex: take sets the locked byte past the CRITICAL_SECTION; a held mutex is not free
+ok    mutex: drop clears the byte
+ok    mutex: another Unlock in the vtable is not the standard pair
+ok    mutex: flag bit 0 clear (not initialised) is left to the lifted body
+ok    mutex: a NULL section pointer is refused
+ok    an empty queue peeks as no message
+ok    three events queue three messages
+ok    first message: WM_KEYDOWN Enter, lParam = scancode 0x1C << 16 | repeat 1
+ok    second message: WM_KEYDOWN Down with the extended bit (24) set
+ok    GetKeyState reports Down as held while its key-up is not yet queued
+ok    third message: WM_KEYUP Enter with the previous-state and transition bits
+ok    GetKeyState reports Enter released after its key-up
+ok    the queue is empty again (messages are delivered once, in order)
+ok    mouse move: WM_MOUSEMOVE with y << 16 | x
+ok    left button: WM_LBUTTONDOWN with MK_LBUTTON
+ok    GetCursorPos follows the last mouse move
+ok    three windows created, the Message window last
+ok    messages are addressed to the GLFW30 window, not the last-created Message window
+ok    GetPropW returns what SetPropW stored for that window and name
+ok    a different window has no such property
+ok    WM_KEYDOWN A comes out first, lParam = scancode 0x1E << 16 | repeat 1
+ok    TranslateMessage(WM_KEYDOWN A) returns nonzero and posts one message
+ok    the next message is WM_CHAR 'a' with the key-down's lParam, to the key-down's window, ahead of the queued key-up
+ok    TranslateMessage(WM_CHAR) returns 0 and posts nothing
+ok    then the WM_KEYUP
+ok    TranslateMessage(WM_KEYUP) returns nonzero (a key message) and posts nothing
+ok    the queue is empty after a
+ok    GetKeyState(VK_SHIFT) is up while Shift's key-down is still queued (synchronous state)
+ok    Shift's key-down translates to nothing
+ok    GetKeyState(VK_SHIFT) is down once its key-down is removed
+ok    GetKeyState(VK_LSHIFT) follows the VK_SHIFT message with the left scancode 0x2A
+ok    GetKeyState(VK_RSHIFT) does not
+ok    Shift + a posts WM_CHAR 'A'
+ok    the batch drained: the key-up, Shift's key-up, then nothing
+ok    VK_LSHIFT released by the VK_SHIFT key-up
+ok    CapsLock's key-down sets GetKeyState bit 0 and posts no character
+ok    CapsLock: b posts 'B'
+ok    CapsLock + Shift: b posts 'b' (the case swaps back)
+ok    CapsLock leaves '2' alone
+ok    the next fresh CapsLock key-down toggles it off; the repeat (bit 30) did not toggle it back
+ok    grave posts '`'
+ok    Shift+grave posts '~'
+ok    Enter posts CR
+ok    Backspace posts BS
+ok    Tab posts TAB
+ok    Escape posts 0x1b
+ok    space posts ' '
+ok    9 posts '9'
+ok    Shift+2 posts '@'
+ok    Shift+0 posts ')'
+ok    period posts '.'
+ok    Shift+period posts '>'
+ok    minus posts '-'
+ok    Shift+minus posts '_'
+ok    Shift+equals posts '+'
+ok    Shift+lbracket posts '{'
+ok    rbracket posts ']'
+ok    quote posts the apostrophe
+ok    Shift+quote posts the double quote
+ok    Shift+semicolon posts ':'
+ok    comma posts ','
+ok    Shift+slash posts '?'
+ok    backslash posts the backslash
+ok    Shift+backslash posts '|'
+ok    Ctrl+c posts 0x03
+ok    Ctrl+Shift+z posts 0x1a too
+ok    Ctrl+Enter posts LF
+ok    Ctrl+lbracket posts 0x1b
+ok    Ctrl+Shift+2 posts nothing (no Shift+Ctrl column)
+ok    F1 posts nothing
+ok    Up posts nothing
+ok    Shift+Left posts nothing
+ok    Shift itself posts nothing
+ok    Delete posts nothing
+ok    TranslateMessage(WM_MOUSEMOVE) returns 0 and posts nothing
+ok    _CIfmod: fmod(ST1, ST0) = fmod(7.5, 2) = 1.5 in ST0
+ok    _CIfmod pops the x87 stack once (old ST2 becomes ST1)
+ok    _CIatan2: atan2(ST1, ST0) = atan2(1, -1) = 3pi/4
+ok    strerror(2) hands back a non-empty guest string
+ok    __stdio_common_vsnprintf_s formats into the guest buffer
+ok    GetStartupInfoW writes cb=68 and zeroes the struct
+ok    seed a file for _access
+ok    _access: 0 for a RAM-FS file, -1 for a missing one
+ok    __std_exception_copy duplicates the message into a fresh guest buffer with doFree set
+ok    __std_exception_destroy clears the copy
+ok    _beginthreadex hands out a handle
+ok    an adopted (never-run) thread is marked done so ~Thread does not terminate()
+ok    SwapBuffers counts presented frames
+ok    PeekMessageW stays silent while no frame cap is set
+ok    glGenRenderbuffers hands out a name
+ok    GL_RENDERBUFFER_WIDTH reads back the stored width
+ok    GL_RENDERBUFFER_HEIGHT reads back the stored height
+ok    a deleted renderbuffer no longer reports a size
+ok    audio: a play with nothing queued stops at once and never reaches the backend
+ok    audio: queueing hands each buffer to the backend and does not start the source
+ok    audio: the play reaches the backend as a stream from entry 0
+ok    audio: a chunk retires when its second has elapsed; AL_BUFFERS_QUEUED still counts the whole queue
+ok    audio: an unqueue asking past the processed count takes nothing
+ok    audio: the unqueue returns the oldest buffer and tells the backend
+ok    audio: the re-queued chunk plays at the chain's end (two retired at 4.1 s, still playing)
+ok    audio: a drained queue stops the source with everything processed
+ok    audio: a play from stopped restarts at the head of the queue
+ok    audio: a stop marks every queued buffer processed
+ok    audio: so the game can unqueue the whole queue after a stop
+ok    audio: AL_BUFFER 0 is refused on a playing source
+ok    audio: AL_BUFFER 0 on a stopped source drops the queue and clears the backend
+ok    audio: pause
+ok    audio: a play from paused resumes the current entry at its offset (0.4 s)
+ok    audio: 0.5 s after the resume the chunk is still playing
+ok    audio: it retires 0.6 s after the resume, when its second is up
+ok    audio: a static source plays its bound buffer (the backend sees a static play)
+ok    audio: and stops when the buffer has played out
+ok    audio: a looping static source keeps playing
+ok    audio: mono/stereo 8/16-bit formats retain sample and byte offsets
+ok    audio: each PCM format remains playing immediately before its duration
+ok    audio: each PCM format stops exactly at its duration
+ok    audio: mono/stereo 8/16-bit formats retain sample and byte offsets
+ok    audio: each PCM format remains playing immediately before its duration
+ok    audio: each PCM format stops exactly at its duration
+ok    audio: mono/stereo 8/16-bit formats retain sample and byte offsets
+ok    audio: each PCM format remains playing immediately before its duration
+ok    audio: each PCM format stops exactly at its duration
+ok    audio: mono/stereo 8/16-bit formats retain sample and byte offsets
+ok    audio: each PCM format remains playing immediately before its duration
+ok    audio: each PCM format stops exactly at its duration
+ok    audio: unavailable PCM still uses byte-count duration, including a partial frame
+ok    audio: a partial terminal frame expires at its fractional duration
+ok    audio: an empty replacement cannot play the preceding buffer duration
+ok    audio: a zero-rate replacement cannot play the preceding buffer duration
+ok    audio: replacing a queued buffer updates its format without restarting the source
+ok    audio: replacing a queued buffer keeps its extended duration after guest overwrite
+ok    audio: the replaced queue head retires exactly at the new duration
+ok    audio: deleting processed and current buffers preserves queued ids and retires the deleted head
+ok    audio: buffer-table compaction keeps the surviving queue entry's format and start time
+ok    audio: deleted buffers are still returned in queue order without losing the survivor
+ok    audio: the surviving queue entry stops and unqueues at its original duration
+ok    SteamInternal_ContextInit returns the slot address
+ok    a non-init-dance accessor slot reads NULL (no Steam)
+ok    the init-dance slot receives the fake context with a vtable
+ok    memset refuses a host-range destination and leaves it untouched
+      call-site decode: ret 0x00aefa07 -> 0x00aefa02
+ok    call site recovered from the return address (off-by-one fixed)
+      GetModuleHandleW(kernel32.dll) -> 0x1a022000
+ok    GetModuleHandleW(kernel32.dll) is non-NULL (the boot blocker)
+ok    module handle is a guest-side token
+ok    GetModuleHandleW(api-set) is NULL, which the caller handles
+ok    GetModuleHandleW(NULL) is the image base, as on Windows
+      GetProcAddress(kernel32, CreateEventW) -> 0x1b001ac0
+ok    GetProcAddress resolves a symbol we implement
+ok    GetProcAddress returns the SAME shim token the IAT holds
+ok    that token is bit-identical to the bound IAT slot
+ok    GetProcAddress resolves the dynamic ntdll!RtlVerifyVersionInfo export
+ok    GetProcAddress returns NULL for a symbol we do not provide
+ok    LoadLibraryA("XInput1_4.dll") loads: the game polls XInput
+ok    XInputGetState, XInputSetState and XInputGetCapabilities all resolve
+ok    with no page, every XInput slot answers ERROR_DEVICE_NOT_CONNECTED
+ok    and a slot with nothing in it writes nothing
+      CreateEventW -> 0x1a030010
+ok    CreateEventW is non-NULL (the intended CRT fallback)
+ok    wait on an unsignalled event with 0 timeout returns WAIT_TIMEOUT
+ok    after SetEvent, an INFINITE wait returns WAIT_OBJECT_0
+      luaL_newstate -> 0x00e1143c
+ok    luaL_newstate returns a guest-addressable lua_State
+      lua_gc LUA_GCCOUNT -> 15 KB
+ok    the Lua VM really allocated after openlibs
+ok    lua_pushnumber shim round-trips a double
+ok    lua_pushinteger shim round-trips a 64-bit lua_Integer
+ok    lua_pushstring shim round-trips a guest string
+ok    luaL_loadbufferx compiles a chunk (LUA_OK)
+ok    lua_pcallk runs the chunk (LUA_OK)
+ok    upstream Lua VM computes 2+3 inside the wasm module
+ok    lua_pushcclosure registers the first trampoline
+ok    distinct guest C functions get distinct trampolines
+ok    re-registering the same guest C function reuses its trampoline
+ok    the trampoline closure reads back as a C function
+ok    calling the trampoline closure yields LUA_OK (inert guest call)
+ok    luaL_checknumber returns the double in st(0)
+ok    luaL_checkinteger returns in EDX:EAX
+ok    lua_pushfstring formats guest %s arguments (the require message)
+      lua_pushfstring -> "-7|Q|-1234567890123|1.5|2.0|0x00c0ffee|%|€|(null)"
+ok    lua_pushfstring marshals %d %c %I %f %p %% %U and a NULL %s
+      luaL_error -> 2 "module '' not found:
+	no file 'mods/eid/.lua'"
+ok    luaL_error raises its formatted message
+ok    trampoline pool survives lua_close
+ok    isaac_fs_seed placed the archive file
+ok    the seeded parent dir reads as a directory
+ok    fopen finds the seeded archive by its normalized key
+ok    fread returns the full seeded length
+ok    the bytes read back are byte-for-byte what was seeded
+ok    three files seed beside each other
+ok    the index finds a seeded file
+ok    DeleteFileA removes it
+ok    after a delete the index still finds the neighbours and not the deleted key
+ok    the deleted key can be seeded again
+ok    and is found again
+ok    allocate an exclusively owned seed buffer
+ok    adopt seeds a new file with normal path canonicalization
+ok    the guest reads adopted binary bytes and exact EOF
+ok    the adopted allocation itself backs the file, not a copy
+ok    adoption allocates no second data buffer
+ok    a nonempty NULL seed is rejected
+ok    a rejected nonempty NULL seed preserves prior file contents
+ok    allocate caller-owned input for rejected seeds
+ok    adopt rejects an invalid path
+ok    invalid-path rejection does not free or allocate caller data
+ok    adopt refuses to replace a directory with file data
+ok    directory rejection leaves the caller's allocation live
+ok    rejected seed data remains readable and unchanged by the caller
+ok    a rejected directory seed preserves the directory
+ok    rejected paths leave the existing child file unchanged
+ok    the borrowed-data API can replace an adopted file
+ok    borrowed seed bytes remain independent of the caller's storage
+ok    the borrowed-data API still zero-fills a nonempty NULL seed
+ok    allocate replacement seed data
+ok    adopt replaces eager data
+ok    adopted bytes replace prior eager contents
+ok    replacement retains the owned buffer without fetching a lazy source
+ok    replace eager data with an unread lazy entry
+ok    allocate replacement seed data
+ok    adopt replaces lazy data
+ok    adopted bytes replace the lazy source
+ok    replacement retains the owned buffer without fetching a lazy source
+ok    register lazy data before materialized replacement
+ok    the lazy source materializes before replacement
+ok    an empty adopted file replaces materialized lazy data
+ok    the replaced empty file opens and immediately reaches EOF
+ok    a new empty file needs no caller data allocation
+ok    replacement frees old eager/lazy buffers and empty seeds allocate no data
+ok    the empty adopted replacement can be deleted
+ok    the new empty adopted file can be deleted
+ok    allocate an adopted file for deletion
+ok    adopt a file that will be deleted
+ok    DeleteFileA removes an adopted file
+ok    deleting an adopted file frees its owned allocation
+ok    the rejected directory retained no caller buffer when removed
+ok    removing the rejected directory cannot free caller-owned data again
+ok    adapter 0 is a primary display device named \\.\DISPLAY1
+ok    there is no second adapter
+ok    the adapter has one active monitor
+ok    ENUM_CURRENT_SETTINGS is the 1280x720 32-bit 60 Hz mode
+ok    and mode 1 does not exist
+ok    fastpath: the imdct butterfly is bit-exact against the stb_vorbis formulation
+ok    fastpath: the verify range covers e0-31..e0 and e2-31..e2 (both runs of 32 floats)
+ok    fastpath: the imdct gate admits the in-heap runs and reports their extent
+ok    fastpath: the imdct gate declines an empty loop (lim < 4)
+ok    fastpath: the imdct gate declines a run outside guest memory
+ok    fastpath: the inverse_mdct gate admits a 2048 block with its tables in the heap
+ok    fastpath: the gate declines a blocktype past 1
+ok    fastpath: the gate declines a block that is not a power of two
+ok    fastpath: the gate declines blocks outside 64..8192
+ok    fastpath: the engine's alloc_buffer (temp_alloc) path is admitted when the scratch fits
+ok    fastpath: a scratch that would reach below setup_offset (the original's NULL) is left to the lifted body
+ok    fastpath: zero tables turn a block of ones into 2048 zeros
+ok    fastpath: nothing past the block is written
+ok    fastpath: temp_offset is left as it was (taken and given back)
+ok    fastpath: the scratch went into the guest temp region, where the original puts it
+ok    fastpath: without an alloc_buffer the host scratch serves
+ok    x87 trunc32: truncates toward zero on both sides
+ok    x87 trunc32: 11.0, log2 of a 2048-point block after floor, converts to 11
+ok    x87 trunc32: |d| < 1 is 0
+ok    x87 trunc32: the largest magnitudes int32 holds
+ok    x87 trunc32: one past either edge is the integer indefinite 0x80000000
+ok    x87 trunc32: NaN and both infinities are the integer indefinite
+ok    x87 trunc64: past 32 bits, toward zero
+ok    x87 trunc64: 2^63 and NaN are the integer indefinite
+ok    quad scale: the viewport divide runs once
+ok    quad scale: only the flag byte of the last dword is cleared
+ok    quad scale: (x/width)*mx and (y/height)*my on four corners
+ok    quad scale: a second pass multiplies and does not divide
+ok    quad scale: a viewport with the high bit set converts as unsigned
+ok    quad tint: rgb is multiplied by the corner scalar, which stays
+ok    quad tint: the dword after the corner is cleared
+ok    quad tint: rgb is multiplied by the corner scalar, which stays
+ok    quad tint: the dword after the corner is cleared
+ok    quad tint: rgb is multiplied by the corner scalar, which stays
+ok    quad tint: the dword after the corner is cleared
+ok    quad tint: rgb is multiplied by the corner scalar, which stays
+ok    quad tint: the dword after the corner is cleared
+ok    quad pack: mixed formats preserve holes, raw payload bits, corner order, duplicate attributes and guards
+ok    quad pack: four rounded depth subtractions and final corner scratch leave cleanup metadata intact
+ok    quad pack: no-position layouts still advance depth and counters without touching scratch or holes
+ok    quad pack: empty zero-stride layout accepts null output and still repeats the depth subtraction
+ok    quad pack: native SSE NaN priority, quieting, sign and infinity results reach vertices, scratch and depth
+ok    quad pack: native SSE NaN priority, quieting, sign and infinity results reach vertices, scratch and depth
+ok    quad pack: native SSE NaN priority, quieting, sign and infinity results reach vertices, scratch and depth
+ok    quad pack: native SSE NaN priority, quieting, sign and infinity results reach vertices, scratch and depth
+ok    quad pack: native SSE NaN priority, quieting, sign and infinity results reach vertices, scratch and depth
+ok    quad pack: native SSE NaN priority, quieting, sign and infinity results reach vertices, scratch and depth
+ok    quad pack: native SSE NaN priority, quieting, sign and infinity results reach vertices, scratch and depth
+ok    quad pack: native SSE NaN priority, quieting, sign and infinity results reach vertices, scratch and depth
+ok    quad pack: invalid last format rejects before any write
+ok    quad pack: changed descriptor width rejects before any write
+ok    quad pack: stale triple stride rejects before any write
+ok    quad pack: output aliasing quad data rejects before any write
+ok    quad pack: output aliasing mutable attributes rejects before any write
+ok    quad pack: changed jump table rejects before any write
+ok    quad pack: wrapped source span rejects before any write
+ok    copy44: a guest object and source are accepted
+ok    copy44: 44 bytes are copied
+ok    copy44: the byte after the object is left alone
+ok    copy44: a source that runs off the guest is left to the lifted body
+ok    copy36: a guest object and source are accepted
+ok    copy36: 36 bytes are copied
+ok    copy36: the byte after the object is left alone
+ok    gl cache: no renderbuffer bound -> the real GL answers
+ok    gl cache: a renderbuffer without storage -> the real GL answers
+ok    gl cache: GL_RENDERBUFFER_WIDTH from the storage call
+ok    gl cache: GL_RENDERBUFFER_HEIGHT too
+ok    gl cache: and the internal format
+ok    gl cache: GL_RGBA8 has 8 red bits
+ok    gl cache: and no depth bits
+ok    gl cache: an unknown pname falls through
+ok    gl cache: GL_DEPTH24_STENCIL8 is 24 depth bits and 8 stencil bits
+ok    gl cache: rebinding recalls the first renderbuffer
+ok    gl cache: a deleted renderbuffer is forgotten
+ok    gl cache: the default framebuffer is complete
+ok    gl cache: a fresh framebuffer asks GL
+ok    gl cache: GL's answer is remembered
+ok    gl cache: an attachment call forgets it
+ok    gl cache: re-attaching the same image changes nothing (the engine does it every frame)
+ok    gl cache: another level of the same texture is a change
+ok    gl cache: a configuration seen before is remembered when it comes back (the engine swaps textures through one attachment point)
+ok    gl cache: each configuration keeps its own answer
+ok    gl cache: a new image for a texture a remembered configuration used (not the slot's) forgets it too
+ok    gl cache: a new image for another texture keeps it
+ok    gl cache: a new image for the attached texture forgets it
+ok    gl cache: storage for another renderbuffer keeps it
+ok    gl cache: the same storage again for the attached renderbuffer keeps it
+ok    gl cache: storage for the attached renderbuffer forgets it
+ok    gl cache: the read binding is its own framebuffer
+ok    gl cache: the draw binding still remembers
+ok    gl cache: deleting an attached texture forgets it
+ok    gl cache: deleting the bound framebuffer leaves the default bound
+ok    gl cache: a deleted name comes back fresh
+ok    gl cache: an unknown uniform asks GL
+ok    gl cache: the uniform location is remembered
+ok    gl cache: attribs and uniforms are separate
+ok    gl cache: programs are separate
+ok    gl cache: -1 is an answer too
+ok    gl cache: a link forgets the program's names
+ok    gl cache: and keeps the other program's
+ok    gl cache: a long name falls through
+ok    a save file opens for writing under Documents
+ok    fwrite stores five bytes
+ok    nothing reaches the host before the close
+ok    fclose hands the written bytes to the persist hook
+ok    with the file's key
+ok    and the persisted count rises
+ok    DeleteFileA reaches the unlink hook
+ok    a lazy entry registers with its size
+ok    registering a lazy entry reads nothing
+ok    the lazy entry is visible to stat before any read
+ok    fread of a lazy entry returns the reader's bytes
+ok    the reader ran exactly once across two opens (bytes are kept)
+ok    the reader receives the seed path verbatim (case kept), not the normalised key
+ok    a 3 MB lazy entry registers by size
+ok    opening it fetches nothing: bytes come on the first read
+ok    a read across the first 1 MB window edge is byte-exact
+ok    a read across the short last window is byte-exact
+ok    a small read far back lands in a still-resident window, byte-exact
+ok    the three reads cost a handful of window refills, not one host read per fread
+ok    the entry was served windowed, never loaded whole
+ok    round 41: three windows touched, three host reads -- the far-back read found window 0 still resident (LRU slots, not two)
+ok    round 41: the window census counts the fills and the resident hits
+ok    allocate replacement for cached lazy windows
+ok    adopt replaces a windowed lazy file
+ok    adoption releases cached windows and the old lazy source
+ok    replacing a windowed file reads adopted bytes without another host pread
+ok    delete the adopted window replacement
+ok    the adopted window replacement leaves no host allocations after deletion
+ok    overlay: a windowed file and its header overlay are seeded
+ok    overlay: a block, and a read inside it, come from the overlay with no host read
+ok    overlay: a read crossing a block's end goes through a window
+ok    overlay: the second block too; one overlay attached, three reads (1,624 bytes) answered by it
+ok    overlay: with lazy samples off it is not used (the window's bytes)
+ok    overlay: one with a wrong magic is refused (window bytes)
+ok    overlay: one with its blocks out of order is refused (window bytes)
+ok    a '.' segment collapses to the same dir key
+ok    a '.' segment collapses to the same dir key
+ok    a '.' segment collapses to the same dir key
+ok    the bare cwd reads as a directory
+ok    the bare cwd reads as a directory
+ok    a second archive seeds beside the first
+ok    FindFirstFileW opens the seeded dir from a wide backslash-star pattern
+ok    the first entry is a regular file (attr 0x80)
+ok    nFileSizeLow carries the seeded length
+ok    cAlternateFileName is empty
+ok    wcstombs_s converts cFileName without error
+ok    cFileName round-trips as one of the seeded basenames
+ok    wcstombs_s reports the length INCLUDING the terminator (readdir stores ret-1)
+ok    FindNextFileW yields the second seeded file
+ok    the second entry is the OTHER seeded basename
+ok    a third FindNextFileW is exhausted (ERROR_NO_MORE_FILES)
+ok    FindClose releases the wide handle
+ok    the root pattern 'c:/isaac/./*' opens the FS root
+ok    the root scan lists 'resources' as a directory (attr 0x10)
+ok    GetFullPathNameW(name, 0, NULL) returns the required size INCLUDING the terminator
+ok    a too-small buffer also returns the required size
+ok    the sized call returns the length WITHOUT the terminator
+ok    the sized call writes L"c:/isaac/./" NUL-terminated (the cwd-resolved form)
+ok    700 files seed into one directory (table capacity)
+ok    a directory scan lists all 700 (per-scan cap)
+ok    the 700th seeded file opens by path
+ok    basic_ios() zeroes ios_base and its three fields, returns this
+ok    basic_iostream(sb,0) returns this and zeroes _Chcount
+ok    basic_ios::init via the vbptr: rdbuf, good, skipws|dec, prec 6, locale, fill ' '
+ok    iostream ctor leaves the iostream basic_ios vptr and vtordisp (d-0x20)
+ok    most_derived=0 leaves the game's vbtables alone
+ok    basic_streambuf(): indirection pointers at the in-object slots, locale allocated
+ok    _Ipfx skips leading whitespace through the indirection pointers
+ok    sgetc peeks without consuming
+ok    operator>>(unsigned __int64&) parses 12, stream stays good
+ok    sbumpc consumes 'a' and decrements the count
+ok    snextc advances past 'b' and peeks 'c'
+ok    sbumpc takes the last char
+ok    an empty get area dispatches uflow through the object's vtable (EOF)
+ok    operator>> at end of input sets eof|fail and leaves the value untouched
+ok    setstate(failbit) with a live rdbuf adds no badbit
+ok    operator>> parsing up to EOF yields the value with eofbit only
+ok    operator<<(unsigned __int64) formats hex|showbase|uppercase into the put area
+ok    width 6 right-adjusts with the fill char and resets width to 0
+ok    write/put append through sputn/sputc, stream good
+ok    a full put area dispatches overflow; EOF from it sets badbit
+ok    flush syncs through the vtable and stays good
+ok    ~basic_iostream takes the vbase-adjusted this and rewinds vptr/vtordisp
+ok    ~basic_ios frees the ios_base locale
+ok    ~basic_streambuf frees the streambuf locale
+--- PASSED (0 failures) ---
+[isaac][gl] textures reach the GPU when first used (65536 bytes and up; ISAAC_GL_LAZY_TEX=0 uploads at once)
+[isaac][snd] a sound's samples are read when it is first played (ISAAC_SND_LAZY=0 reads them at load)
+[isaac][snd] sfx/b3.wav: its samples could not be read when first played (2048 bytes of silence)
+[isaac][stub] FIRST CALL  eossdk-win32-shipping.dll!_EOS_EResult_ToString@4  <- called from return-address 0x00401234 (call site not decodable)   verdict=STUB sites=39  (inert: returns 0)
+[isaac][heap] guest arena 0x00e00000..0x18e00000 (384 MiB), separate from the host allocator by design
+[isaac][heap] double free at 0x00e01018
+[isaac][heap] free(0x19feff00): pointer is outside the guest arena 0x00e00000..0x18e00000 -- ignoring rather than corrupting.
+[isaac][c++] __RTDynamicCast: 13 calls, 6 succeeded, 6 legitimately null, 0 malformed
+[isaac][mod] 34 modules resolvable (EXE + 33 import DLLs); handles 0x1a010000..0x1a032000
+[isaac][thunk] 0x00401000 is an unlifted thunk (ecx -4, jmp 0x00401010); emulated
+[isaac][ui] RegisterClassExW("GLFW3 Helper") -> atom 0xc000 wndproc 0x00500000
+[isaac][ui] CreateWindowExW class="GLFW3 Helper" title="G" style=0x00000000 1x1 -> hwnd 0x00020000
+[isaac][ui] RegisterClassExW("GLFW30") -> atom 0xc001 wndproc 0x00500001
+[isaac][ui] CreateWindowExW class="GLFW30" title="G" style=0x00000000 960x540 -> hwnd 0x00020001
+[isaac][ui] RegisterClassExW("Message") -> atom 0xc002 wndproc 0x00500002
+[isaac][ui] CreateWindowExW class="Message" title="M" style=0x00000000 1280x720 -> hwnd 0x00020002
+[isaac][input] frame 0: TranslateMessage vk 0x41 -> WM_CHAR 0x61
+[isaac][input] frame 0: TranslateMessage vk 0x41 -> WM_CHAR 0x41
+[isaac][input] frame 0: TranslateMessage vk 0x42 -> WM_CHAR 0x42
+[isaac][input] frame 0: TranslateMessage vk 0x42 -> WM_CHAR 0x62
+[isaac][input] frame 0: TranslateMessage vk 0x32 -> WM_CHAR 0x32
+[isaac][input] frame 0: TranslateMessage vk 0xc0 -> WM_CHAR 0x60
+[isaac][input] frame 0: TranslateMessage vk 0xc0 -> WM_CHAR 0x7e
+[isaac][input] frame 0: TranslateMessage vk 0x0d -> WM_CHAR 0x0d (control)
+[isaac][input] frame 0: TranslateMessage vk 0x08 -> WM_CHAR 0x08 (control)
+[isaac][input] frame 0: TranslateMessage vk 0x09 -> WM_CHAR 0x09 (control)
+[isaac][input] frame 0: TranslateMessage vk 0x1b -> WM_CHAR 0x1b (control)
+[isaac][input] frame 0: TranslateMessage vk 0x20 -> WM_CHAR 0x20
+[isaac][input] frame 0: TranslateMessage vk 0x39 -> WM_CHAR 0x39
+[isaac][input] frame 0: TranslateMessage vk 0x32 -> WM_CHAR 0x40
+[isaac][input] frame 0: TranslateMessage vk 0x30 -> WM_CHAR 0x29
+[isaac][input] frame 0: TranslateMessage vk 0xbe -> WM_CHAR 0x2e
+[isaac][input] frame 0: TranslateMessage vk 0xbe -> WM_CHAR 0x3e
+[isaac][input] frame 0: TranslateMessage vk 0xbd -> WM_CHAR 0x2d
+[isaac][input] frame 0: TranslateMessage vk 0xbd -> WM_CHAR 0x5f
+[isaac][input] frame 0: TranslateMessage vk 0xbb -> WM_CHAR 0x2b
+[isaac][input] frame 0: TranslateMessage vk 0xdb -> WM_CHAR 0x7b
+[isaac][input] frame 0: TranslateMessage vk 0xdd -> WM_CHAR 0x5d
+[isaac][input] frame 0: TranslateMessage vk 0xde -> WM_CHAR 0x27
+[isaac][input] frame 0: TranslateMessage vk 0xde -> WM_CHAR 0x22
+[isaac][input] frame 0: TranslateMessage vk 0xba -> WM_CHAR 0x3a
+[isaac][input] frame 0: TranslateMessage vk 0xbc -> WM_CHAR 0x2c
+[isaac][input] frame 0: TranslateMessage vk 0xbf -> WM_CHAR 0x3f
+[isaac][input] frame 0: TranslateMessage vk 0xdc -> WM_CHAR 0x5c
+[isaac][input] frame 0: TranslateMessage vk 0xdc -> WM_CHAR 0x7c
+[isaac][input] frame 0: TranslateMessage vk 0x43 -> WM_CHAR 0x03 (control)
+[isaac][input] frame 0: TranslateMessage vk 0x5a -> WM_CHAR 0x1a (control)
+[isaac][input] frame 0: TranslateMessage vk 0x0d -> WM_CHAR 0x0a (control)
+[isaac][input] frame 0: TranslateMessage vk 0xdb -> WM_CHAR 0x1b (control)
+[isaac][thr] _beginthreadex(fn=0x00a7f130, arg=0x19feca00 -> job 0x00a5a760(0x00000000) -> 0x00000000(0x00000000)) -> handle 0x1a030000 (adopted; does not run: ISAAC_THREADS=0)
+[isaac][frame] 1 frames presented (0 ms since the previous)
+[isaac][frame] 2 frames presented (0 ms since the previous)
+[isaac][frame] 3 frames presented (0 ms since the previous)
+[isaac][steam] SteamInternal_ContextInit(slot=0x19fee000) -> NULL interface (not the init dance; no steam)
+[isaac][steam] SteamInternal_ContextInit(slot=0x00c5c510) -> fake context (init dance; no steam)
+[isaac][crt] memset(0x1c000000, 170, 64) crosses the guest limit 0x1bf00000 -- refusing, this would corrupt the runtime (caller 0xdeadbeef)
+[isaac][mod] GetModuleHandleW("api-ms-win-core-synch-l1-2-0.dll") -> NULL  (caller 0xdeadbeef)  not one of the 34 modules this build has
+[isaac][lua] upstream 5.3.3 linked; 2/2048 trampoline slots used for guest C functions
+[isaac][fs] 'data/Win.bin' (3000000 bytes) is served through a 1024 KB window, never loaded whole
+[isaac][fs] 'data/Ovl.bin' (3000000 bytes) is served through a 1024 KB window, never loaded whole
+[isaac][fs] 'c:/isaac/data/ovl.bin': 2 WAV header blocks (1 KB) answered without a window (c:/isaac/data/ovl.bin.ovl)
+[isaac][fs] 'data/BadA.bin' (3000000 bytes) is served through a 1024 KB window, never loaded whole
+[isaac][fs] c:/isaac/data/bada.bin.ovl is not a well-formed header overlay; 'c:/isaac/data/bada.bin' is read through its windows only
+[isaac][fs] 'data/BadB.bin' (3000000 bytes) is served through a 1024 KB window, never loaded whole
+[isaac][fs] c:/isaac/data/badb.bin.ovl is not a well-formed header overlay; 'c:/isaac/data/badb.bin' is read through its windows only
+[isaac][mod] ---- module / symbol resolution report ----
+[isaac][mod]   34 modules resolvable
+[isaac][mod]   2 distinct NULL results (each may be a deliberate probe the caller handles, or a real gap):
+[isaac][mod]          1 x  module not present: api-ms-win-core-synch-l1-2-0.dll
+[isaac][mod]          1 x  kernel32.dll!SleepConditionVariableCS not provided
+[isaac][heap] ---- guest heap high-water report ----
+[isaac][heap]   arena          : 384 MiB at 0x00e00000
+[isaac][heap]   PEAK live      : 1096176 bytes (1.0 MiB) at alloc #4014
+[isaac][heap]   live now       : 69808 bytes
+[isaac][heap]   largest single : 131072 bytes (0.1 MiB)
+[isaac][heap]   touched span   : 1.0 MiB (highest block end 0x00f0ca28) -- the arena pages that stay resident
+[isaac][heap]   allocs/frees   : 4339 / 4334  (reallocs 0, failures 0)
+[isaac][heap]   total churn    : 1820280 bytes
+[isaac][heap]   free now       : 2 blocks, 402583376 bytes, largest 402583352 (corrupt frees refused: 0)
+[isaac][heap]   written pages  : 255 (1.0 MiB) -- 4 KB pages below the span holding a non-zero byte
+[isaac][snd] lazy samples: 6 read header-only (0.0 MB of PCM), 4 filled on first play (0.0 MB), 0 still unwritten (0.0 MB), 1 freed unwritten, 1 failed, 3 not recorded
+[isaac][heap] Move ISAAC_GUEST_LIMIT_VA / ISAAC_HEAP_SIZE to PEAK plus deliberate headroom, then GLOBAL_BASE and INITIAL_MEMORY follow from it.
+[isaac][gl] ---- GL census: 1 entry points with enum arguments ----
+[isaac][gl] glRenderbufferStorage               1 calls, 1 distinct tuple(s)
+[isaac][gl]            1 x  (0x8d41, 0x8058, 0x2, 0x2)
+[isaac][fastpath] archive inflater: 73 calls, 0.0 MB in, 0.0 MB out, 5 streams finished
+[isaac][fastpath]   static blocks: 1, of which 0 took the kept tables
+[isaac][fastpath] premultiply: 0.0 M pixels, four at a time 0 opaque / 0 clear / 0 mixed
+[isaac][al] no openal32 entry point was ever called.
+[isaac][audio] mixer pumped 0 iteration(s), 0 of them idle
+[isaac][audio] 11 buffer uploads (0.0 MB of PCM, 15.0 s of audio), 13 plays (6 of streams, 3 with nothing to play), 10 queued / 9 unqueued, 0 source(s) live (0 playing, 0 streaming), 0 buffer(s) live
+[isaac][audio] OpenAL rules refused 1 unqueue(s) asking past the processed count and 1 AL_BUFFER change(s) on a playing/paused source
+[isaac][thr] 1 job(s) adopted, 0 frame(s) sliced:
+[isaac][thr]   #0 0x00a5a760(0x00000000): 0 slice(s), 0 yield(s)
+[isaac][input] 0 messages dispatched to the WndProc, 0 still queued, 0 dropped (queue full)
+[isaac] ---- stub report: 1 distinct symbols, 1 total calls ----
+[isaac]          1 x  _EOS_EResult_ToString@4        eossdk-win32-shipping.dll first call return-address 0x00401234 (call site not decodable)  [STUB]
+
+compile: 35 files, 0 errors, 0 warnings (11.0s)
+link   : exit 0, 0 duplicate-symbol, 0 undefined-symbol
+wasm   : 1013890 bytes
+run    : 730 checks, 0 failures -> PASS
+lua    : linked, D:\Isaac\research\the-browsing-of-isaac\output\recomp\host\lua\liblua.a
+wrote D:\Isaac\research\the-browsing-of-isaac\output\recomp\host\build-selftest.json

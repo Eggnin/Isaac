@@ -1,0 +1,17 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 5,
+  "decompiledCount": 5,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00597d00", "name": "HELPER_Laser_DoDamage", "types": "7", "identities": "7.*", "entry": "00597d00", "resolvedFunction": "HELPER_Laser_DoDamage", "ghidraEntry": "00597d00", "instructions": 322, "incomingCalls": 1, "outgoingCalls": 15, "cFile": "HELPER_Laser_DoDamage_00597d00.c", "asmFile": "HELPER_Laser_DoDamage_00597d00.asm", "error": null},
+    {"va": "0x008d57f0", "name": "HELPER_Laser_DoDamage", "types": "7", "identities": "7.*", "entry": "008d57f0", "resolvedFunction": "HELPER_Laser_DoDamage", "ghidraEntry": "008d57f0", "instructions": 117, "incomingCalls": 1, "outgoingCalls": 11, "cFile": "HELPER_Laser_DoDamage_008d57f0.c", "asmFile": "HELPER_Laser_DoDamage_008d57f0.asm", "error": null},
+    {"va": "0x0097e3c0", "name": "HELPER_Laser_DoDamage", "types": "7", "identities": "7.*", "entry": "0097e3c0", "resolvedFunction": "HELPER_Laser_DoDamage", "ghidraEntry": "0097e3c0", "instructions": 217, "incomingCalls": 2, "outgoingCalls": 18, "cFile": "HELPER_Laser_DoDamage_0097e3c0.c", "asmFile": "HELPER_Laser_DoDamage_0097e3c0.asm", "error": null},
+    {"va": "0x0099c790", "name": "HELPER_HomingLaser_BuildBeam", "types": "7", "identities": "7.*", "entry": "0099c790", "resolvedFunction": "HELPER_HomingLaser_BuildBeam", "ghidraEntry": "0099c790", "instructions": 1389, "incomingCalls": 3, "outgoingCalls": 43, "cFile": "HELPER_HomingLaser_BuildBeam_0099c790.c", "asmFile": "HELPER_HomingLaser_BuildBeam_0099c790.asm", "error": null},
+    {"va": "0x00971810", "name": "HELPER_Laser_ApplyDamage", "types": "7", "identities": "7.*", "entry": "00971810", "resolvedFunction": "HELPER_Laser_ApplyDamage", "ghidraEntry": "00971810", "instructions": 1694, "incomingCalls": 2, "outgoingCalls": 99, "cFile": "HELPER_Laser_ApplyDamage_00971810.c", "asmFile": "HELPER_Laser_ApplyDamage_00971810.asm", "error": null}
+  ]
+}

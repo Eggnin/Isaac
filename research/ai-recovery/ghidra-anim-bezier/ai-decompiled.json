@@ -1,0 +1,14 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 2,
+  "decompiledCount": 2,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x0099e360", "name": "HELPER_HomingLaser_BezierSamples", "types": "7", "identities": "7.*", "entry": "0099e360", "resolvedFunction": "HELPER_HomingLaser_BezierSamples", "ghidraEntry": "0099e360", "instructions": 612, "incomingCalls": 2, "outgoingCalls": 15, "cFile": "HELPER_HomingLaser_BezierSamples_0099e360.c", "asmFile": "HELPER_HomingLaser_BezierSamples_0099e360.asm", "error": null},
+    {"va": "0x00409100", "name": "HELPER_ANM2_Update", "types": "0", "identities": "*", "entry": "00409100", "resolvedFunction": "HELPER_ANM2_Update", "ghidraEntry": "00409100", "instructions": 11, "incomingCalls": 21, "outgoingCalls": 2, "cFile": "HELPER_ANM2_Update_00409100.c", "asmFile": "HELPER_ANM2_Update_00409100.asm", "error": null}
+  ]
+}

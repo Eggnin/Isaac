@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 3,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00652ab0", "name": "HELPER_Projectile_ContinuumPoint", "types": "9", "identities": "9.*", "entry": "00652ab0", "resolvedFunction": "HELPER_Projectile_ContinuumPoint", "ghidraEntry": "00652ab0", "instructions": 13, "incomingCalls": 3, "outgoingCalls": 1, "cFile": "HELPER_Projectile_ContinuumPoint_00652ab0.c", "asmFile": "HELPER_Projectile_ContinuumPoint_00652ab0.asm", "error": null},
+    {"va": "0x006cb2a0", "name": "HELPER_Projectile_FinalizeFlags", "types": "9", "identities": "9.*", "entry": "006cb2a0", "resolvedFunction": "HELPER_Projectile_FinalizeFlags", "ghidraEntry": "006cb2a0", "instructions": 18, "incomingCalls": 4, "outgoingCalls": 1, "cFile": "HELPER_Projectile_FinalizeFlags_006cb2a0.c", "asmFile": "HELPER_Projectile_FinalizeFlags_006cb2a0.asm", "error": null},
+    {"va": "0x0041cb70", "name": "HELPER_FloatBound", "types": "0", "identities": "*", "entry": "0041cb70", "resolvedFunction": "HELPER_FloatBound", "ghidraEntry": "0041cb70", "instructions": 5, "incomingCalls": 102, "outgoingCalls": 0, "cFile": "HELPER_FloatBound_0041cb70.c", "asmFile": "HELPER_FloatBound_0041cb70.asm", "error": null}
+  ]
+}

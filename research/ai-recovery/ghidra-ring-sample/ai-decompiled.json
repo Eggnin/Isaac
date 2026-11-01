@@ -1,0 +1,13 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 1,
+  "decompiledCount": 1,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x0097baa0", "name": "HELPER_Laser_UpdateRing", "types": "7", "identities": "7.*", "entry": "0097baa0", "resolvedFunction": "HELPER_Laser_UpdateRing", "ghidraEntry": "0097baa0", "instructions": 973, "incomingCalls": 3, "outgoingCalls": 47, "cFile": "HELPER_Laser_UpdateRing_0097baa0.c", "asmFile": "HELPER_Laser_UpdateRing_0097baa0.asm", "error": null}
+  ]
+}

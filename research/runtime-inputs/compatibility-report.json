@@ -1,0 +1,227 @@
+{
+ "schema": "isaac-runtime-input-compatibility/1",
+ "generatedInputsAreUsable": true,
+ "requiresExplicitParentHandling": true,
+ "sourceExecutable": {
+  "path": "D:\\Steam\\steamapps\\common\\The Binding of Isaac Rebirth\\isaac-ng.exe",
+  "sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+  "bytes": 9362440,
+  "upstreamCanonicalSha256": "5129DF723E645DAAEA59514394195F3EA1DCE1671BB0433D724648A845017200"
+ },
+ "pe": {
+  "imageBase": "0x00400000",
+  "sizeOfImage": "0x0092c000",
+  "entryVa": "0x00cfe310",
+  "nativeEngineEntryVa": "0x00aefc46",
+  "sections": [
+   {
+    "name": ".text",
+    "rva": "0x00001000",
+    "virtualSize": "0x00716134",
+    "rawSize": "0x00716200",
+    "rawOffset": "0x00000400"
+   },
+   {
+    "name": ".rdata",
+    "rva": "0x00718000",
+    "virtualSize": "0x000df948",
+    "rawSize": "0x000dfa00",
+    "rawOffset": "0x00716600"
+   },
+   {
+    "name": ".data",
+    "rva": "0x007f8000",
+    "virtualSize": "0x000a4aa4",
+    "rawSize": "0x00069e00",
+    "rawOffset": "0x007f6000"
+   },
+   {
+    "name": ".rsrc",
+    "rva": "0x0089d000",
+    "virtualSize": "0x00003b20",
+    "rawSize": "0x00003c00",
+    "rawOffset": "0x0085fe00"
+   },
+   {
+    "name": ".reloc",
+    "rva": "0x008a1000",
+    "virtualSize": "0x0005c93c",
+    "rawSize": "0x0005ca00",
+    "rawOffset": "0x00863a00"
+   },
+   {
+    "name": ".bind",
+    "rva": "0x008fe000",
+    "virtualSize": "0x0002d808",
+    "rawSize": "0x0002d808",
+    "rawOffset": "0x008c0400"
+   }
+  ]
+ },
+ "nativeStartup": {
+  "method": "scan function anchors from the hash-bound PE index for the MSVC [call rel32][jmp rel32] entry spine; validate the jump target's two _initterm bounds and main call",
+  "functionStartsScanned": 19038,
+  "validatedCandidates": 1,
+  "entryVa": "0x00aefc46",
+  "entryCallTargetVa": "0x00af04c2",
+  "scrtCommonMainSehVa": "0x00aefac4",
+  "mainVa": "0x00931050"
+ },
+ "bootTables": {
+  "entryVa": "0x00aefc46",
+  "scrtCommonMainSehVa": "0x00aefac4",
+  "mainVa": "0x00931050",
+  "initTermTables": [
+   {
+    "startVa": "0x00b18c10",
+    "endVa": "0x00b18c24",
+    "nonNull": 4,
+    "allTargetsInText": true
+   },
+   {
+    "startVa": "0x00b18a2c",
+    "endVa": "0x00b18c04",
+    "nonNull": 117,
+    "allTargetsInText": true
+   }
+  ],
+  "tlsCallbacks": [
+   "0x00aefec1"
+  ],
+  "iatSlots": 650,
+  "iatSymbolSlots": 622,
+  "suspectedRelocations": []
+ },
+ "imports": {
+  "dlls": 28,
+  "symbols": 622,
+  "iatSlotsIncludingTerminators": 650,
+  "effectiveCallSites": 22513,
+  "thunks": 133,
+  "shimRows": 622,
+  "dynamicRows": 109,
+  "emittedShimRows": 731,
+  "unknownPurgeRows": 0
+ },
+ "memoryImage": {
+  "minimumWasmMemoryPages": 211,
+  "minimumWasmMemoryBytes": 13828096,
+  "flatTrimmedLength": 9615368,
+  "segmentCount": 50,
+  "containsBindSection": true,
+  "dropsRelocSection": true
+ },
+ "hostHeaderExpectedState": {
+  "path": "D:\\Isaac\\research\\the-browsing-of-isaac\\scripts\\recomp\\host\\include\\isaac_host.h",
+  "actual": {
+   "ISAAC_IMAGE_BASE": "0x00400000",
+   "ISAAC_IMAGE_SIZE": "0x0092c000",
+   "ISAAC_ENTRY_VA": "0x00cfe310",
+   "ISAAC_SCRT_MAIN_VA": "0x00aefac4",
+   "ISAAC_MAIN_VA": "0x00931050",
+   "ISAAC_HEAP_VA": "0x00e00000",
+   "ISAAC_HEAP_SIZE": "0x18000000",
+   "ISAAC_STACK_TOP_VA": "0x19ff0000",
+   "ISAAC_STACK_SIZE": "0x00100000",
+   "ISAAC_SHIM_BASE": "0x1b000000",
+   "ISAAC_GUEST_LIMIT_VA": "0x1bf00000",
+   "ISAAC_HOST_BASE_VA": "0x1c000000"
+  },
+  "expected": {
+   "ISAAC_IMAGE_BASE": "0x00400000",
+   "ISAAC_IMAGE_SIZE": "0x0092c000",
+   "ISAAC_ENTRY_VA": "0x00cfe310",
+   "ISAAC_SCRT_MAIN_VA": "0x00aefac4",
+   "ISAAC_MAIN_VA": "0x00931050",
+   "ISAAC_HEAP_VA": "0x00e00000",
+   "ISAAC_HEAP_SIZE": "0x18000000",
+   "ISAAC_STACK_TOP_VA": "0x19ff0000",
+   "ISAAC_STACK_SIZE": "0x00100000",
+   "ISAAC_SHIM_BASE": "0x1b000000",
+   "ISAAC_GUEST_LIMIT_VA": "0x1bf00000",
+   "ISAAC_HOST_BASE_VA": "0x1c000000"
+  },
+  "mismatches": [],
+  "currentHeaderMatchesExpected": true
+ },
+ "upstreamFilesThatNeedVersionSpecificHandling": [
+  {
+   "path": "D:\\Isaac\\research\\the-browsing-of-isaac\\scripts\\recomp\\host\\pe.py",
+   "issue": "default TARGET remains the canonical unpacked executable"
+  },
+  {
+   "path": "D:\\Isaac\\research\\the-browsing-of-isaac\\scripts\\recomp\\host\\boot_tables.py",
+   "issue": "trace_startup assumes the PE header entry jumps to __scrt_common_main_seh"
+  },
+  {
+   "path": "D:\\Isaac\\research\\the-browsing-of-isaac\\scripts\\recomp\\host\\verify_memimage.py",
+   "issue": "EXPECT contains canonical SizeOfImage and native entry constants"
+  },
+  {
+   "path": "D:\\Isaac\\research\\the-browsing-of-isaac\\scripts\\recomp\\lift\\build_boot.py",
+   "issue": "canonical restoration patches are incompatible with pristine bodies"
+  }
+ ],
+ "exactDifferences": [
+  {
+   "id": "executable-hash-and-size",
+   "upstreamCanonicalSha256": "5129DF723E645DAAEA59514394195F3EA1DCE1671BB0433D724648A845017200",
+   "actualSha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+   "canonicalFileBytes": 9176064,
+   "actualFileBytes": 9362440,
+   "sizeDelta": 186376
+  },
+  {
+   "id": "pe-entry-is-steam-bind-wrapper",
+   "nativeEngineEntryVa": "0x00aefc46",
+   "actualPeEntryVa": "0x00cfe310",
+   "wrapperSection": ".bind",
+   "directTraceStartupError": "RuntimeError: could not find jmp to __scrt_common_main_seh",
+   "effect": "the PE header entry is wrapper code in .bind; the pristine engine entry is recovered separately from .text"
+  },
+  {
+   "id": "image-size-includes-bind",
+   "canonicalSizeOfImage": "0x008fe000",
+   "actualSizeOfImage": "0x0092c000",
+   "bindRva": "0x008fe000",
+   "bindVirtualSize": "0x0002d808",
+   "bindRawSize": "0x0002d808",
+   "bindEndVa": "0x00d2b808",
+   "oldHeapVa": "0x00d00000",
+   "effect": "the old 0x00d00000 guest heap overlapped 0x0002c000 bytes of the actual .bind virtual span"
+  },
+  {
+   "id": "canonical-body-patches-absent",
+   "requiredBuildMode": "--no-lift-patches",
+   "upstreamCanonicalInputWasPatched": true,
+   "actualInputIsPristine": true,
+   "effect": "canonical restoration patches must not replace the pristine engine bodies in the actual executable"
+  },
+  {
+   "id": "upstream-verifier-constants",
+   "source": "D:\\Isaac\\research\\the-browsing-of-isaac\\scripts\\recomp\\host\\verify_memimage.py",
+   "sourceSha256": "E6118DB97C64CC306AD15A040BDBFBC9AF65B6E060E3C07B468FC81F71FB7CB5",
+   "currentExpect": {
+    "ISAAC_IMAGE_SIZE": "0x008fe000",
+    "ISAAC_ENTRY_VA": "0x00aefc46"
+   },
+   "requiredForActualImage": {
+    "ISAAC_IMAGE_SIZE": "0x0092c000",
+    "ISAAC_ENTRY_VA": "0x00cfe310"
+   },
+   "effect": "running the unmodified verifier against the actual local image will report image-size and entry mismatches"
+  }
+ ],
+ "provenance": {
+  "adapter": "D:\\Isaac\\research\\prepare_runtime_inputs.py",
+  "adapterSha256": "E6DCC573618018E2BB952F4910FFE7B4AC53AA88EB033F5B05923E78069A2E35",
+  "upstreamRoot": "D:\\Isaac\\research\\the-browsing-of-isaac",
+  "upstreamSources": {
+   "scripts\\recomp\\host\\pe.py": "DC1BC44ED357109F13E69C89F2D2371D29ED2C96375342D2669D8A5B2A4B7F95",
+   "scripts\\recomp\\host\\boot_tables.py": "9E778A0BEA9B85636C5556A34437621004E42DFA8B28637CA8AD14C3240D059A",
+   "scripts\\recomp\\host\\memimage.py": "D452C22C08BD691035BF270F469D407D34B98CEDD3A6C53748364B8332D0F53B",
+   "scripts\\recomp\\host\\gen_shims.py": "8DACCD0BA0C4EEBAF01FAC3FFC26441074D63B1415F5B0574B1261441C7E1E80",
+   "scripts\\recomp\\census\\imports.py": "CAFFAFDFE7321650E159891B2D8264A66123BB5319C31ED425E73090EDA54F5F"
+  }
+ }
+}

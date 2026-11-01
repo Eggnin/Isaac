@@ -1,0 +1,32 @@
+{
+  "Delirium": {
+    "status": "accepted-by-user",
+    "userInstruction": "Delirium 可以完成了，现在这个程度可以了",
+    "acceptedAt": "2026-10-29T00:22:00.457872+00:00",
+    "scope": "current observed performance accepted; stop further Delirium stress testing",
+    "verifiedNoHitKill": false,
+    "lastRecordedProgress": {
+      "frame": 11100,
+      "steps": 11100,
+      "health": 6,
+      "hits": 0,
+      "boss": [
+        {
+          "type": 412,
+          "variant": 0,
+          "hp": 8922.2958984375,
+          "position": {
+            "x": 864.598876953125,
+            "y": 434.49285888671875
+          }
+        }
+      ],
+      "searches": 4305,
+      "elapsedMs": 1464282.5809
+    },
+    "runDirectory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793231814175-28800-0",
+    "policySha256": "e0e1b1f7a73da92b608a404f7e07be0b332f82d7be268d9bf9344903ac77a893",
+    "termination": "user accepted current degree; own test processes stopped",
+    "journalScope": "flushed committed actions retained; interrupted run did not return a complete rollout report"
+  }
+}

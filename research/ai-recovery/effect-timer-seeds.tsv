@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x0067f010	HELPER_Global_ModuloCountdown	1,1000	1.*,1000.*	Creep timeout initial value
+0x004173e0	HELPER_Entity_AddFlags	1,1000	1.*,1000.*	Creep slippery status
+0x00771200	HELPER_Player_HasCollectibleEffect	1,1000	1.*,1000.*	Player HasCollectible early override

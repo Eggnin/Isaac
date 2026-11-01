@@ -1,0 +1,14 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 2,
+  "decompiledCount": 2,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x008131e0", "name": "HELPER_RoomWrapPoint", "types": "0", "identities": "*", "entry": "008131e0", "resolvedFunction": "HELPER_RoomWrapPoint", "ghidraEntry": "008131e0", "instructions": 122, "incomingCalls": 4, "outgoingCalls": 1, "cFile": "HELPER_RoomWrapPoint_008131e0.c", "asmFile": "HELPER_RoomWrapPoint_008131e0.asm", "error": null},
+    {"va": "0x006cb010", "name": "HELPER_ProjectileStatusFlags", "types": "9", "identities": "9.*", "entry": "006cb010", "resolvedFunction": "HELPER_ProjectileStatusFlags", "ghidraEntry": "006cb010", "instructions": 161, "incomingCalls": 7, "outgoingCalls": 6, "cFile": "HELPER_ProjectileStatusFlags_006cb010.c", "asmFile": "HELPER_ProjectileStatusFlags_006cb010.asm", "error": null}
+  ]
+}

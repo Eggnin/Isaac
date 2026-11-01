@@ -1,0 +1,19 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 7,
+  "decompiledCount": 7,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x006b8d4f", "name": "HELPER_FuseWrite_006b8d4f", "types": "4", "identities": "4.*", "entry": "006b8b20", "resolvedFunction": "HELPER_FuseWrite_006b8d4f", "ghidraEntry": "006b8b20", "instructions": 169, "incomingCalls": 0, "outgoingCalls": 6, "cFile": "HELPER_FuseWrite_006b8d4f_006b8b20.c", "asmFile": "HELPER_FuseWrite_006b8d4f_006b8b20.asm", "error": null},
+    {"va": "0x006be7cc", "name": "HELPER_FuseWrite_006be7cc", "types": "4", "identities": "4.*", "entry": "006be760", "resolvedFunction": "HELPER_FuseWrite_006be7cc", "ghidraEntry": "006be760", "instructions": 28, "incomingCalls": 2, "outgoingCalls": 0, "cFile": "HELPER_FuseWrite_006be7cc_006be760.c", "asmFile": "HELPER_FuseWrite_006be7cc_006be760.asm", "error": null},
+    {"va": "0x006c85dd", "name": "HELPER_FuseWrite_006c85dd", "types": "4", "identities": "4.*", "entry": "006c4b30", "resolvedFunction": "HELPER_FuseWrite_006c85dd", "ghidraEntry": "006c4b30", "instructions": 5732, "incomingCalls": 0, "outgoingCalls": 908, "cFile": "HELPER_FuseWrite_006c85dd_006c4b30.c", "asmFile": "HELPER_FuseWrite_006c85dd_006c4b30.asm", "error": null},
+    {"va": "0x00454597", "name": "HELPER_FuseWrite_00454597", "types": "4", "identities": "4.*", "entry": "00453140", "resolvedFunction": "HELPER_FuseWrite_00454597", "ghidraEntry": "00453140", "instructions": 2752, "incomingCalls": 1, "outgoingCalls": 211, "cFile": "HELPER_FuseWrite_00454597_00453140.c", "asmFile": "HELPER_FuseWrite_00454597_00453140.asm", "error": null},
+    {"va": "0x0047be94", "name": "HELPER_FuseWrite_0047be94", "types": "4", "identities": "4.*", "entry": "0047a360", "resolvedFunction": "HELPER_FuseWrite_0047be94", "ghidraEntry": "0047a360", "instructions": 2136, "incomingCalls": 1, "outgoingCalls": 145, "cFile": "HELPER_FuseWrite_0047be94_0047a360.c", "asmFile": "HELPER_FuseWrite_0047be94_0047a360.asm", "error": null},
+    {"va": "0x005b0891", "name": "HELPER_FuseWrite_005b0891", "types": "4", "identities": "4.*", "entry": "005af800", "resolvedFunction": "HELPER_FuseWrite_005b0891", "ghidraEntry": "005af800", "instructions": 1513, "incomingCalls": 1, "outgoingCalls": 142, "cFile": "HELPER_FuseWrite_005b0891_005af800.c", "asmFile": "HELPER_FuseWrite_005b0891_005af800.asm", "error": null},
+    {"va": "0x007d4e01", "name": "HELPER_FuseWrite_007d4e01", "types": "4", "identities": "4.*", "entry": "007d4390", "resolvedFunction": "HELPER_FuseWrite_007d4e01", "ghidraEntry": "007d4390", "instructions": 790, "incomingCalls": 1, "outgoingCalls": 63, "cFile": "HELPER_FuseWrite_007d4e01_007d4390.c", "asmFile": "HELPER_FuseWrite_007d4e01_007d4390.asm", "error": null}
+  ]
+}

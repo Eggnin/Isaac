@@ -1,0 +1,53 @@
+{
+  "native": true,
+  "scope": "one catalog identity per NPC configuration in original narrow and long combat rooms",
+  "caveat": "debug 3 invulnerability is used for catalog identity/danger probes; damage and clear results do not count as no-damage combat evidence",
+  "catalogCount": 653,
+  "start": 231,
+  "limit": 1,
+  "observeFrames": 10,
+  "parameters": {
+    "dt": 0.03333333333333333,
+    "contact_margin": 8
+  },
+  "rooms": {
+    "narrow": {
+      "room": "s.boss.3702",
+      "width": 15,
+      "height": 16,
+      "description": "original tall narrow boss room",
+      "invulnerableProbe": true,
+      "results": [
+        {
+          "key": "96.0.0",
+          "type": 96,
+          "variant": 0,
+          "subtype": 0,
+          "name": "永恒苍蝇",
+          "category": "monster",
+          "role": "monster",
+          "configName": "#ETERNAL_FLY",
+          "index": 0,
+          "observedFrames": 0,
+          "startedAtFrame": 0,
+          "error": null,
+          "status": "spawn-failed",
+          "completedAtFrame": 183,
+          "targetCountGain": 0
+        }
+      ],
+      "summary": {
+        "requested": 1,
+        "observed": 0,
+        "exactObserved": 0,
+        "normalizedObserved": 0,
+        "missing": 1,
+        "dangerObserved": 0,
+        "spawnFailed": 1,
+        "resetTimeout": 0,
+        "engineErrors": 0
+      }
+    }
+  },
+  "wallMs": 7212.2037
+}

@@ -1,0 +1,8 @@
+va	name	types	identity_keys	evidence
+0x006b8d4f	HELPER_FuseWrite_006b8d4f	4	4.*	Candidate immediate-zero +0x410 write, entity type not yet classified
+0x006be7cc	HELPER_FuseWrite_006be7cc	4	4.*	Candidate immediate-zero +0x410 write, entity type not yet classified
+0x006c85dd	HELPER_FuseWrite_006c85dd	4	4.*	Candidate immediate-zero +0x410 write, entity type not yet classified
+0x00454597	HELPER_FuseWrite_00454597	4	4.*	Candidate immediate-zero +0x410 write, entity type not yet classified
+0x0047be94	HELPER_FuseWrite_0047be94	4	4.*	Candidate immediate-zero +0x410 write, entity type not yet classified
+0x005b0891	HELPER_FuseWrite_005b0891	4	4.*	Candidate immediate-zero +0x410 write, entity type not yet classified
+0x007d4e01	HELPER_FuseWrite_007d4e01	4	4.*	Candidate immediate-zero +0x410 write, entity type not yet classified

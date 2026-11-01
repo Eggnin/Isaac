@@ -1,0 +1,3 @@
+va	name	types	identity_keys	evidence
+0x006a2050	HELPER_Bomb_Init	4	4.*	Native constructor defaults for ExplosionDamage, scale and countdown fields
+0x00700060	HELPER_Bomb_ExplosionDispatch	4	4.*	Native damage-radius formula and Bomb Update arguments

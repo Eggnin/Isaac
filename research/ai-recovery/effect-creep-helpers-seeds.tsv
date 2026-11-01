@@ -1,0 +1,13 @@
+va	name	types	identity_keys	evidence
+0x00417470	HELPER_Effect_PlayerGateA	1000	1000.*	Effect Update 0x5EB8CC..0x5EBFA6 call site
+0x00417380	HELPER_Effect_PlayerGateB	1000	1000.*	Effect Update 0x5EB8CC..0x5EBFA6 call site
+0x00440eb0	HELPER_Effect_PlayerGateC	1000	1000.*	Effect Update 0x5EB8CC..0x5EBFA6 call site
+0x00771550	HELPER_Effect_PlayerGateD	1000	1000.*	Effect Update 0x5EB8CC..0x5EBFA6 call site
+0x007706e0	HELPER_Effect_PlayerItemGate	1000	1000.*	Effect Update 0x5EB8CC..0x5EBFA6 call site
+0x00417320	HELPER_Effect_ScaleAccessor	1000	1000.*	Effect Update 0x5EB8CC..0x5EBFA6 call site
+0x00417340	HELPER_Effect_PlayerSize	1000	1000.*	Effect Update 0x5EB8CC..0x5EBFA6 call site
+0x0041e460	HELPER_Effect_SpriteAccessor	1000	1000.*	Effect Update 0x5EB8CC..0x5EBFA6 call site
+0x0040b600	HELPER_Effect_OpacityAtPoint	1000	1000.*	Effect Update 0x5EB8CC..0x5EBFA6 call site
+0x007dba30	HELPER_Effect_PlayerDamageImmunity	1000	1000.*	Effect Update 0x5EB8CC..0x5EBFA6 call site
+0x006ad750	HELPER_Effect_StatusApply	1000	1000.*	Effect Update 0x5EB8CC..0x5EBFA6 call site
+0x007b98c0	HELPER_Effect_PlayerInteraction	1000	1000.*	Effect Update 0x5EB8CC..0x5EBFA6 call site

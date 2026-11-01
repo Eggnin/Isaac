@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 3,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00431640", "name": "HELPER_HitList_Contains", "types": "7", "identities": "7.*", "entry": "00431640", "resolvedFunction": "HELPER_HitList_Contains", "ghidraEntry": "00431640", "instructions": 45, "incomingCalls": 51, "outgoingCalls": 1, "cFile": "HELPER_HitList_Contains_00431640.c", "asmFile": "HELPER_HitList_Contains_00431640.asm", "error": null},
+    {"va": "0x00431570", "name": "HELPER_HitList_Append", "types": "7", "identities": "7.*", "entry": "00431570", "resolvedFunction": "HELPER_HitList_Append", "ghidraEntry": "00431570", "instructions": 79, "incomingCalls": 24, "outgoingCalls": 2, "cFile": "HELPER_HitList_Append_00431570.c", "asmFile": "HELPER_HitList_Append_00431570.asm", "error": null},
+    {"va": "0x006b62b0", "name": "HELPER_Entity_HitListKey", "types": "7", "identities": "7.*", "entry": "006b62b0", "resolvedFunction": "HELPER_Entity_HitListKey", "ghidraEntry": "006b62b0", "instructions": 55, "incomingCalls": 31, "outgoingCalls": 1, "cFile": "HELPER_Entity_HitListKey_006b62b0.c", "asmFile": "HELPER_Entity_HitListKey_006b62b0.asm", "error": null}
+  ]
+}

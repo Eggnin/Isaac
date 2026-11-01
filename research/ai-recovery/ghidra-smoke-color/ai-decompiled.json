@@ -1,0 +1,14 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 2,
+  "decompiledCount": 2,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00407410", "name": "HELPER_SpriteColor", "types": "1000", "identities": "1000.141.*", "entry": "00407410", "resolvedFunction": "HELPER_SpriteColor", "ghidraEntry": "00407410", "instructions": 2, "incomingCalls": 129, "outgoingCalls": 0, "cFile": "HELPER_SpriteColor_00407410.c", "asmFile": "HELPER_SpriteColor_00407410.asm", "error": null},
+    {"va": "0x006fd350", "name": "HELPER_Entity_TimeGate", "types": "1000", "identities": "1000.141.*", "entry": "006fd350", "resolvedFunction": "HELPER_Entity_TimeGate", "ghidraEntry": "006fd350", "instructions": 45, "incomingCalls": 56, "outgoingCalls": 2, "cFile": "HELPER_Entity_TimeGate_006fd350.c", "asmFile": "HELPER_Entity_TimeGate_006fd350.asm", "error": null}
+  ]
+}

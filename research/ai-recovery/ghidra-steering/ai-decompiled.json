@@ -1,0 +1,16 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 4,
+  "decompiledCount": 4,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x007069a0", "name": "HELPER_HostileProjectileHoming", "types": "9", "identities": "9.*", "entry": "007069a0", "resolvedFunction": "HELPER_HostileProjectileHoming", "ghidraEntry": "007069a0", "instructions": 687, "incomingCalls": 8, "outgoingCalls": 22, "cFile": "HELPER_HostileProjectileHoming_007069a0.c", "asmFile": "HELPER_HostileProjectileHoming_007069a0.asm", "error": null},
+    {"va": "0x00707370", "name": "HELPER_FriendlyProjectileHoming", "types": "9", "identities": "9.*", "entry": "00707370", "resolvedFunction": "HELPER_FriendlyProjectileHoming", "ghidraEntry": "00707370", "instructions": 227, "incomingCalls": 7, "outgoingCalls": 4, "cFile": "HELPER_FriendlyProjectileHoming_00707370.c", "asmFile": "HELPER_FriendlyProjectileHoming_00707370.asm", "error": null},
+    {"va": "0x0042f160", "name": "HELPER_ContactVectorCount", "types": "0", "identities": "*", "entry": "0042f160", "resolvedFunction": "HELPER_ContactVectorCount", "ghidraEntry": "0042f160", "instructions": 4, "incomingCalls": 10, "outgoingCalls": 0, "cFile": "HELPER_ContactVectorCount_0042f160.c", "asmFile": "HELPER_ContactVectorCount_0042f160.asm", "error": null},
+    {"va": "0x0042f150", "name": "HELPER_ContactVectorAt", "types": "0", "identities": "*", "entry": "0042f150", "resolvedFunction": "HELPER_ContactVectorAt", "ghidraEntry": "0042f150", "instructions": 7, "incomingCalls": 10, "outgoingCalls": 0, "cFile": "HELPER_ContactVectorAt_0042f150.c", "asmFile": "HELPER_ContactVectorAt_0042f150.asm", "error": null}
+  ]
+}

@@ -1,0 +1,11 @@
+va	name	types	identity_keys	evidence
+0x00431450	HELPER_Entity_AddVelocity	9	9.*	Entity velocity mutation used by ACCELERATE_TO_POSITION
+0x00417290	HELPER_Entity_Position	9	9.*	Entity parent position accessor
+0x004172b0	HELPER_Entity_PreviousPosition	9	9.*	STASIS stored reference accessor
+0x004172d0	HELPER_Entity_Velocity	9	9.*	STASIS reference accessor
+0x006a9c10	HELPER_Entity_AgeModulo	9	9.*	Projectile timed sawtooth and flag switching gate
+0x006ac760	HELPER_Entity_TimeoutCrossed	9	9.*	Projectile ChangeTimeout crossing gate
+0x00435db0	HELPER_Entity_FrameCount	9	9.*	Projectile periodic age gate
+0x00a155c0	HELPER_Float_Interpolate	9	9.*	Anti-gravity height interpolation
+0x006fd350	HELPER_Entity_TimeGate	9	9.*	Timeout crossing suppression predicate
+0x00a101c0	HELPER_Vector_Interpolate	9	9.*	STASIS velocity blend helper

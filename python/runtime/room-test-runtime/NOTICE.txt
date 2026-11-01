@@ -1,0 +1,5 @@
+Clock virtualization, render skipping and synchronous frame-boundary design reference:
+https://github.com/Lceoliu/AIsaac/tree/1a0fd29e021849097305911da91dd9cc00f6a1e2
+This adapter is independently implemented in C/Python/Lua for this external controller.
+MinHook v1.3.4: https://github.com/TsudaKageyu/minhook (BSD license, see MINHOOK-LICENSE.txt).
+The vendor C/H files only have UTF-8 BOMs removed for TinyCC compatibility.

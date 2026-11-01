@@ -1,0 +1,2 @@
+va	name	types	identity_keys	evidence
+0x007ea3e0	HELPER_Entity_TimeScale	1	1.*	Effect and projectile pre-update time-scale helper

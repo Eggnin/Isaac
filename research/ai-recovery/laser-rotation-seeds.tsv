@@ -1,0 +1,3 @@
+va	name	types	identity_keys	evidence
+0x0096f880	HELPER_Laser_AdvanceState	7	7.*	Geometry Update first call
+0x00973c60	HELPER_Laser_DamageDispatch	7	7.*	Geometry Update damage path

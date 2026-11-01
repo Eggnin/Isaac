@@ -1,0 +1,25 @@
+{
+  "input": {
+    "path": "D:/Steam/steamapps/common/The Binding of Isaac Rebirth/isaac-ng.exe",
+    "sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+    "format": "PE32 x86",
+    "pdb": null
+  },
+  "decompiler": {
+    "name": "Ghidra",
+    "version": "11.1.2_PUBLIC",
+    "archive": "ghidra_11.1.2_PUBLIC_20240709.zip",
+    "archiveSha256": "219EC130B901645779948FEEB7CC86F131DD2DA6C36284CF538C3A7F3D44B588",
+    "java": "OpenJDK 17.0.20.1 LTS",
+    "project": "ghidra-project/IsaacJ460_7122ac287799.gpr",
+    "analysisSeconds": 514
+  },
+  "exports": {
+    "legacyDispatchTargets": 239,
+    "helpers": 41,
+    "dispatcherCases": 242,
+    "delegateFunctions": 226,
+    "inlineCases": 14,
+    "noHandlerCases": 2
+  }
+}

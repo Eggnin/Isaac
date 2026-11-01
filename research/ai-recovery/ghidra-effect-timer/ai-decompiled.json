@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 3,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x0067f010", "name": "HELPER_Global_ModuloCountdown", "types": "1,1000", "identities": "1.*,1000.*", "entry": "0067f010", "resolvedFunction": "HELPER_Global_ModuloCountdown", "ghidraEntry": "0067f010", "instructions": 13, "incomingCalls": 295, "outgoingCalls": 1, "cFile": "HELPER_Global_ModuloCountdown_0067f010.c", "asmFile": "HELPER_Global_ModuloCountdown_0067f010.asm", "error": null},
+    {"va": "0x004173e0", "name": "HELPER_Entity_AddFlags", "types": "1,1000", "identities": "1.*,1000.*", "entry": "004173e0", "resolvedFunction": "HELPER_Entity_AddFlags", "ghidraEntry": "004173e0", "instructions": 8, "incomingCalls": 63, "outgoingCalls": 0, "cFile": "HELPER_Entity_AddFlags_004173e0.c", "asmFile": "HELPER_Entity_AddFlags_004173e0.asm", "error": null},
+    {"va": "0x00771200", "name": "HELPER_Player_HasCollectibleEffect", "types": "1,1000", "identities": "1.*,1000.*", "entry": "00771200", "resolvedFunction": "HELPER_Player_HasCollectibleEffect", "ghidraEntry": "00771200", "instructions": 144, "incomingCalls": 4, "outgoingCalls": 2, "cFile": "HELPER_Player_HasCollectibleEffect_00771200.c", "asmFile": "HELPER_Player_HasCollectibleEffect_00771200.asm", "error": null}
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 4,
+  "decompiledCount": 4,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x009a0de0", "name": "HELPER_HomingLaser_CalculateSamples", "types": "7", "identities": "7.*", "entry": "009a0de0", "resolvedFunction": "HELPER_HomingLaser_CalculateSamples", "ghidraEntry": "009a0de0", "instructions": 117, "incomingCalls": 2, "outgoingCalls": 3, "cFile": "HELPER_HomingLaser_CalculateSamples_009a0de0.c", "asmFile": "HELPER_HomingLaser_CalculateSamples_009a0de0.asm", "error": null},
+    {"va": "0x009a0850", "name": "HELPER_HomingLaser_Ring", "types": "7", "identities": "7.*", "entry": "009a0850", "resolvedFunction": "HELPER_HomingLaser_Ring", "ghidraEntry": "009a0850", "instructions": 298, "incomingCalls": 1, "outgoingCalls": 13, "cFile": "HELPER_HomingLaser_Ring_009a0850.c", "asmFile": "HELPER_HomingLaser_Ring_009a0850.asm", "error": null},
+    {"va": "0x0099fa60", "name": "HELPER_HomingLaser_PrimitiveA", "types": "7", "identities": "7.*", "entry": "0099fa60", "resolvedFunction": "HELPER_HomingLaser_PrimitiveA", "ghidraEntry": "0099fa60", "instructions": 249, "incomingCalls": 2, "outgoingCalls": 12, "cFile": "HELPER_HomingLaser_PrimitiveA_0099fa60.c", "asmFile": "HELPER_HomingLaser_PrimitiveA_0099fa60.asm", "error": null},
+    {"va": "0x0099fed0", "name": "HELPER_HomingLaser_PrimitiveB", "types": "7", "identities": "7.*", "entry": "0099fed0", "resolvedFunction": "HELPER_HomingLaser_PrimitiveB", "ghidraEntry": "0099fed0", "instructions": 375, "incomingCalls": 1, "outgoingCalls": 12, "cFile": "HELPER_HomingLaser_PrimitiveB_0099fed0.c", "asmFile": "HELPER_HomingLaser_PrimitiveB_0099fed0.asm", "error": null}
+  ]
+}

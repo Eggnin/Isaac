@@ -1,0 +1,51 @@
+[1/5] jump tables ...
+      763 tables, 9756 entries, 30004 bytes masked
+[2/5] linear decode of .text ...
+      ... 50000 insns @ 0x00429637
+      ... 100000 insns @ 0x0045a34e
+      ... 150000 insns @ 0x004900cc
+      ... 200000 insns @ 0x004c347c
+      ... 250000 insns @ 0x004f7cab
+      ... 300000 insns @ 0x0052d6f7
+      ... 350000 insns @ 0x0056283a
+      ... 400000 insns @ 0x00598a48
+      ... 450000 insns @ 0x005cad73
+      ... 500000 insns @ 0x00603338
+      ... 550000 insns @ 0x0063444b
+      ... 600000 insns @ 0x00664e97
+      ... 650000 insns @ 0x00693bd1
+      ... 700000 insns @ 0x006bff5d
+      ... 750000 insns @ 0x006eed07
+      ... 800000 insns @ 0x0071add1
+      ... 850000 insns @ 0x00742a1a
+      ... 900000 insns @ 0x0076f263
+      ... 950000 insns @ 0x0079f710
+      ... 1000000 insns @ 0x007cd067
+      ... 1050000 insns @ 0x007f6da1
+      ... 1100000 insns @ 0x00827c7d
+      ... 1150000 insns @ 0x00851cec
+      ... 1200000 insns @ 0x008779d4
+      ... 1250000 insns @ 0x00896a50
+      ... 1300000 insns @ 0x008b7544
+      ... 1350000 insns @ 0x008dd323
+      ... 1400000 insns @ 0x00906f8c
+      ... 1450000 insns @ 0x0092e220
+      ... 1500000 insns @ 0x0095b699
+      ... 1550000 insns @ 0x0098e1db
+      ... 1600000 insns @ 0x009ba885
+      ... 1650000 insns @ 0x009e1cbc
+      ... 1700000 insns @ 0x00a0e5a1
+      ... 1750000 insns @ 0x00a32cc1
+      ... 1800000 insns @ 0x00a4e201
+      ... 1850000 insns @ 0x00a7050c
+      ... 1900000 insns @ 0x00a95ca8
+      ... 1950000 insns @ 0x00abb0f2
+      ... 2000000 insns @ 0x00ae0be7
+      ... 2050000 insns @ 0x00b023cf
+      2082517 instructions, 373 resync bytes
+[3/5] resolving call_mem slots + imports ...
+      622 imports, 257 call_slot resolutions
+[4/5] function segmentation ...
+      19038 function starts
+[5/5] strings + indexes ...
+done in 17.9s -> D:\Isaac\research\the-browsing-of-isaac\output\decomp\7122ac287799\index\pe-index.sqlite

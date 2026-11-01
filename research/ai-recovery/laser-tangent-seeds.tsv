@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x0099dca0	HELPER_HomingLaser_BeamTangents	7	7.*	Rebuild beam controls after homing node insertion
+0x0099e160	HELPER_HomingLaser_RingTangents	7	7.*	Rebuild ring controls after target attachment
+0x0099c430	HELPER_HomingLaser_NodeDistance	7	7.*	Target distance predicate for curve attachment

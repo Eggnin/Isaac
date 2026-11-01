@@ -1,0 +1,13 @@
+{
+  "source_tu_sha256": "ec9a6b3fde0ca19b0995189bb3fb980f76465953d21636e6d9f993e6a3d8657e",
+  "other_source_tus": {
+    "lifted_028.c": "b430dcf659425410cc3f6ef37f5a12d31e4493011028baee7c5fd8cd5b293bb5",
+    "lifted_030.c": "001efdc0434bfdf12d6d33e8432b71cc74430ee97ac6038c47a09d60a70d487b",
+    "lifted_057.c": "4f37611ba7dd60f8f83e794ac1960d367ca5315134e75ec2f4ac0e3a6cb8ef23",
+    "lifted_058.c": "e3414be01cf3ee9215bb6c059221cacfd1c5130102b04237278c8227b678072a"
+  },
+  "original_wasm_sha256": "69116fa92a0675d4d13c5ea2399a59a010e8fb69445824ad957426bc54df225e",
+  "instrumented_wasm_sha256": "1e15d682de359a63e5f179204585f2c355115f14500f4a1b42ef7c5edbcaa8e1",
+  "function": "0x007729d0; current runtime Player vtable slot 8",
+  "method": "original function body retained; wrapper reads arguments/health before and after; host-side ring only"
+}

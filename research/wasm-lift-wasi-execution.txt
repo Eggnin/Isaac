@@ -1,0 +1,3 @@
+(node:14504) ExperimentalWarning: WASI is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+{"functions":3,"cases_per_function":20000,"total_cases":60000,"failures":0}

@@ -1,0 +1,19 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 7,
+  "decompiledCount": 7,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x006ace60", "name": "HELPER_Entity_TakeDamage", "types": "4", "identities": "4.*", "entry": "006ace60", "resolvedFunction": "HELPER_Entity_TakeDamage", "ghidraEntry": "006ace60", "instructions": 338, "incomingCalls": 2, "outgoingCalls": 23, "cFile": "HELPER_Entity_TakeDamage_006ace60.c", "asmFile": "HELPER_Entity_TakeDamage_006ace60.asm", "error": null},
+    {"va": "0x006ac920", "name": "HELPER_Entity_Kill", "types": "4", "identities": "4.*", "entry": "006ac920", "resolvedFunction": "HELPER_Entity_Kill", "ghidraEntry": "006ac920", "instructions": 128, "incomingCalls": 3, "outgoingCalls": 10, "cFile": "HELPER_Entity_Kill_006ac920.c", "asmFile": "HELPER_Entity_Kill_006ac920.asm", "error": null},
+    {"va": "0x006acb00", "name": "HELPER_Entity_Remove", "types": "4", "identities": "4.*", "entry": "006acb00", "resolvedFunction": "HELPER_Entity_Remove", "ghidraEntry": "006acb00", "instructions": 27, "incomingCalls": 5, "outgoingCalls": 3, "cFile": "HELPER_Entity_Remove_006acb00.c", "asmFile": "HELPER_Entity_Remove_006acb00.asm", "error": null},
+    {"va": "0x006a8190", "name": "HELPER_Entity_DamagePreparation", "types": "4", "identities": "4.*", "entry": "006a8190", "resolvedFunction": "HELPER_Entity_DamagePreparation", "ghidraEntry": "006a8190", "instructions": 19, "incomingCalls": 2, "outgoingCalls": 0, "cFile": "HELPER_Entity_DamagePreparation_006a8190.c", "asmFile": "HELPER_Entity_DamagePreparation_006a8190.asm", "error": null},
+    {"va": "0x00864560", "name": "HELPER_Damage_CallbackGate", "types": "4", "identities": "4.*", "entry": "00864560", "resolvedFunction": "HELPER_Damage_CallbackGate", "ghidraEntry": "00864560", "instructions": 100, "incomingCalls": 2, "outgoingCalls": 10, "cFile": "HELPER_Damage_CallbackGate_00864560.c", "asmFile": "HELPER_Damage_CallbackGate_00864560.asm", "error": null},
+    {"va": "0x006b7db0", "name": "HELPER_DamageQueue_Append", "types": "4", "identities": "4.*", "entry": "006b7db0", "resolvedFunction": "HELPER_DamageQueue_Append", "ghidraEntry": "006b7db0", "instructions": 22, "incomingCalls": 2, "outgoingCalls": 1, "cFile": "HELPER_DamageQueue_Append_006b7db0.c", "asmFile": "HELPER_DamageQueue_Append_006b7db0.asm", "error": null},
+    {"va": "0x00703190", "name": "HELPER_Explosion_AfterDamage", "types": "4", "identities": "4.*", "entry": "00703190", "resolvedFunction": "HELPER_Explosion_AfterDamage", "ghidraEntry": "00703190", "instructions": 108, "incomingCalls": 12, "outgoingCalls": 7, "cFile": "HELPER_Explosion_AfterDamage_00703190.c", "asmFile": "HELPER_Explosion_AfterDamage_00703190.asm", "error": null}
+  ]
+}

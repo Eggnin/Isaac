@@ -1,0 +1,1861 @@
+{
+  "engine_sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+  "vtables": {
+    "0x7814b0": {
+      "name": ".?AVWeapon_Ludovico@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10432816,
+          "mnemonic": "fldz",
+          "operands": ""
+        },
+        {
+          "address": 10432818,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x781690": {
+      "name": ".?AVWeapon@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10432816,
+          "mnemonic": "fldz",
+          "operands": ""
+        },
+        {
+          "address": 10432818,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x781348": {
+      "name": ".?AVWeapon_UmbilicalWhip@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10432816,
+          "mnemonic": "fldz",
+          "operands": ""
+        },
+        {
+          "address": 10432818,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x7814f8": {
+      "name": ".?AVWeapon_SpiritSword@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10528512,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ecx + 0x10]"
+        },
+        {
+          "address": 10528515,
+          "mnemonic": "fmul",
+          "operands": "dword ptr [0xbaa75c]"
+        },
+        {
+          "address": 10528521,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x781540": {
+      "name": ".?AVWeapon_Rockets@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10432816,
+          "mnemonic": "fldz",
+          "operands": ""
+        },
+        {
+          "address": 10432818,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x781468": {
+      "name": ".?AVWeapon_MonstrosLung@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10521728,
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": 10521729,
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": 10521731,
+          "mnemonic": "sub",
+          "operands": "esp, 8"
+        },
+        {
+          "address": 10521734,
+          "mnemonic": "test",
+          "operands": "byte ptr [ecx + 0x34], 1"
+        },
+        {
+          "address": 10521738,
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], 0x3f800000"
+        },
+        {
+          "address": 10521745,
+          "mnemonic": "je",
+          "operands": "0xa08c9a"
+        },
+        {
+          "address": 10521747,
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], 0x40200000"
+        },
+        {
+          "address": 10521754,
+          "mnemonic": "movss",
+          "operands": "xmm1, dword ptr [ecx + 0x10]"
+        },
+        {
+          "address": 10521759,
+          "mnemonic": "movss",
+          "operands": "xmm0, dword ptr [0xbaa020]"
+        },
+        {
+          "address": 10521767,
+          "mnemonic": "comiss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10521770,
+          "mnemonic": "ja",
+          "operands": "0xa08cb2"
+        },
+        {
+          "address": 10521772,
+          "mnemonic": "movss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10521776,
+          "mnemonic": "jmp",
+          "operands": "0xa08cb6"
+        },
+        {
+          "address": 10521778,
+          "mnemonic": "movss",
+          "operands": "xmm0, xmm0"
+        },
+        {
+          "address": 10521782,
+          "mnemonic": "movss",
+          "operands": "dword ptr [ebp - 8], xmm0"
+        },
+        {
+          "address": 10521787,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ebp - 8]"
+        },
+        {
+          "address": 10521790,
+          "mnemonic": "fmul",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10521793,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10521795,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10521796,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x7813d8": {
+      "name": ".?AVWeapon_Laser@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10512496,
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": 10512497,
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": 10512499,
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": 10512500,
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx + 0x34]"
+        },
+        {
+          "address": 10512503,
+          "mnemonic": "mov",
+          "operands": "eax, edx"
+        },
+        {
+          "address": 10512505,
+          "mnemonic": "movss",
+          "operands": "xmm2, dword ptr [0xbaa454]"
+        },
+        {
+          "address": 10512513,
+          "mnemonic": "shr",
+          "operands": "eax, 3"
+        },
+        {
+          "address": 10512516,
+          "mnemonic": "movaps",
+          "operands": "xmm1, xmm2"
+        },
+        {
+          "address": 10512519,
+          "mnemonic": "test",
+          "operands": "al, 1"
+        },
+        {
+          "address": 10512521,
+          "mnemonic": "je",
+          "operands": "0xa06893"
+        },
+        {
+          "address": 10512523,
+          "mnemonic": "movss",
+          "operands": "xmm1, dword ptr [0xbaa764]"
+        },
+        {
+          "address": 10512531,
+          "mnemonic": "test",
+          "operands": "dl, 1"
+        },
+        {
+          "address": 10512534,
+          "mnemonic": "je",
+          "operands": "0xa068a0"
+        },
+        {
+          "address": 10512536,
+          "mnemonic": "mulss",
+          "operands": "xmm1, dword ptr [0xbaa6bc]"
+        },
+        {
+          "address": 10512544,
+          "mnemonic": "shr",
+          "operands": "edx, 1"
+        },
+        {
+          "address": 10512546,
+          "mnemonic": "test",
+          "operands": "dl, 1"
+        },
+        {
+          "address": 10512549,
+          "mnemonic": "je",
+          "operands": "0xa068ae"
+        },
+        {
+          "address": 10512551,
+          "mnemonic": "movaps",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10512554,
+          "mnemonic": "addss",
+          "operands": "xmm1, xmm0"
+        },
+        {
+          "address": 10512558,
+          "mnemonic": "comiss",
+          "operands": "xmm1, xmm2"
+        },
+        {
+          "address": 10512561,
+          "mnemonic": "jbe",
+          "operands": "0xa068d0"
+        },
+        {
+          "address": 10512563,
+          "mnemonic": "movss",
+          "operands": "xmm0, dword ptr [ecx + 0x10]"
+        },
+        {
+          "address": 10512568,
+          "mnemonic": "addss",
+          "operands": "xmm0, xmm2"
+        },
+        {
+          "address": 10512572,
+          "mnemonic": "mulss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10512576,
+          "mnemonic": "subss",
+          "operands": "xmm0, xmm2"
+        },
+        {
+          "address": 10512580,
+          "mnemonic": "movss",
+          "operands": "dword ptr [ebp - 4], xmm0"
+        },
+        {
+          "address": 10512585,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10512588,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10512590,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10512591,
+          "mnemonic": "ret",
+          "operands": ""
+        },
+        {
+          "address": 10512592,
+          "mnemonic": "fldz",
+          "operands": ""
+        },
+        {
+          "address": 10512594,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10512596,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10512597,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x781300": {
+      "name": ".?AVWeapon_UrnOfSouls@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10432816,
+          "mnemonic": "fldz",
+          "operands": ""
+        },
+        {
+          "address": 10432818,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x781588": {
+      "name": ".?AVWeapon_TechX@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10543712,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ecx + 0x10]"
+        },
+        {
+          "address": 10543715,
+          "mnemonic": "fmul",
+          "operands": "dword ptr [0xbaa6fc]"
+        },
+        {
+          "address": 10543721,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x7815d0": {
+      "name": ".?AVWeapon_Tears@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10541280,
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": 10541281,
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": 10541283,
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": 10541284,
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ecx + 0x34]"
+        },
+        {
+          "address": 10541287,
+          "mnemonic": "mov",
+          "operands": "eax, edx"
+        },
+        {
+          "address": 10541289,
+          "mnemonic": "movss",
+          "operands": "xmm2, dword ptr [0xbaa454]"
+        },
+        {
+          "address": 10541297,
+          "mnemonic": "shr",
+          "operands": "eax, 8"
+        },
+        {
+          "address": 10541300,
+          "mnemonic": "movaps",
+          "operands": "xmm1, xmm2"
+        },
+        {
+          "address": 10541303,
+          "mnemonic": "test",
+          "operands": "al, 1"
+        },
+        {
+          "address": 10541305,
+          "mnemonic": "je",
+          "operands": "0xa0d905"
+        },
+        {
+          "address": 10541307,
+          "mnemonic": "movss",
+          "operands": "xmm1, dword ptr [0xbaa834]"
+        },
+        {
+          "address": 10541315,
+          "mnemonic": "jmp",
+          "operands": "0xa0d925"
+        },
+        {
+          "address": 10541317,
+          "mnemonic": "test",
+          "operands": "dl, 1"
+        },
+        {
+          "address": 10541320,
+          "mnemonic": "je",
+          "operands": "0xa0d912"
+        },
+        {
+          "address": 10541322,
+          "mnemonic": "movss",
+          "operands": "xmm1, dword ptr [0xbaa6bc]"
+        },
+        {
+          "address": 10541330,
+          "mnemonic": "shr",
+          "operands": "edx, 1"
+        },
+        {
+          "address": 10541332,
+          "mnemonic": "test",
+          "operands": "dl, 1"
+        },
+        {
+          "address": 10541335,
+          "mnemonic": "je",
+          "operands": "0xa0d920"
+        },
+        {
+          "address": 10541337,
+          "mnemonic": "movaps",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10541340,
+          "mnemonic": "addss",
+          "operands": "xmm1, xmm0"
+        },
+        {
+          "address": 10541344,
+          "mnemonic": "comiss",
+          "operands": "xmm1, xmm2"
+        },
+        {
+          "address": 10541347,
+          "mnemonic": "jbe",
+          "operands": "0xa0d942"
+        },
+        {
+          "address": 10541349,
+          "mnemonic": "movss",
+          "operands": "xmm0, dword ptr [ecx + 0x10]"
+        },
+        {
+          "address": 10541354,
+          "mnemonic": "addss",
+          "operands": "xmm0, xmm2"
+        },
+        {
+          "address": 10541358,
+          "mnemonic": "mulss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10541362,
+          "mnemonic": "subss",
+          "operands": "xmm0, xmm2"
+        },
+        {
+          "address": 10541366,
+          "mnemonic": "movss",
+          "operands": "dword ptr [ebp - 4], xmm0"
+        },
+        {
+          "address": 10541371,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10541374,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10541376,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10541377,
+          "mnemonic": "ret",
+          "operands": ""
+        },
+        {
+          "address": 10541378,
+          "mnemonic": "fldz",
+          "operands": ""
+        },
+        {
+          "address": 10541380,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10541382,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10541383,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x781228": {
+      "name": ".?AVWeapon_Bone@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10481328,
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": 10481329,
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": 10481331,
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": 10481332,
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ecx + 0x34]"
+        },
+        {
+          "address": 10481335,
+          "mnemonic": "test",
+          "operands": "eax, 0x80e"
+        },
+        {
+          "address": 10481340,
+          "mnemonic": "je",
+          "operands": "0x9feef2"
+        },
+        {
+          "address": 10481342,
+          "mnemonic": "test",
+          "operands": "al, 1"
+        },
+        {
+          "address": 10481344,
+          "mnemonic": "jne",
+          "operands": "0x9feef2"
+        },
+        {
+          "address": 10481346,
+          "mnemonic": "movss",
+          "operands": "xmm1, dword ptr [ecx + 0x10]"
+        },
+        {
+          "address": 10481351,
+          "mnemonic": "movss",
+          "operands": "xmm0, dword ptr [0xbaa020]"
+        },
+        {
+          "address": 10481359,
+          "mnemonic": "comiss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10481362,
+          "mnemonic": "ja",
+          "operands": "0x9feeda"
+        },
+        {
+          "address": 10481364,
+          "mnemonic": "movss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10481368,
+          "mnemonic": "jmp",
+          "operands": "0x9feede"
+        },
+        {
+          "address": 10481370,
+          "mnemonic": "movss",
+          "operands": "xmm0, xmm0"
+        },
+        {
+          "address": 10481374,
+          "mnemonic": "movss",
+          "operands": "dword ptr [ebp - 4], xmm0"
+        },
+        {
+          "address": 10481379,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10481382,
+          "mnemonic": "fstp",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10481385,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10481388,
+          "mnemonic": "fadd",
+          "operands": "st(0), st(0)"
+        },
+        {
+          "address": 10481390,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10481392,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10481393,
+          "mnemonic": "ret",
+          "operands": ""
+        },
+        {
+          "address": 10481394,
+          "mnemonic": "movss",
+          "operands": "xmm1, dword ptr [ecx + 0x10]"
+        },
+        {
+          "address": 10481399,
+          "mnemonic": "movss",
+          "operands": "xmm0, dword ptr [0xbaa020]"
+        },
+        {
+          "address": 10481407,
+          "mnemonic": "comiss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10481410,
+          "mnemonic": "ja",
+          "operands": "0x9fef0a"
+        },
+        {
+          "address": 10481412,
+          "mnemonic": "movss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10481416,
+          "mnemonic": "jmp",
+          "operands": "0x9fef0e"
+        },
+        {
+          "address": 10481418,
+          "mnemonic": "movss",
+          "operands": "xmm0, xmm0"
+        },
+        {
+          "address": 10481422,
+          "mnemonic": "movss",
+          "operands": "dword ptr [ebp - 4], xmm0"
+        },
+        {
+          "address": 10481427,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10481430,
+          "mnemonic": "fmul",
+          "operands": "dword ptr [0xbaa6fc]"
+        },
+        {
+          "address": 10481436,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10481438,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10481439,
+          "mnemonic": "ret",
+          "operands": ""
+        },
+        {
+          "address": 10481440,
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": 10481441,
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": 10481443,
+          "mnemonic": "sub",
+          "operands": "esp, 8"
+        },
+        {
+          "address": 10481446,
+          "mnemonic": "push",
+          "operands": "ebx"
+        },
+        {
+          "address": 10481447,
+          "mnemonic": "push",
+          "operands": "esi"
+        },
+        {
+          "address": 10481448,
+          "mnemonic": "mov",
+          "operands": "edx, 4"
+        },
+        {
+          "address": 10481453,
+          "mnemonic": "lea",
+          "operands": "ebx, [ecx + 0x44]"
+        },
+        {
+          "address": 10481456,
+          "mnemonic": "push",
+          "operands": "edi"
+        },
+        {
+          "address": 10481457,
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], edx"
+        },
+        {
+          "address": 10481460,
+          "mnemonic": "mov",
+          "operands": "esi, dword ptr [ebx]"
+        },
+        {
+          "address": 10481462,
+          "mnemonic": "test",
+          "operands": "esi, esi"
+        },
+        {
+          "address": 10481464,
+          "mnemonic": "je",
+          "operands": "0x9ff088"
+        },
+        {
+          "address": 10481470,
+          "mnemonic": "movss",
+          "operands": "xmm0, dword ptr [0xc7b640]"
+        },
+        {
+          "address": 10481478,
+          "mnemonic": "lea",
+          "operands": "edi, [esi + 0x3c4]"
+        },
+        {
+          "address": 10481484,
+          "mnemonic": "movss",
+          "operands": "dword ptr [esi + 0x334], xmm0"
+        },
+        {
+          "address": 10481492,
+          "mnemonic": "movss",
+          "operands": "xmm0, dword ptr [0xc7b644]"
+        },
+        {
+          "address": 10481500,
+          "mnemonic": "movss",
+          "operands": "dword ptr [esi + 0x338], xmm0"
+        },
+        {
+          "address": 10481508,
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [edi]"
+        },
+        {
+          "address": 10481510,
+          "mnemonic": "test",
+          "operands": "ecx, ecx"
+        },
+        {
+          "address": 10481512,
+          "mnemonic": "je",
+          "operands": "0x9fef7f"
+        },
+        {
+          "address": 10481514,
+          "mnemonic": "lea",
+          "operands": "eax, [ebp - 8]"
+        },
+        {
+          "address": 10481517,
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 8], edi"
+        },
+        {
+          "address": 10481520,
+          "mnemonic": "push",
+          "operands": "eax"
+        },
+        {
+          "address": 10481521,
+          "mnemonic": "add",
+          "operands": "ecx, 0x3cc"
+        },
+        {
+          "address": 10481527,
+          "mnemonic": "call",
+          "operands": "0x4cf210"
+        },
+        {
+          "address": 10481532,
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10481535,
+          "mnemonic": "mov",
+          "operands": "ecx, dword ptr [esi + 0x2c]"
+        },
+        {
+          "address": 10481538,
+          "mnemonic": "mov",
+          "operands": "dword ptr [edi], 0"
+        },
+        {
+          "address": 10481544,
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi + 0x444], 0"
+        },
+        {
+          "address": 10481554,
+          "mnemonic": "mov",
+          "operands": "byte ptr [esi + 0x464], 0"
+        },
+        {
+          "address": 10481561,
+          "mnemonic": "lea",
+          "operands": "eax, [ecx - 2]"
+        },
+        {
+          "address": 10481564,
+          "mnemonic": "mov",
+          "operands": "dword ptr [esi + 0x448], 0"
+        },
+        {
+          "address": 10481574,
+          "mnemonic": "mov",
+          "operands": "word ptr [esi + 0x4e5], 0"
+        },
+        {
+          "address": 10481583,
+          "mnemonic": "cmp",
+          "operands": "eax, 9"
+        },
+        {
+          "address": 10481586,
+          "mnemonic": "ja",
+          "operands": "0x9fefc2"
+        },
+        {
+          "address": 10481588,
+          "mnemonic": "movzx",
+          "operands": "eax, byte ptr [eax + 0x9ff0ac]"
+        },
+        {
+          "address": 10481595,
+          "mnemonic": "jmp",
+          "operands": "dword ptr [eax*4 + 0x9ff0a0]"
+        },
+        {
+          "address": 10481602,
+          "mnemonic": "cmp",
+          "operands": "ecx, 1"
+        },
+        {
+          "address": 10481605,
+          "mnemonic": "jne",
+          "operands": "0x9ff088"
+        },
+        {
+          "address": 10481611,
+          "mnemonic": "cmp",
+          "operands": "dword ptr [esi + 0x7c], 0"
+        },
+        {
+          "address": 10481615,
+          "mnemonic": "je",
+          "operands": "0x9ff088"
+        },
+        {
+          "address": 10481621,
+          "mnemonic": "cmp",
+          "operands": "byte ptr [esi + 0x8c], 0"
+        },
+        {
+          "address": 10481628,
+          "mnemonic": "je",
+          "operands": "0x9ff088"
+        },
+        {
+          "address": 10481634,
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [esi + 0x7c]"
+        },
+        {
+          "address": 10481637,
+          "mnemonic": "cmp",
+          "operands": "dword ptr [eax + 0x14], 0x10"
+        },
+        {
+          "address": 10481641,
+          "mnemonic": "jb",
+          "operands": "0x9fefed"
+        },
+        {
+          "address": 10481643,
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [eax]"
+        },
+        {
+          "address": 10481645,
+          "mnemonic": "mov",
+          "operands": "ecx, 0xb602e8"
+        },
+        {
+          "address": 10481650,
+          "mnemonic": "mov",
+          "operands": "dl, byte ptr [eax]"
+        },
+        {
+          "address": 10481652,
+          "mnemonic": "cmp",
+          "operands": "dl, byte ptr [ecx]"
+        },
+        {
+          "address": 10481654,
+          "mnemonic": "jne",
+          "operands": "0x9ff012"
+        },
+        {
+          "address": 10481656,
+          "mnemonic": "test",
+          "operands": "dl, dl"
+        },
+        {
+          "address": 10481658,
+          "mnemonic": "je",
+          "operands": "0x9ff00e"
+        },
+        {
+          "address": 10481660,
+          "mnemonic": "mov",
+          "operands": "dl, byte ptr [eax + 1]"
+        },
+        {
+          "address": 10481663,
+          "mnemonic": "cmp",
+          "operands": "dl, byte ptr [ecx + 1]"
+        },
+        {
+          "address": 10481666,
+          "mnemonic": "jne",
+          "operands": "0x9ff012"
+        },
+        {
+          "address": 10481668,
+          "mnemonic": "add",
+          "operands": "eax, 2"
+        },
+        {
+          "address": 10481671,
+          "mnemonic": "add",
+          "operands": "ecx, 2"
+        },
+        {
+          "address": 10481674,
+          "mnemonic": "test",
+          "operands": "dl, dl"
+        },
+        {
+          "address": 10481676,
+          "mnemonic": "jne",
+          "operands": "0x9feff2"
+        },
+        {
+          "address": 10481678,
+          "mnemonic": "xor",
+          "operands": "eax, eax"
+        },
+        {
+          "address": 10481680,
+          "mnemonic": "jmp",
+          "operands": "0x9ff017"
+        },
+        {
+          "address": 10481682,
+          "mnemonic": "sbb",
+          "operands": "eax, eax"
+        },
+        {
+          "address": 10481684,
+          "mnemonic": "or",
+          "operands": "eax, 1"
+        },
+        {
+          "address": 10481687,
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "address": 10481689,
+          "mnemonic": "jne",
+          "operands": "0x9ff085"
+        },
+        {
+          "address": 10481691,
+          "mnemonic": "lea",
+          "operands": "edi, [esi + 0x48]"
+        },
+        {
+          "address": 10481694,
+          "mnemonic": "mov",
+          "operands": "esi, dword ptr [edi + 0x34]"
+        },
+        {
+          "address": 10481697,
+          "mnemonic": "test",
+          "operands": "esi, esi"
+        },
+        {
+          "address": 10481699,
+          "mnemonic": "je",
+          "operands": "0x9ff067"
+        },
+        {
+          "address": 10481701,
+          "mnemonic": "cmp",
+          "operands": "dword ptr [esi + 0x14], 0x10"
+        },
+        {
+          "address": 10481705,
+          "mnemonic": "mov",
+          "operands": "eax, esi"
+        },
+        {
+          "address": 10481707,
+          "mnemonic": "jb",
+          "operands": "0x9ff02f"
+        },
+        {
+          "address": 10481709,
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [esi]"
+        },
+        {
+          "address": 10481711,
+          "mnemonic": "mov",
+          "operands": "ecx, 0xb1bc54"
+        },
+        {
+          "address": 10481716,
+          "mnemonic": "mov",
+          "operands": "dl, byte ptr [eax]"
+        },
+        {
+          "address": 10481718,
+          "mnemonic": "cmp",
+          "operands": "dl, byte ptr [ecx]"
+        },
+        {
+          "address": 10481720,
+          "mnemonic": "jne",
+          "operands": "0x9ff054"
+        },
+        {
+          "address": 10481722,
+          "mnemonic": "test",
+          "operands": "dl, dl"
+        },
+        {
+          "address": 10481724,
+          "mnemonic": "je",
+          "operands": "0x9ff050"
+        },
+        {
+          "address": 10481726,
+          "mnemonic": "mov",
+          "operands": "dl, byte ptr [eax + 1]"
+        },
+        {
+          "address": 10481729,
+          "mnemonic": "cmp",
+          "operands": "dl, byte ptr [ecx + 1]"
+        },
+        {
+          "address": 10481732,
+          "mnemonic": "jne",
+          "operands": "0x9ff054"
+        },
+        {
+          "address": 10481734,
+          "mnemonic": "add",
+          "operands": "eax, 2"
+        },
+        {
+          "address": 10481737,
+          "mnemonic": "add",
+          "operands": "ecx, 2"
+        },
+        {
+          "address": 10481740,
+          "mnemonic": "test",
+          "operands": "dl, dl"
+        },
+        {
+          "address": 10481742,
+          "mnemonic": "jne",
+          "operands": "0x9ff034"
+        },
+        {
+          "address": 10481744,
+          "mnemonic": "xor",
+          "operands": "eax, eax"
+        },
+        {
+          "address": 10481746,
+          "mnemonic": "jmp",
+          "operands": "0x9ff059"
+        },
+        {
+          "address": 10481748,
+          "mnemonic": "sbb",
+          "operands": "eax, eax"
+        },
+        {
+          "address": 10481750,
+          "mnemonic": "or",
+          "operands": "eax, 1"
+        },
+        {
+          "address": 10481753,
+          "mnemonic": "test",
+          "operands": "eax, eax"
+        },
+        {
+          "address": 10481755,
+          "mnemonic": "jne",
+          "operands": "0x9ff067"
+        },
+        {
+          "address": 10481757,
+          "mnemonic": "cmp",
+          "operands": "byte ptr [esi + 0x34], al"
+        },
+        {
+          "address": 10481760,
+          "mnemonic": "je",
+          "operands": "0x9ff085"
+        },
+        {
+          "address": 10481762,
+          "mnemonic": "cmp",
+          "operands": "byte ptr [edi + 0x44], al"
+        },
+        {
+          "address": 10481765,
+          "mnemonic": "jne",
+          "operands": "0x9ff085"
+        },
+        {
+          "address": 10481767,
+          "mnemonic": "push",
+          "operands": "1"
+        },
+        {
+          "address": 10481769,
+          "mnemonic": "push",
+          "operands": "0xb1bc54"
+        },
+        {
+          "address": 10481774,
+          "mnemonic": "mov",
+          "operands": "ecx, edi"
+        },
+        {
+          "address": 10481776,
+          "mnemonic": "call",
+          "operands": "0x40a5d0"
+        },
+        {
+          "address": 10481781,
+          "mnemonic": "test",
+          "operands": "al, al"
+        },
+        {
+          "address": 10481783,
+          "mnemonic": "je",
+          "operands": "0x9ff085"
+        },
+        {
+          "address": 10481785,
+          "mnemonic": "lea",
+          "operands": "ecx, [edi + 0x30]"
+        },
+        {
+          "address": 10481788,
+          "mnemonic": "call",
+          "operands": "0x40a1b0"
+        },
+        {
+          "address": 10481793,
+          "mnemonic": "mov",
+          "operands": "byte ptr [edi + 0x44], 1"
+        },
+        {
+          "address": 10481797,
+          "mnemonic": "mov",
+          "operands": "edx, dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10481800,
+          "mnemonic": "add",
+          "operands": "ebx, 4"
+        },
+        {
+          "address": 10481803,
+          "mnemonic": "sub",
+          "operands": "edx, 1"
+        },
+        {
+          "address": 10481806,
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], edx"
+        },
+        {
+          "address": 10481809,
+          "mnemonic": "jne",
+          "operands": "0x9fef34"
+        },
+        {
+          "address": 10481815,
+          "mnemonic": "pop",
+          "operands": "edi"
+        },
+        {
+          "address": 10481816,
+          "mnemonic": "pop",
+          "operands": "esi"
+        },
+        {
+          "address": 10481817,
+          "mnemonic": "pop",
+          "operands": "ebx"
+        },
+        {
+          "address": 10481818,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10481820,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10481821,
+          "mnemonic": "ret",
+          "operands": ""
+        },
+        {
+          "address": 10481822,
+          "mnemonic": "nop",
+          "operands": ""
+        },
+        {
+          "address": 10481824,
+          "mnemonic": "retf",
+          "operands": ""
+        },
+        {
+          "address": 10481825,
+          "mnemonic": "out",
+          "operands": "dx, eax"
+        },
+        {
+          "address": 10481826,
+          "mnemonic": "lahf",
+          "operands": ""
+        },
+        {
+          "address": 10481827,
+          "mnemonic": "add",
+          "operands": "byte ptr [eax - 0x3dff6010], cl"
+        },
+        {
+          "address": 10481833,
+          "mnemonic": "out",
+          "operands": "dx, eax"
+        },
+        {
+          "address": 10481834,
+          "mnemonic": "lahf",
+          "operands": ""
+        },
+        {
+          "address": 10481835,
+          "mnemonic": "add",
+          "operands": "byte ptr [eax], al"
+        },
+        {
+          "address": 10481837,
+          "mnemonic": "add",
+          "operands": "byte ptr [eax], al"
+        },
+        {
+          "address": 10481839,
+          "mnemonic": "add",
+          "operands": "dword ptr [edx], eax"
+        },
+        {
+          "address": 10481841,
+          "mnemonic": "add",
+          "operands": "al, byte ptr [eax]"
+        },
+        {
+          "address": 10481843,
+          "mnemonic": "add",
+          "operands": "byte ptr [edx], al"
+        },
+        {
+          "address": 10481845,
+          "mnemonic": "add",
+          "operands": "esp, ecx"
+        }
+      ]
+    },
+    "0x7811e0": {
+      "name": ".?AVWeapon_Bombs@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10432816,
+          "mnemonic": "fldz",
+          "operands": ""
+        },
+        {
+          "address": 10432818,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x781420": {
+      "name": ".?AVWeapon_Knife@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10506256,
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": 10506257,
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": 10506259,
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": 10506260,
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ecx + 0x34]"
+        },
+        {
+          "address": 10506263,
+          "mnemonic": "shr",
+          "operands": "eax, 4"
+        },
+        {
+          "address": 10506266,
+          "mnemonic": "test",
+          "operands": "al, 1"
+        },
+        {
+          "address": 10506268,
+          "mnemonic": "je",
+          "operands": "0xa0502c"
+        },
+        {
+          "address": 10506270,
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], 0"
+        },
+        {
+          "address": 10506277,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10506280,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10506282,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10506283,
+          "mnemonic": "ret",
+          "operands": ""
+        },
+        {
+          "address": 10506284,
+          "mnemonic": "movss",
+          "operands": "xmm1, dword ptr [ecx + 0x10]"
+        },
+        {
+          "address": 10506289,
+          "mnemonic": "movss",
+          "operands": "xmm0, dword ptr [0xbaa020]"
+        },
+        {
+          "address": 10506297,
+          "mnemonic": "comiss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10506300,
+          "mnemonic": "ja",
+          "operands": "0xa05044"
+        },
+        {
+          "address": 10506302,
+          "mnemonic": "movss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10506306,
+          "mnemonic": "jmp",
+          "operands": "0xa05048"
+        },
+        {
+          "address": 10506308,
+          "mnemonic": "movss",
+          "operands": "xmm0, xmm0"
+        },
+        {
+          "address": 10506312,
+          "mnemonic": "mulss",
+          "operands": "xmm0, dword ptr [0xbaa75c]"
+        },
+        {
+          "address": 10506320,
+          "mnemonic": "movss",
+          "operands": "dword ptr [ebp - 4], xmm0"
+        },
+        {
+          "address": 10506325,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10506328,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10506330,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10506331,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x781270": {
+      "name": ".?AVWeapon_Fetus@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10501984,
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": 10501985,
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": 10501987,
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": 10501988,
+          "mnemonic": "movss",
+          "operands": "xmm0, dword ptr [ecx + 0x10]"
+        },
+        {
+          "address": 10501993,
+          "mnemonic": "mulss",
+          "operands": "xmm0, dword ptr [0xbaa6fc]"
+        },
+        {
+          "address": 10502001,
+          "mnemonic": "maxss",
+          "operands": "xmm0, dword ptr [0xbaa020]"
+        },
+        {
+          "address": 10502009,
+          "mnemonic": "movss",
+          "operands": "dword ptr [ebp - 4], xmm0"
+        },
+        {
+          "address": 10502014,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10502017,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10502019,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10502020,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x781390": {
+      "name": ".?AVWeapon_Deathmatch@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10499760,
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": 10499761,
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": 10499763,
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": 10499764,
+          "mnemonic": "movss",
+          "operands": "xmm1, dword ptr [ecx + 0x10]"
+        },
+        {
+          "address": 10499769,
+          "mnemonic": "movss",
+          "operands": "xmm0, dword ptr [0xbaa020]"
+        },
+        {
+          "address": 10499777,
+          "mnemonic": "comiss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10499780,
+          "mnemonic": "ja",
+          "operands": "0xa036cc"
+        },
+        {
+          "address": 10499782,
+          "mnemonic": "movss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10499786,
+          "mnemonic": "jmp",
+          "operands": "0xa036d0"
+        },
+        {
+          "address": 10499788,
+          "mnemonic": "movss",
+          "operands": "xmm0, xmm0"
+        },
+        {
+          "address": 10499792,
+          "mnemonic": "movss",
+          "operands": "dword ptr [ebp - 4], xmm0"
+        },
+        {
+          "address": 10499797,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10499800,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10499802,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10499803,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    },
+    "0x7812b8": {
+      "name": ".?AVWeapon_Brimstone@IsaacRepentancePlus@@",
+      "max_charge": [
+        {
+          "address": 10489648,
+          "mnemonic": "push",
+          "operands": "ebp"
+        },
+        {
+          "address": 10489649,
+          "mnemonic": "mov",
+          "operands": "ebp, esp"
+        },
+        {
+          "address": 10489651,
+          "mnemonic": "push",
+          "operands": "ecx"
+        },
+        {
+          "address": 10489652,
+          "mnemonic": "test",
+          "operands": "byte ptr [ecx + 0x34], 1"
+        },
+        {
+          "address": 10489656,
+          "mnemonic": "movss",
+          "operands": "xmm2, dword ptr [0xbaa454]"
+        },
+        {
+          "address": 10489664,
+          "mnemonic": "je",
+          "operands": "0xa00f4a"
+        },
+        {
+          "address": 10489666,
+          "mnemonic": "movss",
+          "operands": "xmm2, dword ptr [0xbaa6bc]"
+        },
+        {
+          "address": 10489674,
+          "mnemonic": "mov",
+          "operands": "eax, dword ptr [ecx + 0x34]"
+        },
+        {
+          "address": 10489677,
+          "mnemonic": "shr",
+          "operands": "eax, 4"
+        },
+        {
+          "address": 10489680,
+          "mnemonic": "test",
+          "operands": "al, 1"
+        },
+        {
+          "address": 10489682,
+          "mnemonic": "je",
+          "operands": "0xa00f62"
+        },
+        {
+          "address": 10489684,
+          "mnemonic": "mov",
+          "operands": "dword ptr [ebp - 4], 0"
+        },
+        {
+          "address": 10489691,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10489694,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10489696,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10489697,
+          "mnemonic": "ret",
+          "operands": ""
+        },
+        {
+          "address": 10489698,
+          "mnemonic": "movss",
+          "operands": "xmm1, dword ptr [ecx + 0x10]"
+        },
+        {
+          "address": 10489703,
+          "mnemonic": "movss",
+          "operands": "xmm0, dword ptr [0xbaa020]"
+        },
+        {
+          "address": 10489711,
+          "mnemonic": "comiss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10489714,
+          "mnemonic": "ja",
+          "operands": "0xa00f7a"
+        },
+        {
+          "address": 10489716,
+          "mnemonic": "movss",
+          "operands": "xmm0, xmm1"
+        },
+        {
+          "address": 10489720,
+          "mnemonic": "jmp",
+          "operands": "0xa00f7e"
+        },
+        {
+          "address": 10489722,
+          "mnemonic": "movss",
+          "operands": "xmm0, xmm0"
+        },
+        {
+          "address": 10489726,
+          "mnemonic": "mulss",
+          "operands": "xmm0, xmm2"
+        },
+        {
+          "address": 10489730,
+          "mnemonic": "movss",
+          "operands": "dword ptr [ebp - 4], xmm0"
+        },
+        {
+          "address": 10489735,
+          "mnemonic": "fld",
+          "operands": "dword ptr [ebp - 4]"
+        },
+        {
+          "address": 10489738,
+          "mnemonic": "mov",
+          "operands": "esp, ebp"
+        },
+        {
+          "address": 10489740,
+          "mnemonic": "pop",
+          "operands": "ebp"
+        },
+        {
+          "address": 10489741,
+          "mnemonic": "ret",
+          "operands": ""
+        }
+      ]
+    }
+  },
+  "constants": {
+    "0xbaa75c": "00008040",
+    "0xbaa020": "6f12833a",
+    "0xbaa454": "0000803f",
+    "0xbaa764": "9a998940",
+    "0xbaa6bc": "00002040",
+    "0xbaa6fc": "00004040",
+    "0xbaa834": "00004041",
+    "0xc7b640": "1c376037",
+    "0xc7b644": "70378737"
+  }
+}

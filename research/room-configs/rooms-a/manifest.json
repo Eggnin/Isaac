@@ -1,0 +1,123 @@
+{
+ "archive": "rooms.a",
+ "version": 1,
+ "entries": [
+  {
+   "index": 0,
+   "h1": "91f1f0e4",
+   "h2": "b16806f9",
+   "size": 113413,
+   "x": "007b024e",
+   "file": "resources/rooms/00.special rooms.stb",
+   "name": "resources/rooms/00.special rooms.stb"
+  },
+  {
+   "index": 1,
+   "h1": "8eaddbe3",
+   "h2": "36346d60",
+   "size": 310344,
+   "x": "5983181c",
+   "file": "resources/rooms/01.basement.stb",
+   "name": "resources/rooms/01.basement.stb"
+  },
+  {
+   "index": 2,
+   "h1": "108c1268",
+   "h2": "dab93ff5",
+   "size": 322055,
+   "x": "8a3b7660",
+   "file": "resources/rooms/02.cellar.stb",
+   "name": "resources/rooms/02.cellar.stb"
+  },
+  {
+   "index": 3,
+   "h1": "81982308",
+   "h2": "46c5764d",
+   "size": 424532,
+   "x": "a438a74d",
+   "file": "_unnamed/81982308-46c5764d.bin",
+   "name": null
+  },
+  {
+   "index": 4,
+   "h1": "4e4aad84",
+   "h2": "f4a7e6d5",
+   "size": 438202,
+   "x": "1b2cb770",
+   "file": "_unnamed/4e4aad84-f4a7e6d5.bin",
+   "name": null
+  },
+  {
+   "index": 5,
+   "h1": "d0b02a20",
+   "h2": "f6fc1d3b",
+   "size": 385086,
+   "x": "61b71244",
+   "file": "_unnamed/d0b02a20-f6fc1d3b.bin",
+   "name": null
+  },
+  {
+   "index": 6,
+   "h1": "00f49437",
+   "h2": "c690c366",
+   "size": 373652,
+   "x": "fddbcefc",
+   "file": "_unnamed/00f49437-c690c366.bin",
+   "name": null
+  },
+  {
+   "index": 7,
+   "h1": "a1d036cf",
+   "h2": "c9a33792",
+   "size": 382561,
+   "x": "e4a1ab65",
+   "file": "_unnamed/a1d036cf-c9a33792.bin",
+   "name": null
+  },
+  {
+   "index": 8,
+   "h1": "d777116a",
+   "h2": "f491d745",
+   "size": 382511,
+   "x": "78022fe6",
+   "file": "_unnamed/d777116a-f491d745.bin",
+   "name": null
+  },
+  {
+   "index": 9,
+   "h1": "598f26b7",
+   "h2": "6e8a29f4",
+   "size": 119056,
+   "x": "8839c8eb",
+   "file": "_unnamed/598f26b7-6e8a29f4.bin",
+   "name": null
+  },
+  {
+   "index": 10,
+   "h1": "29e02c3c",
+   "h2": "b4622d23",
+   "size": 93297,
+   "x": "819f611d",
+   "file": "_unnamed/29e02c3c-b4622d23.bin",
+   "name": null
+  },
+  {
+   "index": 11,
+   "h1": "ddc7b674",
+   "h2": "c46f5777",
+   "size": 14759,
+   "x": "fdca7283",
+   "file": "_unnamed/ddc7b674-c46f5777.bin",
+   "name": null
+  },
+  {
+   "index": 12,
+   "h1": "a717e5cd",
+   "h2": "7829e938",
+   "size": 11053,
+   "x": "3a93e71e",
+   "file": "_unnamed/a717e5cd-7829e938.bin",
+   "name": null
+  }
+ ]
+}

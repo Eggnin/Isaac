@@ -1,0 +1,3 @@
+va	name	types	identity_keys	evidence
+0x008131e0	HELPER_RoomWrapPoint	0	*	Continuum helper delegates
+0x006cb010	HELPER_ProjectileStatusFlags	9	9.*	Projectile finalization native flags

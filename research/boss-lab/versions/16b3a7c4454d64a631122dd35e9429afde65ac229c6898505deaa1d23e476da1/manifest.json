@@ -1,0 +1,24 @@
+{
+  "policySha256": "16b3a7c4454d64a631122dd35e9429afde65ac229c6898505deaa1d23e476da1",
+  "inputs": {
+    "offline\\planner_policy.mjs": "796de7a61e97efffe785a588a0182aa2246cb928069335e753a0a8e8bf439c53",
+    "offline\\planner_policy.wasm": "16b3a7c4454d64a631122dd35e9429afde65ac229c6898505deaa1d23e476da1",
+    "offline\\planner_bridge.cpp": "3a0d05b9079d28c69731a5bd9fb227138e1d891cd5033cdf8a07ecd799d341e7",
+    "cpp\\src\\control.cpp": "039ff15c5b50ba483c0c26e8d413addd5bef42bdf938173899496b5e329af25f",
+    "cpp\\src\\gui_win32.cpp": "8da2de700ce96353ecb14d0c65c55405cd551cf41a04c29fdda7487bed7ecabc",
+    "cpp\\src\\keyboard_win32.cpp": "af08d0eb4d745859d8a5a718fb393864f65ebd50b6758e12499f66f540ba094d",
+    "cpp\\src\\main.cpp": "62b7d063a914d4ca1d1cf56f81efb765f2eeeda5530ed6d1fcb60a32e04cdf13",
+    "cpp\\src\\model.cpp": "bd67e340755f42b290118e29e7a8512cdc12360dc9e3f25f66230ce6be946219",
+    "cpp\\src\\planner.cpp": "13a2395ae60977cc4f6a090a12aed906f67c5cf946adb175aa4e725b2a3755f0",
+    "cpp\\src\\reader.cpp": "9085c7a8af21031dc47707d83399436884523275c5ff581c1978dbaa5b5ff797",
+    "cpp\\src\\weapons.cpp": "4309bfaa0f1629ad6f7635b2cc71545290d4a57433c74ca29138adf679f65e33",
+    "cpp\\tests\\core_tests.cpp": "521c478a91ca0fe3cf5d1732bbb7fbdf8a2ae429e177d81d73d9403084fbca25",
+    "cpp\\include\\gamebot\\control.hpp": "187b8a9c81fa9e228b2101c6444dffd8aedcd623a7c69b77cb20f73cff37120a",
+    "cpp\\include\\gamebot\\model.hpp": "81c9f304096ab86eb3946fc0cb4bc0497200e2c74d10c0791aa47f9580c4f74e",
+    "cpp\\include\\gamebot\\planner.hpp": "023653c8918df7a20fcec421b6b6e4623edfca2080841df0fb7a34e7388c38a7",
+    "cpp\\include\\gamebot\\reader.hpp": "5ce53c11f22815b8538c71684543f99e5a16c4fe5b4ca2b5142219b2af90acf5",
+    "cpp\\include\\gamebot\\runtime.hpp": "b8829614955d5ab7919316cbfb1bc9bf937f91f51a5de3e4725ee20b8d474ad0",
+    "cpp\\include\\gamebot\\weapons.hpp": "59fe020169f7fb56abe6f05d3a52d2f245ee8070c41f408943d0e65174520869",
+    "cpp\\third_party\\nlohmann\\json.hpp": "aaf127c04cb31c406e5b04a63f1ae89369fccde6d8fa7cdda1ed4f32dfc5de63"
+  }
+}

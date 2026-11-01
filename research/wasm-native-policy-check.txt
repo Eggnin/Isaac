@@ -1,0 +1,1 @@
+{"native":true,"runDirectory":"D:\\Isaac\\research\\training-runs\\1793124247260-31100-0","initialFrame":0,"finalFrame":1306,"frames":1306,"damageTaken":0,"health":6,"cleared":true,"dead":false,"peakTears":2,"peakProjectiles":18,"elapsedMs":5865.010499999999,"parameters":{},"maxPolicyInputBytes":58599,"logicFramesPerSecond":222.6764981921175,"pass":true}

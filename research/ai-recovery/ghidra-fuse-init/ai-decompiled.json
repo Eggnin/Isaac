@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 3,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x0081f8b0", "name": "HELPER_LRoomRectangles", "types": "0", "identities": "*", "entry": "0081f8b0", "resolvedFunction": "HELPER_LRoomRectangles", "ghidraEntry": "0081f8b0", "instructions": 182, "incomingCalls": 4, "outgoingCalls": 0, "cFile": "HELPER_LRoomRectangles_0081f8b0.c", "asmFile": "HELPER_LRoomRectangles_0081f8b0.asm", "error": null},
+    {"va": "0x006a5f00", "name": "HELPER_Bomb_HandleCollision", "types": "4", "identities": "4.*", "entry": "006a5f00", "resolvedFunction": "HELPER_Bomb_HandleCollision", "ghidraEntry": "006a5f00", "instructions": 616, "incomingCalls": 0, "outgoingCalls": 34, "cFile": "HELPER_Bomb_HandleCollision_006a5f00.c", "asmFile": "HELPER_Bomb_HandleCollision_006a5f00.asm", "error": null},
+    {"va": "0x00652b90", "name": "HELPER_Projectile_Init", "types": "9", "identities": "9.*", "entry": "00652b90", "resolvedFunction": "HELPER_Projectile_Init", "ghidraEntry": "00652b90", "instructions": 107, "incomingCalls": 0, "outgoingCalls": 6, "cFile": "HELPER_Projectile_Init_00652b90.c", "asmFile": "HELPER_Projectile_Init_00652b90.asm", "error": null}
+  ]
+}

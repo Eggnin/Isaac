@@ -1,0 +1,5 @@
+va	name	types	identity_keys	evidence
+0x007069a0	HELPER_HostileProjectileHoming	9	9.*	SMART branch calls
+0x00707370	HELPER_FriendlyProjectileHoming	9	9.*	SMART alternate target branch
+0x0042f160	HELPER_ContactVectorCount	0	*	Bounce contact normal list count
+0x0042f150	HELPER_ContactVectorAt	0	*	Bounce contact normal list access

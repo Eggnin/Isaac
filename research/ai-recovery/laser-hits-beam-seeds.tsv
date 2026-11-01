@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x0097e3c0	HELPER_Laser_DoDamage	7	7.*	SDK DoDamage signature matched original J460
+0x0099c790	HELPER_HomingLaser_BuildBeam	7	7.*	Straight sampled beam node builder homing-type argument
+0x00971810	HELPER_Laser_ApplyDamage	7	7.*	Active laser damage dispatch; hit list consumption

@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x0096cf80	HELPER_Laser_CanDamageEntity	7	7.*	Reference method signature match
+0x00973a50	HELPER_Laser_AdvanceLifetime	7	7.*	Damage dispatch first call
+0x006ae7d0	HELPER_Entity_PreUpdate	0	*	Age and time-scale update

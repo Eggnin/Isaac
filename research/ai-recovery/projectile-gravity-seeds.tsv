@@ -1,0 +1,2 @@
+va	name	types	identity_keys	evidence
+0x00684cb0	HELPER_TimeScaledDamping	9	9.*	Projectile FallSpeed damping with floor/time scale

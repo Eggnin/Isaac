@@ -1,0 +1,1 @@
+{"pass":true,"runDirectory":"D:\\Isaac\\research\\training-runs\\1793124065563-8892-0","freeze":{"firstFrame":0,"secondFrame":0,"identical":true},"steps":60}

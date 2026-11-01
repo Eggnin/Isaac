@@ -1,0 +1,22 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 10,
+  "decompiledCount": 10,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00431450", "name": "HELPER_Entity_AddVelocity", "types": "9", "identities": "9.*", "entry": "00431450", "resolvedFunction": "HELPER_Entity_AddVelocity", "ghidraEntry": "00431450", "instructions": 18, "incomingCalls": 29, "outgoingCalls": 0, "cFile": "HELPER_Entity_AddVelocity_00431450.c", "asmFile": "HELPER_Entity_AddVelocity_00431450.asm", "error": null},
+    {"va": "0x00417290", "name": "HELPER_Entity_Position", "types": "9", "identities": "9.*", "entry": "00417290", "resolvedFunction": "HELPER_Entity_Position", "ghidraEntry": "00417290", "instructions": 9, "incomingCalls": 447, "outgoingCalls": 0, "cFile": "HELPER_Entity_Position_00417290.c", "asmFile": "HELPER_Entity_Position_00417290.asm", "error": null},
+    {"va": "0x004172b0", "name": "HELPER_Entity_PreviousPosition", "types": "9", "identities": "9.*", "entry": "004172b0", "resolvedFunction": "HELPER_Entity_PreviousPosition", "ghidraEntry": "004172b0", "instructions": 9, "incomingCalls": 6, "outgoingCalls": 0, "cFile": "HELPER_Entity_PreviousPosition_004172b0.c", "asmFile": "HELPER_Entity_PreviousPosition_004172b0.asm", "error": null},
+    {"va": "0x004172d0", "name": "HELPER_Entity_Velocity", "types": "9", "identities": "9.*", "entry": "004172d0", "resolvedFunction": "HELPER_Entity_Velocity", "ghidraEntry": "004172d0", "instructions": 9, "incomingCalls": 80, "outgoingCalls": 0, "cFile": "HELPER_Entity_Velocity_004172d0.c", "asmFile": "HELPER_Entity_Velocity_004172d0.asm", "error": null},
+    {"va": "0x006a9c10", "name": "HELPER_Entity_AgeModulo", "types": "9", "identities": "9.*", "entry": "006a9c10", "resolvedFunction": "HELPER_Entity_AgeModulo", "ghidraEntry": "006a9c10", "instructions": 4, "incomingCalls": 81, "outgoingCalls": 0, "cFile": "HELPER_Entity_AgeModulo_006a9c10.c", "asmFile": "HELPER_Entity_AgeModulo_006a9c10.asm", "error": null},
+    {"va": "0x006ac760", "name": "HELPER_Entity_TimeoutCrossed", "types": "9", "identities": "9.*", "entry": "006ac760", "resolvedFunction": "HELPER_Entity_TimeoutCrossed", "ghidraEntry": "006ac760", "instructions": 34, "incomingCalls": 165, "outgoingCalls": 1, "cFile": "HELPER_Entity_TimeoutCrossed_006ac760.c", "asmFile": "HELPER_Entity_TimeoutCrossed_006ac760.asm", "error": null},
+    {"va": "0x00435db0", "name": "HELPER_Entity_FrameCount", "types": "9", "identities": "9.*", "entry": "00435db0", "resolvedFunction": "HELPER_Entity_FrameCount", "ghidraEntry": "00435db0", "instructions": 4, "incomingCalls": 10, "outgoingCalls": 0, "cFile": "HELPER_Entity_FrameCount_00435db0.c", "asmFile": "HELPER_Entity_FrameCount_00435db0.asm", "error": null},
+    {"va": "0x00a155c0", "name": "HELPER_Float_Interpolate", "types": "9", "identities": "9.*", "entry": "00a155c0", "resolvedFunction": "HELPER_Float_Interpolate", "ghidraEntry": "00a155c0", "instructions": 8, "incomingCalls": 58, "outgoingCalls": 0, "cFile": "HELPER_Float_Interpolate_00a155c0.c", "asmFile": "HELPER_Float_Interpolate_00a155c0.asm", "error": null},
+    {"va": "0x006fd350", "name": "HELPER_Entity_TimeGate", "types": "9", "identities": "9.*", "entry": "006fd350", "resolvedFunction": "HELPER_Entity_TimeGate", "ghidraEntry": "006fd350", "instructions": 45, "incomingCalls": 56, "outgoingCalls": 2, "cFile": "HELPER_Entity_TimeGate_006fd350.c", "asmFile": "HELPER_Entity_TimeGate_006fd350.asm", "error": null},
+    {"va": "0x00a101c0", "name": "HELPER_Vector_Interpolate", "types": "9", "identities": "9.*", "entry": "00a101c0", "resolvedFunction": "HELPER_Vector_Interpolate", "ghidraEntry": "00a101c0", "instructions": 20, "incomingCalls": 9, "outgoingCalls": 0, "cFile": "HELPER_Vector_Interpolate_00a101c0.c", "asmFile": "HELPER_Vector_Interpolate_00a101c0.asm", "error": null}
+  ]
+}

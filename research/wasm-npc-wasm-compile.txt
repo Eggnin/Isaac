@@ -1,0 +1,4 @@
+research/wasm-npc-lift/lifted.c:5766:22: warning: self-comparison always evaluates to false [-Wtautological-compare]
+ 5766 |   CF = (uint8_t)(EAX < EAX);
+      |                      ^
+1 warning generated.

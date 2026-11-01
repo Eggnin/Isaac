@@ -1,0 +1,9 @@
+va	name	types	identity_keys	evidence
+0x009a0850	HELPER_HomingLaser_BuildRing	7	7.*	Ring node builder takes effective radius in XMM2
+0x009a0de0	HELPER_HomingLaser_SimplifySamples	7	7.*	Ring path post-sample helper
+0x00973c60	HELPER_Laser_UpdateStraightSampled	7	7.*	Laser Update straight damage branch
+0x0099ec00	HELPER_HomingLaser_ApplyHoming	7	7.*	Ring and beam homing curve update
+0x0096ce70	HELPER_Laser_Root	7	7.*	CanDamageEntity chained root resolution
+0x0096cf40	HELPER_Laser_FriendlyPredicate	7	7.*	CanDamageEntity allegiance predicate
+0x0096d3f0	HELPER_Laser_DamageSamples	7	7.*	Ring sampled damage helper
+0x0096ce30	HELPER_Laser_BrimstonePredicate	7	7.*	Ring lifecycle variant predicate

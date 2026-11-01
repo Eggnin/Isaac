@@ -1,0 +1,19 @@
+Session: D:\Isaac\research\offline-runs\20261028-005804-234
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null) entry 112: initialiser 0x00407070
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null) entry 112: 0x00407070 returned 0
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null) entry 113: initialiser 0x00407080
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null) entry 113: 0x00407080 returned 0
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null) entry 114: initialiser 0x004070b0
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null) entry 114: 0x004070b0 returned 0
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null) entry 115: initialiser 0x004070c0
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null) entry 115: 0x004070c0 returned 13081664
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null) entry 116: initialiser 0x004070f0
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null) entry 116: 0x004070f0 returned 0
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null) entry 117: initialiser 0x00407100
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null) entry 117: 0x00407100 returned 0
+[isaac][boot] .CRT$XC (C++ dynamic initialisers, 117 non-null): ran 117 initialisers (1 null slots)
+[isaac][boot] ready; main() at 0x00931050 has NOT been called yet
+  isaac_boot_init -> 1
+  guard after boot: intact
+
+RESULT: boot rc=1

@@ -1,0 +1,463 @@
+{
+  "format": "j460-trap-room-registry-v1",
+  "source": "https://isaac.huijiwiki.com/wiki/%E6%8C%89%E9%92%AE",
+  "game_sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+  "npc_catalog_total": 653,
+  "listed_families": [
+    {
+      "name_zh": "地刺",
+      "npc_keys": [],
+      "non_npc_representations": [
+        {
+          "grid_type": 8
+        }
+      ]
+    },
+    {
+      "name_zh": "伸缩地刺",
+      "npc_keys": [],
+      "non_npc_representations": [
+        {
+          "grid_type": 9
+        }
+      ]
+    },
+    {
+      "name_zh": "炸药桶",
+      "npc_keys": [
+        "292.0.0"
+      ],
+      "non_npc_representations": [
+        {
+          "grid_type": 12
+        }
+      ]
+    },
+    {
+      "name_zh": "即爆炸弹",
+      "npc_keys": [],
+      "non_npc_representations": [
+        {
+          "entity_type": 4,
+          "variant": 3,
+          "subtype": 0
+        }
+      ]
+    },
+    {
+      "name_zh": "超级即爆炸弹",
+      "npc_keys": [],
+      "non_npc_representations": [
+        {
+          "entity_type": 4,
+          "variant": 4,
+          "subtype": 0
+        }
+      ]
+    },
+    {
+      "name_zh": "石鬼面",
+      "npc_keys": [
+        "42.0.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "呕吐鬼面",
+      "npc_keys": [
+        "42.1.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "三发鬼面",
+      "npc_keys": [
+        "42.2.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "张口大嘴",
+      "npc_keys": [
+        "235.0.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "损坏的张口大嘴",
+      "npc_keys": [
+        "236.0.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "硫磺火头 / Brimstone Head",
+      "npc_keys": [
+        "203.0.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "常时石质发射器",
+      "npc_keys": [
+        "202.0.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "十字石质发射器",
+      "npc_keys": [
+        "202.10.0",
+        "202.10.1",
+        "202.11.0",
+        "202.11.1"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "震地鬼面",
+      "npc_keys": [
+        "804.0.0",
+        "804.0.1",
+        "804.0.2",
+        "804.0.3"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "刺块",
+      "npc_keys": [
+        "44.0.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "滑块",
+      "npc_keys": [
+        "44.1.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "靠墙刺块",
+      "npc_keys": [
+        "218.0.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "怨恨",
+      "npc_keys": [
+        "877.0.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "刺球",
+      "npc_keys": [
+        "852.0.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "红大便",
+      "npc_keys": [],
+      "non_npc_representations": [
+        {
+          "grid_type": 14,
+          "variant": 1
+        }
+      ]
+    },
+    {
+      "name_zh": "红色火堆",
+      "npc_keys": [
+        "33.1.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "紫色火堆",
+      "npc_keys": [
+        "33.3.0"
+      ],
+      "non_npc_representations": []
+    },
+    {
+      "name_zh": "陷阱 / Pitfall",
+      "npc_keys": [
+        "291.0.0"
+      ],
+      "non_npc_representations": []
+    }
+  ],
+  "npc_identities": [
+    {
+      "key": "292.0.0",
+      "type": 292,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "炸药桶",
+      "entity_config_name": "Movable TNT",
+      "previous_category": "unlisted_npc",
+      "previous_role": "unlisted_npc"
+    },
+    {
+      "key": "42.0.0",
+      "type": 42,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "石鬼面",
+      "entity_config_name": "#STONE_GRIMACE",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "42.1.0",
+      "type": 42,
+      "variant": 1,
+      "subtype": 0,
+      "trap_name_zh": "呕吐鬼面",
+      "entity_config_name": "#VOMIT_GRIMACE",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "42.2.0",
+      "type": 42,
+      "variant": 2,
+      "subtype": 0,
+      "trap_name_zh": "三发鬼面",
+      "entity_config_name": "#TRIPLE_GRIMACE",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "235.0.0",
+      "type": 235,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "张口大嘴",
+      "entity_config_name": "#GAPING_MAW",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "236.0.0",
+      "type": 236,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "损坏的张口大嘴",
+      "entity_config_name": "#BROKEN_GAPING_MAW",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "203.0.0",
+      "type": 203,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "硫磺火头 / Brimstone Head",
+      "entity_config_name": "#BRIMSTONE_HEAD",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "202.0.0",
+      "type": 202,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "常时石质发射器",
+      "entity_config_name": "#CONSTANT_STONE_SHOOTER",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "202.10.0",
+      "type": 202,
+      "variant": 10,
+      "subtype": 0,
+      "trap_name_zh": "十字石质发射器",
+      "entity_config_name": "#CROSS_STONE_SHOOTER",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "202.10.1",
+      "type": 202,
+      "variant": 10,
+      "subtype": 1,
+      "trap_name_zh": "十字石质发射器",
+      "entity_config_name": "#CROSS_STONE_SHOOTER",
+      "previous_category": "unlisted_npc",
+      "previous_role": "unlisted_npc"
+    },
+    {
+      "key": "202.11.0",
+      "type": 202,
+      "variant": 11,
+      "subtype": 0,
+      "trap_name_zh": "十字石质发射器",
+      "entity_config_name": "Cross Stone Shooter (always on)",
+      "previous_category": "unlisted_npc",
+      "previous_role": "unlisted_npc"
+    },
+    {
+      "key": "202.11.1",
+      "type": 202,
+      "variant": 11,
+      "subtype": 1,
+      "trap_name_zh": "十字石质发射器",
+      "entity_config_name": "Cross Stone Shooter (always on)",
+      "previous_category": "unlisted_npc",
+      "previous_role": "unlisted_npc"
+    },
+    {
+      "key": "804.0.0",
+      "type": 804,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "震地鬼面",
+      "entity_config_name": "#QUAKE_GRIMACE",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "804.0.1",
+      "type": 804,
+      "variant": 0,
+      "subtype": 1,
+      "trap_name_zh": "震地鬼面",
+      "entity_config_name": "Quake Grimace",
+      "previous_category": "unlisted_npc",
+      "previous_role": "unlisted_npc"
+    },
+    {
+      "key": "804.0.2",
+      "type": 804,
+      "variant": 0,
+      "subtype": 2,
+      "trap_name_zh": "震地鬼面",
+      "entity_config_name": "Quake Grimace",
+      "previous_category": "unlisted_npc",
+      "previous_role": "unlisted_npc"
+    },
+    {
+      "key": "804.0.3",
+      "type": 804,
+      "variant": 0,
+      "subtype": 3,
+      "trap_name_zh": "震地鬼面",
+      "entity_config_name": "Quake Grimace",
+      "previous_category": "unlisted_npc",
+      "previous_role": "unlisted_npc"
+    },
+    {
+      "key": "44.0.0",
+      "type": 44,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "刺块",
+      "entity_config_name": "#POKY",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "44.1.0",
+      "type": 44,
+      "variant": 1,
+      "subtype": 0,
+      "trap_name_zh": "滑块",
+      "entity_config_name": "#SLIDE",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "218.0.0",
+      "type": 218,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "靠墙刺块",
+      "entity_config_name": "#WALL_HUGGER",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "877.0.0",
+      "type": 877,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "怨恨",
+      "entity_config_name": "#GRUDGE",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "852.0.0",
+      "type": 852,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "刺球",
+      "entity_config_name": "#SPIKEBALL",
+      "previous_category": "monster",
+      "previous_role": "monster"
+    },
+    {
+      "key": "33.1.0",
+      "type": 33,
+      "variant": 1,
+      "subtype": 0,
+      "trap_name_zh": "红色火堆",
+      "entity_config_name": "Red Fire Place",
+      "previous_category": "unlisted_npc",
+      "previous_role": "unlisted_npc"
+    },
+    {
+      "key": "33.3.0",
+      "type": 33,
+      "variant": 3,
+      "subtype": 0,
+      "trap_name_zh": "紫色火堆",
+      "entity_config_name": "Purple Fire Place",
+      "previous_category": "unlisted_npc",
+      "previous_role": "unlisted_npc"
+    },
+    {
+      "key": "291.0.0",
+      "type": 291,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "陷阱 / Pitfall",
+      "entity_config_name": "Pitfall",
+      "previous_category": "unlisted_npc",
+      "previous_role": "unlisted_npc"
+    },
+    {
+      "key": "201.0.0",
+      "type": 201,
+      "variant": 0,
+      "subtype": 0,
+      "trap_name_zh": "石眼（补充联动机关）",
+      "entity_config_name": "#STONE_EYE",
+      "previous_category": "monster",
+      "previous_role": "monster",
+      "additional_source": "research/MECHANISM-ENTITIES-20261029.md"
+    }
+  ],
+  "buttons": [
+    {
+      "grid_type": 20,
+      "variant": 0,
+      "kind": "silver",
+      "completion": "all state 3 and room flag bit 1"
+    },
+    {
+      "grid_type": 20,
+      "variant": 9,
+      "kind": "kill",
+      "completion": "state 3; observe enemy and hostile projectile removal"
+    }
+  ],
+  "scope": "Exact identities are membership annotations. Only the two button scenarios are tested in this change; no individual trap is marked combat-verified.",
+  "runtime_orientation_note": "Brimstone Head also appears with orientation subtypes 1/2/3 in native rooms; these are not added as invented EntityConfig rows."
+}

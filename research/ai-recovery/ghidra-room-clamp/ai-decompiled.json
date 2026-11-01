@@ -1,0 +1,13 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 1,
+  "decompiledCount": 1,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00812f50", "name": "HELPER_RoomClampedPoint", "types": "0", "identities": "*", "entry": "00812f50", "resolvedFunction": "HELPER_RoomClampedPoint", "ghidraEntry": "00812f50", "instructions": 180, "incomingCalls": 160, "outgoingCalls": 1, "cFile": "HELPER_RoomClampedPoint_00812f50.c", "asmFile": "HELPER_RoomClampedPoint_00812f50.asm", "error": null}
+  ]
+}

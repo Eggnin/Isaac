@@ -1,0 +1,15 @@
+{
+  "file_sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+  "engine_version": "v1.9.7.17.J460",
+  "baseline": "user_reinstall_2026-10-23",
+  "preferred_base": 4194304,
+  "game_slot_rva": 8853112,
+  "player_list_offset": 113320,
+  "source": "https://github.com/TeamREPENTOGON/REPENTOGON/tree/main/libzhl/functions",
+  "runtime_verified": false,
+  "game": "D:\\Steam\\steamapps\\common\\The Binding of Isaac Rebirth",
+  "steam_build_id": "22878971",
+  "builtin_present": false,
+  "main_lua_sha256": "4849AAEF553FF30F2BCE6D44291491809CF87B519882275B69C2134270DEA631",
+  "old_restore_must_not_run": true
+}

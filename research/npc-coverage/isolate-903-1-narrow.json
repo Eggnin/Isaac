@@ -1,0 +1,42 @@
+{
+  "native": true,
+  "scope": "one catalog identity per NPC configuration in original narrow and long combat rooms",
+  "caveat": "debug 3 invulnerability is used for catalog identity/danger probes; damage and clear results do not count as no-damage combat evidence",
+  "catalogCount": 653,
+  "start": 580,
+  "limit": 1,
+  "observeFrames": 2,
+  "parameters": {
+    "dt": 0.03333333333333333,
+    "contact_margin": 8
+  },
+  "rooms": {
+    "narrow": {
+      "room": "s.boss.3702",
+      "width": 15,
+      "height": 16,
+      "description": "original tall narrow boss room",
+      "invulnerableProbe": true,
+      "results": [
+        {
+          "status": "engine-error",
+          "error": "Error: engine returned before the training session closed; see D:\\Isaac\\research\\training-runs\\1793147907412-14532-0\\engine.log\n    at ChildProcess.<anonymous> (file:///D:/Isaac/research/offline/engine_environment.mjs:72:25)\n    at ChildProcess.emit (node:events:514:28)\n    at emit (node:internal/child_process:1020:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:91:21)",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793147907412-14532-0"
+        }
+      ],
+      "summary": {
+        "requested": 1,
+        "observed": 0,
+        "exactObserved": 0,
+        "normalizedObserved": 0,
+        "missing": 1,
+        "dangerObserved": 0,
+        "spawnFailed": 0,
+        "resetTimeout": 0,
+        "engineErrors": 1
+      }
+    }
+  },
+  "error": "Error: engine returned before the training session closed; see D:\\Isaac\\research\\training-runs\\1793147907412-14532-0\\engine.log\n    at ChildProcess.<anonymous> (file:///D:/Isaac/research/offline/engine_environment.mjs:72:25)\n    at ChildProcess.emit (node:events:514:28)\n    at emit (node:internal/child_process:1020:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:91:21)",
+  "wallMs": 6779.918900000001
+}

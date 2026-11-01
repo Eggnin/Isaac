@@ -1,0 +1,5 @@
+va	name	types	identity_keys	evidence
+0x007cb6e0	HELPER_Player_TrinketMultiplier	1,1000	1.*,1000.*	Creep damage/slow player immunity gate
+0x0072fd10	HELPER_ItemConfig_GetCollectible	1,1000	1.*,1000.*	Creep damage/slow player immunity gate
+0x00771550	HELPER_Player_HasTrinket	1,1000	1.*,1000.*	Creep damage/slow player immunity gate
+0x007706e0	HELPER_Player_HasCollectible	1,1000	1.*,1000.*	Creep damage/slow player immunity gate

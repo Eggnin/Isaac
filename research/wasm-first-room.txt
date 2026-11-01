@@ -1,0 +1,19 @@
+Session: D:\Isaac\research\offline-runs\20261028-005819-384
+[isaac][mod]          1 x  ntdll.dll!NtAllocateVirtualMemoryEx not provided
+[isaac][mod]          1 x  kernel32.dll!GetCurrentProcessorNumberEx not provided
+[isaac][mod]          1 x  kernel32.dll!GetNumaProcessorNodeEx not provided
+[isaac][mod]          1 x  kernel32.dll!GetNumaNodeProcessorMaskEx not provided
+[isaac][mod]          1 x  module not present: bootstp
+[isaac][mod]          1 x  unknown module handle for symbol: GetUserProfileDirectoryA
+[isaac][mod]          1 x  user32.dll!SetProcessDPIAware not provided
+[isaac][mod]          1 x  user32.dll!EnableNonClientDpiScaling not provided
+[isaac][mod]          1 x  user32.dll!SetProcessDpiAwarenessContext not provided
+[isaac][mod]          1 x  user32.dll!GetDpiForWindow not provided
+[isaac][mod]          1 x  user32.dll!AdjustWindowRectExForDpi not provided
+[isaac][mod]          1 x  user32.dll!GetSystemMetricsForDpi not provided
+[isaac][mod]          1 x  module not present: dwmapi.dll
+[isaac][mod]          1 x  shcore.dll!SetProcessDpiAwareness not provided
+[isaac][mod]          1 x  shcore.dll!GetDpiForMonitor not provided
+[isaac][mod]          2 x  ordinal lookup: (by ordinal)
+
+RESULT: main trapped

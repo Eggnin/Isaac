@@ -1,0 +1,3 @@
+va	name	types	identity_keys	evidence
+0x009737b0	HELPER_Laser_AdvanceCountdown	7	7.*	Active laser dispatch tail
+0x00435f20	HELPER_Laser_SetTimeout	7	7.*	Lua SetTimeout registration

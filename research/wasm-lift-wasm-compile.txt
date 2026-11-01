@@ -1,0 +1,7 @@
+research/wasm-lift-smoke/lifted.c:274:22: warning: self-comparison always evaluates to false [-Wtautological-compare]
+  274 |   CF = (uint8_t)(EAX < EAX);
+      |                      ^
+research/wasm-lift-smoke/lifted.c:375:22: warning: self-comparison always evaluates to false [-Wtautological-compare]
+  375 |   CF = (uint8_t)(EAX < EAX);
+      |                      ^
+2 warnings generated.

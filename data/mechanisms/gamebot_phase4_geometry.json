@@ -1,0 +1,33 @@
+{
+  "game_sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+  "models": {
+    "60.0.0:8:Shoot": {
+      "model": "ai_angle_room_ray",
+      "angle_field": "ai_v1.x",
+      "angle_unit": "degrees",
+      "origin_offset": 15,
+      "native_half_width": 5,
+      "geometry_margin": 1,
+      "active_frames": 1,
+      "active_offset_from_spawn": 0,
+      "planning_validated": true,
+      "range_scope": "Conservative ray across the room diagonal; native beam stops earlier at its endpoint",
+      "margin_scope": "1 world unit positional envelope, not physical collision radius",
+      "evidence": {
+        "native_samples": 1163,
+        "native_matches": 1163,
+        "eye_axis_samples": 95,
+        "max_axis_error": 1.8715370823121388e-07,
+        "max_origin_error": 0.24161009115336277,
+        "closed_eye_windows": 94,
+        "sources": [
+          "validation/phase4-native-geometry-suite-20261029/native-oracle-analysis.json",
+          "validation/phase4-oracle-output-calibration-20261029/native-oracle-analysis.json",
+          "validation/phase4-native-brim-left-20261029/native-oracle-analysis.json"
+        ],
+        "static_ai": "research/ai-recovery/ghidra-export/AI_00522ef0_00522ef0.c",
+        "constants": "0xBAA7A4=6.0, 0xBAA6BC=2.5, 0xBAA088=degrees-to-radians"
+      }
+    }
+  }
+}

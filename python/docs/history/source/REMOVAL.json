@@ -1,0 +1,45 @@
+{
+  "managed_files": 253,
+  "exe_patches": [
+    {
+      "name": "CoopPatched",
+      "offset": 5299205
+    },
+    {
+      "name": "AnalyticsPatched",
+      "offset": 5263488
+    },
+    {
+      "name": "CoopCharactersTogglePatched",
+      "offset": 5162377
+    },
+    {
+      "name": "CoopCharactersCyclePatched",
+      "offset": 5162506
+    },
+    {
+      "name": "CoopCharactersRelocationPatched",
+      "offset": 9035966
+    },
+    {
+      "name": "CoopCharactersAvailabilityPatched",
+      "offset": 5541744
+    },
+    {
+      "name": "CoopCharactersAvailabilityRelocationPatched",
+      "offset": 9049526
+    }
+  ],
+  "applied": true,
+  "archive": "D:\\IsaacAccessAssist\\removed-internal\\20261023-094053",
+  "exe_before_sha256": "BA57F862701BA2D20F77653D09ADD2ECBB350771C8BAEAC1F140AB4AA7092AB1",
+  "exe_after_sha256": "86AB4D4A489B5731EEE53BD4579B827671C27138FA2A5A5AA3923F67C5B8D6D7",
+  "original_main_sha256": "4849AAEF553FF30F2BCE6D44291491809CF87B519882275B69C2134270DEA631",
+  "original_chinese_archive_sha256": "7F3E4D56C07B41C94137D7130405183D3C76A2ED7F9A529E85D3E3CEFA758498",
+  "saves_changed": false,
+  "builtin_present": false,
+  "steam_launch_options": "",
+  "launcher_lua_debug_disabled": true,
+  "reapplied_patch_removed": true,
+  "launcher_launch_mode": 0
+}

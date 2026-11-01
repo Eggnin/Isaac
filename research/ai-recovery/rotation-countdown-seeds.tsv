@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x00452c40	HELPER_SetExplosionCountdown	4	4.*	Lua method registration
+0x0096f420	HELPER_Laser_SetActiveRotation	7	7.*	Lua method registration
+0x009704a0	HELPER_Laser_UpdateGeometry	7	7.*	Laser Update tail call

@@ -1,0 +1,20 @@
+{
+ "schema": "isaac-memimage-verify/1",
+ "sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+ "pass": true,
+ "failures": [],
+ "imageBase": "0x00400000",
+ "sizeOfImage": 9617408,
+ "flatBytes": 9615368,
+ "fullMaterializedBytes": 9617408,
+ "trailingZeroBytesTrimmed": 2040,
+ "segmentCount": 50,
+ "segmentedReconstruction": true,
+ "dataWasmPlacement": {
+  "ok": true,
+  "bytes": 9617408
+ },
+ "bindMaterialized": true,
+ "relocDropped": true,
+ "consumerContract": "place isaac.mem at 0x00400000 in zero-filled linear memory; isaac.mem is a zero-trimmed prefix of the actual local SizeOfImage"
+}

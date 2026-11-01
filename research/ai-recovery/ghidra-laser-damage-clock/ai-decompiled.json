@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 3,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x0096cf80", "name": "HELPER_Laser_CanDamageEntity", "types": "7", "identities": "7.*", "entry": "0096cf80", "resolvedFunction": "HELPER_Laser_CanDamageEntity", "ghidraEntry": "0096cf80", "instructions": 141, "incomingCalls": 2, "outgoingCalls": 5, "cFile": "HELPER_Laser_CanDamageEntity_0096cf80.c", "asmFile": "HELPER_Laser_CanDamageEntity_0096cf80.asm", "error": null},
+    {"va": "0x00973a50", "name": "HELPER_Laser_AdvanceLifetime", "types": "7", "identities": "7.*", "entry": "00973a50", "resolvedFunction": "HELPER_Laser_AdvanceLifetime", "ghidraEntry": "00973a50", "instructions": 123, "incomingCalls": 2, "outgoingCalls": 4, "cFile": "HELPER_Laser_AdvanceLifetime_00973a50.c", "asmFile": "HELPER_Laser_AdvanceLifetime_00973a50.asm", "error": null},
+    {"va": "0x006ae7d0", "name": "HELPER_Entity_PreUpdate", "types": "0", "identities": "*", "entry": "006ae7d0", "resolvedFunction": "HELPER_Entity_PreUpdate", "ghidraEntry": "006ae7d0", "instructions": 9, "incomingCalls": 0, "outgoingCalls": 0, "cFile": "HELPER_Entity_PreUpdate_006ae7d0.c", "asmFile": "HELPER_Entity_PreUpdate_006ae7d0.asm", "error": null}
+  ]
+}

@@ -1,0 +1,3 @@
+va	name	types	identity_keys	evidence
+0x00782af0	HELPER_Player_Update	1	1.*	Entity_Player vtable 0xB6BDD0 slot +0xC
+0x00708250	HELPER_Entity_TimeScaleCore	1	1.*	Entity TimeScale 0x7EA3E0 callee

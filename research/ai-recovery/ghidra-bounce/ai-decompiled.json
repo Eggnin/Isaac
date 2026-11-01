@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 3,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x0065b670", "name": "HELPER_Projectile_HandleCollision", "types": "9", "identities": "9.*", "entry": "0065b670", "resolvedFunction": "HELPER_Projectile_HandleCollision", "ghidraEntry": "0065b670", "instructions": 959, "incomingCalls": 0, "outgoingCalls": 42, "cFile": "HELPER_Projectile_HandleCollision_0065b670.c", "asmFile": "HELPER_Projectile_HandleCollision_0065b670.asm", "error": null},
+    {"va": "0x00652df0", "name": "HELPER_Projectile_BaseUpdate", "types": "9", "identities": "9.*", "entry": "00652df0", "resolvedFunction": "HELPER_Projectile_BaseUpdate", "ghidraEntry": "00652df0", "instructions": 87, "incomingCalls": 1, "outgoingCalls": 3, "cFile": "HELPER_Projectile_BaseUpdate_00652df0.c", "asmFile": "HELPER_Projectile_BaseUpdate_00652df0.asm", "error": null},
+    {"va": "0x006ae820", "name": "HELPER_Entity_BaseUpdate", "types": "0", "identities": "*", "entry": "006ae820", "resolvedFunction": "HELPER_Entity_BaseUpdate", "ghidraEntry": "006ae820", "instructions": 2254, "incomingCalls": 23, "outgoingCalls": 91, "cFile": "HELPER_Entity_BaseUpdate_006ae820.c", "asmFile": "HELPER_Entity_BaseUpdate_006ae820.asm", "error": null}
+  ]
+}

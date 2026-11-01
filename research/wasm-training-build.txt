@@ -1,0 +1,28 @@
+D:\Isaac\research\wasm-validation-env\Scripts\python.exe D:\Isaac\research\the-browsing-of-isaac\scripts\recomp\lift\build_boot.py --dir D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\original-j460 --jobs 3 --fast --no-lift-patches --training
+lua  : building D:\Isaac\research\the-browsing-of-isaac\output\recomp\host\lua-wasmsjlj\liblua.a (setjmp/longjmp as Wasm EH, round 25)
+
+Now rebuild the host layer; host_lua.c picks up lua.h automatically:
+   EMCC_CFLAGS='-ID:\Isaac\research\the-browsing-of-isaac\tools\lua-5.3.3\src' python scripts/recomp/host/build_selftest.py
+emcc : emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5-git (1db513782be24469589d7cb8a1f1834e9a33f271)
+lift : D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\original-j460
+check_lifted: 75 TU(s), 27 dispatch-loop function(s), 19 tail-only, 0 problem(s)
+{
+ "missing_callees": 9,
+ "callother_intrinsics": 27,
+ "import_shims": 0,
+ "import_stubs_omitted": 595,
+ "exports": 30260
+}
+re-entry blocks: 159429
+dispatch entries: 30269  (0x401000..0xb1712b)  image slices: 0
+boot_integration.c: 1 warnings
+host : 39 TUs in 12.8s
+lift : dependency fingerprint 089e5ba828f7 (4 headers + flags)
+lift : 75 TU(s) unchanged (hash), objects kept
+lift : 75 objects (0 rebuilt) in 0.0s
+link : 115 inputs -> D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\boot-training-fast\boot.mjs
+link : exit 0 in 1.1s
+wasm : 94383736 bytes
+mjs  : 196036 bytes
+driver copied to D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\boot-training-fast\boot_integration.mjs
+wrote D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\boot-training-fast\build_boot.json

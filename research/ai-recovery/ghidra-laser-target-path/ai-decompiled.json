@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 3,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00813360", "name": "HELPER_Room_IsPositionInRoom", "types": "7", "identities": "7.*", "entry": "00813360", "resolvedFunction": "HELPER_Room_IsPositionInRoom", "ghidraEntry": "00813360", "instructions": 61, "incomingCalls": 91, "outgoingCalls": 1, "cFile": "HELPER_Room_IsPositionInRoom_00813360.c", "asmFile": "HELPER_Room_IsPositionInRoom_00813360.asm", "error": null},
+    {"va": "0x009a1610", "name": "HELPER_LaserNode_PopBack", "types": "7", "identities": "7.*", "entry": "009a1610", "resolvedFunction": "HELPER_LaserNode_PopBack", "ghidraEntry": "009a1610", "instructions": 44, "incomingCalls": 2, "outgoingCalls": 0, "cFile": "HELPER_LaserNode_PopBack_009a1610.c", "asmFile": "HELPER_LaserNode_PopBack_009a1610.asm", "error": null},
+    {"va": "0x009a1680", "name": "HELPER_LaserNode_Insert", "types": "7", "identities": "7.*", "entry": "009a1680", "resolvedFunction": "HELPER_LaserNode_Insert", "ghidraEntry": "009a1680", "instructions": 79, "incomingCalls": 1, "outgoingCalls": 1, "cFile": "HELPER_LaserNode_Insert_009a1680.c", "asmFile": "HELPER_LaserNode_Insert_009a1680.asm", "error": null}
+  ]
+}

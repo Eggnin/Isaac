@@ -1,0 +1,13 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 1,
+  "decompiledCount": 1,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00684cb0", "name": "HELPER_TimeScaledDamping", "types": "9", "identities": "9.*", "entry": "00684cb0", "resolvedFunction": "HELPER_TimeScaledDamping", "ghidraEntry": "00684cb0", "instructions": 13, "incomingCalls": 35, "outgoingCalls": 0, "cFile": "HELPER_TimeScaledDamping_00684cb0.c", "asmFile": "HELPER_TimeScaledDamping_00684cb0.asm", "error": null}
+  ]
+}

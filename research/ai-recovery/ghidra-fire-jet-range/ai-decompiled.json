@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 3,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x0041a790", "name": "HELPER_Room_QueryRadius", "types": "1000", "identities": "1000.147.*", "entry": "0041a790", "resolvedFunction": "HELPER_Room_QueryRadius", "ghidraEntry": "0041a790", "instructions": 308, "incomingCalls": 176, "outgoingCalls": 13, "cFile": "HELPER_Room_QueryRadius_0041a790.c", "asmFile": "HELPER_Room_QueryRadius_0041a790.asm", "error": null},
+    {"va": "0x006fed60", "name": "HELPER_AreaDamage", "types": "1000", "identities": "1000.147.*", "entry": "006fed60", "resolvedFunction": "HELPER_AreaDamage", "ghidraEntry": "006fed60", "instructions": 200, "incomingCalls": 17, "outgoingCalls": 6, "cFile": "HELPER_AreaDamage_006fed60.c", "asmFile": "HELPER_AreaDamage_006fed60.asm", "error": null},
+    {"va": "0x006a9c10", "name": "HELPER_Effect_RealAge", "types": "1000", "identities": "1000.147.*", "entry": "006a9c10", "resolvedFunction": "HELPER_Effect_RealAge", "ghidraEntry": "006a9c10", "instructions": 4, "incomingCalls": 81, "outgoingCalls": 0, "cFile": "HELPER_Effect_RealAge_006a9c10.c", "asmFile": "HELPER_Effect_RealAge_006a9c10.asm", "error": null}
+  ]
+}

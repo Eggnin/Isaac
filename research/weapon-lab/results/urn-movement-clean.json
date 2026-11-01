@@ -1,0 +1,34 @@
+{
+  "created_utc": "2026-10-29T17:47:28.109Z",
+  "scope": "Paired native player movement in a private original-engine instance; no live-game process or installation writes",
+  "logic_fps": 30,
+  "render_fps": 60,
+  "frames_per_branch": 20,
+  "room": "s.boss.1010",
+  "seed": "3JY1 6FLR",
+  "cases": [
+    {
+      "name": "urn-of-souls",
+      "items": [
+        640
+      ],
+      "type": 12,
+      "activate": 640,
+      "earnSouls": true,
+      "settle": 90,
+      "prehold": 6,
+      "pairs": [],
+      "error": "Error: engine setup timeout; see D:\\Isaac\\research\\boss-lab\\training-runs\\1793296048113-26292-0\\engine.log\n    at Timeout._onTimeout (file:///D:/Isaac/research/boss-lab/offline/engine_environment.mjs:53:30)\n    at listOnTimeout (node:internal/timers:685:17)\n    at process.processTimers (node:internal/timers:618:7)"
+    }
+  ],
+  "errors": [
+    {
+      "case": "urn-of-souls",
+      "error": "Error: engine setup timeout; see D:\\Isaac\\research\\boss-lab\\training-runs\\1793296048113-26292-0\\engine.log\n    at Timeout._onTimeout (file:///D:/Isaac/research/boss-lab/offline/engine_environment.mjs:53:30)\n    at listOnTimeout (node:internal/timers:685:17)\n    at process.processTimers (node:internal/timers:618:7)"
+    }
+  ],
+  "elapsed_ms": 120083.7629,
+  "completed": false,
+  "worker_sha256": "bee167c3a70a67906c29be8b9c3ce7b6eccd08f6d3b619275df44c97d4160083",
+  "engine_wasm_sha256": "a160fe0d2b147b2859d38cfe9296d7674f1f40195aa669241cbb49a001a09694"
+}

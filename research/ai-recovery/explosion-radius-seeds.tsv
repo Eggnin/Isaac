@@ -1,0 +1,3 @@
+va	name	types	identity_keys	evidence
+0x009bea80	HELPER_ExplosionRoomModifier	4	4.*	Native explosion radius multiplier lookup for id 63
+0x006a9140	HELPER_EntityPlayerOwner	4	4.*	Explosion radius source player-owner gate

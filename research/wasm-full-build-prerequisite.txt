@@ -1,0 +1,1 @@
+emcc not found; set EMCC=<path to emcc.exe>

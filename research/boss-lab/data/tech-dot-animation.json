@@ -1,0 +1,19 @@
+{
+  "path": "gfx/1000.126_Tech Dot.anm2",
+  "sha256": "0ce560b01bad0e40ea177b3b72440c006157e19c0e96bf51c7d832abe456132c",
+  "events": {},
+  "animations": [
+    {
+      "name": "Idle",
+      "frames": "32",
+      "loop": "true",
+      "events": []
+    },
+    {
+      "name": "Disappear",
+      "frames": "14",
+      "loop": "false",
+      "events": []
+    }
+  ]
+}

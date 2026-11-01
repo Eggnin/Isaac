@@ -1,0 +1,226 @@
+  
+
+  
+  Bosses 
+    
+ 
+
+  
+  Chapter 1 
+ 
+        Chapter 1.5 
+ 
+  Chapter 2 
+ 
+        Chapter 2.5 
+ 
+  Chapter 3 
+ 
+        Chapter 3.5 
+ 
+  Chapter 4 
+ 
+        Corpse 
+ 
+        ??? 
+ 
+  Chapter 5 
+ 
+  Chapter 6 
+ 
+        The Void 
+ 
+        Home 
+    
+ 
+
+  
+             Chapter 1 
+ 
+             Chapter 2 
+ 
+             Chapter 3 
+ 
+             Chapter 4 
+ 
+             Chapter 5 
+ 
+             The Shop 
+ 
+             Ultra Greed 
+    
+ 
+
+  
+  Harbingers 
+ 
+  Alternate Bosses 
+ 
+  Universal 
+ 
+  Devil and Angel Room 
+ 
+  Seven Deadly Sins 
+ 
+  All Mini-Bosses 
+ 
+  All Bosses 
+    
+  Bosses  are very strong  monsters  found in  Boss Rooms  at the end of a floor. The boss at the end of the floor must be defeated to advance to the next floor. From  Chapter 2  onwards, many of these non-final bosses can spawn as degraded bosses, or normal  enemies . The same can go for mini-bosses, which can spawn on later floors as degraded mini-bosses. However, some bosses and mini-bosses may not appear as degraded bosses at all. The boss for a particular floor is chosen from the pool of bosses for the  chapters  of the floor. After defeating  Satan  for the first time, bosses may also spawn as  champions , which can change various attributes such as health, damage, and attack pattern. Upon defeat, most bosses will drop an item from the  Boss item pool  as well as 1-2  Hearts  of any kind. 
+  Bosses boast additional resistances to  status effects . Once a boss has been inflicted with a status, they become immune to further ones for some time, lasting longer than the initial effect itself. Slowdown-causing items that require the enemy to stay within their area such as              Night Light   are nearly useless on bosses due to the immunity triggering from the first tick. On the other hand, whole-room slowdown and slowing creep, such as that from        Stop Watch   and        Juicy Sack  , ignore the immunity and affect bosses like normal enemies. 
+  Additionally, some floors may spawn a room with a  mini-boss .
+  In total, there are 102 bosses and 20 mini-bosses. 10 bosses were added in   The Binding of Isaac: Afterbirth  , 6 were added in   The Binding of Isaac: Afterbirth †  , and 30 bosses and 2 mini-bosses were added in   The Binding of Isaac: Repentance  .
+ 
+    Contents      
+ 
+   1   Gallery   
+   2   Trivia   
+   3   Music   
+   4   References   
+ 
+ 
+
+  Gallery   [  ]   
+ 
+		 
+			       
+			  Concept art for a few bosses. 
+		 
+		 
+			       
+			  Mini-boss concept art. 
+		 
+ 
+  Trivia   [  ]   
+  Originally, every boss and enemy in Binding of Isaac was going to resemble Isaac in some way.    &#91; 1 &#93;    This is still the case for some. 
+ Double Trouble boss pools can have bosses from previous chapters        and can be the same for both versions of that chapter's floor. This means that, for example, Double Trouble boss fights in The Caves can feature bosses from The Cellar or The Basement,        and every Double Trouble fight in The Caves can also be encountered in The Catacombs. 
+ Bosses often come in three versions: normal (for example, &#32;      Monstro ), posthumous (&#32;      Monstro II ), and alternate (&#32;      Gish ). Usually, the posthumous boss looks like the original with some horrible mutilation; for example, Monstro and &#32;      Chub  had most of their skin ripped off.
+  Most bosses and their alternate/posthumous forms either share similar death animations or share the fact that they lack death animations.   
+ Some bosses appear as evolved or larger versions of enemies (for example, Chub looks like a bigger &#32;      Charger ). Some even act as larger versions of other bosses (      &#32;      Little Horn  and       &#32;      Big Horn ).  
+  Music   [  ]   
+  As for normal bosses, the  music  that plays is called "Crusade"   &#91; 2 &#93;   .
+         Another  music  track, "Cerebrum Dispersio", can also play during fights.  cerebrum dispersio  is a misspelling of  cerebrum dispersum , literally meaning "scattered brains", but colloquially meaning " mindblown. "   &#91; 3 &#93;   .   
+ Final bosses, except for  Ultra Greed  and Mega  Satan  , all have a specific fight track.  
+  References   [  ]   
+  
+   ↑     https://web.archive.org/web/20170923040329/http://edmundm.com/post/51416553970/binding-of-isaac-fast-facts-now-they-need-to-do  
+ 
+   ↑     [1]  
+ 
+   ↑     [2]  
+ 
+  
+     
+ 
+  
+        Bosses       
+  
+ 
+  Chapter 1                 
+ 
+  Monstro  •  Gemini  •  Steven  •  Dingle  •  Gurglings  •  Larry Jr.  •  The Duke of Flies  •  Widow  •  Blighted Ovum  •  The Haunt  •  Pin  •  Famine  •  The Fallen  •  Headless Horseman           Dangle  •  Turdlings  •  Little Horn  •  Rag Man           Baby Plum 
+  
+ 
+        Chapter 1.5            
+ 
+        The Rainmaker  •  Min-Min  •  Lil Blub  •  Wormwood  •  Clog  •  Colostomia  •  Turdlet 
+  
+ 
+  Chapter 2                 
+ 
+  Fistula  •  Chub  •  C.H.A.D.  •  Gurdy  •  Mega Fatty  •  Mega Maw  •  Gurdy Jr.  •  Peep  •  The Husk  •  The Hollow  •  Carrion Queen  •  Dark One  •  Polycephalus  •  The Wretched  •  Pestilence  •  The Fallen  •  Headless Horseman           The Stain  •  The Frail  •  The Forsaken           Big Horn  •  Rag Mega          Bumbino 
+  
+ 
+        Chapter 2.5            
+ 
+        Reap Creep  •  Tuff Twins  •  Hornfel  •  Great Gideon  •  The Pile  •  The Shell  •  Singe  •  Clutch 
+  
+ 
+  Chapter 3                 
+ 
+  Monstro II  •  Gish  •  The Cage  •  The Gate  •  Loki  •  The Adversary  •  The Bloat  •  Mask of Infamy  •  War  •  The Fallen  •  Headless Horseman  •  Mom           Brownie           Sisters Vis           Reap Creep  •  The Pile 
+  
+ 
+        Chapter 3.5            
+ 
+        The Siren  •  The Heretic  •  The Visage  •  The Horny Boys  •  Mom  •  Mom's Heart 
+  
+ 
+  Chapter 4                 
+ 
+  Blastocyst  •  Mama Gurdy  •  Scolex  •  Mr. Fred  •  Lokii  •  The Bloat  •  Daddy Long Legs  •  Triachnid  •  Teratoma  •  Death  •  Conquest  •  The Fallen  •  Headless Horseman  •  Mom's Heart  •  It Lives           The Matriarch 
+  
+ 
+        ???       
+ 
+        Hush 
+  
+ 
+        Corpse       
+ 
+        Chimera  •  The Scourge  •  Rotgut  •  Mother 
+  
+ 
+  Chapter 5            
+ 
+  Satan  •  Isaac 
+  
+ 
+  Chapter 6            
+ 
+  ???  •  The Lamb  •  Mega Satan 
+  
+ 
+        The Void       
+ 
+        Delirium 
+  
+ 
+        Home       
+ 
+        Dogma  •  Ultra Famine  •  Ultra Pestilence  •  Ultra War  •  Ultra Death  •  The Beast 
+  
+ 
+        Greed Mode       
+ 
+        Ultra Greed           Ultra Greedier 
+    
+ 
+  
+       The Binding of Isaac: Rebirth      
+  
+ 
+ 
+        Achievements  
+       Challenges  
+       Completion Marks  
+       Items  
+       Trinkets  
+       Characters  
+       Chapters  
+       Rooms  
+       Transformations  
+       Attributes  
+       Bosses  
+       Monsters  
+       Pickups  
+       Modes  
+       Curses  
+        Objects  
+       Seeds  
+       Effects  
+       Endings   
+  
+ 
+ 
+   Collection  
+  Item Pools  
+  Version History  
+  Modding  
+  Music   
+    
+ 
+ 
+
+ 
+ 

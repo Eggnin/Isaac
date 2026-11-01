@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x0065b670	HELPER_Projectile_HandleCollision	9	9.*	native projectile vtable collision slot
+0x00652df0	HELPER_Projectile_BaseUpdate	9	9.*	Projectile Update first call
+0x006ae820	HELPER_Entity_BaseUpdate	0	*	native base movement and collision

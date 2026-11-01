@@ -1,0 +1,20 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 8,
+  "decompiledCount": 8,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x009a0850", "name": "HELPER_HomingLaser_BuildRing", "types": "7", "identities": "7.*", "entry": "009a0850", "resolvedFunction": "HELPER_HomingLaser_BuildRing", "ghidraEntry": "009a0850", "instructions": 298, "incomingCalls": 1, "outgoingCalls": 13, "cFile": "HELPER_HomingLaser_BuildRing_009a0850.c", "asmFile": "HELPER_HomingLaser_BuildRing_009a0850.asm", "error": null},
+    {"va": "0x009a0de0", "name": "HELPER_HomingLaser_SimplifySamples", "types": "7", "identities": "7.*", "entry": "009a0de0", "resolvedFunction": "HELPER_HomingLaser_SimplifySamples", "ghidraEntry": "009a0de0", "instructions": 117, "incomingCalls": 2, "outgoingCalls": 3, "cFile": "HELPER_HomingLaser_SimplifySamples_009a0de0.c", "asmFile": "HELPER_HomingLaser_SimplifySamples_009a0de0.asm", "error": null},
+    {"va": "0x00973c60", "name": "HELPER_Laser_UpdateStraightSampled", "types": "7", "identities": "7.*", "entry": "00973c60", "resolvedFunction": "HELPER_Laser_UpdateStraightSampled", "ghidraEntry": "00973c60", "instructions": 3638, "incomingCalls": 3, "outgoingCalls": 305, "cFile": "HELPER_Laser_UpdateStraightSampled_00973c60.c", "asmFile": "HELPER_Laser_UpdateStraightSampled_00973c60.asm", "error": null},
+    {"va": "0x0099ec00", "name": "HELPER_HomingLaser_ApplyHoming", "types": "7", "identities": "7.*", "entry": "0099ec00", "resolvedFunction": "HELPER_HomingLaser_ApplyHoming", "ghidraEntry": "0099ec00", "instructions": 225, "incomingCalls": 2, "outgoingCalls": 5, "cFile": "HELPER_HomingLaser_ApplyHoming_0099ec00.c", "asmFile": "HELPER_HomingLaser_ApplyHoming_0099ec00.asm", "error": null},
+    {"va": "0x0096ce70", "name": "HELPER_Laser_Root", "types": "7", "identities": "7.*", "entry": "0096ce70", "resolvedFunction": "HELPER_Laser_Root", "ghidraEntry": "0096ce70", "instructions": 7, "incomingCalls": 3, "outgoingCalls": 0, "cFile": "HELPER_Laser_Root_0096ce70.c", "asmFile": "HELPER_Laser_Root_0096ce70.asm", "error": null},
+    {"va": "0x0096cf40", "name": "HELPER_Laser_FriendlyPredicate", "types": "7", "identities": "7.*", "entry": "0096cf40", "resolvedFunction": "HELPER_Laser_FriendlyPredicate", "ghidraEntry": "0096cf40", "instructions": 23, "incomingCalls": 1, "outgoingCalls": 0, "cFile": "HELPER_Laser_FriendlyPredicate_0096cf40.c", "asmFile": "HELPER_Laser_FriendlyPredicate_0096cf40.asm", "error": null},
+    {"va": "0x0096d3f0", "name": "HELPER_Laser_DamageSamples", "types": "7", "identities": "7.*", "entry": "0096d3f0", "resolvedFunction": "HELPER_Laser_DamageSamples", "ghidraEntry": "0096d3f0", "instructions": 1605, "incomingCalls": 2, "outgoingCalls": 79, "cFile": "HELPER_Laser_DamageSamples_0096d3f0.c", "asmFile": "HELPER_Laser_DamageSamples_0096d3f0.asm", "error": null},
+    {"va": "0x0096ce30", "name": "HELPER_Laser_BrimstonePredicate", "types": "7", "identities": "7.*", "entry": "0096ce30", "resolvedFunction": "HELPER_Laser_BrimstonePredicate", "ghidraEntry": "0096ce30", "instructions": 10, "incomingCalls": 11, "outgoingCalls": 0, "cFile": "HELPER_Laser_BrimstonePredicate_0096ce30.c", "asmFile": "HELPER_Laser_BrimstonePredicate_0096ce30.asm", "error": null}
+  ]
+}

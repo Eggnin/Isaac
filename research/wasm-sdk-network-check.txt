@@ -1,0 +1,27 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+  0     0    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+HTTP/1.1 200 OK
+  0 35.5M    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+Content-Type: application/zip
+X-GUploader-UploadID: AP6rU83qNagNyhwXDG8UbMm5rl077V_hQVODljlTipck6YmKeWu-2u-gdvmIVRFy6P6IKBTldhfHfcg
+  0 35.5M    0     0    0     0      0      0 --:--:--  0:00:01 --:--:--     0
+Expires: Tue, 27 Oct 2026 17:14:54 GMT
+Date: Tue, 27 Oct 2026 16:14:54 GMT
+Cache-Control: public, max-age=3600
+Last-Modified: Tue, 04 Aug 2026 18:50:09 GMT
+ETag: "8a8a3b8d4f1a47c0833bdbe2a4d8e2e8"
+x-goog-generation: 1785869409291422
+x-goog-metageneration: 1
+x-goog-stored-content-encoding: identity
+x-goog-stored-content-length: 37304352
+x-goog-hash: crc32c=wyzFyg==
+x-goog-hash: md5=ioo7jU8aR8CDO9vipNji6A==
+x-goog-storage-class: STANDARD
+Accept-Ranges: bytes
+Content-Length: 37304352
+Server: UploadServer
+Alt-Svc: h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+

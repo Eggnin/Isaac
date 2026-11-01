@@ -1,0 +1,20 @@
+chunk 1/16: 40602832 bytes
+chunk 3/16: 40602832 bytes
+chunk 8/16: 40602832 bytes
+chunk 11/16: 40602832 bytes
+chunk 15/16: 40602832 bytes
+chunk 2/16: 40602832 bytes
+chunk 7/16: 40602832 bytes
+chunk 4/16: 40602832 bytes
+chunk 16/16: 40602817 bytes
+chunk 5/16: 40602832 bytes
+chunk 9/16: 40602832 bytes
+chunk 14/16: 40602832 bytes
+chunk 12/16: 40602832 bytes
+curl: (28) Operation timed out after 240005 milliseconds with 2654208 out of 40602832 bytes received
+curl: (28) Operation timed out after 240010 milliseconds with 318192 out of 40602832 bytes received
+curl: (28) Operation timed out after 240002 milliseconds with 1063629 out of 40602832 bytes received
+chunk 6/16: 40602832 bytes
+chunk 10/16: 40602832 bytes
+chunk 13/16: 40602832 bytes
+Verified SDK archive: 649645297 bytes, MD5=6448e8b8e8feb9703c7b95b05f5558e2

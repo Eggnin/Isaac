@@ -1,0 +1,1 @@
+["_malloc", "_free", "_isaac_place_image", "_isaac_layout_check", "_isaac_guard_arm", "_isaac_guard_check", "_isaac_run_boot", "_isaac_run_main", "_isaac_fs_seed_adopt", "_isaac_fs_seed_lazy", "_isaac_stub_report", "_isaac_dump_va_ring", "_isaac_heap_report", "_isaac_module_report", "_phase4_damage_count", "_phase4_damage_record", "_phase4_laser_count", "_phase4_laser_record"]

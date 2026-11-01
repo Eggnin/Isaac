@@ -1,0 +1,13 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 1,
+  "decompiledCount": 1,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x007009a0", "name": "HELPER_ExplosionEffects", "types": "4", "identities": "4.17.0", "entry": "007009a0", "resolvedFunction": "HELPER_ExplosionEffects", "ghidraEntry": "007009a0", "instructions": 2336, "incomingCalls": 6, "outgoingCalls": 142, "cFile": "HELPER_ExplosionEffects_007009a0.c", "asmFile": "HELPER_ExplosionEffects_007009a0.asm", "error": null}
+  ]
+}

@@ -1,0 +1,305 @@
+[
+  {
+    "identity": [
+      20,
+      0
+    ],
+    "path": "gfx/020.000_Monstro.anm2",
+    "eventNames": {
+      "0": "BloodStart",
+      "1": "Explosion",
+      "2": "Shoot",
+      "3": "Land",
+      "4": "Jump"
+    },
+    "animations": [
+      {
+        "name": "Death",
+        "frames": "78",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "0",
+            "AtFrame": "12",
+            "Name": "BloodStart"
+          },
+          {
+            "EventId": "1",
+            "AtFrame": "77",
+            "Name": "Explosion"
+          }
+        ]
+      },
+      {
+        "name": "JumpDown",
+        "frames": "64",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "3",
+            "AtFrame": "32",
+            "Name": "Land"
+          },
+          {
+            "EventId": "2",
+            "AtFrame": "34",
+            "Name": "Shoot"
+          }
+        ]
+      },
+      {
+        "name": "JumpUp",
+        "frames": "15",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "4",
+            "AtFrame": "10",
+            "Name": "Jump"
+          }
+        ]
+      },
+      {
+        "name": "Taunt",
+        "frames": "66",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "2",
+            "AtFrame": "21",
+            "Name": "Shoot"
+          }
+        ]
+      },
+      {
+        "name": "Walk",
+        "frames": "45",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "4",
+            "AtFrame": "6",
+            "Name": "Jump"
+          },
+          {
+            "EventId": "3",
+            "AtFrame": "22",
+            "Name": "Land"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "identity": [
+      43,
+      0
+    ],
+    "path": "gfx/043.000_Monstro II.anm2",
+    "eventNames": {
+      "0": "Explosion",
+      "1": "BloodStart",
+      "2": "BloodStop",
+      "3": "Shoot",
+      "4": "Jump",
+      "5": "Land"
+    },
+    "animations": [
+      {
+        "name": "Death",
+        "frames": "78",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "1",
+            "AtFrame": "0",
+            "Name": "BloodStart"
+          },
+          {
+            "EventId": "2",
+            "AtFrame": "49",
+            "Name": "BloodStop"
+          },
+          {
+            "EventId": "0",
+            "AtFrame": "77",
+            "Name": "Explosion"
+          }
+        ]
+      },
+      {
+        "name": "JumpDown",
+        "frames": "64",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "5",
+            "AtFrame": "32",
+            "Name": "Land"
+          },
+          {
+            "EventId": "3",
+            "AtFrame": "34",
+            "Name": "Shoot"
+          }
+        ]
+      },
+      {
+        "name": "JumpUp",
+        "frames": "15",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "4",
+            "AtFrame": "10",
+            "Name": "Jump"
+          }
+        ]
+      },
+      {
+        "name": "Taunt",
+        "frames": "66",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "3",
+            "AtFrame": "21",
+            "Name": "Shoot"
+          }
+        ]
+      },
+      {
+        "name": "Walk",
+        "frames": "45",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "4",
+            "AtFrame": "6",
+            "Name": "Jump"
+          },
+          {
+            "EventId": "5",
+            "AtFrame": "23",
+            "Name": "Land"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "identity": [
+      68,
+      1
+    ],
+    "path": "gfx/068.001_The Bloat.anm2",
+    "eventNames": {
+      "0": "Explosion",
+      "1": "BloodStart",
+      "2": "BloodStop",
+      "3": "Jump",
+      "4": "Shoot"
+    },
+    "animations": [
+      {
+        "name": "Attack01",
+        "frames": "76",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "4",
+            "AtFrame": "38",
+            "Name": "Shoot"
+          }
+        ]
+      },
+      {
+        "name": "Attack02",
+        "frames": "57",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "3",
+            "AtFrame": "30",
+            "Name": "Jump"
+          },
+          {
+            "EventId": "4",
+            "AtFrame": "31",
+            "Name": "Shoot"
+          }
+        ]
+      },
+      {
+        "name": "JumpUp",
+        "frames": "34",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "3",
+            "AtFrame": "28",
+            "Name": "Jump"
+          }
+        ]
+      },
+      {
+        "name": "JumpDown",
+        "frames": "67",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "4",
+            "AtFrame": "28",
+            "Name": "Shoot"
+          }
+        ]
+      },
+      {
+        "name": "AttackAlt01",
+        "frames": "68",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "4",
+            "AtFrame": "10",
+            "Name": "Shoot"
+          }
+        ]
+      },
+      {
+        "name": "AttackAlt02",
+        "frames": "68",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "4",
+            "AtFrame": "10",
+            "Name": "Shoot"
+          }
+        ]
+      },
+      {
+        "name": "Death",
+        "frames": "74",
+        "loop": "false",
+        "events": [
+          {
+            "EventId": "1",
+            "AtFrame": "7",
+            "Name": "BloodStart"
+          },
+          {
+            "EventId": "2",
+            "AtFrame": "55",
+            "Name": "BloodStop"
+          },
+          {
+            "EventId": "0",
+            "AtFrame": "73",
+            "Name": "Explosion"
+          }
+        ]
+      }
+    ]
+  }
+]

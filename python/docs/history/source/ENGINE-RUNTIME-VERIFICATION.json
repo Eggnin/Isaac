@@ -1,0 +1,51 @@
+{
+  "engine_version": "v1.9.7.17.J460",
+  "engine_sha256": "7122AC28779925B24E23E2416F231322B1470388BD25E2C08665AD8D53B3EA4F",
+  "captured_at": "2026-10-23T02:42:34.319848+00:00",
+  "structure_checks_passed": true,
+  "semantic_validation_scope": [
+    "player_position_candidate",
+    "player_radius_candidate",
+    "persistent_player_partition"
+  ],
+  "entity_types": {
+    "1000": 24,
+    "5": 1,
+    "1": 1
+  },
+  "partitions": {
+    "main": 25,
+    "persistent": 1,
+    "update": 26
+  },
+  "players": [
+    {
+      "address": 2281648332,
+      "index": 0,
+      "type": 1,
+      "variant": 0,
+      "subtype": 14,
+      "seed": 2561931323,
+      "x": 258.7319030761719,
+      "y": 347.0159912109375,
+      "vx": 0.0007518705097027123,
+      "vy": -2.966326974274125e-05,
+      "radius": 10.0,
+      "collision_class": 4,
+      "collision_damage": 0.0,
+      "health": 1.0,
+      "flags": 0,
+      "visible": true,
+      "dead": false,
+      "state": null,
+      "state_frame": null,
+      "controller_index": 0,
+      "player_index": 0
+    }
+  ],
+  "npc_fields_verified": false,
+  "projectile_fields_verified": false,
+  "laser_geometry_verified": false,
+  "automatic_control_uses_engine_data": false,
+  "game_memory_written": false
+}

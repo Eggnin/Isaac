@@ -1,0 +1,9 @@
+Resolving SDK version '6.0.5' to 'sdk-releases-dbd755b5da399329c2576f6e3dfa7f419f5d8409-64bit'
+Installing SDK 'sdk-releases-dbd755b5da399329c2576f6e3dfa7f419f5d8409-64bit'..
+Installing tool 'node-24.19.0-64bit'..
+Downloading: D:/Isaac/research/emsdk/downloads/node-v24.19.0-win-x64.zip from https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/node-v24.19.0-win-x64.zip, 37304352 Bytes
+ [----------------------------------------------------------------------------]
+Unpacking 'D:/Isaac/research/emsdk/downloads/node-v24.19.0-win-x64.zip' to 'D:/Isaac/research/emsdk/node/24.19.0_64bit'
+Done installing tool 'node-24.19.0-64bit'.
+Installing tool 'python-3.13.3-64bit'..
+Downloading: D:/Isaac/research/emsdk/downloads/python-3.13.3-0-win-amd64.zip from https://storage.googleapis.com/webassembly/emscripten-releases-builds/deps/python-3.13.3-0-win-amd64.zip, 29736374 Bytes

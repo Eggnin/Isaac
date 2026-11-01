@@ -1,0 +1,550 @@
+{
+  "format": "isaac-external-invincibility-observations-v1",
+  "sources": {
+    "session_files_scanned": 99,
+    "files_with_invincible_true": [
+      "sessions/native-20261027-221129-187/frames-0002.jsonl",
+      "sessions/native-20261027-221129-187/frames-0003.jsonl",
+      "sessions/native-20261027-221129-187/frames-0004.jsonl",
+      "sessions/native-20261027-221129-187/frames-0005.jsonl",
+      "sessions/native-20261027-221129-187/frames-0006.jsonl",
+      "sessions/native-20261027-221129-187/frames-0007.jsonl",
+      "sessions/native-20261027-221129-187/frames-0008.jsonl",
+      "sessions/native-20261027-223538-537/frames-0001.jsonl",
+      "sessions/native-20261028-190154-420/frames-0005.jsonl",
+      "sessions/native-20261028-190154-420/frames-0006.jsonl",
+      "sessions/native-20261029-104631-576/frames-0001.jsonl"
+    ]
+  },
+  "method": "stream JSONL frame records; group invulnerable=true observations by run and entity address; split intervals after a >120 clock gap",
+  "limitations": [
+    "An observed true interval proves the external field value, not the internal cause.",
+    "Files end while an entity is active; absence of a later false sample does not prove the window never ended."
+  ],
+  "skipped_lines": 0,
+  "identities": [
+    {
+      "key": "96.0.0",
+      "type": 96,
+      "variant": 0,
+      "subtype": 0,
+      "windows": 3,
+      "runs": [
+        "native-20261027-221129-187",
+        "native-20261028-190154-420",
+        "native-20261029-104631-576"
+      ],
+      "states": {
+        "4": 13617
+      },
+      "animations": {
+        "Fly": 13617
+      },
+      "observed_duration_clocks": {
+        "min": 623,
+        "max": 10311
+      },
+      "examples": [
+        {
+          "run": "native-20261027-221129-187",
+          "file": "sessions/native-20261027-221129-187/frames-0002.jsonl",
+          "address": 2212542052,
+          "identity": {
+            "type": 96,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2105487380,
+          "first_clock": 0,
+          "last_clock": 10310,
+          "observations": 11429,
+          "states": {
+            "4": 11429
+          },
+          "animations": {
+            "Fly": 11429
+          },
+          "hp_min": 300.0,
+          "hp_max": 300.0,
+          "observed_duration_clocks": 10311,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261028-190154-420",
+          "file": "sessions/native-20261028-190154-420/frames-0005.jsonl",
+          "address": 2116144260,
+          "identity": {
+            "type": 96,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2087702540,
+          "first_clock": 5188,
+          "last_clock": 6578,
+          "observations": 1508,
+          "states": {
+            "4": 1508
+          },
+          "animations": {
+            "Fly": 1508
+          },
+          "hp_min": 300.0,
+          "hp_max": 300.0,
+          "observed_duration_clocks": 1391,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261029-104631-576",
+          "file": "sessions/native-20261029-104631-576/frames-0001.jsonl",
+          "address": 2201855012,
+          "identity": {
+            "type": 96,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2088693780,
+          "first_clock": 42,
+          "last_clock": 664,
+          "observations": 680,
+          "states": {
+            "4": 680
+          },
+          "animations": {
+            "Fly": 680
+          },
+          "hp_min": 300.0,
+          "hp_max": 300.0,
+          "observed_duration_clocks": 623,
+          "end_observed": false
+        }
+      ],
+      "evidence": "external_read_process_memory_jsonl",
+      "cause_confirmed": false
+    },
+    {
+      "key": "218.0.0",
+      "type": 218,
+      "variant": 0,
+      "subtype": 0,
+      "windows": 4,
+      "runs": [
+        "native-20261028-190154-420"
+      ],
+      "states": {
+        "4": 1106
+      },
+      "animations": {
+        "Spikes": 942,
+        "No-Spikes": 164
+      },
+      "observed_duration_clocks": {
+        "min": 161,
+        "max": 339
+      },
+      "examples": [
+        {
+          "run": "native-20261028-190154-420",
+          "file": "sessions/native-20261028-190154-420/frames-0006.jsonl",
+          "address": 2116179684,
+          "identity": {
+            "type": 218,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2087702540,
+          "first_clock": 7941,
+          "last_clock": 8101,
+          "observations": 181,
+          "states": {
+            "4": 181
+          },
+          "animations": {
+            "No-Spikes": 41,
+            "Spikes": 140
+          },
+          "hp_min": 100.0,
+          "hp_max": 100.0,
+          "observed_duration_clocks": 161,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261028-190154-420",
+          "file": "sessions/native-20261028-190154-420/frames-0006.jsonl",
+          "address": 2116183620,
+          "identity": {
+            "type": 218,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2087702540,
+          "first_clock": 7941,
+          "last_clock": 8101,
+          "observations": 181,
+          "states": {
+            "4": 181
+          },
+          "animations": {
+            "No-Spikes": 41,
+            "Spikes": 140
+          },
+          "hp_min": 100.0,
+          "hp_max": 100.0,
+          "observed_duration_clocks": 161,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261028-190154-420",
+          "file": "sessions/native-20261028-190154-420/frames-0006.jsonl",
+          "address": 2116195428,
+          "identity": {
+            "type": 218,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2087702540,
+          "first_clock": 8305,
+          "last_clock": 8643,
+          "observations": 372,
+          "states": {
+            "4": 372
+          },
+          "animations": {
+            "No-Spikes": 41,
+            "Spikes": 331
+          },
+          "hp_min": 100.0,
+          "hp_max": 100.0,
+          "observed_duration_clocks": 339,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261028-190154-420",
+          "file": "sessions/native-20261028-190154-420/frames-0006.jsonl",
+          "address": 2116199364,
+          "identity": {
+            "type": 218,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2087702540,
+          "first_clock": 8305,
+          "last_clock": 8643,
+          "observations": 372,
+          "states": {
+            "4": 372
+          },
+          "animations": {
+            "No-Spikes": 41,
+            "Spikes": 331
+          },
+          "hp_min": 100.0,
+          "hp_max": 100.0,
+          "observed_duration_clocks": 339,
+          "end_observed": false
+        }
+      ],
+      "evidence": "external_read_process_memory_jsonl",
+      "cause_confirmed": false
+    },
+    {
+      "key": "302.0.0",
+      "type": 302,
+      "variant": 0,
+      "subtype": 0,
+      "windows": 9,
+      "runs": [
+        "native-20261027-223538-537",
+        "native-20261029-104631-576"
+      ],
+      "states": {
+        "1": 262,
+        "4": 2850,
+        "16": 1288,
+        "18": 78
+      },
+      "animations": {
+        "WalkVert": 1903,
+        "Pant": 1307,
+        "WalkHori": 1198,
+        "Death": 70
+      },
+      "observed_duration_clocks": {
+        "min": 169,
+        "max": 602
+      },
+      "examples": [
+        {
+          "run": "native-20261027-223538-537",
+          "file": "sessions/native-20261027-223538-537/frames-0001.jsonl",
+          "address": 2212746724,
+          "identity": {
+            "type": 302,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2105487380,
+          "first_clock": 32,
+          "last_clock": 633,
+          "observations": 657,
+          "states": {
+            "1": 30,
+            "4": 414,
+            "16": 200,
+            "18": 13
+          },
+          "animations": {
+            "WalkVert": 256,
+            "WalkHori": 186,
+            "Pant": 203,
+            "Death": 12
+          },
+          "hp_min": 50.0,
+          "hp_max": 50.0,
+          "observed_duration_clocks": 602,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261027-223538-537",
+          "file": "sessions/native-20261027-223538-537/frames-0001.jsonl",
+          "address": 2212750660,
+          "identity": {
+            "type": 302,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2105487380,
+          "first_clock": 32,
+          "last_clock": 633,
+          "observations": 657,
+          "states": {
+            "1": 30,
+            "4": 413,
+            "16": 201,
+            "18": 13
+          },
+          "animations": {
+            "WalkVert": 247,
+            "WalkHori": 193,
+            "Pant": 205,
+            "Death": 12
+          },
+          "hp_min": 50.0,
+          "hp_max": 50.0,
+          "observed_duration_clocks": 602,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261027-223538-537",
+          "file": "sessions/native-20261027-223538-537/frames-0001.jsonl",
+          "address": 2212762468,
+          "identity": {
+            "type": 302,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2105487380,
+          "first_clock": 32,
+          "last_clock": 633,
+          "observations": 657,
+          "states": {
+            "1": 30,
+            "4": 456,
+            "16": 158,
+            "18": 13
+          },
+          "animations": {
+            "WalkVert": 283,
+            "WalkHori": 200,
+            "Pant": 162,
+            "Death": 12
+          },
+          "hp_min": 50.0,
+          "hp_max": 50.0,
+          "observed_duration_clocks": 602,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261027-223538-537",
+          "file": "sessions/native-20261027-223538-537/frames-0001.jsonl",
+          "address": 2212766404,
+          "identity": {
+            "type": 302,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2105487380,
+          "first_clock": 32,
+          "last_clock": 633,
+          "observations": 657,
+          "states": {
+            "1": 30,
+            "4": 389,
+            "16": 225,
+            "18": 13
+          },
+          "animations": {
+            "WalkVert": 285,
+            "WalkHori": 132,
+            "Pant": 228,
+            "Death": 12
+          },
+          "hp_min": 50.0,
+          "hp_max": 50.0,
+          "observed_duration_clocks": 602,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261029-104631-576",
+          "file": "sessions/native-20261029-104631-576/frames-0001.jsonl",
+          "address": 2201827460,
+          "identity": {
+            "type": 302,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2088693780,
+          "first_clock": 899,
+          "last_clock": 1067,
+          "observations": 218,
+          "states": {
+            "1": 28,
+            "4": 140,
+            "16": 50
+          },
+          "animations": {
+            "WalkVert": 92,
+            "WalkHori": 76,
+            "Pant": 50
+          },
+          "hp_min": 50.0,
+          "hp_max": 50.0,
+          "observed_duration_clocks": 169,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261029-104631-576",
+          "file": "sessions/native-20261029-104631-576/frames-0001.jsonl",
+          "address": 2201835332,
+          "identity": {
+            "type": 302,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2088693780,
+          "first_clock": 899,
+          "last_clock": 1067,
+          "observations": 218,
+          "states": {
+            "1": 28,
+            "4": 148,
+            "16": 42
+          },
+          "animations": {
+            "WalkVert": 122,
+            "WalkHori": 54,
+            "Pant": 42
+          },
+          "hp_min": 50.0,
+          "hp_max": 50.0,
+          "observed_duration_clocks": 169,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261029-104631-576",
+          "file": "sessions/native-20261029-104631-576/frames-0001.jsonl",
+          "address": 2201847140,
+          "identity": {
+            "type": 302,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2088693780,
+          "first_clock": 899,
+          "last_clock": 1067,
+          "observations": 218,
+          "states": {
+            "1": 28,
+            "4": 140,
+            "16": 50
+          },
+          "animations": {
+            "WalkVert": 123,
+            "WalkHori": 45,
+            "Pant": 50
+          },
+          "hp_min": 50.0,
+          "hp_max": 50.0,
+          "observed_duration_clocks": 169,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261029-104631-576",
+          "file": "sessions/native-20261029-104631-576/frames-0001.jsonl",
+          "address": 2201866820,
+          "identity": {
+            "type": 302,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2088693780,
+          "first_clock": 42,
+          "last_clock": 588,
+          "observations": 598,
+          "states": {
+            "1": 29,
+            "4": 353,
+            "16": 203,
+            "18": 13
+          },
+          "animations": {
+            "WalkVert": 248,
+            "WalkHori": 133,
+            "Pant": 206,
+            "Death": 11
+          },
+          "hp_min": 50.0,
+          "hp_max": 50.0,
+          "observed_duration_clocks": 547,
+          "end_observed": false
+        },
+        {
+          "run": "native-20261029-104631-576",
+          "file": "sessions/native-20261029-104631-576/frames-0001.jsonl",
+          "address": 2201878628,
+          "identity": {
+            "type": 302,
+            "variant": 0,
+            "subtype": 0
+          },
+          "room": 2088693780,
+          "first_clock": 42,
+          "last_clock": 588,
+          "observations": 598,
+          "states": {
+            "1": 29,
+            "4": 397,
+            "16": 159,
+            "18": 13
+          },
+          "animations": {
+            "WalkVert": 247,
+            "WalkHori": 179,
+            "Pant": 161,
+            "Death": 11
+          },
+          "hp_min": 50.0,
+          "hp_max": 50.0,
+          "observed_duration_clocks": 547,
+          "end_observed": false
+        }
+      ],
+      "evidence": "external_read_process_memory_jsonl",
+      "cause_confirmed": false
+    }
+  ],
+  "summary": {
+    "identities": 3,
+    "windows": 16,
+    "observations": 19201
+  }
+}

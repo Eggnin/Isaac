@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x00431640	HELPER_HitList_Contains	7	7.*	Laser CanDamageEntity membership
+0x00431570	HELPER_HitList_Append	7	7.*	Laser DoDamage membership insertion
+0x006b62b0	HELPER_Entity_HitListKey	7	7.*	Laser DoDamage derives hit identity

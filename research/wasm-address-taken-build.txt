@@ -1,0 +1,24 @@
+D:\Isaac\research\wasm-validation-env\Scripts\python.exe D:\Isaac\research\the-browsing-of-isaac\scripts\recomp\lift\build_boot.py --dir D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\original-j460 --jobs 3 --fast --no-lift-patches
+emcc : emcc (Emscripten gcc/clang-like replacement + linker emulating GNU ld) 6.0.5-git (1db513782be24469589d7cb8a1f1834e9a33f271)
+lift : D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\original-j460
+check_lifted: 75 TU(s), 12 dispatch-loop function(s), 4 tail-only, 0 problem(s)
+{
+ "missing_callees": 9,
+ "callother_intrinsics": 27,
+ "import_shims": 0,
+ "import_stubs_omitted": 594,
+ "exports": 28232
+}
+re-entry blocks: 158742
+dispatch entries: 28241  (0x401000..0xb17121)  image slices: 0
+boot_integration.c: 1 warnings
+host : 38 TUs in 13.5s
+lift : dependency fingerprint 6247b724ab6e (4 headers + flags)
+lift : compiling 75 / 75 TUs (3 jobs)
+lift : 75 objects (75 rebuilt) in 376.2s
+link : 114 inputs -> D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\boot-fast\boot.mjs
+link : exit 0 in 2.3s
+wasm : 93856602 bytes
+mjs  : 194567 bytes
+driver copied to D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\boot-fast\boot_integration.mjs
+wrote D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\boot-fast\build_boot.json

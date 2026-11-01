@@ -1,0 +1,19 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 7,
+  "decompiledCount": 7,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00409030", "name": "HELPER_AnimationState_Update", "types": "0", "identities": "*", "entry": "00409030", "resolvedFunction": "HELPER_AnimationState_Update", "ghidraEntry": "00409030", "instructions": 68, "incomingCalls": 232, "outgoingCalls": 5, "cFile": "HELPER_AnimationState_Update_00409030.c", "asmFile": "HELPER_AnimationState_Update_00409030.asm", "error": null},
+    {"va": "0x0040af10", "name": "HELPER_AnimationState_NextEventTrigger", "types": "0", "identities": "*", "entry": "0040af10", "resolvedFunction": "HELPER_AnimationState_NextEventTrigger", "ghidraEntry": "0040af10", "instructions": 97, "incomingCalls": 1, "outgoingCalls": 1, "cFile": "HELPER_AnimationState_NextEventTrigger_0040af10.c", "asmFile": "HELPER_AnimationState_NextEventTrigger_0040af10.asm", "error": null},
+    {"va": "0x00408d00", "name": "HELPER_AnimationState_AdvancePosition", "types": "0", "identities": "*", "entry": "00408d00", "resolvedFunction": "HELPER_AnimationState_AdvancePosition", "ghidraEntry": "00408d00", "instructions": 81, "incomingCalls": 28, "outgoingCalls": 6, "cFile": "HELPER_AnimationState_AdvancePosition_00408d00.c", "asmFile": "HELPER_AnimationState_AdvancePosition_00408d00.asm", "error": null},
+    {"va": "0x0040add0", "name": "HELPER_AnimationState_IsEventTriggered", "types": "0", "identities": "*", "entry": "0040add0", "resolvedFunction": "HELPER_AnimationState_IsEventTriggered", "ghidraEntry": "0040add0", "instructions": 68, "incomingCalls": 398, "outgoingCalls": 1, "cFile": "HELPER_AnimationState_IsEventTriggered_0040add0.c", "asmFile": "HELPER_AnimationState_IsEventTriggered_0040add0.asm", "error": null},
+    {"va": "0x0040ae70", "name": "HELPER_AnimationState_WasEventTriggered", "types": "0", "identities": "*", "entry": "0040ae70", "resolvedFunction": "HELPER_AnimationState_WasEventTriggered", "ghidraEntry": "0040ae70", "instructions": 68, "incomingCalls": 103, "outgoingCalls": 1, "cFile": "HELPER_AnimationState_WasEventTriggered_0040ae70.c", "asmFile": "HELPER_AnimationState_WasEventTriggered_0040ae70.asm", "error": null},
+    {"va": "0x00408c90", "name": "HELPER_AnimationState_TriggerEvents", "types": "0", "identities": "*", "entry": "00408c90", "resolvedFunction": "HELPER_AnimationState_TriggerEvents", "ghidraEntry": "00408c90", "instructions": 43, "incomingCalls": 3, "outgoingCalls": 1, "cFile": "HELPER_AnimationState_TriggerEvents_00408c90.c", "asmFile": "HELPER_AnimationState_TriggerEvents_00408c90.asm", "error": null},
+    {"va": "0x0040a1b0", "name": "HELPER_AnimationState_Loop", "types": "0", "identities": "*", "entry": "0040a1b0", "resolvedFunction": "HELPER_AnimationState_Loop", "ghidraEntry": "0040a1b0", "instructions": 29, "incomingCalls": 849, "outgoingCalls": 1, "cFile": "HELPER_AnimationState_Loop_0040a1b0.c", "asmFile": "HELPER_AnimationState_Loop_0040a1b0.asm", "error": null}
+  ]
+}

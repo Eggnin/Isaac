@@ -1,0 +1,30 @@
+{
+  "created_utc": "2026-10-29T17:34:01.866Z",
+  "scope": "Paired native player movement in a private original-engine instance; no live-game process or installation writes",
+  "logic_fps": 30,
+  "render_fps": 60,
+  "frames_per_branch": 20,
+  "room": "s.boss.1010",
+  "seed": "3JY1 6FLR",
+  "cases": [
+    {
+      "name": "brimstone",
+      "items": [
+        118
+      ],
+      "type": 2,
+      "charged": true,
+      "pairs": [],
+      "error": "Error: spawn 20 did not appear after 181 frames; setup={\"mode\":\"type\",\"commands\":[\"lua for _,e in ipairs(Isaac.GetRoomEntities()) do if e:ToNPC() then e:Remove() end end\"],\"executed\":[{\"cmd\":\"lua for _,e in ipairs(Isaac.GetRoomEntities()) do if e:ToNPC() then e:Remove() end end\",\"frame\":1859,\"clearedAfter\":1}],\"failed\":[],\"openedAt\":1250,\"closedAt\":1918,\"ups\":0,\"openFailed\":false,\"closeFailed\":false,\"typedMismatches\":0,\"history\":[\"spawn undefined.undefined.undefined\",\"goto s.boss.1010\",\"giveitem c118\",\"seed 3JY1 6FLR\"],\"lastState\":0,\"phase\":\"done\"}; see D:\\Isaac\\research\\boss-lab\\training-runs\\1793295241868-4336-0\\engine.log\n    at ChildProcess.<anonymous> (file:///D:/Isaac/research/boss-lab/offline/engine_environment.mjs:72:25)\n    at ChildProcess.emit (node:events:514:28)\n    at emit (node:internal/child_process:1020:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:91:21)"
+    }
+  ],
+  "errors": [
+    {
+      "case": "brimstone",
+      "error": "Error: spawn 20 did not appear after 181 frames; setup={\"mode\":\"type\",\"commands\":[\"lua for _,e in ipairs(Isaac.GetRoomEntities()) do if e:ToNPC() then e:Remove() end end\"],\"executed\":[{\"cmd\":\"lua for _,e in ipairs(Isaac.GetRoomEntities()) do if e:ToNPC() then e:Remove() end end\",\"frame\":1859,\"clearedAfter\":1}],\"failed\":[],\"openedAt\":1250,\"closedAt\":1918,\"ups\":0,\"openFailed\":false,\"closeFailed\":false,\"typedMismatches\":0,\"history\":[\"spawn undefined.undefined.undefined\",\"goto s.boss.1010\",\"giveitem c118\",\"seed 3JY1 6FLR\"],\"lastState\":0,\"phase\":\"done\"}; see D:\\Isaac\\research\\boss-lab\\training-runs\\1793295241868-4336-0\\engine.log\n    at ChildProcess.<anonymous> (file:///D:/Isaac/research/boss-lab/offline/engine_environment.mjs:72:25)\n    at ChildProcess.emit (node:events:514:28)\n    at emit (node:internal/child_process:1020:14)\n    at process.processTicksAndRejections (node:internal/process/task_queues:91:21)"
+    }
+  ],
+  "elapsed_ms": 8351.0318,
+  "completed": false,
+  "worker_sha256": "bee167c3a70a67906c29be8b9c3ce7b6eccd08f6d3b619275df44c97d4160083"
+}

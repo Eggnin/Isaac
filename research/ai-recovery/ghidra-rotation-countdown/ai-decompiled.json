@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 3,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00452c40", "name": "HELPER_SetExplosionCountdown", "types": "4", "identities": "4.*", "entry": "00452c40", "resolvedFunction": "HELPER_SetExplosionCountdown", "ghidraEntry": "00452c40", "instructions": 7, "incomingCalls": 2, "outgoingCalls": 0, "cFile": "HELPER_SetExplosionCountdown_00452c40.c", "asmFile": "HELPER_SetExplosionCountdown_00452c40.asm", "error": null},
+    {"va": "0x0096f420", "name": "HELPER_Laser_SetActiveRotation", "types": "7", "identities": "7.*", "entry": "0096f420", "resolvedFunction": "HELPER_Laser_SetActiveRotation", "ghidraEntry": "0096f420", "instructions": 23, "incomingCalls": 0, "outgoingCalls": 1, "cFile": "HELPER_Laser_SetActiveRotation_0096f420.c", "asmFile": "HELPER_Laser_SetActiveRotation_0096f420.asm", "error": null},
+    {"va": "0x009704a0", "name": "HELPER_Laser_UpdateGeometry", "types": "7", "identities": "7.*", "entry": "009704a0", "resolvedFunction": "HELPER_Laser_UpdateGeometry", "ghidraEntry": "009704a0", "instructions": 491, "incomingCalls": 3, "outgoingCalls": 19, "cFile": "HELPER_Laser_UpdateGeometry_009704a0.c", "asmFile": "HELPER_Laser_UpdateGeometry_009704a0.asm", "error": null}
+  ]
+}

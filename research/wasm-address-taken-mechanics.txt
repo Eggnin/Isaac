@@ -1,0 +1,150 @@
+D:\Isaac\research\wasm-validation-env\Scripts\python.exe D:\Isaac\research\the-browsing-of-isaac\scripts\recomp\lift\patch_reentry.py --dir D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\original-j460 --cont D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\original-j460\call_cont.txt
+lifted_000.c     funcs= 474 guards= 289 labels= 2228
+lifted_001.c     funcs= 393 guards= 256 labels= 1511
+lifted_002.c     funcs= 220 guards= 105 labels= 1959
+lifted_003.c     funcs= 103 guards=  54 labels= 1561
+lifted_004.c     funcs=  48 guards=  44 labels= 2082
+lifted_005.c     funcs=  38 guards=  33 labels= 1794
+lifted_006.c     funcs=  57 guards=  39 labels= 1366
+lifted_007.c     funcs= 117 guards=  75 labels= 1671
+lifted_008.c     funcs= 128 guards=  99 labels= 1462
+lifted_009.c     funcs=  47 guards=  38 labels= 1560
+lifted_010.c     funcs=  81 guards=  61 labels= 1699
+lifted_011.c     funcs=  36 guards=  36 labels= 1678
+lifted_012.c     funcs=  69 guards=  65 labels= 1813
+lifted_013.c     funcs=  78 guards=  71 labels= 1636
+lifted_014.c     funcs=  63 guards=  56 labels= 1426
+lifted_015.c     funcs=  73 guards=  61 labels= 1959
+lifted_016.c     funcs=  99 guards=  79 labels= 1760
+lifted_017.c     funcs=  65 guards=  52 labels= 1473
+lifted_018.c     funcs= 113 guards=  53 labels= 3718
+lifted_019.c     funcs= 149 guards=  80 labels= 6287
+lifted_021.c     funcs= 127 guards=  49 labels=  644
+lifted_022.c     funcs= 126 guards= 118 labels= 2576
+lifted_023.c     funcs= 178 guards= 164 labels= 1739
+lifted_024.c     funcs= 137 guards= 121 labels= 2431
+lifted_025.c     funcs= 112 guards=  78 labels= 3323
+lifted_026.c     funcs= 189 guards= 135 labels= 4398
+lifted_027.c     funcs= 171 guards= 148 labels= 2979
+lifted_028.c     funcs= 210 guards= 155 labels= 1476
+lifted_029.c     funcs= 164 guards= 157 labels= 2921
+lifted_030.c     funcs= 241 guards= 206 labels= 2834
+lifted_031.c     funcs= 189 guards= 146 labels= 2756
+lifted_032.c     funcs= 388 guards= 318 labels= 2535
+lifted_033.c     funcs= 258 guards= 216 labels= 2504
+lifted_034.c     funcs= 564 guards= 501 labels= 2531
+lifted_035.c     funcs= 511 guards= 420 labels= 2224
+lifted_036.c     funcs=  62 guards=  58 labels=26517
+lifted_037.c     funcs=  58 guards=  49 labels= 6468
+lifted_038.c     funcs= 106 guards= 101 labels= 3161
+lifted_039.c     funcs= 167 guards= 155 labels= 3080
+lifted_040.c     funcs= 246 guards= 219 labels= 2943
+lifted_041.c     funcs=1074 guards= 841 labels=11961
+lifted_042.c     funcs= 462 guards= 421 labels= 6490
+lifted_043.c     funcs= 778 guards= 741 labels=50478
+lifted_044.c     funcs= 259 guards= 218 labels= 1465
+lifted_045.c     funcs= 121 guards= 107 labels= 1411
+lifted_046.c     funcs= 396 guards= 273 labels= 4072
+lifted_047.c     funcs= 333 guards= 316 labels= 4416
+lifted_048.c     funcs= 617 guards= 569 labels= 6345
+lifted_049.c     funcs= 449 guards= 444 labels= 4579
+lifted_050.c     funcs= 565 guards= 563 labels= 3313
+lifted_051.c     funcs= 126 guards= 121 labels= 1646
+lifted_052.c     funcs= 158 guards= 148 labels= 2006
+lifted_053.c     funcs= 187 guards= 162 labels= 2169
+lifted_054.c     funcs= 212 guards= 190 labels= 2414
+lifted_055.c     funcs= 217 guards= 189 labels= 2141
+lifted_056.c     funcs= 110 guards= 100 labels= 1713
+lifted_057.c     funcs= 155 guards= 128 labels= 1799
+lifted_058.c     funcs=  68 guards=  59 labels= 1612
+lifted_059.c     funcs= 179 guards= 156 labels= 1681
+lifted_060.c     funcs= 178 guards= 154 labels= 1686
+lifted_061.c     funcs= 216 guards= 178 labels= 2610
+lifted_062.c     funcs= 300 guards= 261 labels= 2261
+lifted_063.c     funcs= 189 guards= 156 labels= 1419
+lifted_064.c     funcs= 271 guards= 176 labels= 1550
+lifted_065.c     funcs= 415 guards= 357 labels= 1999
+lifted_066.c     funcs=2299 guards=2298 labels= 2539
+lifted_067.c     funcs=1058 guards=1010 labels= 2270
+lifted_068.c     funcs= 345 guards= 284 labels= 2373
+lifted_069.c     funcs= 403 guards= 369 labels= 2005
+lifted_070.c     funcs= 214 guards= 172 labels= 1313
+lifted_071.c     funcs= 241 guards= 169 labels= 1069
+lifted_072.c     funcs= 224 guards= 152 labels=  643
+lifted_073.c     funcs= 524 guards= 308 labels= 1239
+lifted_074.c     funcs=5460 guards=1401 labels= 1973
+lifted_075.c     funcs=2774 guards= 822 labels= 1104
+TOTAL funcs=28232 guards=19173 labels=260447
+entry-first: 7 function(s) fixed in lifted_000.c; lifted_000.o dropped for recompile
+entry-first: 4 function(s) fixed in lifted_001.c; lifted_001.o dropped for recompile
+entry-first: 4 function(s) fixed in lifted_002.c; lifted_002.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_003.c; lifted_003.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_004.c; lifted_004.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_005.c; lifted_005.o dropped for recompile
+entry-first: 2 function(s) fixed in lifted_010.c; lifted_010.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_011.c; lifted_011.o dropped for recompile
+entry-first: 4 function(s) fixed in lifted_012.c; lifted_012.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_013.c; lifted_013.o dropped for recompile
+entry-first: 2 function(s) fixed in lifted_015.c; lifted_015.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_016.c; lifted_016.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_017.c; lifted_017.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_018.c; lifted_018.o dropped for recompile
+entry-first: 5 function(s) fixed in lifted_022.c; lifted_022.o dropped for recompile
+entry-first: 6 function(s) fixed in lifted_023.c; lifted_023.o dropped for recompile
+entry-first: 3 function(s) fixed in lifted_024.c; lifted_024.o dropped for recompile
+entry-first: 3 function(s) fixed in lifted_026.c; lifted_026.o dropped for recompile
+entry-first: 5 function(s) fixed in lifted_027.c; lifted_027.o dropped for recompile
+entry-first: 2 function(s) fixed in lifted_028.c; lifted_028.o dropped for recompile
+entry-first: 5 function(s) fixed in lifted_029.c; lifted_029.o dropped for recompile
+entry-first: 3 function(s) fixed in lifted_030.c; lifted_030.o dropped for recompile
+entry-first: 6 function(s) fixed in lifted_031.c; lifted_031.o dropped for recompile
+entry-first: 7 function(s) fixed in lifted_032.c; lifted_032.o dropped for recompile
+entry-first: 11 function(s) fixed in lifted_033.c; lifted_033.o dropped for recompile
+entry-first: 24 function(s) fixed in lifted_034.c; lifted_034.o dropped for recompile
+entry-first: 3 function(s) fixed in lifted_035.c; lifted_035.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_038.c; lifted_038.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_039.c; lifted_039.o dropped for recompile
+entry-first: 3 function(s) fixed in lifted_040.c; lifted_040.o dropped for recompile
+entry-first: 224 function(s) fixed in lifted_041.c; lifted_041.o dropped for recompile
+entry-first: 47 function(s) fixed in lifted_042.c; lifted_042.o dropped for recompile
+entry-first: 151 function(s) fixed in lifted_043.c; lifted_043.o dropped for recompile
+entry-first: 2 function(s) fixed in lifted_044.c; lifted_044.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_045.c; lifted_045.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_051.c; lifted_051.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_052.c; lifted_052.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_053.c; lifted_053.o dropped for recompile
+entry-first: 3 function(s) fixed in lifted_055.c; lifted_055.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_056.c; lifted_056.o dropped for recompile
+entry-first: 5 function(s) fixed in lifted_059.c; lifted_059.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_060.c; lifted_060.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_061.c; lifted_061.o dropped for recompile
+entry-first: 9 function(s) fixed in lifted_062.c; lifted_062.o dropped for recompile
+entry-first: 1 function(s) fixed in lifted_072.c; lifted_072.o dropped for recompile
+entry-first: 568 goto-shaped function(s) start below their entry, 568 fixed now
+split : sub_005b39d0 in lifted_018.c -> 7 parts (175074 lines)
+split : sub_005d4380 in lifted_019.c -> 14 parts (342908 lines)
+split : sub_0061da10 in lifted_022.c -> 3 parts (62484 lines)
+split : sub_00653070 in lifted_024.c -> 3 parts (62505 lines)
+split : sub_006670f0 in lifted_025.c -> 4 parts (101180 lines)
+split : sub_00763570 in lifted_036.c -> 4 parts (102442 lines)
+split : sub_00765f69 in lifted_036.c -> 4 parts (84512 lines)
+split : sub_00766433 in lifted_036.c -> 4 parts (82203 lines)
+split : sub_00766474 in lifted_036.c -> 4 parts (82103 lines)
+split : sub_00766631 in lifted_036.c -> 4 parts (81218 lines)
+split : sub_0076666c in lifted_036.c -> 4 parts (81097 lines)
+split : sub_00766672 in lifted_036.c -> 4 parts (81085 lines)
+split : sub_00766931 in lifted_036.c -> 3 parts (76490 lines)
+split : sub_00766933 in lifted_036.c -> 3 parts (76488 lines)
+split : sub_00766d61 in lifted_036.c -> 3 parts (74529 lines)
+split : sub_00767333 in lifted_036.c -> 3 parts (72249 lines)
+split : sub_00767375 in lifted_036.c -> 3 parts (72116 lines)
+split : sub_0076786c in lifted_036.c -> 3 parts (70207 lines)
+split : sub_00767874 in lifted_036.c -> 3 parts (70205 lines)
+split : sub_00767961 in lifted_036.c -> 3 parts (69864 lines)
+split : sub_00782af0 in lifted_037.c -> 3 parts (71739 lines)
+split : sub_00794e50 in lifted_038.c -> 4 parts (93323 lines)
+split : sub_00866960 in lifted_046.c -> 3 parts (68414 lines)
+call-slim: 969195 EIP/FS_OFFSET spill or reload line(s) dropped in 75 TU(s)
+mechanical passes updated 84 translation units
+D:\Isaac\research\wasm-validation-env\Scripts\python.exe D:\Isaac\research\the-browsing-of-isaac\scripts\recomp\lift\check_lifted.py --dir D:\Isaac\research\the-browsing-of-isaac\output\recomp\lift\original-j460
+check_lifted: 75 TU(s), 12 dispatch-loop function(s), 4 tail-only, 0 problem(s)

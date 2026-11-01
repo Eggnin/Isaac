@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x00652ab0	HELPER_Projectile_ContinuumPoint	9	9.*	CONTINUUM position update
+0x006cb2a0	HELPER_Projectile_FinalizeFlags	9	9.*	NPC projectile finalize helper
+0x0041cb70	HELPER_FloatBound	0	*	Perfect homing minimum speed

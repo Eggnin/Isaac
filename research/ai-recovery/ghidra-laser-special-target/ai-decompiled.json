@@ -1,0 +1,14 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 2,
+  "decompiledCount": 2,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x0099f2c0", "name": "HELPER_HomingLaser_TurnHorizontal", "types": "7", "identities": "7.*", "entry": "0099f2c0", "resolvedFunction": "HELPER_HomingLaser_TurnHorizontal", "ghidraEntry": "0099f2c0", "instructions": 487, "incomingCalls": 1, "outgoingCalls": 12, "cFile": "HELPER_HomingLaser_TurnHorizontal_0099f2c0.c", "asmFile": "HELPER_HomingLaser_TurnHorizontal_0099f2c0.asm", "error": null},
+    {"va": "0x0096fc70", "name": "HELPER_Laser_WallEndpoint", "types": "7", "identities": "7.*", "entry": "0096fc70", "resolvedFunction": "HELPER_Laser_WallEndpoint", "ghidraEntry": "0096fc70", "instructions": 65, "incomingCalls": 6, "outgoingCalls": 1, "cFile": "HELPER_Laser_WallEndpoint_0096fc70.c", "asmFile": "HELPER_Laser_WallEndpoint_0096fc70.asm", "error": null}
+  ]
+}

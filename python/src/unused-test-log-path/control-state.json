@@ -1,0 +1,30 @@
+{
+  "status": "辅助已开启；等待有效游戏数据",
+  "enabled": true,
+  "foreground": null,
+  "error": null,
+  "timing": null,
+  "time": 1792848070.0651228,
+  "pid": null,
+  "frame": null,
+  "paused": null,
+  "transitional": null,
+  "targets": 0,
+  "bodies": 0,
+  "keys": null,
+  "version": "0.3.4-external-core",
+  "search": null,
+  "aim": null,
+  "motion": null,
+  "locality": null,
+  "player_controls": {
+    "controls_enabled": null,
+    "controls_cooldown": null
+  },
+  "input_delivery": null,
+  "keyboard_input": null,
+  "diagnostics": {
+    "queue_dropped": 0,
+    "write_errors": 0
+  }
+}

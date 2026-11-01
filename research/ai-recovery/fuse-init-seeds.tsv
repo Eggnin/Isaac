@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x0081f8b0	HELPER_LRoomRectangles	0	*	Native clamp sub-rectangles
+0x006a5f00	HELPER_Bomb_HandleCollision	4	4.*	Bomb vtable collision
+0x00652b90	HELPER_Projectile_Init	9	9.*	Projectile vtable Init

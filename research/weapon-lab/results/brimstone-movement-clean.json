@@ -1,0 +1,57 @@
+{
+  "created_utc": "2026-10-29T17:35:20.691Z",
+  "scope": "Paired native player movement in a private original-engine instance; no live-game process or installation writes",
+  "logic_fps": 30,
+  "render_fps": 60,
+  "frames_per_branch": 20,
+  "room": "s.boss.1010",
+  "seed": "3JY1 6FLR",
+  "cases": [
+    {
+      "name": "brimstone",
+      "items": [
+        118
+      ],
+      "type": 2,
+      "charged": true,
+      "pairs": [],
+      "initial": {
+        "clock": 1,
+        "pos": {
+          "x": 320,
+          "y": 400
+        },
+        "vel": {
+          "x": 0,
+          "y": 0
+        },
+        "max_speed": 260,
+        "health": 6,
+        "weapons": [
+          {
+            "type": 2,
+            "charge": 0,
+            "cooldown": -1,
+            "num_fired": 0,
+            "modifiers": 4
+          }
+        ],
+        "attacks": [],
+        "player_radius": 10,
+        "enemy_count": 1
+      },
+      "run_directory": "D:\\Isaac\\research\\boss-lab\\training-runs\\1793295320692-12792-0",
+      "error": "Error: Room is not empty (1 enemies)\n    at file:///D:/Isaac/research/weapon-lab/verify_weapon_movement.mjs:84:41\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+    }
+  ],
+  "errors": [
+    {
+      "case": "brimstone",
+      "error": "Error: Room is not empty (1 enemies)\n    at file:///D:/Isaac/research/weapon-lab/verify_weapon_movement.mjs:84:41\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)"
+    }
+  ],
+  "elapsed_ms": 7429.2062000000005,
+  "completed": false,
+  "worker_sha256": "bee167c3a70a67906c29be8b9c3ce7b6eccd08f6d3b619275df44c97d4160083",
+  "engine_wasm_sha256": "a160fe0d2b147b2859d38cfe9296d7674f1f40195aa669241cbb49a001a09694"
+}

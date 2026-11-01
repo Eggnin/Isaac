@@ -1,0 +1,17 @@
+▶ generated dispatch preserves bodies, census, re-entry and diagnostic modes
+  ✔ colliding cache targets evict and refill without corrupting nested dispatch (0.9364ms)
+  ✔ entry and block boundaries preserve missing sentinels and opposite ownership precedence (0.1826ms)
+  ✔ each diagnostic independently disables caching and keeps exact entry counts (0.1944ms)
+  ✔ modes resolve only at valid function entries and remain frozen afterward (0.1542ms)
+  ✔ negative heartbeat is re-read until zero permits the fast transition (0.1139ms)
+  ✔ wrapped entries stay public while continuations resume their original body in every cache mode (0.1926ms)
+  ✔ real split continuations resume through the renamed trampoline across pending jumps (0.1859ms)
+✔ generated dispatch preserves bodies, census, re-entry and diagnostic modes (15847.8434ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 15990.4228

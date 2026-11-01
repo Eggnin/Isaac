@@ -1,0 +1,33 @@
+﻿以撒辅助：循环运行与逐局记录
+
+开始：双击 Start-Loop-Runs.cmd。
+停止：按 F7，或双击 Stop-Loop-Runs.cmd。停止时会先保存日志、结束本次启动的游戏并恢复文件；请等控制台出现 Loop finished。
+
+启动循环前，请关闭已经运行的以撒和辅助窗口。脚本不会接管或关闭这些原有进程。
+
+默认行为：
+- 每局从新开 Isaac 困难模式开始，支持后台输入。
+- 受伤后继续打，直到原生玩家死亡标记出现；首层 Boss 清房不会结束，继续寻找实际出现的下层入口。
+- 连续 30 秒没有新房间、敌人血量下降、道具变化或新的探索位置，判为卡住，保留现场后重开。
+- 单房最多 600 秒；异常退出也会记录并重开。没有默认局数上限或整局时长上限。
+- 每局开始前重新读取 Latest-Isaac-Program.json，校验程序和构建清单，下一局使用最新发布版本。
+- 不安装模组、不使用 Computer Use。原存档和配置逐局备份、恢复；所有测试证据保留。恢复失败时会停止循环。
+
+记录保存在程序旁 loop-runs：
+- runs-history.jsonl：所有会话每一局的摘要。
+- loop-memory.json：累计局数、死亡/卡住等结束原因、最高已观察 stage、重复失败位置。
+- 每次会话的 runs.jsonl / session-summary.md：本次各局摘要。
+- 每局 events.jsonl：进房、换层、Boss 出现、清房、血量/道具变化、动作变化、读取错误与结束原因。
+- 每局 logs：持续的战斗/控制记录、每次受伤快照；卡住或死亡另有现场快照。循环模式不轮换覆盖旧记录。
+- 每局 program-build.json：实际使用的版本、EXE 哈希及源码哈希。game-log.txt 保留游戏本身的日志及随机种子。
+
+只把已观察的事实记入日志；不能仅凭消失推断 Boss 已死亡，也不能把日志当作自动学习或代码自行优化。
+
+可选参数示例（PowerShell）：
+.\Start-Loop-Runs.ps1 -MaxRuns 5 -StallSeconds 45 -RoomTimeoutSeconds 900
+MaxRuns=0 持续循环，RoomTimeoutSeconds=0 关闭单房总时限。
+MaxRunSeconds 默认为 0，即每局无总时限；该参数用于有界验证。
+
+需要保留整个 outputs 目录中的 Start-Loop-Runs.ps1、Run-Native-Session.ps1、Latest-Isaac-Program.json、对应 EXE 和 BUILD.json。
+
+双击入口仅对它创建的 PowerShell 进程设置 RemoteSigned 以运行本地脚本；系统级执行策略不变。

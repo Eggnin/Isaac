@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x00813360	HELPER_Room_IsPositionInRoom	7	7.*	HomingType 2 40-pixel walk continues while inside room
+0x009a1610	HELPER_LaserNode_PopBack	7	7.*	HomingType 2 removes straight endpoint before walking
+0x009a1680	HELPER_LaserNode_Insert	7	7.*	HomingType 1 inserts candidates before endpoint

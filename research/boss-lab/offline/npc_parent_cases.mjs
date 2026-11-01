@@ -1,0 +1,17 @@
+export const NPC_PARENT_CASES = Object.freeze([
+  { target: '66.10.0', parents: ['66.0.0'] },
+  { target: '78.10.0', parents: ['78.0.0', '78.1.0'] },
+  { target: '266.1.0', parents: ['266.0.0'] },
+  { target: '266.2.0', parents: ['266.0.0'] },
+  { target: '307.0.1', parents: [{ key: '307.0.0', champion: 18 }, { key: '307.0.0', champion: 2 }] },
+  { target: '819.1.0', parents: ['920.0.0'] },
+  { target: '865.10.0', parents: ['865.0.0'] },
+  { target: '903.1.0', parents: ['903.0.0'] },
+  { target: '903.10.0', parents: ['903.0.0'] },
+  { target: '904.10.0', parents: ['904.0.0'] },
+  { target: '909.10.0', parents: ['909.0.0'] },
+  { target: '912.30.0', parents: ['912.0.0'] },
+  { target: '951.42.0', parents: ['951.40.0'] },
+  { target: '966.0.0', parents: ['904.0.0'] },
+  { target: '96.0.0', parents: [{ key: '10.0.0', champion: 17 }, { key: '14.0.0', champion: 17 }] },
+]);

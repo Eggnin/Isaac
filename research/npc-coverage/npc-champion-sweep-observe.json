@@ -1,0 +1,3481 @@
+{
+  "native": true,
+  "scope": "parent identity and champion variants in original combat rooms",
+  "caveat": "debug flags accelerate original behavior; child identity evidence does not count as balanced combat or no-damage evidence",
+  "observeFrames": 1200,
+  "attack": false,
+  "debugFlags": [
+    3
+  ],
+  "champions": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25
+  ],
+  "cases": [
+    {
+      "parent": "10.0.0",
+      "targetChild": "96.0.0"
+    },
+    {
+      "parent": "14.0.0",
+      "targetChild": "96.0.0"
+    },
+    {
+      "parent": "307.0.0",
+      "targetChild": "307.0.1"
+    },
+    {
+      "parent": "819.0.0",
+      "targetChild": "819.1.0"
+    }
+  ],
+  "rooms": {
+    "narrow": {
+      "name": "narrow",
+      "room": "s.boss.3702",
+      "width": 15,
+      "height": 16,
+      "description": "original tall narrow boss room",
+      "results": [
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 1,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 2,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 3,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 4,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 5,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 6,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 7,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 8,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 9,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 10,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 11,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 12,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 13,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 14,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 15,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 16,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 17,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": true,
+          "child": {
+            "key": "96.0.0",
+            "type": 96,
+            "variant": 0,
+            "subtype": 0,
+            "parent": 358678972,
+            "active": true,
+            "exists": true,
+            "dead": false,
+            "hp": 300,
+            "damage": 1,
+            "collision": 2
+          },
+          "identities": [
+            "10.0.0",
+            "96.0.0",
+            "9.0.0",
+            "18.0.0"
+          ],
+          "status": "child-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 18,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 19,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 20,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 21,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 22,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 23,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 24,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "10.0.0",
+          "parentChampion": 25,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": true,
+          "child": {
+            "key": "96.0.0",
+            "type": 96,
+            "variant": 0,
+            "subtype": 0,
+            "parent": 359159164,
+            "active": true,
+            "exists": true,
+            "dead": false,
+            "hp": 300,
+            "damage": 1,
+            "collision": 2
+          },
+          "identities": [
+            "10.0.0",
+            "96.0.0",
+            "9.0.0"
+          ],
+          "status": "child-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 1,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 2,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 3,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 4,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 5,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 6,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 7,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 8,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 9,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 10,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 11,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 12,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 13,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 14,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 15,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 16,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 17,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": true,
+          "child": {
+            "key": "96.0.0",
+            "type": 96,
+            "variant": 0,
+            "subtype": 0,
+            "parent": 358159420,
+            "active": true,
+            "exists": true,
+            "dead": false,
+            "hp": 300,
+            "damage": 1,
+            "collision": 2
+          },
+          "identities": [
+            "14.0.0",
+            "96.0.0",
+            "9.0.0",
+            "18.0.0"
+          ],
+          "status": "child-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 18,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 19,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 20,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 21,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 22,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 23,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 24,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "14.0.0",
+          "parentChampion": 25,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": true,
+          "child": {
+            "key": "96.0.0",
+            "type": 96,
+            "variant": 0,
+            "subtype": 0,
+            "parent": 358639612,
+            "active": true,
+            "exists": true,
+            "dead": false,
+            "hp": 300,
+            "damage": 1,
+            "collision": 2
+          },
+          "identities": [
+            "14.0.0",
+            "96.0.0",
+            "9.0.0",
+            "18.0.0"
+          ],
+          "status": "child-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 1,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 2,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 3,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 4,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 5,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 6,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 7,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 8,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 9,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 10,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 11,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 12,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 13,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 14,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 15,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 16,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 17,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "96.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 18,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": true,
+          "child": {
+            "key": "307.0.1",
+            "type": 307,
+            "variant": 0,
+            "subtype": 1,
+            "parent": 357694972,
+            "active": true,
+            "exists": true,
+            "dead": false,
+            "hp": 1,
+            "damage": 0,
+            "collision": 0
+          },
+          "identities": [
+            "307.0.0",
+            "9.0.0",
+            "307.0.1"
+          ],
+          "status": "child-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 19,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 20,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 21,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 22,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 23,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 24,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "307.0.0",
+          "parentChampion": 25,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "96.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 1,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 2,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 3,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 4,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 5,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 6,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 7,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 8,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 9,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 10,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 11,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 12,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 13,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 14,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 15,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 16,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 17,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "96.0.0",
+            "9.0.0",
+            "18.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 18,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 19,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 20,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 21,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 22,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 23,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 24,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 25,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "96.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793150873227-30828-0"
+        }
+      ],
+      "targets": {
+        "96.0.0": {
+          "observed": true,
+          "parents": [
+            {
+              "parent": "14.0.0",
+              "observedChampions": [
+                17,
+                25
+              ]
+            }
+          ]
+        },
+        "307.0.1": {
+          "observed": true,
+          "parents": [
+            {
+              "parent": "307.0.0",
+              "observedChampions": [
+                18
+              ]
+            }
+          ]
+        },
+        "819.1.0": {
+          "observed": false,
+          "parents": [
+            {
+              "parent": "819.0.0",
+              "observedChampions": []
+            }
+          ]
+        }
+      }
+    },
+    "long": {
+      "name": "long",
+      "room": "s.boss.3700",
+      "width": 28,
+      "height": 9,
+      "description": "original wide long boss room",
+      "results": [
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 1,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 2,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 3,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 4,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 5,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 6,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 7,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 8,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 9,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 10,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 11,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 12,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 13,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 14,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 15,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 16,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 17,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": true,
+          "child": {
+            "key": "96.0.0",
+            "type": 96,
+            "variant": 0,
+            "subtype": 0,
+            "parent": 357875772,
+            "active": true,
+            "exists": true,
+            "dead": false,
+            "hp": 300,
+            "damage": 1,
+            "collision": 2
+          },
+          "identities": [
+            "10.0.0",
+            "96.0.0",
+            "9.0.0"
+          ],
+          "status": "child-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 18,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 19,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 20,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 21,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 22,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 23,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 24,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "10.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "10.0.0",
+          "parentChampion": 25,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": true,
+          "child": {
+            "key": "96.0.0",
+            "type": 96,
+            "variant": 0,
+            "subtype": 0,
+            "parent": 357974172,
+            "active": true,
+            "exists": true,
+            "dead": false,
+            "hp": 300,
+            "damage": 1,
+            "collision": 2
+          },
+          "identities": [
+            "10.0.0",
+            "96.0.0",
+            "9.0.0"
+          ],
+          "status": "child-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 1,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 2,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 3,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 4,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 5,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 6,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 7,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 8,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 9,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 10,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 11,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 12,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 13,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 14,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 15,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 16,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 17,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": true,
+          "child": {
+            "key": "96.0.0",
+            "type": 96,
+            "variant": 0,
+            "subtype": 0,
+            "parent": 358178844,
+            "active": true,
+            "exists": true,
+            "dead": false,
+            "hp": 300,
+            "damage": 1,
+            "collision": 2
+          },
+          "identities": [
+            "14.0.0",
+            "96.0.0",
+            "9.0.0"
+          ],
+          "status": "child-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 18,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 19,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 20,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 21,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 22,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 23,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 24,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "14.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "14.0.0",
+          "parentChampion": 25,
+          "targetChild": "96.0.0",
+          "parentObserved": true,
+          "childObserved": true,
+          "child": {
+            "key": "96.0.0",
+            "type": 96,
+            "variant": 0,
+            "subtype": 0,
+            "parent": 358277244,
+            "active": true,
+            "exists": true,
+            "dead": false,
+            "hp": 300,
+            "damage": 1,
+            "collision": 2
+          },
+          "identities": [
+            "14.0.0",
+            "96.0.0",
+            "9.0.0"
+          ],
+          "status": "child-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 1,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 2,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": true,
+          "child": {
+            "key": "307.0.1",
+            "type": 307,
+            "variant": 0,
+            "subtype": 1,
+            "parent": 358304796,
+            "active": true,
+            "exists": true,
+            "dead": false,
+            "hp": 1,
+            "damage": 0,
+            "collision": 0
+          },
+          "identities": [
+            "307.0.0",
+            "9.0.0",
+            "307.0.1"
+          ],
+          "status": "child-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 3,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 4,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 5,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 6,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 7,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 8,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 9,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 10,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 11,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 12,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 13,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 14,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 15,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 16,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 17,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "96.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 18,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 19,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 20,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 21,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 22,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 23,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 24,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "307.0.0",
+          "parentChampion": 25,
+          "targetChild": "307.0.1",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "307.0.0",
+            "96.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 1,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 2,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 3,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 4,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 5,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 6,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 7,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 8,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 9,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 10,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 11,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 12,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 13,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 14,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 15,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 16,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 17,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "96.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 18,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 19,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 20,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 21,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 22,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 23,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 24,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 25,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "96.0.0",
+            "9.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151317538-30828-1"
+        }
+      ],
+      "targets": {
+        "96.0.0": {
+          "observed": true,
+          "parents": [
+            {
+              "parent": "14.0.0",
+              "observedChampions": [
+                17,
+                25
+              ]
+            }
+          ]
+        },
+        "307.0.1": {
+          "observed": true,
+          "parents": [
+            {
+              "parent": "307.0.0",
+              "observedChampions": [
+                2
+              ]
+            }
+          ]
+        },
+        "819.1.0": {
+          "observed": false,
+          "parents": [
+            {
+              "parent": "819.0.0",
+              "observedChampions": []
+            }
+          ]
+        }
+      }
+    }
+  },
+  "wallMs": 817956.1088
+}

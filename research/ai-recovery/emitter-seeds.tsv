@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x00653070	HELPER_Projectile_Update	9	9.*	native vtable+0xc
+0x005d4380	HELPER_Effect_Update	1000	1000.72.0	native RTTI vtable+0xc
+0x006a24d0	HELPER_Bomb_Update	4	4.17.0	native RTTI vtable+0xc

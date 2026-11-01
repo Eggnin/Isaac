@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 3,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x0099dca0", "name": "HELPER_HomingLaser_BeamTangents", "types": "7", "identities": "7.*", "entry": "0099dca0", "resolvedFunction": "HELPER_HomingLaser_BeamTangents", "ghidraEntry": "0099dca0", "instructions": 285, "incomingCalls": 5, "outgoingCalls": 4, "cFile": "HELPER_HomingLaser_BeamTangents_0099dca0.c", "asmFile": "HELPER_HomingLaser_BeamTangents_0099dca0.asm", "error": null},
+    {"va": "0x0099e160", "name": "HELPER_HomingLaser_RingTangents", "types": "7", "identities": "7.*", "entry": "0099e160", "resolvedFunction": "HELPER_HomingLaser_RingTangents", "ghidraEntry": "0099e160", "instructions": 147, "incomingCalls": 2, "outgoingCalls": 0, "cFile": "HELPER_HomingLaser_RingTangents_0099e160.c", "asmFile": "HELPER_HomingLaser_RingTangents_0099e160.asm", "error": null},
+    {"va": "0x0099c430", "name": "HELPER_HomingLaser_NodeDistance", "types": "7", "identities": "7.*", "entry": "0099c430", "resolvedFunction": "HELPER_HomingLaser_NodeDistance", "ghidraEntry": "0099c430", "instructions": 201, "incomingCalls": 4, "outgoingCalls": 0, "cFile": "HELPER_HomingLaser_NodeDistance_0099c430.c", "asmFile": "HELPER_HomingLaser_NodeDistance_0099c430.asm", "error": null}
+  ]
+}

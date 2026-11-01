@@ -1,0 +1,3 @@
+va	name	types	identity_keys	evidence
+0x007729d0	HELPER_Player_TakeDamage	1	1.*	Entity_Player vtable 0xB6BDD0 slot +0x20
+0x007dba30	HELPER_Player_SourceImmunity	1	1.*	Effect source immunity gate

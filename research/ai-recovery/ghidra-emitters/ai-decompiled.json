@@ -1,0 +1,15 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 3,
+  "decompiledCount": 2,
+  "errorCounts": {"Exception while decompiling 005d4380: process: timeout\n": 1},
+  "functions": [
+    {"va": "0x00653070", "name": "HELPER_Projectile_Update", "types": "9", "identities": "9.*", "entry": "00653070", "resolvedFunction": "HELPER_Projectile_Update", "ghidraEntry": "00653070", "instructions": 7415, "incomingCalls": 0, "outgoingCalls": 1107, "cFile": "HELPER_Projectile_Update_00653070.c", "asmFile": "HELPER_Projectile_Update_00653070.asm", "error": null},
+    {"va": "0x005d4380", "name": "HELPER_Effect_Update", "types": "1000", "identities": "1000.72.0", "entry": "005d4380", "resolvedFunction": "HELPER_Effect_Update", "ghidraEntry": "005d4380", "instructions": 283, "incomingCalls": 0, "outgoingCalls": 29, "cFile": null, "asmFile": null, "error": "Exception while decompiling 005d4380: process: timeout\n"},
+    {"va": "0x006a24d0", "name": "HELPER_Bomb_Update", "types": "4", "identities": "4.17.0", "entry": "006a24d0", "resolvedFunction": "HELPER_Bomb_Update", "ghidraEntry": "006a24d0", "instructions": 2935, "incomingCalls": 0, "outgoingCalls": 231, "cFile": "HELPER_Bomb_Update_006a24d0.c", "asmFile": "HELPER_Bomb_Update_006a24d0.asm", "error": null}
+  ]
+}

@@ -1,0 +1,136 @@
+{
+  "native": true,
+  "scope": "parent identity and champion variants in original combat rooms",
+  "caveat": "debug flags accelerate original behavior; child identity evidence does not count as balanced combat or no-damage evidence",
+  "observeFrames": 600,
+  "attack": true,
+  "debugFlags": [
+    3,
+    4
+  ],
+  "champions": [
+    17,
+    25
+  ],
+  "cases": [
+    {
+      "parent": "819.0.0",
+      "targetChild": "819.1.0"
+    }
+  ],
+  "rooms": {
+    "narrow": {
+      "name": "narrow",
+      "room": "s.boss.3702",
+      "width": 15,
+      "height": 16,
+      "description": "original tall narrow boss room",
+      "results": [
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 17,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "96.0.0",
+            "2.0.0",
+            "18.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151730106-26760-0"
+        },
+        {
+          "room": "narrow",
+          "roomConfig": "s.boss.3702",
+          "parent": "819.0.0",
+          "parentChampion": 25,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "96.0.0",
+            "2.0.0",
+            "18.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151730106-26760-0"
+        }
+      ],
+      "targets": {
+        "819.1.0": {
+          "observed": false,
+          "parents": [
+            {
+              "parent": "819.0.0",
+              "observedChampions": []
+            }
+          ]
+        }
+      }
+    },
+    "long": {
+      "name": "long",
+      "room": "s.boss.3700",
+      "width": 28,
+      "height": 9,
+      "description": "original wide long boss room",
+      "results": [
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 17,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "96.0.0",
+            "2.0.0",
+            "18.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151737943-26760-1"
+        },
+        {
+          "room": "long",
+          "roomConfig": "s.boss.3700",
+          "parent": "819.0.0",
+          "parentChampion": 25,
+          "targetChild": "819.1.0",
+          "parentObserved": true,
+          "childObserved": false,
+          "child": null,
+          "identities": [
+            "819.0.0",
+            "96.0.0",
+            "2.0.0",
+            "18.0.0"
+          ],
+          "status": "child-not-observed",
+          "runDirectory": "D:\\Isaac\\research\\training-runs\\1793151737943-26760-1"
+        }
+      ],
+      "targets": {
+        "819.1.0": {
+          "observed": false,
+          "parents": [
+            {
+              "parent": "819.0.0",
+              "observedChampions": []
+            }
+          ]
+        }
+      }
+    }
+  },
+  "wallMs": 15823.6823
+}

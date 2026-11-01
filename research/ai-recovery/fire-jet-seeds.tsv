@@ -1,0 +1,4 @@
+va	name	types	identity_keys	evidence
+0x006fed60	HELPER_AreaDamage	1000	1000.147.*	FireJet dispatch with radius 20 and ownership flag
+0x006a9c10	HELPER_Entity_RealAge	1000	1000.147.*	Effect global-frame minus birth
+0x00417430	HELPER_Entity_HasFlag	1000	1000.147.*	FireJet friendly ownership flag

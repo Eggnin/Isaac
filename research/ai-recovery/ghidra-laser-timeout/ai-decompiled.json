@@ -1,0 +1,14 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 2,
+  "decompiledCount": 2,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x009737b0", "name": "HELPER_Laser_AdvanceCountdown", "types": "7", "identities": "7.*", "entry": "009737b0", "resolvedFunction": "HELPER_Laser_AdvanceCountdown", "ghidraEntry": "009737b0", "instructions": 155, "incomingCalls": 2, "outgoingCalls": 5, "cFile": "HELPER_Laser_AdvanceCountdown_009737b0.c", "asmFile": "HELPER_Laser_AdvanceCountdown_009737b0.asm", "error": null},
+    {"va": "0x00435f20", "name": "HELPER_Laser_SetTimeout", "types": "7", "identities": "7.*", "entry": "00435f20", "resolvedFunction": "HELPER_Laser_SetTimeout", "ghidraEntry": "00435f20", "instructions": 6, "incomingCalls": 5, "outgoingCalls": 0, "cFile": "HELPER_Laser_SetTimeout_00435f20.c", "asmFile": "HELPER_Laser_SetTimeout_00435f20.asm", "error": null}
+  ]
+}

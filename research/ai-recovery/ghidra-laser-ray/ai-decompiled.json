@@ -1,0 +1,13 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 1,
+  "decompiledCount": 1,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x0096fd60", "name": "HELPER_Laser_RoomRay", "types": "7", "identities": "7.*", "entry": "0096fd60", "resolvedFunction": "HELPER_Laser_RoomRay", "ghidraEntry": "0096fd60", "instructions": 461, "incomingCalls": 7, "outgoingCalls": 3, "cFile": "HELPER_Laser_RoomRay_0096fd60.c", "asmFile": "HELPER_Laser_RoomRay_0096fd60.asm", "error": null}
+  ]
+}

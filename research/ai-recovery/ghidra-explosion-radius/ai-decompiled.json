@@ -1,0 +1,14 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 2,
+  "decompiledCount": 2,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x009bea80", "name": "HELPER_ExplosionRoomModifier", "types": "4", "identities": "4.*", "entry": "009bea80", "resolvedFunction": "HELPER_ExplosionRoomModifier", "ghidraEntry": "009bea80", "instructions": 60, "incomingCalls": 43, "outgoingCalls": 2, "cFile": "HELPER_ExplosionRoomModifier_009bea80.c", "asmFile": "HELPER_ExplosionRoomModifier_009bea80.asm", "error": null},
+    {"va": "0x006a9140", "name": "HELPER_EntityPlayerOwner", "types": "4", "identities": "4.*", "entry": "006a9140", "resolvedFunction": "HELPER_EntityPlayerOwner", "ghidraEntry": "006a9140", "instructions": 118, "incomingCalls": 25, "outgoingCalls": 8, "cFile": "HELPER_EntityPlayerOwner_006a9140.c", "asmFile": "HELPER_EntityPlayerOwner_006a9140.asm", "error": null}
+  ]
+}

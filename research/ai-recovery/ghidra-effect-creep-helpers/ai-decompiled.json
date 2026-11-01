@@ -1,0 +1,24 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 12,
+  "decompiledCount": 12,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x00417470", "name": "HELPER_Effect_PlayerGateA", "types": "1000", "identities": "1000.*", "entry": "00417470", "resolvedFunction": "HELPER_Effect_PlayerGateA", "ghidraEntry": "00417470", "instructions": 2, "incomingCalls": 84, "outgoingCalls": 0, "cFile": "HELPER_Effect_PlayerGateA_00417470.c", "asmFile": "HELPER_Effect_PlayerGateA_00417470.asm", "error": null},
+    {"va": "0x00417380", "name": "HELPER_Effect_PlayerGateB", "types": "1000", "identities": "1000.*", "entry": "00417380", "resolvedFunction": "HELPER_Effect_PlayerGateB", "ghidraEntry": "00417380", "instructions": 2, "incomingCalls": 32, "outgoingCalls": 0, "cFile": "HELPER_Effect_PlayerGateB_00417380.c", "asmFile": "HELPER_Effect_PlayerGateB_00417380.asm", "error": null},
+    {"va": "0x00440eb0", "name": "HELPER_Effect_PlayerGateC", "types": "1000", "identities": "1000.*", "entry": "00440eb0", "resolvedFunction": "HELPER_Effect_PlayerGateC", "ghidraEntry": "00440eb0", "instructions": 2, "incomingCalls": 14, "outgoingCalls": 0, "cFile": "HELPER_Effect_PlayerGateC_00440eb0.c", "asmFile": "HELPER_Effect_PlayerGateC_00440eb0.asm", "error": null},
+    {"va": "0x00771550", "name": "HELPER_Effect_PlayerGateD", "types": "1000", "identities": "1000.*", "entry": "00771550", "resolvedFunction": "HELPER_Effect_PlayerGateD", "ghidraEntry": "00771550", "instructions": 81, "incomingCalls": 288, "outgoingCalls": 4, "cFile": "HELPER_Effect_PlayerGateD_00771550.c", "asmFile": "HELPER_Effect_PlayerGateD_00771550.asm", "error": null},
+    {"va": "0x007706e0", "name": "HELPER_Effect_PlayerItemGate", "types": "1000", "identities": "1000.*", "entry": "007706e0", "resolvedFunction": "HELPER_Effect_PlayerItemGate", "ghidraEntry": "007706e0", "instructions": 448, "incomingCalls": 1216, "outgoingCalls": 40, "cFile": "HELPER_Effect_PlayerItemGate_007706e0.c", "asmFile": "HELPER_Effect_PlayerItemGate_007706e0.asm", "error": null},
+    {"va": "0x00417320", "name": "HELPER_Effect_ScaleAccessor", "types": "1000", "identities": "1000.*", "entry": "00417320", "resolvedFunction": "HELPER_Effect_ScaleAccessor", "ghidraEntry": "00417320", "instructions": 2, "incomingCalls": 40, "outgoingCalls": 0, "cFile": "HELPER_Effect_ScaleAccessor_00417320.c", "asmFile": "HELPER_Effect_ScaleAccessor_00417320.asm", "error": null},
+    {"va": "0x00417340", "name": "HELPER_Effect_PlayerSize", "types": "1000", "identities": "1000.*", "entry": "00417340", "resolvedFunction": "HELPER_Effect_PlayerSize", "ghidraEntry": "00417340", "instructions": 2, "incomingCalls": 56, "outgoingCalls": 0, "cFile": "HELPER_Effect_PlayerSize_00417340.c", "asmFile": "HELPER_Effect_PlayerSize_00417340.asm", "error": null},
+    {"va": "0x0041e460", "name": "HELPER_Effect_SpriteAccessor", "types": "1000", "identities": "1000.*", "entry": "0041e460", "resolvedFunction": "HELPER_Effect_SpriteAccessor", "ghidraEntry": "0041e460", "instructions": 2, "incomingCalls": 81, "outgoingCalls": 0, "cFile": "HELPER_Effect_SpriteAccessor_0041e460.c", "asmFile": "HELPER_Effect_SpriteAccessor_0041e460.asm", "error": null},
+    {"va": "0x0040b600", "name": "HELPER_Effect_OpacityAtPoint", "types": "1000", "identities": "1000.*", "entry": "0040b600", "resolvedFunction": "HELPER_Effect_OpacityAtPoint", "ghidraEntry": "0040b600", "instructions": 360, "incomingCalls": 8, "outgoingCalls": 17, "cFile": "HELPER_Effect_OpacityAtPoint_0040b600.c", "asmFile": "HELPER_Effect_OpacityAtPoint_0040b600.asm", "error": null},
+    {"va": "0x007dba30", "name": "HELPER_Effect_PlayerDamageImmunity", "types": "1000", "identities": "1000.*", "entry": "007dba30", "resolvedFunction": "HELPER_Effect_PlayerDamageImmunity", "ghidraEntry": "007dba30", "instructions": 59, "incomingCalls": 9, "outgoingCalls": 2, "cFile": "HELPER_Effect_PlayerDamageImmunity_007dba30.c", "asmFile": "HELPER_Effect_PlayerDamageImmunity_007dba30.asm", "error": null},
+    {"va": "0x006ad750", "name": "HELPER_Effect_StatusApply", "types": "1000", "identities": "1000.*", "entry": "006ad750", "resolvedFunction": "HELPER_Effect_StatusApply", "ghidraEntry": "006ad750", "instructions": 85, "incomingCalls": 18, "outgoingCalls": 5, "cFile": "HELPER_Effect_StatusApply_006ad750.c", "asmFile": "HELPER_Effect_StatusApply_006ad750.asm", "error": null},
+    {"va": "0x007b98c0", "name": "HELPER_Effect_PlayerInteraction", "types": "1000", "identities": "1000.*", "entry": "007b98c0", "resolvedFunction": "HELPER_Effect_PlayerInteraction", "ghidraEntry": "007b98c0", "instructions": 34, "incomingCalls": 7, "outgoingCalls": 2, "cFile": "HELPER_Effect_PlayerInteraction_007b98c0.c", "asmFile": "HELPER_Effect_PlayerInteraction_007b98c0.asm", "error": null}
+  ]
+}

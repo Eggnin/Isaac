@@ -1,0 +1,394 @@
+{
+  "reference": "online/assist-source",
+  "purpose": "Function/API inventory, not proof of equivalence",
+  "modules": [
+    {
+      "file": "online\\assist-source\\config.lua",
+      "sha256": "ffb7f5c880185b593b10c6a3c49909a5a46ed86f7070808c5d70cda980ae95d2",
+      "named_functions": [],
+      "engine_method_names": [],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\diagnostics.lua",
+      "sha256": "e9e9c6ba33b4a1bac4e8b94074cf14a1665cdc44fe7a54434d603fd494f9dfc6",
+      "named_functions": [
+        "D.new",
+        "D:damage",
+        "D:record",
+        "D:reset",
+        "D:scene",
+        "D:source",
+        "raw",
+        "sceneData"
+      ],
+      "engine_method_names": [
+        "GetAnimation",
+        "GetEndPoint",
+        "GetFrame",
+        "GetSprite",
+        "HasProjectileFlags",
+        "IsCircleLaser",
+        "IsDead",
+        "ToLaser",
+        "ToNPC",
+        "ToProjectile"
+      ],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\effects.lua",
+      "sha256": "2aba6c5f1aa517a616640d90fba7cf151a54172cfd0357003fe0466d67323804",
+      "named_functions": [
+        "E.creepDirection",
+        "E.creepFront",
+        "E.profile",
+        "E.warnings",
+        "add",
+        "rebuild"
+      ],
+      "engine_method_names": [
+        "GetBottomRightPos",
+        "GetSprite",
+        "GetTopLeftPos",
+        "HasCollectible",
+        "ToNPC"
+      ],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\geometry.lua",
+      "sha256": "48da392d7721088107001d839d5b83c85eedfd71767500698646f1322df089d8",
+      "named_functions": [
+        "G.add",
+        "G.dot",
+        "G.len",
+        "G.limit",
+        "G.mul",
+        "G.pointSegment",
+        "G.propulsivePoint",
+        "G.rectDistance",
+        "G.rotate",
+        "G.segmentRect",
+        "G.segments",
+        "G.sub",
+        "G.sweptSegmentDistance",
+        "G.unit",
+        "G.v",
+        "cross",
+        "pointSegmentSquared"
+      ],
+      "engine_method_names": [],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\laser_warnings.lua",
+      "sha256": "30169367d38811ea6b284964eb98ef9fd96cfc97fa8a5d596d47a1b541072220",
+      "named_functions": [
+        "L.begin",
+        "L.capture",
+        "L.finish",
+        "L.reset",
+        "line",
+        "suffix"
+      ],
+      "engine_method_names": [
+        "GetAnimation",
+        "GetBottomRightPos",
+        "GetFrame",
+        "GetSprite",
+        "GetTopLeftPos"
+      ],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\main.lua",
+      "sha256": "9bacc54d09107883eb5b67c6245768fe5dffbace358da1ce404d253396651c54",
+      "named_functions": [
+        "guardedUpdate",
+        "input",
+        "log",
+        "observe",
+        "observedPlayer",
+        "raw",
+        "recordPerformance",
+        "render",
+        "reset",
+        "update"
+      ],
+      "engine_method_names": [
+        "AddCallback",
+        "GetAliveEnemiesCount",
+        "GetDamageCooldown",
+        "GetFrameCount",
+        "GetLevel",
+        "GetRoom",
+        "GetTearDisplacement",
+        "GetTotalDamageTaken",
+        "IsClear",
+        "IsDead",
+        "IsGreedMode",
+        "IsPaused",
+        "ToPlayer"
+      ],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\motion.lua",
+      "sha256": "66ce9a33af6e001a860f55d5f71eab1b8c45d38ef629f760caca7813052f1b74",
+      "named_functions": [
+        "M.new",
+        "M:breakSequence",
+        "M:observe",
+        "M:observePosition",
+        "M:parameters",
+        "M:positionParameters",
+        "M:reset"
+      ],
+      "engine_method_names": [],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\native.lua",
+      "sha256": "ed8e49527b92b9e1173b3d2b938630afd04929566a382b337c4a88cf6551f490",
+      "named_functions": [
+        "N.prepare"
+      ],
+      "engine_method_names": [],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\navigation.lua",
+      "sha256": "06a2dd1ff8ea3c52587f09609aad0c09ba89c323ecbdfd79df7678591507b9d0",
+      "named_functions": [
+        "N.build",
+        "consider",
+        "escaping",
+        "firingDelta",
+        "nav.canAcquire",
+        "nav.discOpen",
+        "nav.freedom",
+        "nav.goalCost",
+        "nav.graph",
+        "nav.guidance",
+        "nav.index",
+        "nav.resolve",
+        "nav.segment",
+        "nav.setGoals",
+        "nav.shotClear",
+        "nav.shotCost",
+        "neighborhood"
+      ],
+      "engine_method_names": [],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\planner.lua",
+      "sha256": "6416dde6c7844547bfc35f8ab0ef8025140af2c30630d01a9dde6d40ac752f6b",
+      "named_functions": [
+        "P.advance",
+        "P.better",
+        "P.choose",
+        "P.coastIsSafe",
+        "P.controls",
+        "P.exitCount",
+        "P.replay",
+        "actions",
+        "clone",
+        "rankedLess",
+        "score"
+      ],
+      "engine_method_names": [],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\prediction.lua",
+      "sha256": "a7becdb4f2904f2256f440865f538cd8d9dcbc579b38bbb717339a5e1d73b23e",
+      "named_functions": [
+        "P.clearance",
+        "P.emptyRegion",
+        "P.prepare",
+        "P.query",
+        "bounds",
+        "preparePoints",
+        "queryList",
+        "ringGap"
+      ],
+      "engine_method_names": [],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\retreat.lua",
+      "sha256": "14e6b466cd1d2a8f9c635f125d5751b2de5a925b94cb4289bf00258a993969cf",
+      "named_functions": [
+        "R.prepare",
+        "closed",
+        "field.cost",
+        "forecast",
+        "mark"
+      ],
+      "engine_method_names": [],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\target.lua",
+      "sha256": "7b477007d44f3cdf1a8376a959b45c01336669f96a3ed14cb0d623e4a29ee518",
+      "named_functions": [
+        "T.label",
+        "T.player",
+        "T.poll",
+        "T.reset"
+      ],
+      "engine_method_names": [
+        "GetNumPlayers"
+      ],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\telemetry.lua",
+      "sha256": "05324118a966610e406190022e668897c94de9045a4518904786246727414b5f",
+      "named_functions": [
+        "T.new",
+        "T:begin",
+        "T:damage",
+        "T:emit",
+        "T:fail",
+        "T:finish",
+        "T:flushDamage",
+        "T:frameUpdate",
+        "T:inventoryStep",
+        "T:legacy",
+        "T:motion",
+        "T:perfSummary",
+        "T:performance",
+        "T:roomBoundary",
+        "T:saveIndex",
+        "T:start",
+        "T:tear",
+        "T:weaponEntity",
+        "actor",
+        "aimData",
+        "call",
+        "gridData",
+        "health",
+        "id",
+        "livePlayers",
+        "tail",
+        "vec",
+        "weaponData"
+      ],
+      "engine_method_names": [
+        "GetFrameCount",
+        "GetLevel",
+        "GetRoom"
+      ],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\weapons.lua",
+      "sha256": "cd9a798761760196b2f68724949201b48bb28546077ccfc3c1621e5f825d0e6a",
+      "named_functions": [
+        "W.aim",
+        "W.centered",
+        "W.firingCost",
+        "W.firingPoint",
+        "W.flightLimit",
+        "W.futureTarget",
+        "W.intercept",
+        "W.movementInheritance",
+        "W.observeTear",
+        "W.occultAim",
+        "W.positionCost",
+        "W.prepareAcquisition",
+        "W.profile",
+        "W.refreshInputAim",
+        "W.resetEyes",
+        "W.setShooter",
+        "W.update",
+        "call",
+        "closest",
+        "consider",
+        "crossesBlast",
+        "has",
+        "isIncubus",
+        "item",
+        "motionSamples",
+        "owned"
+      ],
+      "engine_method_names": [
+        "GetNumTears",
+        "GetPlayerType",
+        "GetSprite",
+        "HasCollectible",
+        "HasWeaponType",
+        "IsDead"
+      ],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    },
+    {
+      "file": "online\\assist-source\\world.lua",
+      "sha256": "b5a0deb98d4b51b4524d1f5ea87c958d095b59747698d92ae34c154ce967b7e5",
+      "named_functions": [
+        "W.capture",
+        "W.explosionRadius",
+        "W.projectileGridImpact",
+        "W.reset",
+        "add",
+        "branch",
+        "coinBlastRadius",
+        "collides",
+        "direct",
+        "explosiveCoin",
+        "finite",
+        "friendly",
+        "hasCharge",
+        "lane",
+        "owned",
+        "radius",
+        "reserve",
+        "strategicRole",
+        "vec",
+        "visit"
+      ],
+      "engine_method_names": [
+        "Exists",
+        "Get",
+        "GetActiveCharge",
+        "GetBatteryCharge",
+        "GetBottomRightPos",
+        "GetCollisionCapsule",
+        "GetDoor",
+        "GetEndPoint",
+        "GetFrame",
+        "GetGridCollision",
+        "GetGridEntity",
+        "GetGridHeight",
+        "GetGridIndex",
+        "GetGridPosition",
+        "GetGridSize",
+        "GetGridWidth",
+        "GetRoomShape",
+        "GetSamples",
+        "GetSpawnSeed",
+        "GetSprite",
+        "GetTopLeftPos",
+        "GetType",
+        "GetVariant",
+        "HasEntityFlags",
+        "HasProjectileFlags",
+        "IsCircleLaser",
+        "IsDead",
+        "IsEnemy",
+        "IsPositionInRoom",
+        "IsVulnerableEnemy",
+        "ToBomb",
+        "ToEffect",
+        "ToLaser",
+        "ToNPC",
+        "ToPickup",
+        "ToProjectile"
+      ],
+      "review_status": "inventory_only_not_behavioral_equivalence"
+    }
+  ]
+}

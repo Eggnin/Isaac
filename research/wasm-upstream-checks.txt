@@ -1,0 +1,94 @@
+✔ ISAAC_EPOCH pins _time64 and GetSystemTimeAsFileTime to the same instant (1.1693ms)
+﹣ generated dispatch preserves bodies, census, re-entry and diagnostic modes (120.3196ms) # no usable native C compiler or Emscripten; set CC, EMCC or EMSDK
+﹣ compiled Win32 input shim preserves lookahead and removes only matching messages (1.638ms) # Emscripten emcc missing; set EMCC
+▶ portable CDN readiness and engine reads do not wait for unrelated archive bodies
+  ✔ no trail (40.6819ms)
+  ✔ recorded trail (17.7206ms)
+✔ portable CDN readiness and engine reads do not wait for unrelated archive bodies (59.1163ms)
+✔ portable stored-window cache reads span windows, chunks and tails without mutating shared bytes (26.1778ms)
+✔ portable byte progress measures streamed prefixes with a fixed unequal-size total and deduplicates retries (1.5159ms)
+✔ portable boot progress excludes archive probes and worker ranges while deduplicating streamed retries (3.21ms)
+✔ portable inline boot progress requires no download while full progress retains embedded bytes before and after reads (0.3146ms)
+✔ portable worker intervals preserve version identity and union overlaps across all stored chunks (0.2948ms)
+▶ portable whole responses reject invalid headers and bodies without completing progress or poisoning retry
+  ✔ short (0.3478ms)
+  ✔ long (0.2686ms)
+  ✔ partial-status (0.2106ms)
+  ✔ content-range (0.1706ms)
+  ✔ content-length (0.1873ms)
+✔ portable whole responses reject invalid headers and bodies without completing progress or poisoning retry (1.6001ms)
+▶ portable whole HTTP gzip responses validate decoded payload size rather than encoded Content-Length
+  ✔ exact (0.3634ms)
+  ✔ short (0.2215ms)
+✔ portable whole HTTP gzip responses validate decoded payload size rather than encoded Content-Length (0.7584ms)
+▶ portable rejected whole bodies release their transfer before the preload pool advances
+  ✔ http (1.9544ms)
+  ✔ header (2.7233ms)
+✔ portable rejected whole bodies release their transfer before the preload pool advances (4.9609ms)
+▶ portable rejected range bodies finish cancellation before fallback or consumer retry
+  ✔ http (2.3815ms)
+  ✔ header (1.1035ms)
+✔ portable rejected range bodies finish cancellation before fallback or consumer retry (3.7685ms)
+▶ portable probe rejection cancels both probe bodies before starting whole archives
+  ✔ first (1.1106ms)
+  ✔ overlap (1.0284ms)
+✔ portable probe rejection cancels both probe bodies before starting whole archives (2.3763ms)
+▶ portable streamed body completion is validated before a full-byte claim
+  ✔ short (0.4004ms)
+  ✔ long (0.316ms)
+✔ portable streamed body completion is validated before a full-byte claim (0.9226ms)
+▶ portable compressed range rejection preserves stored cache bytes and excludes invalid accounting
+  ✔ start (6.997ms)
+  ✔ end (7.3388ms)
+  ✔ total (7.8795ms)
+  ✔ content-length (6.6988ms)
+  ✔ encoded-length (8.4157ms)
+  ✔ short (6.6046ms)
+  ✔ whole (8.1521ms)
+✔ portable compressed range rejection preserves stored cache bytes and excludes invalid accounting (52.7576ms)
+✔ portable prefetch bounds lookahead, releases consumed slots and expires stale slots without blocking demand (8.7729ms)
+✔ portable byte-budget eviction protects unconsumed engine chunks from archive lookahead (173.4427ms)
+✔ portable startup overlaps required chunks and four probe pairs without waiting for the image (32.5116ms)
+✔ portable preload stays at four and failed shared requests can be retried (5.0517ms)
+✔ portable parallel probes keep every failure and report the first chunk deterministically (8.7376ms)
+▶ portable range guards preserve whole-chunk delivery
+  ✔ total (1.0973ms)
+  ✔ overlap-length (0.9377ms)
+  ✔ network (0.8022ms)
+  ✔ cdn (0.7484ms)
+  ✔ noranges (0.8688ms)
+✔ portable range guards preserve whole-chunk delivery (4.8806ms)
+▶ portable runtime range rejection never caches a partial response as a whole chunk
+  ✔ 200 (1.2353ms)
+  ✔ 206 (0.9247ms)
+✔ portable runtime range rejection never caches a partial response as a whole chunk (2.3649ms)
+✔ portable raw ranges isolate concurrent cache entries and deliver matching direct and worker bytes (6.1732ms)
+✔ portable compressed windows share stable direct and worker cache identities and exact bytes (11.3694ms)
+✔ portable reader decode helpers return exact bytes and decode only packed windows (20.4611ms)
+✔ portable reader retires its decode helpers at the first clear and decodes alone after it (43.776ms)
+✔ portable reader keeps a busy helper until its decode answers, and sends it no more (29.4232ms)
+✔ portable reader starts the next download while a window is still decoding (15.9808ms)
+✔ portable reader keeps decoded version 2 windows and the next visit reads them without a download (1116.7346ms)
+✔ portable reader keeps nothing without spare quota, and a short kept window is a miss (619.4906ms)
+✔ portable reader with no helpers decodes as before, and a failing helper fails its read (28.6114ms)
+✔ portable offline reads span inline chunks without network activity (0.3933ms)
+✔ portable packers serialize exact stored sizes while retaining payload bytes and immutable tokens (143.8538ms)
+✔ portable loader downloads cache exact GIF bytes and reject fetch failures without substituting its poster (652.8493ms)
+✔ round 77: the keystream is reversible from any offset (69.2596ms)
+✔ round 77: the minifier walks the source rather than pattern-matching it (73.9119ms)
+✔ every piece of a version-0 archive comes back exactly through the page decoder (450.1678ms)
+✔ the fixture really codes PCM, mono and stereo, beside plain bytes (7.0599ms)
+✔ a damaged recipe never rebuilds the archive bytes silently (6.2443ms)
+✔ the page and its reader Worker both decode recipe windows (flag 2) (0.4189ms)
+✔ a recipe ships only where it shrinks the window, else the window as it is (83.6319ms)
+✔ lossy.py trims only sound under its own floor and leaves the archive otherwise intact (304.1937ms)
+﹣ version 2: every piece comes back exactly when each Vorbis stream decodes to its own samples (0.0646ms) # needs python with numpy and ffmpeg
+﹣ version 2: a stream one frame short, other samples, or a cut recipe never rebuilds the archive silently (0.0426ms) # needs python with numpy and ffmpeg
+ℹ tests 76
+ℹ suites 0
+ℹ pass 72
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 4
+ℹ todo 0
+ℹ duration_ms 3551.373

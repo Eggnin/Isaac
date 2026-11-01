@@ -1,0 +1,16 @@
+{
+  "format": "isaac-j460-ai-ghidra-export-v1",
+  "program": "isaac-ng.exe",
+  "language": "x86:LE:32:default",
+  "compiler": "windows",
+  "imageBase": "00400000",
+  "functionCount": 4,
+  "decompiledCount": 4,
+  "errorCounts": {},
+  "functions": [
+    {"va": "0x007cb6e0", "name": "HELPER_Player_TrinketMultiplier", "types": "1,1000", "identities": "1.*,1000.*", "entry": "007cb6e0", "resolvedFunction": "HELPER_Player_TrinketMultiplier", "ghidraEntry": "007cb6e0", "instructions": 268, "incomingCalls": 326, "outgoingCalls": 12, "cFile": "HELPER_Player_TrinketMultiplier_007cb6e0.c", "asmFile": "HELPER_Player_TrinketMultiplier_007cb6e0.asm", "error": null},
+    {"va": "0x0072fd10", "name": "HELPER_ItemConfig_GetCollectible", "types": "1,1000", "identities": "1.*,1000.*", "entry": "0072fd10", "resolvedFunction": "HELPER_ItemConfig_GetCollectible", "ghidraEntry": "0072fd10", "instructions": 33, "incomingCalls": 364, "outgoingCalls": 0, "cFile": "HELPER_ItemConfig_GetCollectible_0072fd10.c", "asmFile": "HELPER_ItemConfig_GetCollectible_0072fd10.asm", "error": null},
+    {"va": "0x00771550", "name": "HELPER_Player_HasTrinket", "types": "1,1000", "identities": "1.*,1000.*", "entry": "00771550", "resolvedFunction": "HELPER_Player_HasTrinket", "ghidraEntry": "00771550", "instructions": 81, "incomingCalls": 288, "outgoingCalls": 4, "cFile": "HELPER_Player_HasTrinket_00771550.c", "asmFile": "HELPER_Player_HasTrinket_00771550.asm", "error": null},
+    {"va": "0x007706e0", "name": "HELPER_Player_HasCollectible", "types": "1,1000", "identities": "1.*,1000.*", "entry": "007706e0", "resolvedFunction": "HELPER_Player_HasCollectible", "ghidraEntry": "007706e0", "instructions": 448, "incomingCalls": 1216, "outgoingCalls": 40, "cFile": "HELPER_Player_HasCollectible_007706e0.c", "asmFile": "HELPER_Player_HasCollectible_007706e0.asm", "error": null}
+  ]
+}
