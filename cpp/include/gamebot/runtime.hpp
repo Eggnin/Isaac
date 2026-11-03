@@ -4,7 +4,7 @@
 #include <string>
 #include "model.hpp"
 namespace gamebot {
-inline constexpr char gamebot_version[]="2026.10.29";
+inline constexpr char gamebot_version[]="2026.11.02-v0.9.1.1.2";
 // Frame logs already contain everything the semantics layer derives from.
 // Compact mode drops the two largest recomputable mechanism blocks; replay
 // recomputes them from `frame` plus the database hash recorded in session.json.

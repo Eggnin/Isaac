@@ -80,6 +80,11 @@ class MechanismSemantics {
     void clear_tracking();
 public:
     bool load(const std::filesystem::path& path);
+    // Merge failure-driven candidate patterns. Only verified rules load by
+    // default; inferred rules require an explicit opt-in. Existing models are
+    // never replaced, and duplicate discovered ids are ignored.
+    bool load_discovered_patterns(const std::filesystem::path& path,
+        bool include_inferred=false,std::string* error=nullptr);
     MechanismFrame evaluate(const Frame& frame);
     bool loaded() const { return loaded_; }
     const std::string& error() const { return error_; }

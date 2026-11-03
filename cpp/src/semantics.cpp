@@ -320,6 +320,75 @@ bool MechanismSemantics::load(const std::filesystem::path& path) {
         error_=exception.what();loaded_=false;return false;
     }
 }
+bool MechanismSemantics::load_discovered_patterns(const std::filesystem::path& path,
+    bool include_inferred,std::string* error) {
+    if(!loaded_) {if(error)*error="runtime semantics database is not loaded";return false;}
+    std::ifstream input(path);
+    if(!input) {if(error)*error="cannot open discovered pattern file";return false;}
+    json patterns;
+    try {input>>patterns;}
+    catch(const std::exception& exception) {
+        if(error)*error=exception.what();return false;
+    }
+    if(patterns.value("format",std::string{})!=
+       "isaac-gamebot-monster-geometry-patterns-v1") {
+        if(error)*error="unsupported discovered pattern format";
+        return false;
+    }
+    int loaded=0;
+    for(const auto& rule:patterns.value("rules",json::array())) {
+        const std::string status=rule.value("evidence_status",std::string{"candidate"});
+        if(status!="verified"&&!(include_inferred&&status=="inferred"))continue;
+        const std::string identity=rule.value("target_identity",std::string{});
+        if(identity.empty())continue;
+        const std::string kind=rule.value("kind",std::string{"projectile"});
+        const int state=rule.value("source_state",-1);
+        const std::string animation=rule.value("source_animation",std::string{});
+        const std::string id=identity+"|discovered|"+kind+"|"+animation+"|"+
+            std::to_string(state);
+        auto& refs=geometry_models_by_identity_[identity];
+        const bool exists=std::any_of(refs.begin(),refs.end(),
+            [&](const MonsterGeometryRef& ref){return ref.id==id;});
+        if(exists)continue;
+        const auto hazard=parse_dotted_identity(
+            rule.value("hazard_identity",std::string{"9.0.0"}));
+        MonsterGeometryRef ref;
+        ref.hazard_type=hazard[0];ref.hazard_variant=hazard[1];ref.hazard_subtype=hazard[2];
+        ref.kind=kind;ref.source_state=state;ref.source_animation=animation;
+        ref.pattern=rule.value("pattern",std::string{});
+        ref.pattern_rule=identity+"|"+std::to_string(state)+"|"+animation+"|"+
+            ref.pattern;
+        ref.pattern_center=rule.value("center",std::string{"source"});
+        ref.pattern_direction=rule.value("direction",std::string{"fixed"});
+        ref.pattern_clock=rule.value("clock",std::string{"animation"});
+        ref.pattern_count=rule.value("count",1);
+        ref.pattern_samples=rule.value("phase_samples",1);
+        ref.pattern_phase_degrees=rule.value("phase_degrees",0.0);
+        ref.pattern_phase_uncertainty_degrees=
+            rule.value("phase_uncertainty_degrees",0.0);
+        ref.pattern_spacing_degrees=rule.value("spacing_degrees",0.0);
+        ref.trigger_animation_frame=rule.value("trigger_animation_frame",-1.0);
+        ref.trigger_animation_frame_min=rule.value("trigger_animation_frame_min",
+            int(std::lround(ref.trigger_animation_frame)));
+        ref.trigger_animation_frame_max=rule.value("trigger_animation_frame_max",
+            int(std::lround(ref.trigger_animation_frame)));
+        ref.speed=rule.value("speed",0.0);
+        ref.speed_min=rule.value("speed_min",0.0);
+        ref.radius=rule.value("radius",0.0);
+        ref.duration=rule.value("duration_frames",0.0);
+        ref.planning_validated=status=="verified";
+        ref.pre_spawn_verified=status=="verified";
+        ref.geometry_verified=status=="verified";
+        ref.runtime_geometry_verified=status=="verified";
+        ref.evidence_status=status;
+        ref.source_refs=rule.value("source_refs",std::string{});
+        ref.id=id;
+        refs.push_back(std::move(ref));
+        ++loaded;
+    }
+    if(error)error->clear();
+    return loaded>0||patterns.value("rules",json::array()).empty();
+}
 std::vector<MechanismSemantics::ModelInventory> MechanismSemantics::geometry_inventory() const {
     std::vector<ModelInventory> inventory;
     for(const auto& [identity,models]:geometry_models_by_identity_)

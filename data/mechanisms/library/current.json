@@ -1,0 +1,178 @@
+{
+  "candidates": [],
+  "format": "isaac-gamebot-discovered-library-v1",
+  "generated_utc": "2026-11-02T09:59:34Z",
+  "history": [
+    {
+      "candidates": 0,
+      "diff": {
+        "added": [
+          "projectile-motion-models"
+        ],
+        "projectile_models_status": "added",
+        "removed": [],
+        "unchanged": [],
+        "updated": []
+      },
+      "generated_utc": "2026-11-02T09:59:34Z",
+      "projectile_models": {
+        "count": 8,
+        "format": "isaac-gamebot-projectile-motion-v1",
+        "version": 1
+      },
+      "reason": "projectile motion model import",
+      "version": 1
+    }
+  ],
+  "projectile_models": {
+    "format": "isaac-gamebot-projectile-motion-v1",
+    "generated": "2026-11-02",
+    "models": [
+      {
+        "fields": [
+          "projectile_curve",
+          "speed_multiplier"
+        ],
+        "flags": [
+          "CURVE_LEFT=1<<18",
+          "CURVE_RIGHT=1<<19"
+        ],
+        "formula": "step=(speed/30)*curve*speed_multiplier; left=-step; v=rotate(v,atan(step))",
+        "id": "projectile-curve-left-right",
+        "note": "Formula was already used by the validated Planner; no independent game-update export is stored here.",
+        "parameters": {},
+        "runtime_loadable": false,
+        "status": "inferred"
+      },
+      {
+        "fields": [
+          "projectile_orbit_distance",
+          "target_pos",
+          "projectile_parent_velocity"
+        ],
+        "flags": [
+          "ORBIT_CW=1<<11",
+          "ORBIT_CCW=1<<12",
+          "ORBIT_PARENT=1<<56"
+        ],
+        "formula": "center=target_pos (or parent.pos+parent.vel*time); radial=pos-center; tangent={-radial.y,radial.x}; ccw negates tangent; correction=.5*clamp(1-|radial|/orbit_distance,-1,1); v=normalize(radial*correction+tangent)*|v|",
+        "id": "projectile-orbit-cw-ccw",
+        "note": "Parent-relative velocity compensation follows the existing Planner implementation.",
+        "parameters": {
+          "zero_distance_correction": 0.5
+        },
+        "runtime_loadable": false,
+        "status": "inferred"
+      },
+      {
+        "fields": [
+          "projectile_change_timeout",
+          "projectile_change_velocity",
+          "projectile_age",
+          "projectile_change_flags"
+        ],
+        "flags": [
+          "CHANGE_VELOCITY_AFTER_TIMEOUT=1<<33"
+        ],
+        "formula": "change = period<=0 || int(age/period) != int(previous_age/period); if change: |v|=change_velocity*30; clear bit unless ((change_flags>>32)&3)==3",
+        "id": "projectile-change-velocity-after-timeout",
+        "parameters": {
+          "native_tick_hz": 30
+        },
+        "runtime_loadable": false,
+        "status": "inferred"
+      },
+      {
+        "fields": [
+          "projectile_change_timeout",
+          "projectile_change_flags",
+          "projectile_flags"
+        ],
+        "flags": [
+          "CHANGE_FLAGS_AFTER_TIMEOUT=1<<32"
+        ],
+        "formula": "at timeout: swap(projectile_flags, projectile_change_flags)",
+        "id": "projectile-change-flags-after-timeout",
+        "parameters": {},
+        "runtime_loadable": false,
+        "status": "inferred"
+      },
+      {
+        "fields": [
+          "projectile_curve",
+          "projectile_change_velocity",
+          "projectile_parent_velocity",
+          "target_pos"
+        ],
+        "flags": [
+          "STASIS=1<<34",
+          "CHANGE_FLAGS_AFTER_TIMEOUT=1<<32"
+        ],
+        "formula": "while held: follow parent, height->-23; release: angle=curve*pi/180, v={cos(angle),sin(angle)}*30*change_velocity, curve=0.015",
+        "id": "projectile-stasis-release",
+        "parameters": {
+          "held_height": -23,
+          "release_curve_reset": 0.015
+        },
+        "runtime_loadable": false,
+        "status": "inferred"
+      },
+      {
+        "fields": [
+          "projectile_homing_strength",
+          "target",
+          "speed_multiplier"
+        ],
+        "flags": [
+          "SMART=1<<0",
+          "SMART_PERFECT=1<<48"
+        ],
+        "formula": "SMART steps toward target within 100px with homing_strength; SMART_PERFECT preserves speed and applies strong steering",
+        "id": "projectile-smart-homing",
+        "parameters": {},
+        "runtime_loadable": false,
+        "status": "inferred"
+      },
+      {
+        "fields": [
+          "projectile_accel",
+          "projectile_flags"
+        ],
+        "flags": [
+          "ACCELERATE=1<<27",
+          "DECELERATE=1<<28",
+          "ACCELERATE_EX=1<<37",
+          "ACCELERATE_TO_POSITION=1<<52"
+        ],
+        "formula": "speed factor from projectile_accel; ACCELERATE_EX ramps over 20 native ticks; ACCELERATE_TO_POSITION steers toward target_pos",
+        "id": "projectile-acceleration",
+        "parameters": {},
+        "runtime_loadable": false,
+        "status": "inferred"
+      },
+      {
+        "fields": [],
+        "flags": [
+          "BOOMERANG=1<<6",
+          "SLOWED=1<<24",
+          "TRIANGLE=1<<25"
+        ],
+        "formula": "not recovered; bounded uncertainty envelope only",
+        "id": "projectile-unmodelled-motion",
+        "parameters": {
+          "uncertainty_cap_px": 48
+        },
+        "runtime_loadable": false,
+        "status": "candidate"
+      }
+    ],
+    "source": {
+      "decompiled_update_function": "not present in this repository; formulas remain inferred where the update function was not exported",
+      "enum": "python/src/engine_enums.json + python/records/research/enums-public-latest.lua",
+      "model": "cpp/src/projectile_motion.cpp, extracted from the existing Planner projectile model",
+      "reader_offsets": "cpp/src/reader.cpp: type==9, flags +0x438, change flags +0x450, change velocity +0x458, change timeout +0x45c, age +0x3a4, phase +0x448, homing +0x424, accel +0x42c, curve +0x428, orbit distance +0x430"
+    },
+    "version": 1
+  },
+  "version": 1
+}

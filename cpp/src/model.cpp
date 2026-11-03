@@ -614,6 +614,7 @@ const char* damage_class_name(DamageClass value) {
     case DamageClass::charge:return "charge";
     case DamageClass::explosion:return "explosion";
     case DamageClass::hazard:return "hazard";
+    case DamageClass::unknown:return "unknown";
     }
     return "contact";
 }

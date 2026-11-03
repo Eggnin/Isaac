@@ -2,7 +2,11 @@
 #include "gamebot/reader.hpp"
 #include "gamebot/planner.hpp"
 #include "gamebot/control.hpp"
+#include "gamebot/closed_loop.hpp"
+#include "gamebot/performance_monitor.hpp"
 #include "gamebot/semantics.hpp"
+#include "gamebot/strategy.hpp"
+#include "gamebot/movement_intent.hpp"
 #define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -20,10 +24,10 @@ namespace gamebot {
 namespace {
 double clock_ms(){return std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now().time_since_epoch()).count();}
 std::wstring wide(const std::string&s) {if(s.empty())return {};int n=MultiByteToWideChar(CP_UTF8,0,s.data(),int(s.size()),nullptr,0);std::wstring w(n,0);MultiByteToWideChar(CP_UTF8,0,s.data(),int(s.size()),w.data(),n);return w;}
-struct View {Frame frame;MechanismFrame mechanisms;Decision decision;Execution execution;std::vector<Threat> threats;std::string status{"Searching for isaac-ng.exe (read-only)"};uint64_t frames{},damage_events{};};
+struct View {Frame frame;MechanismFrame mechanisms;Decision decision;Execution execution;std::vector<Threat> threats;std::vector<Vec> predicted_path;std::vector<Vec> actual_trail;std::string status{"Searching for isaac-ng.exe (read-only)"};uint64_t frames{},damage_events{};};
 struct App {
     HWND hwnd{};HHOOK hook{};std::atomic_bool quit{};std::atomic_uint commands{};std::atomic_uint32_t pid{};
-    std::array<std::atomic_bool,256> physical{};std::atomic_bool attack_enabled{true},background{};std::mutex mutex;View view;std::thread worker;std::filesystem::path root,log_directory;
+    std::array<std::atomic_bool,256> physical{};std::atomic_bool attack_enabled{true},background{},mpc_enabled{};std::mutex mutex;View view;std::thread worker;std::filesystem::path root,log_directory;
 };
 struct RuntimeKeyboard final:KeyboardSink {
     WindowsKeyboard foreground;WindowKeyboard window;bool background{};
@@ -42,6 +46,7 @@ LRESULT CALLBACK keyboard_hook(int code,WPARAM message,LPARAM parameter) {
             if(down&&!before&&key->vkCode==VK_F8&&foreground==app->pid.load())app->commands.fetch_or(1);
             if(down&&!before&&key->vkCode==VK_F6&&foreground==app->pid.load())app->commands.fetch_or(4);
             if(down&&!before&&key->vkCode==VK_F7&&foreground==app->pid.load())app->commands.fetch_or(8);
+            if(down&&!before&&key->vkCode==VK_F10&&foreground==app->pid.load())app->commands.fetch_or(16);
         }
     }
     return CallNextHookEx(nullptr,code,message,parameter);
@@ -55,19 +60,41 @@ std::string session_name() {
     SYSTEMTIME t{};GetLocalTime(&t);char name[80];std::snprintf(name,sizeof name,"native-%04u%02u%02u-%02u%02u%02u-%03u",t.wYear,t.wMonth,t.wDay,t.wHour,t.wMinute,t.wSecond,t.wMilliseconds);return name;
 }
 void run_worker(App& state) {
-    RuntimeKeyboard keyboard;Controller control(keyboard);Planner planner;
+    RuntimeKeyboard keyboard;Controller control(keyboard);Planner planner;RealtimeMpcController controller;RuntimePerformanceMonitor performance;
+    MovementIntentConfig movement_config;
+    if(const char* movement_env=std::getenv("GAMEBOT_MOVEMENT"))
+        if(std::string(movement_env)=="0"||std::string(movement_env)=="off")
+            movement_config.enabled=false;
+    MovementIntentEvaluator movement_evaluator(movement_config);
+    MovementStabilizer movement_stabilizer(movement_config);
+    uint32_t last_movement_escape_clock=0;
+    bool movement_escape_searched=false;
+    const char* strategy_env=std::getenv("GAMEBOT_STRATEGY");
+    const bool strategy_enabled=strategy_env&&
+        (std::string(strategy_env)=="1"||std::string(strategy_env)=="on"||
+         std::string(strategy_env)=="true");
+    if(strategy_enabled) {
+        controller.mpc().set_strategy_enabled(true);
+        if(auto library=StrategyLibrary::load(
+               state.root.parent_path()/L"data"/L"strategies"/L"current.json"))
+            controller.mpc().set_strategy_profiles(library->profiles);
+    }
     MechanismSemantics semantics;auto semantics_path=MechanismSemantics::default_path(state.root);
     semantics.load(semantics_path);
+    if(const char* discovered=std::getenv("GAMEBOT_DISCOVERED_PATTERNS"))
+        if(*discovered)semantics.load_discovered_patterns(discovered,true);
     std::unique_ptr<Reader> reader;uint32_t last_clock{};double unchanged_since{},retry_at{},manual_until{};
     View published;int previous_health=-1;std::ofstream log;
     try {
         auto directory=state.log_directory;std::filesystem::create_directories(directory);
+        controller.set_dump_directory(directory/L"prediction-failures");
         log.open(directory/L"frames-0001.jsonl");
         if(!log)throw std::runtime_error("Cannot create session log");
         std::ofstream manifest(directory/L"session.json");manifest<<json{{"version",gamebot_version},{"implementation","C++20 native"},{"data_source","external-process-memory"},
-            {"log_detail",compact_session_log()?"compact":"full"},
+            {"log_detail",compact_session_log()?"compact":"full"},{"mpc_planning",state.mpc_enabled.load()},
+            {"strategy_planning",strategy_enabled},
             {"runtime_semantics",{{"path",semantics_path.string()},{"loaded",semantics.loaded()},{"error",semantics.error()},{"source_sha256",semantics.source_sha256()},{"identities",semantics.identity_count()},{"warning_rules",semantics.warning_rule_count()}}},
-            {"input","foreground scan codes / background window messages; F8 opt-in"},{"goal","avoid damage and attack"},{"hotkeys",{{"F6","toggle attack"},{"F7","toggle background output; stops control"},{"F8","toggle control"},{"F9","emergency stop"}}}}.dump(2);manifest.close();
+            {"input","foreground scan codes / background window messages; F8 opt-in"},{"goal","avoid damage and attack"},{"hotkeys",{{"F6","toggle attack"},{"F7","toggle background output; stops control"},{"F8","toggle control"},{"F9","emergency stop"},{"F10","toggle MPC / original Planner"}}}}.dump(2);manifest.close();
         std::ofstream connection_log(directory/L"connection-events.jsonl");
         if(!connection_log)throw std::runtime_error("Cannot create connection log");
         std::string last_connection_status;
@@ -77,12 +104,13 @@ void run_worker(App& state) {
             if(commands&2)control.stop();
             if(commands&4){state.attack_enabled=!state.attack_enabled.load();control.set_attack_enabled(state.attack_enabled.load());}
             if(commands&8){control.stop();keyboard.background=!keyboard.background;state.background=keyboard.background;manual_until=0;}
+            if(commands&16){control.stop();state.mpc_enabled=!state.mpc_enabled.load();planner.reset();controller.reset();manual_until=0;}
             if(!reader&&now>=retry_at) {
                 retry_at=now+1000;
                 try {
                     auto processes=Reader::processes();
                     if(processes.size()!=1)throw std::runtime_error(processes.empty()?"Waiting for isaac-ng.exe":"Multiple game processes; close the extra instance");
-                    reader=Reader::attach(processes.front());state.pid=reader->pid();keyboard.window.set_process(reader->pid());planner.reset();unchanged_since=now;last_clock=0;
+                    reader=Reader::attach(processes.front());state.pid=reader->pid();keyboard.window.set_process(reader->pid());planner.reset();controller.reset();movement_stabilizer.reset();movement_escape_searched=false;unchanged_since=now;last_clock=0;
                     published.status="Connected read-only. Enter a room, then F8 to control.";
                 }catch(const std::exception&e){published.status=e.what();}
                 if(published.status!=last_connection_status) {
@@ -90,9 +118,12 @@ void run_worker(App& state) {
                     last_connection_status=published.status;
                 }
             }
-            Frame frame;MechanismFrame mechanisms;Decision decision;Execution execution;
+            Frame frame;MechanismFrame mechanisms;Decision decision;Execution execution;double reader_ms=0,action_ms=0;json damage_event;
+            MovementIntentEvaluation movement;double movement_ms=0;
             if(reader) {
-                frame=reader->capture(now);DWORD foreground{};GetWindowThreadProcessId(GetForegroundWindow(),&foreground);bool focused=foreground==reader->pid();
+                auto reader_started=std::chrono::steady_clock::now();
+                frame=reader->capture(now);reader_ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-reader_started).count();
+                DWORD foreground{};GetWindowThreadProcessId(GetForegroundWindow(),&foreground);bool focused=foreground==reader->pid();
                 if(focused&&manual_keys(state,state.attack_enabled.load()))manual_until=now+250;
                 if(!frame.valid||frame.paused||frame.transition||frame.clock!=last_clock){last_clock=frame.clock;unchanged_since=now;}
                 if(commands&1) {
@@ -101,9 +132,77 @@ void run_worker(App& state) {
                 }
                 if(frame.valid&&!frame.paused&&!frame.transition&&now-unchanged_since>150){frame.valid=false;frame.error="等待游戏逻辑帧恢复：程序持续运行，恢复后自动继续。";}
                 mechanisms=semantics.evaluate(frame);
-                decision=planner.decide(frame,state.attack_enabled.load(),&mechanisms);execution=control.apply(frame,decision,clock_ms(),focused||keyboard.background,now<manual_until);
+                const bool use_mpc=state.mpc_enabled.load();
+                ClosedLoopStep closed_loop;
+                if(use_mpc) {
+                    closed_loop=controller.step(frame,state.attack_enabled.load(),&mechanisms);
+                    decision=closed_loop.decision;
+                    MovementIntentInput movement_input;
+                    movement_input.frame=&frame;
+                    movement_input.decision=&decision;
+                    movement_input.plan=&closed_loop.plan;
+                    movement_input.snapshot=&controller.snapshot();
+                    const auto movement_started=std::chrono::steady_clock::now();
+                    movement=movement_evaluator.evaluate(movement_input);
+                    if(movement.intent==MovementIntent::escape&&
+                       movement_evaluator.config().allow_temporal_escape&&
+                       (!movement_escape_searched||
+                        frame.clock-last_movement_escape_clock>=6)) {
+                        ForwardSimConfig escape_sim;
+                        escape_sim.horizon_frames=movement_evaluator.config().
+                            escape_search.horizon_frames;
+                        escape_sim.early_terminate=false;
+                        escape_sim.danger_map=false;
+                        ForwardSimulator escape_root(escape_sim);
+                        std::string escape_error;
+                        if(escape_root.restore(controller.snapshot(),&escape_error)) {
+                            const auto reachability=search_temporal_reachability(
+                                escape_root,movement_evaluator.config().escape_search);
+                            movement_evaluator.apply_temporal_escape(reachability,
+                                movement);
+                        }
+                        last_movement_escape_clock=frame.clock;
+                        movement_escape_searched=true;
+                    }
+                    if(movement.intent!=MovementIntent::escape)
+                        movement_escape_searched=false;
+                    movement=movement_stabilizer.stabilize(frame,movement,
+                        movement.danger_now);
+                    decision.move=movement.executed_move;
+                    movement_ms=std::chrono::duration<double,std::milli>(
+                        std::chrono::steady_clock::now()-movement_started).count();
+                }else {
+                    decision=planner.decide(frame,state.attack_enabled.load(),&mechanisms);
+                }
+                auto action_started=std::chrono::steady_clock::now();
+                execution=control.apply(frame,decision,clock_ms(),focused||keyboard.background,now<manual_until);
+                action_ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-action_started).count();
+                FramePerformance sample;
+                sample.reader_ms=reader_ms;
+                sample.bridge_ms=use_mpc?closed_loop.bridge_ms:0;
+                sample.monitor_ms=use_mpc?closed_loop.monitor_ms:0;
+                sample.mpc_ms=use_mpc?closed_loop.mpc_ms:decision.planning_ms;
+                sample.action_ms=action_ms;
+                sample.total_ms=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-tick).count();
+                sample.timed_out=use_mpc&&closed_loop.plan.timed_out;
+                sample.fallback=use_mpc&&closed_loop.plan.used_fallback;
+                sample.safety_stop=use_mpc&&closed_loop.safety_stop;
+                performance.observe(sample);
                 if(frame.valid) {
-                    if(previous_health>=0&&frame.player.health<previous_health)++damage_events;
+                    if(previous_health>=0&&frame.player.health<previous_health) {
+                        ++damage_events;
+                        damage_event={{"previous_health",previous_health},
+                            {"health",frame.player.health},
+                            {"drop",previous_health-frame.player.health},
+                            {"move",int(decision.move)},{"fire",int(decision.fire)},
+                            {"prediction",closed_loop.report.to_json()},
+                            {"feedback",closed_loop.feedback.to_json()},
+                            {"predicted_cause",closed_loop.report.predicted_damage_cause},
+                            {"predicted_source",closed_loop.report.predicted_damage_source},
+                            {"reason","health drop observed by Reader"}};
+                    }
+                    if(frame.player.health<=0)
+                        damage_event["death_reason"]="player health reached zero";
                     previous_health=frame.player.health;
                 }
                 published.status=execution.reason;
@@ -111,7 +210,39 @@ void run_worker(App& state) {
                 if(frame.error.starts_with("Room dimensions invalid"))published.status="房间网格暂不可用："+std::to_string(frame.grid.width)+"×"+std::to_string(frame.grid.height)+"；持续重试。";
                 else if(frame.error=="Game is in a menu")published.status="等待进入游戏：程序持续监测，就绪后自动继续。";
                 else if(frame.paused)published.status="游戏已暂停：程序持续监测，恢复后自动继续。";
-                json record{{"frame",frame},{"mechanisms",mechanisms},{"decision",decision},{"control",{{"enabled",execution.enabled},{"applied",execution.applied},{"keys",execution.keys},{"reason",execution.reason},{"attack_enabled",execution.attack_enabled},{"input_backend",keyboard.background?"window-messages":"scan-codes"},{"game_foreground",focused}}}};
+                json record{{"frame",frame},{"mechanisms",mechanisms},{"decision",decision},{"control",{{"enabled",execution.enabled},{"applied",execution.applied},{"keys",execution.keys},{"reason",execution.reason},{"attack_enabled",execution.attack_enabled},{"input_backend",keyboard.background?"window-messages":"scan-codes"},{"game_foreground",focused}}},{"timings",{{"reader_ms",reader_ms},{"bridge_ms",sample.bridge_ms},{"monitor_ms",sample.monitor_ms},{"mpc_ms",sample.mpc_ms},{"movement_ms",movement_ms},{"action_ms",action_ms},{"total_ms",sample.total_ms}}}};
+                if(use_mpc)record["movement"]=movement.to_json();
+                if(use_mpc)record["mpc"]={{"available",closed_loop.plan.available},
+                    {"used_fallback",closed_loop.plan.used_fallback},
+                    {"reused",closed_loop.plan.reused},
+                    {"overridden",closed_loop.plan.overridden},
+                    {"timed_out",closed_loop.plan.timed_out},
+                    {"safety_stop",closed_loop.safety_stop},
+                    {"stale",closed_loop.stale},
+                    {"simulation_limit",closed_loop.plan.stats.simulation_limit},
+                    {"value",closed_loop.plan.value},
+                    {"baseline_value",closed_loop.plan.baseline_value},
+                    {"depth",closed_loop.plan.stats.depth},
+                    {"nodes",closed_loop.plan.stats.nodes},
+                    {"simulations",closed_loop.plan.stats.simulations},
+                    {"horizon_frames",closed_loop.plan.stats.horizon_frames},
+                    {"unknown_scale",closed_loop.plan.stats.unknown_scale},
+                    {"elapsed_ms",closed_loop.plan.stats.elapsed_ms},
+                    {"first",{{"move",int(closed_loop.plan.first.move)},{"fire",int(closed_loop.plan.first.fire)}}},
+                    {"combat",closed_loop.plan.combat.to_json()},
+                    {"shot",closed_loop.plan.shot.to_json()},
+                    {"sequence",closed_loop.plan.sequence.to_json()},
+                    {"prediction",closed_loop.report.to_json()},
+                    {"feedback",closed_loop.feedback.to_json()},
+                    {"progress",closed_loop.progress},
+                    {"arbitration",closed_loop.plan.arbitration},
+                    {"strategy",closed_loop.plan.strategy},
+                    {"reason",closed_loop.plan.reason}};
+                if(use_mpc&&!compact_session_log()) {
+                    record["snapshot"]=controller.snapshot().to_json();
+                    record["mpc"]["predicted_future"]=controller.monitor().trace().to_json(false);
+                }
+                if(!damage_event.is_null())record["damage_event"]=damage_event;
                 if(compact_session_log())trim_session_record(record);
                 log<<record.dump()<<'\n';if(!log)throw std::runtime_error("Session log write failed; control stopped");
                 if(log.tellp()>=64LL*1024*1024) {
@@ -120,6 +251,10 @@ void run_worker(App& state) {
                 }
                 ++frames;
                 if(frames%30==0)log.flush();
+                if(frames%300==0) {
+                    std::ofstream perf{directory/L"performance.json"};
+                    if(perf)perf<<performance.summary().to_json().dump(2)<<'\n';
+                }
                 if(!reader->alive()) {
                     control.stop();reader.reset();state.pid=0;previous_health=-1;published.status="Game exited; keys released";
                     connection_log<<json{{"time_ms",now},{"connected",false},{"status",published.status}}.dump()<<'\n';connection_log.flush();
@@ -127,12 +262,29 @@ void run_worker(App& state) {
                 }
             }
             published.frame=std::move(frame);published.mechanisms=std::move(mechanisms);published.decision=std::move(decision);published.execution=execution;
-            published.threats=planner.threats();published.frames=frames;published.damage_events=damage_events;
+            static uint32_t trail_room{};
+            if(published.frame.room!=trail_room) {
+                published.actual_trail.clear();
+                trail_room=published.frame.room;
+            }
+            published.threats=state.mpc_enabled.load()?controller.mpc().base().baseline().threats():planner.threats();published.frames=frames;published.damage_events=damage_events;
+            published.predicted_path.clear();
+            if(state.mpc_enabled.load()) {
+                const auto& trace=controller.monitor().trace();
+                if(trace.valid)for(const auto& future:trace.frames)published.predicted_path.push_back(future.player_pos);
+            }
+            if(published.frame.has_player) {
+                published.actual_trail.push_back(published.frame.player.body.pos);
+                if(published.actual_trail.size()>120)
+                    published.actual_trail.erase(published.actual_trail.begin());
+            }
             {std::lock_guard lock(state.mutex);state.view=published;}
             std::this_thread::sleep_until(tick+std::chrono::milliseconds(16));
         }
         control.stop();log.flush();
-        std::ofstream summary(directory/L"summary.json");summary<<json{{"frames",frames},{"health_drop_events",damage_events},{"keys_released",control.held().empty()}}.dump(2);
+        const auto perf=performance.summary();
+        std::ofstream summary(directory/L"summary.json");summary<<json{{"frames",frames},{"health_drop_events",damage_events},{"keys_released",control.held().empty()},{"performance",perf.to_json()}}.dump(2);
+        std::ofstream perf_out(directory/L"performance.json");if(perf_out)perf_out<<perf.to_json().dump(2)<<'\n';
     }catch(const std::exception&e) {
         control.stop();std::lock_guard lock(state.mutex);state.view.status=e.what();state.view.execution.enabled=false;
     }
@@ -144,12 +296,12 @@ void paint(App& state,HDC target,RECT client) {
     View view;{std::lock_guard lock(state.mutex);view=state.view;}
     auto text=[&](int x,int y,const std::wstring& value){TextOutW(dc,x,y,value.c_str(),int(value.size()));};
     text(24,22,L"以撒 Gamebot · "+wide(gamebot_version)+L" · 只读内存采集");
-    text(24,99,L"F6 自动攻击   F7 后台输出   F8 开关控制   F9 急停   Shift 临时手动");
+    text(24,99,L"F6 自动攻击   F7 后台输出   F8 开关控制   F9 急停   F10 MPC/原 Planner   Shift 临时手动");
     std::wostringstream stats;stats<<L"采集 "<<view.frames<<L" 帧    观察到生命下降 "<<view.damage_events<<L" 次    决策 "<<std::fixed<<std::setprecision(1)<<view.decision.planning_ms<<L" ms";
     text(24,128,stats.str());text(24,157,wide(view.status));
     std::wostringstream mechanisms;mechanisms<<L"机制 "<<view.mechanisms.known_states<<L"/"<<view.mechanisms.identities<<L"    攻击 "<<view.mechanisms.known_attack_types<<L"    预警 "<<view.mechanisms.predictive_warnings;
     text(620,128,mechanisms.str());
-    text(24,186,std::wstring(view.execution.enabled?L"自动控制：开启":L"自动控制：关闭")+(state.attack_enabled?L"    自动攻击：开启":L"    自动攻击：关闭（只躲避，可手动射击）")+(state.background?L"    输出：后台窗口":L"    输出：前台键盘"));
+    text(24,186,std::wstring(view.execution.enabled?L"自动控制：开启":L"自动控制：关闭")+(state.attack_enabled?L"    自动攻击：开启":L"    自动攻击：关闭（只躲避，可手动射击）")+(state.mpc_enabled?L"    MPC：开 (F10)":L"    MPC：关 (F10)")+(state.background?L"    输出：后台窗口":L"    输出：前台键盘"));
     std::wstring log_text=L"日志："+state.log_directory.wstring();RECT log_rect{24,215,client.right-24,240};DrawTextW(dc,log_text.c_str(),-1,&log_rect,DT_SINGLELINE|DT_PATH_ELLIPSIS|DT_NOPREFIX);
     if(!state.hook)text(24,243,L"键盘观察器不可用，自动控制未开放。");
     const auto& frame=view.frame;
@@ -183,6 +335,10 @@ void paint(App& state,HDC target,RECT client) {
             if(e.type==9)circle(e.pos,e.radius,RGB(250,170,60),true);
         }
         const auto&path=view.decision.path;for(size_t i=1;i<path.size();++i)line(path[i-1],path[i],RGB(90,220,170),2);
+        for(size_t i=1;i<view.actual_trail.size();++i)
+            line(view.actual_trail[i-1],view.actual_trail[i],RGB(110,160,125),1);
+        for(size_t i=1;i<view.predicted_path.size();++i)
+            line(view.predicted_path[i-1],view.predicted_path[i],RGB(90,150,250),1);
         if(frame.has_player)circle(frame.player.body.pos,frame.player.body.radius,RGB(100,185,250),true);
     }
     SelectObject(dc,old_font);DeleteObject(font);BitBlt(target,0,0,client.right,client.bottom,dc,0,0,SRCCOPY);SelectObject(dc,old_bitmap);DeleteObject(bitmap);DeleteDC(dc);
@@ -209,6 +365,9 @@ LRESULT CALLBACK window_proc(HWND hwnd,UINT message,WPARAM w,LPARAM l) {
 }
 int gui_main(const std::filesystem::path& root) {
     SetProcessDPIAware();App state;state.root=root;state.log_directory=root.parent_path()/L"sessions"/session_name();app=&state;
+    const char* mpc_env=std::getenv("GAMEBOT_MPC");
+    state.mpc_enabled=mpc_env&&(std::string(mpc_env)=="1"||std::string(mpc_env)=="on"||
+        std::string(mpc_env)=="true");
     WNDCLASSW cls{};cls.lpfnWndProc=window_proc;cls.hInstance=GetModuleHandleW(nullptr);cls.lpszClassName=L"IsaacCppGamebot";cls.hCursor=LoadCursorW(nullptr,IDC_ARROW);RegisterClassW(&cls);
     state.hwnd=CreateWindowExW(0,cls.lpszClassName,L"以撒 Gamebot · C++",WS_OVERLAPPEDWINDOW,CW_USEDEFAULT,CW_USEDEFAULT,1120,820,nullptr,nullptr,cls.hInstance,nullptr);
     if(!state.hwnd){app=nullptr;return 1;}

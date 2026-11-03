@@ -6,6 +6,9 @@
 | --- | --- |
 | `D:/IsaacAccessAssist/handoff/IsaacAccessAssist-0.3.0-20261024/` | 外部采集的原始字段记录、本机归属和运行边界 |
 | `D:/以撒` → `D:/Isaac/python` | `engine_reader.py` 的 J460 字段/签名证据、三分区实体集合、本机输入设备归属；`engine_hazards.py` 与枚举资料的具体机制身份；`native_getters.json` 的武器类地址、GetMaxCharge 指令和常量记录 |
+| `python/src/engine_enums.json` | `ProjectileFlags` 的本地 J460 位值；`projectile_motion.cpp` 使用命名常量，不使用裸位移 |
+| `python/records/research/enums-public-latest.lua` | `ProjectileFlags` 的官方枚举注释（CURVE/ORBIT/CHANGE/STASIS/BOUNCE 等） |
+| `data/mechanisms/projectile_motion_models.json` | 特殊弹幕公式、参数、字段偏移和 candidate/inferred/verified 状态 |
 | `D:/IsaacAssistIO` → `D:/以撒` | 与上一项是同一份参考，通过目录联接访问 |
 | 本地 `auto_dodge_helper_3769075414` | 惯性、预测窗口、曲线与紧急避险思路 |
 | 本地 `autoaimpro_eop_3778464661` | `core/direction_engine.lua` 的预测与近身不反向瞄准；危险/攻击模块划分 |
@@ -17,6 +20,9 @@
 公开网址：
 
 - [AIsaac](https://github.com/Lceoliu/AIsaac)：战斗与原版引擎评估路线，其 AB+ Linux 训练环境与此 Windows 原生工程不同。
+- [th06nc-autododge](https://github.com/FanerJian/th06nc-autododge)：只参考“安全分优先/软项后置”“逃生排序”“局部空旷度按可用面积归一”“激光长前瞻”等决策结构，不复制其东方固定参数。
+- [touhou_ai](https://github.com/wcycn/touhou_ai)：只参考普通/紧急策略分离、预测与实际轨迹叠加、方向切换/反转/边界停留复盘；不引入 YOLO 或训练流程。
+- [TouhouRL-AI](https://github.com/RozenScarlet/TouhouRL-AI)：只参考普通策略与紧急生存策略分离的思想；不引入 PPO/CNN 或训练网络。
 - [AutoAimPro × EOP](https://steamcommunity.com/sharedfiles/filedetails/?id=3778464661)
 - [gentle dodge](https://steamcommunity.com/sharedfiles/filedetails/?id=3800092423)
 - [Auto Aim](https://steamcommunity.com/sharedfiles/filedetails/?id=3759966365)

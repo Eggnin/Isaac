@@ -1,4 +1,5 @@
 #include "gamebot/planner.hpp"
+#include "gamebot/projectile_motion.hpp"
 #include <array>
 #include <chrono>
 #include <numeric>
@@ -9,6 +10,13 @@
 
 namespace gamebot {
 namespace {
+const Entity* lookup_frame_entity(const void* user,uint32_t address) {
+    const auto* entities=static_cast<const std::vector<Entity>*>(user);
+    if(!entities||!address)return nullptr;
+    for(const auto& entity:*entities)
+        if(entity.address==address)return &entity;
+    return nullptr;
+}
 uint64_t identity(const Entity& e) { return (uint64_t(e.address)<<32)|e.seed; }
 double normalized_angle(double a) { return std::remainder(a,2*pi); }
 bool sliding_charge(const Entity& e) {
@@ -123,7 +131,15 @@ double blast_radius(const Entity& e) {
        (e.type==16&&e.variant==2)||(e.type==295&&e.variant==0)||e.champion==5)return 80;
     return 0;
 }
-void Planner::reset() { room_=clock_=release_until_=hold_until_=0;charged_seen_=false;target_=0;last_move_=Move::stay;last_emission_clock_=0;emissions_.clear();emission_seen_.clear();observed_patterns_.clear();emission_diagnostics_={};tracks_.clear();reserves_.clear();threats_.clear();detonated_.clear();eye_locks_.clear();projectile_bursts_.clear();navigation_progress_clock_=0;navigation_enemy_hp_.clear();navigation_boost_=false;navigation_goal_={};navigation_goal_until_=0;navigation_goal_target_=0;navigation_waypoint_={};navigation_waypoint_until_=0;navigation_waypoint_target_=0;escaping_=false;escape_goal_until_=escape_started_=0;escape_goal_={};navigation_motion_target_=0;navigation_target_dynamic_=false;known_hazard_cells_.clear();kill_button_done_.clear(); }
+void Planner::reset() { room_=clock_=release_until_=hold_until_=0;charged_seen_=false;target_=0;last_move_=Move::stay;last_emission_clock_=0;emissions_.clear();emission_seen_.clear();observed_patterns_.clear();emission_diagnostics_={};tracks_.clear();reserves_.clear();threats_.clear();candidates_.clear();detonated_.clear();eye_locks_.clear();projectile_bursts_.clear();navigation_progress_clock_=0;navigation_enemy_hp_.clear();navigation_boost_=false;navigation_goal_={};navigation_goal_until_=0;navigation_goal_target_=0;navigation_waypoint_={};navigation_waypoint_until_=0;navigation_waypoint_target_=0;escaping_=false;escape_goal_until_=escape_started_=0;escape_goal_={};navigation_motion_target_=0;navigation_target_dynamic_=false;known_hazard_cells_.clear();kill_button_done_.clear(); }
+void Planner::observe_applied(Move move,uint32_t clock) {
+    if(move==last_move_)return;
+    last_move_=move;
+    // decide() stored a hold for its own action. The applied action differs,
+    // so let the next frame choose from scratch instead of holding.
+    hold_until_=0;
+    (void)clock;
+}
 Aim Planner::aim_at(const Frame& f,Vec origin,uint32_t requested_target,double time_offset) const {
     Aim best;double best_score=-1e30;
     if(f.cleared||!f.has_player||!f.player.can_shoot||!f.player.attack_supported)return best;
@@ -139,13 +155,25 @@ Aim Planner::aim_at(const Frame& f,Vec origin,uint32_t requested_target,double t
                 break;
             }
         for(int i=1;i<=4;++i) {
-            auto fire=static_cast<Fire>(i);Vec axis=direction(fire),rel=target_pos-origin;
-            double forward=rel.dot(axis),closing=f.player.tear_speed-target_velocity.dot(axis);
-            if(forward<=0||closing<=1)continue;
-            double t=forward/closing;Vec point=target_pos+target_velocity*t;
-            double reach=f.player.tear_speed*t;
-            double miss=std::abs((point-origin).x*axis.y-(point-origin).y*axis.x);
-            bool clear=f.grid.shot_clear(origin,origin+axis*reach);
+            auto fire=static_cast<Fire>(i);Vec axis=direction(fire);
+            // The native tear inherits the player's instantaneous velocity, so
+            // the actual flight line is not the cardinal key direction.
+            Vec spawn=origin+axis*native_tear_spawn_offset;
+            Vec tear_velocity=native_tear_velocity(fire,f.player.tear_speed,
+                f.player.body.vel);
+            if(tear_velocity.norm()<=1.0)continue;
+            Vec relative=target_pos-spawn;
+            Vec relative_velocity=target_velocity-tear_velocity;
+            double speed2=relative_velocity.dot(relative_velocity);
+            double max_time=std::min(1.5,f.player.tear_range/
+                std::max(1.0,tear_velocity.norm()));
+            double t=speed2>1e-9?std::clamp(
+                -relative.dot(relative_velocity)/speed2,0.0,max_time):0.0;
+            Vec point=target_pos+target_velocity*t;
+            Vec tear=spawn+tear_velocity*t;
+            double reach=distance(spawn,tear);
+            double miss=distance(tear,point);
+            bool clear=f.grid.shot_clear(spawn,tear);
             bool can=miss<=e.radius+config_.tear_radius&&reach<=f.player.tear_range&&clear;
             if(blast_radius(e)>0&&distance(origin,point)<blast_radius(e)+f.player.body.radius+12)can=false;
             double score=(can?600:0)+(clear?30:0)-miss*2-reach*.04+(target_==identity(e)?28:0)+30/(1+e.hp/3.5);
@@ -159,7 +187,16 @@ Aim Planner::aim_at(const Frame& f,Vec origin,uint32_t requested_target,double t
                 if(threat.predictive)source_priority+=4.0;
             }
             score+=std::min(60.0,source_priority);
-            if(score>best_score) { best_score=score;best={e.address,fire,point,t,miss,can}; }
+            if(score>best_score) {
+                best_score=score;
+                best.target=e.address;best.fire=fire;best.point=point;
+                best.time=t;best.miss=miss;best.can_fire=can;
+                best.spawn=spawn;best.velocity=tear_velocity;
+                best.target_position=target_pos;best.target_velocity=target_velocity;
+                best.travel_frames=can?int(std::lround(t*60.0)):-1;
+                best.hit_radius=e.radius+config_.tear_radius;
+                best.predicted_hit=can;
+            }
         }
     }
     // Ordinary tears can open their current firing lane by destroying the first
@@ -373,184 +410,38 @@ void Planner::build_threats(const Frame& f,double horizon,const MechanismFrame* 
                 burst.next_diagonal=!(std::abs(projectile.vel.x)>1&&std::abs(projectile.vel.y)>1);
         }
     }
-    auto projectile_speed_factor=[](const Entity& e,double age) {
-        auto native_factor=[&](double value) {
-            const double scale=e.speed_multiplier;
-            return scale==1?value:value/(value+scale-value*scale);
-        };
-        double factor=1;
-        if(e.projectile_flags&(1ULL<<27))factor*=native_factor(e.projectile_accel);
-        if(e.projectile_flags&(1ULL<<28))factor*=native_factor(1/e.projectile_accel);
-        if(e.projectile_flags&(1ULL<<37))factor*=native_factor(1+(e.projectile_accel-1)*std::min(1.0,age/20));
-        return factor;
-    };
-    auto apply_projectile_clock=[](Entity& predicted,Vec& velocity,double previous_age,double age) {
-        const int period=predicted.projectile_change_timeout;
-        const bool change=period<=0||int(age/period)!=int(previous_age/period);
-        if(!change||age<=0)return;
-        if(predicted.projectile_flags&(1ULL<<33)) {
-            velocity=velocity.unit()*(predicted.projectile_change_velocity*30);
-            if(((predicted.projectile_change_flags>>32)&3)!=3)predicted.projectile_flags&=~(1ULL<<33);
-        }
-        if(predicted.projectile_flags&(1ULL<<32))
-            std::swap(predicted.projectile_flags,predicted.projectile_change_flags);
-    };
-    auto bounce_from_grid=[&](const Entity& e,Vec& point,Vec& velocity,double height) {
-        if(!(e.projectile_flags&(1ULL<<42)))return;
-        Vec normal{};const int threshold=height<-50?4:2;
-        for(const Vec sample:e.grid_contacts)
-            if(f.grid.native_collision_at(point+sample)>=threshold)normal=normal+sample;
-        normal=normal.unit();
-        const double outward=normal.dot(velocity);
-        if(outward>0) {
-            velocity=velocity-normal*(2*outward);
-            point=point+velocity/30;
-        }
-    };
-    auto bounce_from_floor=[&](const Entity& e,Vec point,double& height,double& falling) {
-        if(!(e.projectile_flags&(1ULL<<43)))return;
-        const double plane=f.grid.native_collision_at(point)>=2?-50:-5;
-        if(height>plane&&falling>2){height=plane;falling=falling*-2;}
-    };
-    auto steer_projectile=[&](const Entity& e,Vec point,Vec& velocity,double time) {
-        if(!(e.projectile_flags&(1|(1ULL<<48))))return;
-        Vec target=f.player.body.pos+f.player.body.vel*time,target_velocity=f.player.body.vel/60;
-        for(const auto& entity:f.entities)if(entity.address==e.target) {
-            target=entity.pos+entity.vel*time;target_velocity=entity.vel/(entity.type==1?60:30);break;
-        }
-        if(e.projectile_flags&(1ULL<<48)) {
-            const double speed=std::max(.03,velocity.norm());
-            velocity=(velocity+(target-point)*3).unit()*speed;
-            return;
-        }
-        if(distance(target+target_velocity*.5,point)>=100)return;
-        const double strength=e.projectile_homing_strength;
-        velocity=velocity+(target-point).unit()*(42*strength*e.speed_multiplier);
-        const double damping=1-.08*strength,scale=e.speed_multiplier;
-        velocity=velocity*(scale==1?damping:damping/(damping+scale-damping*scale));
-    };
-    auto orbit_projectile=[&](Entity& e,Vec point,Vec& velocity,double time) {
-        if(!(e.projectile_flags&((1ULL<<11)|(1ULL<<12))))return false;
-        const Entity* parent=nullptr;
-        if(e.projectile_flags&(1ULL<<56))for(const auto& candidate:f.entities)
-            if(candidate.address==e.parent){parent=&candidate;break;}
-        Vec center=e.target_pos;
-        if(parent){velocity=velocity-e.projectile_parent_velocity;center=parent->pos+parent->vel*time;}
-        const Vec radial=point-center;
-        Vec tangent{-radial.y,radial.x};
-        if(e.projectile_flags&(1ULL<<12))tangent=tangent*-1;
-        const double correction=e.projectile_orbit_distance>0?
-            .5*std::clamp(1-radial.norm()/e.projectile_orbit_distance,-1.0,1.0):.5;
-        velocity=(radial*correction+tangent).unit()*velocity.norm();
-        if(parent) {
-            // Native orbit velocity is relative to the previous parent velocity.
-            // Player Entity::Velocity uses half the Reader's 60 Hz conversion.
-            e.projectile_parent_velocity=parent->vel*(parent->type==1?.5:1);
-            velocity=velocity+e.projectile_parent_velocity;e.target_pos=center;
-        }
-        return true;
-    };
-    auto direct_projectile=[&](const Entity& e,Vec point,Vec& velocity,double& height,double& falling,double time,double age) {
-        if(e.projectile_flags&(1ULL<<26))for(const auto& parent:f.entities)if(parent.address==e.parent) {
-            const Vec delta=parent.pos+parent.vel*time-point;
-            const double speed=velocity.norm();velocity=delta.unit()*speed;
-            if(delta.norm()<speed/30)return false;
-            break;
-        }
-        if(e.projectile_flags&(1ULL<<52)) {
-            const Vec delta=e.target_pos-point;
-            if(delta.norm()<10)return false;
-            velocity=velocity+delta.unit()*(30*e.projectile_homing_strength*e.speed_multiplier);
-            if(age<150){falling=0;height=-15;}
-        }
-        return true;
-    };
-    auto advance_projectile=[&](Entity& e,Vec& point,Vec& velocity,double& height,double& falling,int tick,double turn=0,bool* jumped=nullptr) {
-        const double previous_age=e.projectile_age,age=previous_age+e.speed_multiplier,time=tick/30.0;
-        e.projectile_age=age;
-        advance_native_entity_motion(e,point,velocity);
-        if(e.projectile_flags&(1ULL<<34)) {
-            const int period=e.projectile_change_timeout;
-            const bool release=!e.parent||((e.projectile_flags&(1ULL<<32))&&
-                f.clock+tick>uint32_t(e.birth)&&(period<=0||int(age/period)!=int(previous_age/period)));
-            if(release) {
-                const double angle=e.projectile_curve*pi/180;
-                velocity=Vec{std::cos(angle),std::sin(angle)}*(30*e.projectile_change_velocity);
-                e.projectile_curve=.015;
-            }else for(const auto& parent:f.entities)if(parent.address==e.parent) {
-                const Vec previous_parent=parent.pos+parent.vel*(time-1.0/30);
-                const Vec radial=point+velocity/30-previous_parent;
-                const double radius=radial.norm();
-                if(radius>0) {
-                    e.projectile_curve=std::atan2(radial.y,radial.x)*180/pi;
-                    const Vec relative=velocity-e.target_pos*30;
-                    const Vec correction=radial.unit()*((50-radius)*3);
-                    const Vec parent_velocity=parent.vel*(parent.type==1?.5:1);
-                    velocity=relative+(correction-relative)*.3+parent_velocity;
-                    e.target_pos=parent_velocity/30;
-                }
-                height+=(-23-height)*.4;
-                // Held STASIS returns before ordinary homing, orbit, gravity
-                // and timed-flag finalization; only the release continues.
-                return true;
-            }
-        }
-        if(e.projectile_flags&(1ULL<<30)) {
-            const Vec wrapped=f.grid.wrapped_position(point,-100);
-            if(jumped)*jumped=wrapped.x!=point.x||wrapped.y!=point.y;
-            point=wrapped;
-        }
-        steer_projectile(e,point,velocity,time);
-        const bool orbit=orbit_projectile(e,point,velocity,time);
-        if(e.projectile_flags&((1ULL<<18)|(1ULL<<19))) {
-            double step=(velocity.norm()/30)*e.projectile_curve*e.speed_multiplier;
-            if(e.projectile_flags&(1ULL<<18))step=-step;
-            velocity=rotated(velocity,std::atan(step));
-        }else if(!orbit&&!(e.projectile_flags&((1ULL<<23)|(1ULL<<48)|(1ULL<<26)|(1ULL<<52)|(1ULL<<20)|1)))
-            velocity=rotated(velocity,turn/30);
-        if((e.projectile_flags&(1ULL<<20))&&point.x>f.grid.native_min.x-120&&point.x<f.grid.native_max.x+120) {
-            for(const auto& player:f.entities)if(player.type==1) {
-                const Vec delta=player.pos+player.vel*time-point;
-                const double vertical=delta.unit().y;
-                if(vertical>-.4&&vertical<.05) {
-                    velocity={velocity.norm()*2*(delta.x>0?1:-1),0};
-                    e.projectile_flags&=~(1ULL<<20);break;
-                }
-            }
-        }
-        if(e.projectile_flags&(1ULL<<21))point=point+velocity*(std::sin(age*2*pi/30)/30);
-        const Vec perpendicular=Vec{velocity.y,-velocity.x}.unit();
-        const double phase=(age+e.projectile_phase)*2*pi/30;
-        if(e.projectile_flags&(1ULL<<5))point=point+perpendicular*(3*std::cos(phase*(e.spawner_type==912?2:1)));
-        if(e.projectile_flags&(1ULL<<22))point=point+perpendicular*((3+std::min(4.0,(age+e.projectile_phase)*.04))*std::cos(phase));
-        if(e.projectile_flags&(1ULL<<23)) {
-            if(f.clock+tick-uint32_t(e.birth)==1)velocity=rotated(velocity,pi/4);
-            else if(int(age)>int(previous_age)) {
-                const int remainder=int(age)%30;
-                if(remainder==17)velocity=rotated(velocity,-3*pi/4);
-                else if(remainder==0)velocity=rotated(velocity,3*pi/4);
-            }
-        }
-        if(!direct_projectile(e,point,velocity,height,falling,time,age))return false;
-        velocity=velocity*projectile_speed_factor(e,age);
-        if((e.projectile_flags&(1ULL<<27))&&(e.spawner_type==888||e.spawner_type==407)) {
-            const double limit=e.spawner_type==888?300:270;
-            if(velocity.norm()>limit)velocity=velocity.unit()*limit;
-        }
-        const double scale=e.speed_multiplier,damping=.8/(.8+scale-.8*scale);
-        falling=falling*damping+scale*(e.fall_accel+.1);height+=falling*scale;
-        bounce_from_floor(e,point,height,falling);bounce_from_grid(e,point,velocity,height);
-        apply_projectile_clock(e,velocity,previous_age,age);
-        if(f.room_type!=16&&e.height_known&&height>-5)return false;
-        if(e.projectile_flags&(1ULL<<40)) {
-            height+=(-50-height)*.2;falling=0;
-            if(!e.parent)return false;
-        }
-        return true;
-    };
+    ProjectileMotionContext motion_context;
+    motion_context.grid=&f.grid;
+    motion_context.room_type=f.room_type;
+    motion_context.clock=f.clock;
+    motion_context.player_pos=f.player.body.pos;
+    motion_context.player_vel=f.player.body.vel;
+    motion_context.player=&f.player.body;
+    motion_context.lookup_user=const_cast<std::vector<Entity>*>(&f.entities);
+    motion_context.lookup=lookup_frame_entity;
+    ProjectileMotionConfig motion_config;
+    motion_config.simulate_height=true;
+    motion_config.stop_on_height_gate=true;
     auto projectile_can_damage=[&](const Entity& e,double height) {
-        return !(e.projectile_flags&((1ULL<<31)|(1ULL<<57)))&&!(e.flags&(1ULL<<5))&&
-            (f.room_type==16||!e.height_known||height>=-50||(e.projectile_flags&(1ULL<<17)));
+        return gamebot::projectile_can_damage(e,height,f.room_type);
+    };
+    auto advance_projectile=[&](Entity& e,Vec& point,Vec& velocity,double& height,
+                                double& falling,int tick,double turn=0,bool* jumped=nullptr) {
+        ProjectileMotionState state;
+        state.entity=e;
+        state.pos=point;
+        state.vel=velocity;
+        state.height=height;
+        state.falling=falling;
+        const bool active=gamebot::advance_projectile(state,motion_context,tick,
+            turn,motion_config);
+        e=state.entity;
+        point=state.pos;
+        velocity=state.vel;
+        height=state.height;
+        falling=state.falling;
+        if(jumped)*jumped=state.jumped;
+        return active;
     };
     auto future_source=[&](const Entity& e,double time) {
         Vec point=e.pos,velocity=e.vel;
@@ -2058,6 +1949,7 @@ void Planner::build_threats(const Frame& f,double horizon,const MechanismFrame* 
 }
 Decision Planner::decide(const Frame& f,bool attack_enabled,const MechanismFrame* mechanisms) {
     auto started=std::chrono::steady_clock::now();Decision out;
+    candidates_.clear();
     if(!f.valid||!f.has_player||!f.grid.valid||f.paused||f.transition||!f.player.body.alive()||!f.player.controls) {
         out.stop=true;out.reason=!f.error.empty()?f.error:"Snapshot, player, terrain or game state unavailable";return out;
     }
@@ -2698,8 +2590,7 @@ Decision Planner::decide(const Frame& f,bool attack_enabled,const MechanismFrame
                             (finish-start).dot(to_player.unit())/dt:0.0;
                         if(closing>config_.contact_spacing_speed_threshold) {
                             const double desired=std::min(config_.contact_spacing_max,
-                                config_.contact_spacing_base+closing*config_.contact_spacing_gain+
-                                (std::clamp(threat.damage,1.0,3.0)-1.0)*40.0);
+                                config_.contact_spacing_base+closing*config_.contact_spacing_gain);
                             const double gap=std::max(0.0,c);
                             if(gap<desired)
                                 n.exposure+=(desired-gap)*config_.contact_spacing_weight*exposure_weight*contact_spacing_scale;
@@ -2741,7 +2632,7 @@ Decision Planner::decide(const Frame& f,bool attack_enabled,const MechanismFrame
             return out;
         }
         std::stable_sort(next.begin(),next.end(),[&](const Node& a,const Node& b){
-            return route_rank_less(rank_values(a),rank_values(b),effective_goal_priority,escape_priority,wide_dodge,special_dodge);
+            return route_rank_less(rank_values(a),rank_values(b),effective_goal_priority,escape_priority,wide_dodge,wall_dodge);
         });
         if(stage==stages-1) {
             // Run the escape rollout on the final candidate pool instead of
@@ -2749,21 +2640,36 @@ Decision Planner::decide(const Frame& f,bool attack_enabled,const MechanismFrame
             retain_routes(next,size_t(planning_beam_width*2));
             for(auto& node:next)evaluate_future_escape(node);
             std::stable_sort(next.begin(),next.end(),[&](const Node& a,const Node& b){
-                return route_rank_less(rank_values(a),rank_values(b),effective_goal_priority,escape_priority,wide_dodge,special_dodge);
+                return route_rank_less(rank_values(a),rank_values(b),effective_goal_priority,escape_priority,wide_dodge,wall_dodge);
             });
         }
         retain_routes(next,size_t(planning_beam_width));
         beam=std::move(next);
+    }
+    if(config_.record_candidates) {
+        const size_t limit=std::min<size_t>(beam.size(),64);
+        candidates_.reserve(limit);
+        for(size_t index=0;index<limit;++index) {
+            const Node& node=beam[index];
+            RouteCandidate candidate;
+            candidate.move=node.first;candidate.end=node.pos;
+            candidate.hits=node.hits;candidate.exposure=node.exposure;
+            candidate.clearance=node.margin;candidate.end_clearance=node.end_clearance;
+            candidate.score=node.score;candidate.escape_directions=node.escape_directions;
+            candidate.escape_area=node.escape_area;candidate.edge_clearance=node.edge_clearance;
+            candidate.margin=node.margin;candidate.path=node.path;
+            candidates_.push_back(std::move(candidate));
+        }
     }
     const Node* selected=&beam.front();
     if(holding&&!recovering&&!escaping_) {
         const Node* held=nullptr;
         for(const auto& node:beam) {
             if(node.first!=last_move_)continue;
-            if(!held||route_rank_less(rank_values(node),rank_values(*held),effective_goal_priority,escape_priority,wide_dodge,special_dodge))held=&node;
+            if(!held||route_rank_less(rank_values(node),rank_values(*held),effective_goal_priority,escape_priority,wide_dodge,wall_dodge))held=&node;
         }
         if(held&&held->hits==0&&held->margin>=config_.action_hold_min_clearance&&
-           route_safety_no_worse(rank_values(*held),rank_values(*selected),escape_priority,wide_dodge,special_dodge))selected=held;
+           route_safety_no_worse(rank_values(*held),rank_values(*selected),escape_priority,wide_dodge,wall_dodge))selected=held;
     }
     const auto& chosen=*selected;out.valid=true;out.safe=chosen.hits==0;out.collision_cost=chosen.hits;
     out.selected_exits=chosen.escape_directions;out.selected_area=chosen.escape_area;
@@ -2781,7 +2687,7 @@ Decision Planner::decide(const Frame& f,bool attack_enabled,const MechanismFrame
             ++valid_final[index];
             if(node.hits==0)++zero_hit_final[index];
             if(!has_route[index]||route_rank_less(rank_values(node),rank_values(best[index]),
-                effective_goal_priority,escape_priority,wide_dodge,special_dodge)) {
+                effective_goal_priority,escape_priority,wide_dodge,wall_dodge)) {
                 best[index]=node;
                 has_route[index]=true;
             }
@@ -2835,6 +2741,13 @@ Decision Planner::decide(const Frame& f,bool attack_enabled,const MechanismFrame
     out.analysis.firing_miss=current.miss;
     out.analysis.firing_time=current.time;
     out.analysis.firing_available=current.can_fire;
+    out.analysis.firing_spawn=current.spawn;
+    out.analysis.firing_velocity=current.velocity;
+    out.analysis.firing_target_position=current.target_position;
+    out.analysis.firing_target_velocity=current.target_velocity;
+    out.analysis.firing_travel_frames=current.travel_frames;
+    out.analysis.firing_hit_radius=current.hit_radius;
+    out.analysis.firing_predicted_hit=current.predicted_hit;
     out.navigation_boost=navigation_boost_;
     out.clearance=chosen.margin;out.end_clearance=chosen.end_clearance;
     out.move=chosen.first;out.target=current.target;

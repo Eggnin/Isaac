@@ -35,6 +35,16 @@ inline Vec direction(Move m) {
     }
 }
 inline Vec direction(Fire f) { switch(f) {case Fire::up:return {0,-1};case Fire::right:return {1,0};case Fire::down:return {0,1};case Fire::left:return {-1,0};default:return {};} }
+// Native ordinary-tear launch velocity. The controlled J460 probe
+// (research/tear-velocity-probe.json) measured a lateral tear/player velocity
+// ratio of 0.59-0.60 for a 300 px/s tear. Special hitscan weapons use a much
+// larger tear speed, so the same coefficient is effectively negligible there.
+constexpr double native_tear_inheritance = 0.6;
+constexpr double native_tear_spawn_offset = 12.0;
+inline Vec native_tear_velocity(Fire fire,double tear_speed,Vec player_velocity,
+    double inheritance=native_tear_inheritance) {
+    return direction(fire)*tear_speed+player_velocity*inheritance;
+}
 struct Cell { int type{}, variant{}, state{}, collision{}; bool destructible{}, danger{}; int native_collision{-1}; };
 struct Grid {
     int width{15},height{9},shape{}; bool valid{}; std::vector<Cell> cells;
@@ -155,13 +165,16 @@ struct NativeSmokeHazard {
 std::vector<NativeSmokeHazard> predict_native_smoke_hazards(const Frame& frame,const Entity& effect,double horizon);
 double native_explosion_radius_scale(const Frame& frame,const Entity& source);
 double native_bomb_explosion_radius(const Entity& bomb);
-struct Aim { uint32_t target{}; Fire fire{}; Vec point{}; double time{},miss{}; bool can_fire{}; };
+struct Aim { uint32_t target{}; Fire fire{}; Vec point{}; double time{},miss{}; bool can_fire{};
+    // Launch/intercept diagnostics for the actual native tear model.
+    Vec spawn{},velocity{},target_position{},target_velocity{};
+    int travel_frames{};double hit_radius{};bool predicted_hit{}; };
 enum class Shape { disc, capsule, ring, polyline, stream, cone };
 // Every hostile attack in the game reduces to one of these damage classes.
 // Identity rules decide *when* and *where*; the class decides how the planner
 // treats the hazard. `hazard` is persistent area damage (creep, fire, spikes,
 // poison cloud, pit) and is deliberately separate from body `contact`.
-enum class DamageClass : uint8_t { contact, projectile, jump, laser, charge, explosion, hazard };
+enum class DamageClass : uint8_t { contact, projectile, jump, laser, charge, explosion, hazard, unknown };
 // How often the class hurts: a single impact, a bounded window, periodic ticks
 // while inside, or damage over time after the source is gone.
 enum class DamageTiming : uint8_t { instant, window, periodic, dot };
@@ -187,7 +200,14 @@ struct Threat {
     uint32_t seed{},initiator{};int type{},variant{},subtype{};
     int64_t start_frame{-1},end_frame{-1};
     bool predictive{},timing_verified{},geometry_verified{},target_center_only{};
+    // Set only by the intent-forecast layer. Real observations and existing
+    // pre-spawn geometry warnings keep this false so logs and audits can
+    // separate measured threats from action-conditioned virtual threats.
+    bool virtual_threat{};
+    bool unknown_threat{};
     double confidence{};
+    double risk_weight{1};
+    std::string forecast_id;
     std::string evidence_status{"heuristic"},data_source{"external-memory"},end_condition{"reobserve"};
     Vec at(double t) const;
     double clearance(Vec a,Vec b,double from,double to,double player_radius) const;
@@ -208,6 +228,8 @@ struct DecisionAnalysis {
     uint32_t navigation_progress_since{};int navigation_living_enemies{};
     bool navigation_hp_progress{};
     Fire firing_direction{};Vec firing_point{};double firing_miss{},firing_time{};bool firing_available{};
+    Vec firing_spawn{},firing_velocity{},firing_target_position{},firing_target_velocity{};
+    int firing_travel_frames{};double firing_hit_radius{};bool firing_predicted_hit{};
     Vec navigation_goal{};bool navigation_goal_kept{};
     Vec navigation_waypoint{};bool navigation_waypoint_kept{};
     std::string cause;
@@ -392,7 +414,7 @@ NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Player,body,max_speed,tear_speed
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Frame,sequence,clock,room,pid,captured_ms,read_ms,clear_flags,room_type,valid,paused,transition,cleared,pressure_plates_triggered,has_player,error,grid,player,entities,native_target_order,native_target_order_known)
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(RouteCandidate,move,end,hits,exposure,clearance,end_clearance,score,escape_directions,escape_area,edge_clearance,margin,path)
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(MoveEvaluation,move,has_route,terrain_rejected,valid_final,zero_hit_final,pruned_zero_hit,best)
-NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DecisionAnalysis,valid_final,zero_hit_final,terrain_rejected,pruned_zero_hit,action_held,navigation_progress_since,navigation_living_enemies,navigation_hp_progress,firing_direction,firing_point,firing_miss,firing_time,firing_available,navigation_goal,navigation_goal_kept,navigation_waypoint,navigation_waypoint_kept,cause,moves)
+NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(DecisionAnalysis,valid_final,zero_hit_final,terrain_rejected,pruned_zero_hit,action_held,navigation_progress_since,navigation_living_enemies,navigation_hp_progress,firing_direction,firing_point,firing_miss,firing_time,firing_available,firing_spawn,firing_velocity,firing_target_position,firing_target_velocity,firing_travel_frames,firing_hit_radius,firing_predicted_hit,navigation_goal,navigation_goal_kept,navigation_waypoint,navigation_waypoint_kept,cause,moves)
 NLOHMANN_DEFINE_TYPE_NON_INTRUSIVE_WITH_DEFAULT(Decision,move,fire,target,valid,safe,stop,navigation_boost,clearance,end_clearance,collision_cost,planning_ms,predicted_damage,threats,reason,pressure_plate_mode,pressure_plates_complete,pressure_plate_goal,pressure_plates_remaining,button_kind,kill_button_triggered,path,threat_kinds,threat_classes,analysis,strategy_mode,encirclement_escape,escape_goal,escape_waypoint,escape_priority_used,selected_exits,selected_area,selected_edge,selected_exposure,predicted_impact_time,urgent_threat)
 
 struct MechanismObservation {

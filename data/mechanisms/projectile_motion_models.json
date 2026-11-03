@@ -1,0 +1,88 @@
+﻿{
+  "format": "isaac-gamebot-projectile-motion-v1",
+  "version": 1,
+  "generated": "2026-11-02",
+  "source": {
+    "reader_offsets": "cpp/src/reader.cpp: type==9, flags +0x438, change flags +0x450, change velocity +0x458, change timeout +0x45c, age +0x3a4, phase +0x448, homing +0x424, accel +0x42c, curve +0x428, orbit distance +0x430",
+    "enum": "python/src/engine_enums.json + python/records/research/enums-public-latest.lua",
+    "model": "cpp/src/projectile_motion.cpp, extracted from the existing Planner projectile model",
+    "decompiled_update_function": "not present in this repository; formulas remain inferred where the update function was not exported"
+  },
+  "models": [
+    {
+      "id": "projectile-curve-left-right",
+      "status": "inferred",
+      "flags": ["CURVE_LEFT=1<<18", "CURVE_RIGHT=1<<19"],
+      "fields": ["projectile_curve", "speed_multiplier"],
+      "formula": "step=(speed/30)*curve*speed_multiplier; left=-step; v=rotate(v,atan(step))",
+      "parameters": {},
+      "runtime_loadable": false,
+      "note": "Formula was already used by the validated Planner; no independent game-update export is stored here."
+    },
+    {
+      "id": "projectile-orbit-cw-ccw",
+      "status": "inferred",
+      "flags": ["ORBIT_CW=1<<11", "ORBIT_CCW=1<<12", "ORBIT_PARENT=1<<56"],
+      "fields": ["projectile_orbit_distance", "target_pos", "projectile_parent_velocity"],
+      "formula": "center=target_pos (or parent.pos+parent.vel*time); radial=pos-center; tangent={-radial.y,radial.x}; ccw negates tangent; correction=.5*clamp(1-|radial|/orbit_distance,-1,1); v=normalize(radial*correction+tangent)*|v|",
+      "parameters": {"zero_distance_correction": 0.5},
+      "runtime_loadable": false,
+      "note": "Parent-relative velocity compensation follows the existing Planner implementation."
+    },
+    {
+      "id": "projectile-change-velocity-after-timeout",
+      "status": "inferred",
+      "flags": ["CHANGE_VELOCITY_AFTER_TIMEOUT=1<<33"],
+      "fields": ["projectile_change_timeout", "projectile_change_velocity", "projectile_age", "projectile_change_flags"],
+      "formula": "change = period<=0 || int(age/period) != int(previous_age/period); if change: |v|=change_velocity*30; clear bit unless ((change_flags>>32)&3)==3",
+      "parameters": {"native_tick_hz": 30},
+      "runtime_loadable": false
+    },
+    {
+      "id": "projectile-change-flags-after-timeout",
+      "status": "inferred",
+      "flags": ["CHANGE_FLAGS_AFTER_TIMEOUT=1<<32"],
+      "fields": ["projectile_change_timeout", "projectile_change_flags", "projectile_flags"],
+      "formula": "at timeout: swap(projectile_flags, projectile_change_flags)",
+      "parameters": {},
+      "runtime_loadable": false
+    },
+    {
+      "id": "projectile-stasis-release",
+      "status": "inferred",
+      "flags": ["STASIS=1<<34", "CHANGE_FLAGS_AFTER_TIMEOUT=1<<32"],
+      "fields": ["projectile_curve", "projectile_change_velocity", "projectile_parent_velocity", "target_pos"],
+      "formula": "while held: follow parent, height->-23; release: angle=curve*pi/180, v={cos(angle),sin(angle)}*30*change_velocity, curve=0.015",
+      "parameters": {"release_curve_reset": 0.015, "held_height": -23},
+      "runtime_loadable": false
+    },
+    {
+      "id": "projectile-smart-homing",
+      "status": "inferred",
+      "flags": ["SMART=1<<0", "SMART_PERFECT=1<<48"],
+      "fields": ["projectile_homing_strength", "target", "speed_multiplier"],
+      "formula": "SMART steps toward target within 100px with homing_strength; SMART_PERFECT preserves speed and applies strong steering",
+      "parameters": {},
+      "runtime_loadable": false
+    },
+    {
+      "id": "projectile-acceleration",
+      "status": "inferred",
+      "flags": ["ACCELERATE=1<<27", "DECELERATE=1<<28", "ACCELERATE_EX=1<<37", "ACCELERATE_TO_POSITION=1<<52"],
+      "fields": ["projectile_accel", "projectile_flags"],
+      "formula": "speed factor from projectile_accel; ACCELERATE_EX ramps over 20 native ticks; ACCELERATE_TO_POSITION steers toward target_pos",
+      "parameters": {},
+      "runtime_loadable": false
+    },
+    {
+      "id": "projectile-unmodelled-motion",
+      "status": "candidate",
+      "flags": ["BOOMERANG=1<<6", "SLOWED=1<<24", "TRIANGLE=1<<25"],
+      "fields": [],
+      "formula": "not recovered; bounded uncertainty envelope only",
+      "parameters": {"uncertainty_cap_px": 48},
+      "runtime_loadable": false
+    }
+  ]
+}
+

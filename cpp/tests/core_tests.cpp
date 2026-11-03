@@ -1,4 +1,23 @@
 #include "gamebot/planner.hpp"
+#include "gamebot/lookahead.hpp"
+#include "gamebot/benchmark.hpp"
+#include "gamebot/enemy_intent.hpp"
+#include "gamebot/unknown_threat.hpp"
+#include "gamebot/world_state.hpp"
+#include "gamebot/forward_sim.hpp"
+#include "gamebot/projectile_motion.hpp"
+#include "gamebot/safety.hpp"
+#include "gamebot/temporal_reachability.hpp"
+#include "gamebot/policy_validation.hpp"
+#include "gamebot/movement_intent.hpp"
+#include "gamebot/mpc.hpp"
+#include "gamebot/combat.hpp"
+#include "gamebot/prediction_monitor.hpp"
+#include "gamebot/closed_loop.hpp"
+#include "gamebot/session_review.hpp"
+#include "gamebot/performance_monitor.hpp"
+#include "gamebot/discovery.hpp"
+#include "gamebot/strategy.hpp"
 #include "gamebot/runtime.hpp"
 #include "gamebot/control.hpp"
 #include "gamebot/reader.hpp"
@@ -29,6 +48,156 @@ Frame frame() {
 }
 Entity enemy(Vec p={500,280},Vec v={}) {Entity e;e.type=10;e.address=0x30000;e.seed=1;e.pos=p;e.vel=v;e.radius=16;e.hp=10;e.damage=1;e.collision=2;return e;}
 Entity bullet(Vec p,Vec v) {Entity e;e.type=9;e.address=0x50000;e.seed=2;e.pos=p;e.vel=v;e.radius=6;e.collision=1;return e;}
+SimWorld simulation_world(const Frame& f,Vec player={320,280}) {
+    SimWorld world;
+    world.room.grid=f.grid;
+    world.player.pos=player;
+    world.player.radius=10;
+    world.player.max_speed=260;
+    world.player.flying=false;
+    world.player.health=f.player.body.hp>0?f.player.body.hp:6;
+    return world;
+}
+SimEnemy safety_enemy(Vec pos,uint32_t id) {
+    SimEnemy enemy;
+    enemy.id=id;
+    enemy.pos=pos;
+    enemy.vel={20,0};
+    enemy.radius=16;
+    enemy.hp=10;
+    enemy.damage=1;
+    enemy.contact=true;
+    enemy.chase=true;
+    return enemy;
+}
+Grid narrow_corridor_grid() {
+    auto f=frame();
+    auto& grid=f.grid;
+    // Player cell is (7,4). Fill the whole local BFS diamond with rock except
+    // one horizontal seven-cell corridor so reachable_area is unambiguous.
+    const int px=7,py=4,radius=4;
+    for(int dy=-radius;dy<=radius;++dy)for(int dx=-radius;dx<=radius;++dx) {
+        if(std::abs(dx)+std::abs(dy)>radius)continue;
+        const int x=px+dx,y=py+dy;
+        if(x<0||y<0||x>=grid.width||y>=grid.height)continue;
+        if(dy==0&&x>=4&&x<=10)continue;
+        grid.cells[y*grid.width+x].collision=2;
+    }
+    return grid;
+}
+std::vector<SimWorld> temporal_sequence(const SimWorld& base,int frames,
+    const std::function<void(SimWorld&,int)>& mutate) {
+    std::vector<SimWorld> out;
+    out.reserve(size_t(frames));
+    for(int frame=0;frame<frames;++frame) {
+        SimWorld world=base;
+        world.time=double(frame)/60.0;
+        mutate(world,frame);
+        out.push_back(std::move(world));
+    }
+    return out;
+}
+SimHazard temporal_hazard(Vec pos,double radius,double from,double until,
+                          HazardKind kind=HazardKind::laser,
+                          Precision precision=Precision::exact) {
+    SimHazard hazard;
+    hazard.spec.kind=kind;
+    hazard.spec.pos=pos;
+    hazard.spec.radius=radius;
+    hazard.spec.precision=precision;
+    hazard.spec.damage=1;
+    hazard.spec.damage_class=DamageClass::laser;
+    hazard.active_from=from;
+    hazard.active_until=until;
+    return hazard;
+}
+SimProjectile temporal_projectile(Vec pos,Vec vel,uint32_t id=1) {
+    SimProjectile projectile;
+    projectile.id=id;
+    projectile.pos=pos;
+    projectile.vel=vel;
+    projectile.radius=4;
+    projectile.damage=1;
+    projectile.hostile=true;
+    projectile.damageable=true;
+    projectile.life=5;
+    return projectile;
+}
+TemporalTrajectorySample temporal_sample(int frame,Vec position,double radius=10.0) {
+    return {frame,double(frame)/60.0,position,radius};
+}
+TemporalReachabilityConfig reachability_config(int horizon=12,int step=3,
+    int layers=4,int cap=12) {
+    TemporalReachabilityConfig config;
+    config.horizon_frames=horizon;
+    config.step_frames=step;
+    config.max_layers=layers;
+    config.max_states_per_layer=cap;
+    config.max_total_states=cap*16;
+    config.max_seconds=0.5;
+    config.max_memory_bytes=4u*1024u*1024u;
+    config.max_representative_paths=2;
+    config.danger.max_slices=8;
+    return config;
+}
+TemporalReachabilityResult reachability_of(const Frame& frame,
+    TemporalReachabilityConfig config) {
+    const auto snapshot=WorldStateBridge::snapshot(frame,nullptr,nullptr);
+    ForwardSimConfig sim;
+    sim.horizon_frames=config.horizon_frames;
+    sim.early_terminate=false;
+    sim.danger_map=false;
+    ForwardSimulator root(sim);
+    std::string error;
+    if(!root.restore(snapshot,&error))return {};
+    return search_temporal_reachability(root,config);
+}
+int grid_cell(const Grid& grid,Vec point) {
+    const int x=int(std::floor((point.x-40.0)/40.0));
+    const int y=int(std::floor((point.y-120.0)/40.0));
+    if(x<0||y<0||x>=grid.width||y>=grid.height)return -1;
+    return y*grid.width+x;
+}
+Frame reachability_frame(int enemies,int projectiles) {
+    auto f=frame();
+    f.grid.width=28;
+    f.grid.height=16;
+    f.grid.cells.assign(28*16,Cell{});
+    f.player.body.pos={640,360};
+    f.player.body.radius=10;
+    f.player.max_speed=260;
+    f.player.health=6;
+    for(int i=0;i<enemies;++i) {
+        auto e=enemy({120.0+double(i%8)*120.0,180.0+double(i/8)*240.0},
+            {60.0,0});
+        e.address=uint32_t(0x30000+i*16);
+        e.radius=16;
+        e.collision=2;
+        f.entities.push_back(e);
+    }
+    for(int i=0;i<projectiles;++i) {
+        auto b=bullet({100.0+double(i%14)*70.0,150.0+double(i/14)*90.0},
+            {120.0,20.0});
+        b.address=uint32_t(0x50000+i*16);
+        b.radius=6;
+        f.entities.push_back(b);
+    }
+    return f;
+}
+HazardState temporal_hazard_state(Vec pos,double radius,double from,double until) {
+    HazardState hazard;
+    hazard.kind=HazardKind::laser;
+    hazard.pos=pos;
+    hazard.radius=radius;
+    hazard.start=from;
+    hazard.until=until;
+    hazard.damage=1;
+    hazard.damage_class=DamageClass::laser;
+    hazard.damage_timing=DamageTiming::window;
+    hazard.shape=Shape::disc;
+    hazard.precision=Precision::exact;
+    return hazard;
+}
 struct FakeSink:KeyboardSink {
     Keys keys;bool fail{};int changes{};
     bool transition(const Keys&,const Keys& after)override{++changes;if(fail)return false;keys=after;return true;}
@@ -1531,9 +1700,3891 @@ int main(int argc,char**argv) {
         ++f.clock;f.entities[0].animation_frame=15;m=s.evaluate(f);p.decide(f,true,&m);
         CHECK(std::none_of(p.threats().begin(),p.threats().end(),[](const auto&t){return t.kind=="laser-warning";}));
     });
+    test("candidate beam is opt-in and exposes full planner paths",[]{
+        auto f=frame();f.entities={enemy({500,280})};
+        PlannerConfig config;config.record_candidates=true;Planner planner(config);
+        auto decision=planner.decide(f);CHECK(decision.valid);
+        CHECK(!planner.candidates().empty());
+        CHECK(planner.candidates().front().path.size()>1);
+        CHECK(planner.candidates().front().move==decision.move);
+        Planner plain;plain.decide(f);CHECK(plain.candidates().empty());
+    });
+    test("top-k joint planner reads candidate paths and chooses move plus fire",[]{
+        auto f=frame();f.entities={enemy({470,280})};
+        TopKJointPlanner planner;
+        auto plan=planner.decide(f);
+        CHECK(plan.baseline.valid&&plan.decision.valid);
+        CHECK(!plan.previews.empty());
+        CHECK(int(plan.previews.size())<=planner.config().seed_candidates);
+        CHECK(plan.previews.front().path.size()>1);
+        CHECK(!plan.move_sequence.empty()&&!plan.fire_sequence.empty());
+        CHECK(plan.decision.fire==Fire::right);
+        CHECK(plan.predicted_shots>=0);
+        CHECK(plan.planning_ms>=plan.baseline_planning_ms);
+    });
+    test("top-k joint planner respects attack disable",[]{
+        auto f=frame();f.entities={enemy({470,280})};
+        TopKJointPlanner planner;
+        auto plan=planner.decide(f,false);
+        CHECK(plan.decision.fire==Fire::none);
+    });
+    test("multi-step lookahead reports attack opportunities along future paths",[]{
+        auto f=frame();f.entities={enemy({470,280}),enemy({420,200})};f.entities[1].address=0x30001;f.entities[1].seed=2;
+        for(int tick=0;tick<40;++tick) {
+            ++f.clock;
+            Planner baseline;TopKJointPlanner joint;
+            auto plan=joint.decide(f);
+            CHECK(plan.decision.valid);
+            CHECK(!plan.previews.empty());
+            CHECK(std::isfinite(plan.predicted_damage)&&std::isfinite(plan.predicted_attack));
+            CHECK(plan.previews.front().path.size()*joint.config().dt>0.3);
+            if(plan.predicted_attack>0)break;
+        }
+        CHECK(true);
+    });
+    test("joint lookup is deterministic for the same frame",[]{
+        auto f=frame();f.entities={enemy({500,280}),enemy({400,220})};f.entities[1].address=0x30001;f.entities[1].seed=2;
+        TopKJointPlanner first,second;
+        auto a=first.decide(f),b=second.decide(f);
+        CHECK(a.decision.move==b.decision.move);
+        CHECK(a.decision.fire==b.decision.fire);
+        CHECK(a.predicted_damage==b.predicted_damage);
+        CHECK(a.predicted_attack==b.predicted_attack);
+        CHECK(a.move_sequence==b.move_sequence);
+        CHECK(a.fire_sequence==b.fire_sequence);
+    });
+    test("seeded comparison scenarios reproduce counters",[]{
+        BenchmarkScenario scenario{"unit-probe",7,120,6,1,30,true};
+        const auto first=run_policy_scenario(scenario,false);
+        const auto second=run_policy_scenario(scenario,false);
+        CHECK(first.policy=="baseline"&&second.policy=="baseline");
+        CHECK(first.ticks==second.ticks);
+        CHECK(first.hp_lost==second.hp_lost);
+        CHECK(first.damage_dealt==second.damage_dealt);
+        CHECK(first.enemies_killed==second.enemies_killed);
+        CHECK(first.shots==second.shots&&first.shot_hits==second.shot_hits);
+        const auto joint=run_policy_scenario(scenario,true);
+        CHECK(joint.policy=="topk-joint");
+        CHECK(joint.ticks>0&&joint.total_planning_ms>0);
+    });
+    test("mpc pressure arm runs the same seeded scenario as the original planner",[]{
+        BenchmarkScenario scenario{"unit-mpc-pressure",9,24,6,2,25,true,45,40,180};
+        const auto baseline=run_policy_scenario(scenario,BenchmarkPolicy::baseline);
+        const auto mpc=run_policy_scenario(scenario,BenchmarkPolicy::mpc);
+        CHECK(baseline.policy=="baseline"&&mpc.policy=="mpc");
+        CHECK(baseline.ticks>0&&mpc.ticks>0);
+        CHECK(baseline.total_planning_ms>0&&mpc.total_planning_ms>0);
+        CHECK(mpc.mpc_depth>=mpc.ticks);
+    });
+    test("enemy intent recognises a pre-spawn aimed projectile from geometry data",[]{
+        auto f=frame();auto e=enemy({500,280});e.state=4;e.animation="Shoot";e.animation_frame=48;
+        e.animation_length=60;e.animation_looping=true;e.animation_playing=true;
+        e.animation_speed=1;e.speed_multiplier=1;f.entities={e};
+        MechanismFrame m;m.loaded=m.valid=true;m.room=f.room;m.pid=f.pid;m.clock=f.clock;
+        MonsterGeometryRef model;model.source=e.address;model.kind="projectile";
+        model.source_state=4;model.source_animation="Shoot";
+        model.trigger_animation_frame=54;model.trigger_animation_frame_min=54;model.trigger_animation_frame_max=54;
+        model.pattern="stream";model.pattern_direction="aimed";model.pattern_center="source";
+        model.speed=200;model.radius=5;model.duration=30;model.pattern_count=1;
+        model.planning_validated=true;model.pre_spawn_verified=true;model.geometry_verified=true;
+        model.evidence_status="unit-test geometry";model.id="unit.aimed";
+        m.geometry_models={model};
+        MechanismObservation observation;observation.address=e.address;observation.type=e.type;
+        observation.variant=e.variant;observation.subtype=e.subtype;observation.state=4;
+        observation.attack_type="ProjectileAttack";
+        observation.attack_type_evidence="unit-test strict timing";
+        observation.attack_timing_verified=true;observation.predicted_trigger_frame=f.clock+6;
+        observation.attack_target_semantics="player lock";observation.confidence=.9;
+        m.enemies={observation};
+        EnemyIntentPredictor predictor;
+        const auto intents=predictor.predict(f,&m);
+        CHECK(!intents.empty());
+        const auto found=std::find_if(intents.begin(),intents.end(),[](const EnemyIntent& intent){
+            return intent.primitive==AttackPrimitive::aimed_projectile;});
+        CHECK(found!=intents.end());
+        CHECK(found->can_instantiate);CHECK(found->evidence==AttackEvidence::verified);
+        CHECK(std::abs(found->trigger_time-0.2)<1e-6);
+        CHECK(found->targeting==AttackTargeting::player_position);
+        CHECK(predictor.coverage().geometry_known==1);
+        CHECK(predictor.coverage().verified>=1);
+    });
+    test("action-conditioned forecast aims at each candidate path position",[]{
+        auto f=frame();auto e=enemy({320,200});e.state=4;e.animation="Shoot";e.animation_frame=48;
+        e.animation_length=60;e.animation_looping=true;e.animation_playing=true;
+        e.animation_speed=1;e.speed_multiplier=1;f.entities={e};
+        MechanismFrame m;m.loaded=m.valid=true;m.room=f.room;m.pid=f.pid;m.clock=f.clock;
+        MonsterGeometryRef model;model.source=e.address;model.kind="projectile";
+        model.source_state=4;model.source_animation="Shoot";
+        model.trigger_animation_frame=54;model.trigger_animation_frame_min=54;model.trigger_animation_frame_max=54;
+        model.pattern="stream";model.pattern_direction="aimed";model.speed=200;model.radius=5;
+        model.duration=30;model.planning_validated=true;model.pre_spawn_verified=true;
+        model.geometry_verified=true;model.id="unit.aimed";m.geometry_models={model};
+        EnemyIntentPredictor predictor;const auto intents=predictor.predict(f,&m);
+        std::vector<Vec> left(30,Vec{200,280}),right(30,Vec{440,280});
+        const auto left_path=predictor.instantiate_path(intents,f,left,1.0/60);
+        const auto right_path=predictor.instantiate_path(intents,f,right,1.0/60);
+        CHECK(left_path.instantiated==1&&right_path.instantiated==1);
+        CHECK(left_path.forecasts.front().target_position.x<300);
+        CHECK(right_path.forecasts.front().target_position.x>400);
+        CHECK(left_path.forecasts.front().direction.x<0);
+        CHECK(right_path.forecasts.front().direction.x>0);
+    });
+    test("virtual threat generator marks and deduplicates intent threats",[]{
+        auto f=frame();auto e=enemy({500,280});e.state=4;e.animation="Shoot";e.animation_frame=48;
+        e.animation_length=60;e.animation_looping=true;e.animation_playing=true;
+        e.animation_speed=1;e.speed_multiplier=1;f.entities={e};
+        MechanismFrame m;m.loaded=m.valid=true;m.room=f.room;m.pid=f.pid;m.clock=f.clock;
+        MonsterGeometryRef model;model.source=e.address;model.kind="projectile";
+        model.source_state=4;model.source_animation="Shoot";
+        model.trigger_animation_frame=54;model.trigger_animation_frame_min=54;model.trigger_animation_frame_max=54;
+        model.pattern="stream";model.pattern_direction="aimed";model.speed=200;model.radius=5;
+        model.duration=30;model.planning_validated=true;model.pre_spawn_verified=true;
+        model.geometry_verified=true;model.id="unit.aimed";m.geometry_models={model};
+        EnemyIntentPredictor predictor;const auto intents=predictor.predict(f,&m);
+        const auto path=predictor.instantiate_path(intents,f,std::vector<Vec>(30,Vec{320,280}),1.0/60);
+        CHECK(path.instantiated==1);
+        VirtualThreatGenerator generator;
+        const auto batch=generator.generate(path.forecasts,f,{},1.5);
+        CHECK(batch.generated>=1&&!batch.threats.empty());
+        for(const auto& threat:batch.threats) {
+            CHECK(threat.virtual_threat);CHECK(threat.predictive);
+            CHECK(threat.damage_class==DamageClass::projectile);
+            CHECK(!threat.motion_path.empty());
+            CHECK(!threat.forecast_id.empty());
+        }
+        Threat existing=batch.threats.front();existing.virtual_threat=false;
+        const auto deduped=generator.generate(path.forecasts,f,{existing},1.5);
+        CHECK(deduped.deduplicated>=1);
+    });
+    test("animation cue creates a candidate charge intent but unknown stays silent",[]{
+        auto f=frame();auto e=enemy({480,280});e.type=999;e.state=8;e.animation="Charge";
+        e.animation_frame=5;e.animation_length=20;e.animation_playing=true;e.animation_speed=1;
+        e.speed_multiplier=1;e.vel={120,0};f.entities={e};
+        EnemyIntentPredictor predictor;
+        const auto intents=predictor.predict(f,nullptr);
+        const auto charge=std::find_if(intents.begin(),intents.end(),[](const EnemyIntent& intent){
+            return intent.primitive==AttackPrimitive::charge;});
+        CHECK(charge!=intents.end());CHECK(charge->can_instantiate);
+        CHECK(charge->evidence==AttackEvidence::candidate);
+        VirtualThreatConfig virtual_config;virtual_config.include_candidate=true;
+        VirtualThreatGenerator generator(virtual_config);
+        const auto path=predictor.instantiate_path(intents,f,std::vector<Vec>(20,Vec{320,280}),1.0/60);
+        const auto batch=generator.generate(path.forecasts,f,{},1.0);
+        CHECK(batch.generated>=1);
+        CHECK(batch.threats.front().damage_class==DamageClass::charge);
+        auto unknown_frame=frame();unknown_frame.entities={enemy({480,280})};
+        CHECK(predictor.predict(unknown_frame,nullptr).empty());
+    });
+    test("top-k joint planner carries intent forecasts into its virtual threat set",[]{
+        auto f=frame();auto e=enemy({470,280});e.type=999;e.state=8;e.animation="Charge";
+        e.animation_frame=5;e.animation_length=20;e.animation_playing=true;e.animation_speed=1;
+        e.speed_multiplier=1;e.vel={120,0};f.entities={e};
+        LookaheadConfig config;config.intent_include_candidate=true;
+        config.epochs=2;config.epoch_frames=4;
+        TopKJointPlanner planner(config);
+        const auto plan=planner.decide(f);
+        CHECK(plan.decision.valid);CHECK(!plan.intents.empty());
+        CHECK(plan.intent_coverage.animation_known>=1);
+        CHECK(plan.real_threats>0);
+        CHECK(plan.virtual_threats>0);
+        CHECK(!plan.selected_virtual_threats.empty());
+        for(const auto& threat:plan.selected_virtual_threats)CHECK(threat.virtual_threat);
+        CHECK(!plan.selected_forecasts.empty());
+    });
+    test("unknown entity always leaves a generic physical tracking threat",[]{
+        auto f=frame();auto e=enemy({450,280});e.type=999;e.animation.clear();
+        e.vel={};f.entities={e};
+        UnknownThreatManager manager;
+        const auto assessment=manager.assess(f,nullptr);
+        CHECK(assessment.unknown_entities>=1);
+        CHECK(!assessment.tracking_threats.empty());
+        for(const auto& threat:assessment.tracking_threats) {
+            CHECK(threat.unknown_threat);CHECK(threat.virtual_threat);CHECK(threat.predictive);
+            CHECK(threat.risk_weight>=1);
+            CHECK(!threat.motion_path.empty());
+            CHECK(threat.kind=="unknown-tracking");
+        }
+        CHECK(!assessment.entities.empty());
+        CHECK(!assessment.entities.front().history.empty());
+    });
+    test("lower confidence widens the conservative tracking envelope",[]{
+        auto f=frame();auto e=enemy({450,280});e.type=999;f.entities={e};
+        UnknownThreatManager unknown_manager;
+        const auto unknown=unknown_manager.assess(f,nullptr);
+        MechanismFrame m;m.loaded=m.valid=true;m.room=f.room;m.pid=f.pid;m.clock=f.clock;
+        MechanismObservation observation;observation.address=e.address;observation.type=e.type;
+        observation.state=4;observation.unknown_state=true;observation.confidence=.9;
+        m.enemies={observation};
+        UnknownThreatManager known_manager;
+        const auto known=known_manager.assess(f,&m);
+        CHECK(!unknown.tracking_threats.empty()&&!known.tracking_threats.empty());
+        CHECK(unknown.tracking_threats.front().radius>known.tracking_threats.front().radius);
+        CHECK(unknown.tracking_threats.front().risk_weight>=
+              known.tracking_threats.front().risk_weight);
+    });
+    test("unknown attack cue creates a conservative corridor and emergency",[]{
+        auto f=frame();auto e=enemy({360,280});e.type=999;e.animation="Attack";
+        e.state=8;e.state_frame=4;e.animation_frame=4;e.animation_playing=true;
+        e.animation_speed=1;e.speed_multiplier=1;f.entities={e};
+        UnknownThreatManager manager;
+        const auto assessment=manager.assess(f,nullptr);
+        CHECK(!assessment.attack_intents.empty());
+        CHECK(assessment.uncertain_attacks>=1);
+        CHECK(assessment.attack_intents.front().primitive==AttackPrimitive::uncertain_corridor);
+        CHECK(assessment.attack_intents.front().risk_weight>=2.5);
+        CHECK(assessment.emergency);
+        CHECK(!assessment.emergency_reason.empty());
+    });
+    test("fast unknown body gets a corridor envelope",[]{
+        auto f=frame();auto e=enemy({420,280});e.type=999;e.animation="Dash";
+        e.vel={300,0};e.state=8;e.animation_playing=true;e.animation_speed=1;
+        e.speed_multiplier=1;f.entities={e};
+        UnknownThreatManager manager;
+        const auto assessment=manager.assess(f,nullptr);
+        CHECK(!assessment.attack_intents.empty());
+        CHECK(assessment.attack_intents.front().primitive==AttackPrimitive::uncertain_corridor);
+        CHECK(assessment.attack_intents.front().collision_radius>e.radius);
+        CHECK(assessment.attack_intents.front().length>100);
+    });
+    test("unknown classification is revised when precise mechanism evidence appears",[]{
+        auto f=frame();auto e=enemy({450,280});e.type=999;e.state=4;e.animation="Shoot";
+        e.animation_frame=40;e.animation_length=60;e.animation_playing=true;
+        e.animation_speed=1;e.speed_multiplier=1;f.entities={e};
+        UnknownThreatManager manager;
+        const auto first=manager.assess(f,nullptr);
+        CHECK(!first.entities.empty());
+        CHECK(first.entities.front().classification!=UnknownClassification::identified);
+        MechanismFrame m;m.loaded=m.valid=true;m.room=f.room;m.pid=f.pid;m.clock=f.clock;
+        MonsterGeometryRef model;model.source=e.address;model.kind="projectile";
+        model.source_state=4;model.source_animation="Shoot";
+        model.planning_validated=true;model.pre_spawn_verified=true;
+        model.geometry_verified=true;m.geometry_models={model};
+        const auto second=manager.assess(f,&m);
+        CHECK(!second.entities.empty());
+        CHECK(second.entities.front().classification==UnknownClassification::identified);
+        bool revised=false;
+        for(const auto& revision:second.entities.front().revisions)
+            revised|=revision.find("-> identified")!=std::string::npos;
+        CHECK(revised);
+        CHECK(second.attack_intents.empty());
+    });
+    test("unknown attack enters top-k scoring and emergency reason",[]{
+        auto f=frame();auto e=enemy({360,280});e.type=999;e.animation="Attack";
+        e.state=8;e.animation_frame=4;e.animation_playing=true;
+        e.animation_speed=1;e.speed_multiplier=1;f.entities={e};
+        LookaheadConfig config;config.epochs=8;config.epoch_frames=6;
+        TopKJointPlanner planner(config);
+        const auto plan=planner.decide(f);
+        CHECK(plan.decision.valid);
+        CHECK(plan.unknown_attack_intents>0);
+        CHECK(plan.unknown_tracking_threats>0);
+        CHECK(plan.unknown_emergency);
+        CHECK(plan.decision.reason.find("UNKNOWN THREAT EMERGENCY")!=std::string::npos);
+        CHECK(!plan.unknown.attack_intents.empty());
+        CHECK(plan.virtual_threats>0);
+        for(const auto& threat:plan.selected_virtual_threats)CHECK(threat.virtual_threat);
+    });
+    test("world snapshot records exact, estimated and unknown provenance",[]{
+        auto f=frame();f.player.health=6;auto e=enemy({420,280});f.entities={e};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        CHECK(snapshot.enemies.size()==1);
+        CHECK(snapshot.player.provenance.get("player.body.transform.pos").precision==Precision::exact);
+        CHECK(snapshot.player.provenance.get("player.invulnerability_frames").precision==Precision::unknown);
+        CHECK(!snapshot.rng.available);
+        CHECK(snapshot.rng.precision==Precision::unknown);
+        CHECK(snapshot.enemies.front().provenance.get("enemy.transform.pos").precision==Precision::exact);
+        CHECK(snapshot.enemies.front().provenance.get("enemy.attack_plan").precision==Precision::unknown);
+        CHECK(snapshot.enemies.front().provenance.get("enemy.height").precision==Precision::estimated);
+        CHECK(snapshot.enemies.front().provenance.get("enemy.ai_semantics").precision==Precision::unknown);
+        CHECK(snapshot.exact_fields>0&&snapshot.unknown_fields>0);
+        CHECK(snapshot.provenance.get("snapshot.coverage_gap").precision==Precision::unknown);
+        const auto copy=WorldStateSnapshot::from_json(snapshot.to_json());
+        CHECK(copy.enemies.size()==1);
+        CHECK(std::abs(copy.enemies.front().entity.pos.x-420)<1e-9);
+        CHECK(!copy.rng.available);
+        CHECK(copy.exact_fields==snapshot.exact_fields);
+        CHECK(copy.unknown_fields==snapshot.unknown_fields);
+    });
+    test("world state bridge classifies spawns, deaths and despawns",[]{
+        auto f=frame();f.player.health=6;auto a=enemy({420,280});f.entities={a};
+        WorldStateBridge bridge;
+        const auto first=bridge.build(f,nullptr,nullptr);
+        CHECK(first.enemies.size()==1);
+        CHECK(first.lifecycle.empty());
+        f.clock+=1;auto b=enemy({480,280});b.address=0x31000;b.seed=7;
+        f.entities={a,b};
+        const auto second=bridge.build(f,nullptr,nullptr);
+        CHECK(second.enemies.size()==2);
+        CHECK(second.lifecycle.size()==1);
+        CHECK(second.lifecycle.front().kind==LifecycleKind::spawned);
+        CHECK(bridge.report().spawned==1);
+        f.clock+=1;f.entities={b};
+        const auto third=bridge.build(f,nullptr,nullptr);
+        CHECK(third.enemies.size()==1);
+        CHECK(third.lifecycle.size()==1);
+        CHECK(third.lifecycle.front().kind==LifecycleKind::despawned);
+        CHECK(bridge.report().despawned==1);
+    });
+    test("unknown attacks become labelled virtual hazards, never projectiles",[]{
+        auto f=frame();f.player.health=6;
+        UnknownAssessment unknown;
+        EnemyIntent intent;intent.enemy_id=0x777;
+        intent.primitive=AttackPrimitive::uncertain_area;
+        intent.position={400,280};intent.target_position={320,280};
+        intent.collision_radius=40;intent.trigger_time=0.2;intent.duration=0.3;
+        intent.risk_weight=2.5;intent.evidence_status="candidate";
+        unknown.attack_intents={intent};unknown.uncertain_attacks=1;
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,&unknown);
+        CHECK(!snapshot.hazards.empty());
+        const auto& hazard=snapshot.hazards.front();
+        CHECK(hazard.virtual_hazard);
+        CHECK(hazard.precision==Precision::unknown);
+        CHECK(hazard.risk_weight>=2.0);
+        CHECK(snapshot.projectiles.empty());
+        CHECK(snapshot.hazards.front().provenance.get("hazard.timing").precision==Precision::unknown);
+    });
+    test("branching re-aims an aimed attack from each branch player position",[]{
+        auto f=frame();f.player.health=6;f.player.body.pos={320,280};
+        auto e=enemy({320,160});e.state=4;e.animation="Shoot";e.animation_frame=48;
+        e.animation_length=60;e.animation_looping=true;e.animation_playing=true;
+        e.animation_speed=1;e.speed_multiplier=1;e.collision=0;e.damage=0;
+        f.entities={e};
+        MechanismFrame m;m.loaded=m.valid=true;m.room=f.room;m.pid=f.pid;m.clock=f.clock;
+        MonsterGeometryRef model;model.source=e.address;model.kind="projectile";
+        model.source_state=4;model.source_animation="Shoot";
+        model.trigger_animation_frame=54;model.trigger_animation_frame_min=54;
+        model.trigger_animation_frame_max=54;
+        model.pattern="stream";model.pattern_direction="aimed";model.pattern_center="source";
+        model.speed=200;model.radius=5;model.duration=30;model.pattern_count=1;
+        model.planning_validated=true;model.pre_spawn_verified=true;model.geometry_verified=true;
+        model.id="unit.aimed";m.geometry_models={model};
+        const auto snapshot=WorldStateBridge::snapshot(f,&m,nullptr);
+        CHECK(!snapshot.enemies.empty());
+        bool precise=false;
+        for(const auto& intent:snapshot.enemies.front().intents)
+            precise|=intent.primitive==AttackPrimitive::aimed_projectile&&intent.can_instantiate;
+        CHECK(precise);
+        ForwardSimConfig config;config.horizon_frames=30;config.player_shoots=false;
+        ForwardSimulator simulator(config);std::string error;
+        CHECK(simulator.restore(snapshot,&error));
+        auto east=simulator.fork();auto west=simulator.fork();
+        east->step(SimAction{Move::east,Fire::none,false},30);
+        west->step(SimAction{Move::west,Fire::none,false},30);
+CHECK(east->world().projectiles.size()==1&&west->world().projectiles.size()==1);
+        const Vec east_direction=east->world().projectiles.front().vel.unit();
+        const Vec west_direction=west->world().projectiles.front().vel.unit();
+        CHECK(east->world().player.pos.x>west->world().player.pos.x);
+        CHECK(east_direction.x>west_direction.x);
+        CHECK(east_direction.dot(west_direction)<0.999);
+        CHECK(simulator.world().time==0);
+        CHECK(std::abs(simulator.world().player.pos.x-320)<1e-9);
+    });
+    test("simulated hostile projectile damages the player and sets invulnerability",[]{
+        auto f=frame();f.player.health=6;
+        auto b=bullet({280,280},{400,0});b.spawner=0;b.damage=1;b.radius=6;
+        f.entities={b};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        CHECK(snapshot.projectiles.size()==1);
+        CHECK(snapshot.projectiles.front().provenance.get("projectile.height").precision==
+            Precision::estimated);
+        ForwardSimConfig config;config.horizon_frames=30;
+        ForwardSimulator simulator(config);std::string error;
+        CHECK(simulator.restore(snapshot,&error));
+        simulator.step(SimAction{Move::stay,Fire::none,false},30);
+CHECK(simulator.world().player.health==5);
+        CHECK(simulator.score().damage_taken==1);
+        CHECK(!simulator.world().player_dead);
+        CHECK(simulator.world().player.invulnerable>0);
+    });
+    test("simulated tears kill an enemy and complete the room",[]{
+        auto f=frame();f.player.health=6;f.player.tear_range=300;f.player.tear_speed=400;
+        auto e=enemy({420,280});e.collision=0;e.hp=3.5;e.max_hp=3.5;
+        f.entities={e};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig config;config.horizon_frames=30;config.tear_damage=3.5;
+        ForwardSimulator simulator(config);std::string error;
+        CHECK(simulator.restore(snapshot,&error));
+        simulator.step(SimAction{Move::stay,Fire::right,true},30);
+CHECK(simulator.world().player.kills==1);
+        CHECK(simulator.world().player.damage_dealt>0);
+        CHECK(simulator.world().cleared);
+        CHECK(simulator.score().time_to_clear>=0);
+    });
+    test("simulation cache reuses identical state and action plans",[]{
+        auto f=frame();f.player.health=6;auto e=enemy({470,280});f.entities={e};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig config;config.horizon_frames=12;config.max_branches=4;
+        SimulationPlanner planner(config);
+        const std::vector<SimAction> actions{
+            {Move::stay,Fire::none,false},{Move::east,Fire::none,false},
+            {Move::west,Fire::none,false},{Move::south,Fire::none,false}};
+        const auto first=planner.evaluate_actions(snapshot,actions,12);
+        const auto second=planner.evaluate_actions(snapshot,actions,12);
+        CHECK(first.available&&second.available);
+        CHECK(first.cache_hits==0);
+        CHECK(second.cache_hits==uint64_t(second.branches));
+        CHECK(first.best>=0&&second.best>=0);
+        CHECK(std::abs(first.candidates[size_t(first.best)].score.score-
+            second.candidates[size_t(second.best)].score.score)<1e-9);
+    });
+    test("simulation terminates a branch that already lost the survival threshold",[]{
+        auto f=frame();f.player.health=6;
+        auto b=bullet({300,280},{300,0});b.damage=1;f.entities={b};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig config;config.horizon_frames=30;config.early_terminate=true;
+        config.early_terminate_damage=1;
+        SimulationPlanner planner(config);
+        const auto batch=planner.evaluate_actions(snapshot,
+            {SimAction{Move::stay,Fire::none,false}},30);
+        CHECK(batch.available);
+        CHECK(batch.candidates.front().terminal);
+        CHECK(batch.candidates.front().score.frames<30);
+    });
+    test("wasm backend reports the missing live-state injection instead of guessing",[]{
+        const auto report=probe_wasm_backend();
+        CHECK(!report.conclusion.empty());
+        CHECK(report.full_internal_state_restore==
+            (report.memory_snapshot_restore&&report.external_state_injection));
+        CHECK(!report.full_internal_state_restore);
+        CHECK(!report.live_capture_restore);
+        CHECK(!report.missing.empty());
+        auto f=frame();f.player.health=6;
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        WasmSimulationBackend backend(report);
+        std::string error;
+        CHECK(!backend.restore(snapshot,&error));
+        CHECK(!error.empty());
+        CHECK(!backend.capabilities().restore_live_capture);
+        ForwardSimulator simulator(ForwardSimConfig{},SimBackendKind::wasm_native);
+        CHECK(!simulator.restore(snapshot,&error));
+        CHECK(!simulator.capabilities().full_internal_state);
+    });
+    test("hybrid backend declares what it restores and what it cannot",[]{
+        const auto capabilities=HybridSimulationBackend{}.capabilities();
+        CHECK(capabilities.restore&&capabilities.fork&&capabilities.deterministic);
+        CHECK(!capabilities.full_internal_state);
+        CHECK(!capabilities.restore_live_capture);
+        CHECK(!capabilities.rng_state);
+        CHECK(capabilities.exact_player_motion);
+        CHECK(capabilities.mechanism_behavior);
+        CHECK(capabilities.unknown_threat_fallback);
+        CHECK(!capabilities.restore_scope.empty());
+        CHECK(!capabilities.missing.empty());
+    });
+    test("top-k joint planner adds forward simulation to its decision",[]{
+        auto f=frame();f.player.health=6;
+        auto e=enemy({500,280});e.state=4;e.animation="Shoot";e.animation_frame=48;
+        e.animation_length=60;e.animation_looping=true;e.animation_playing=true;
+        e.animation_speed=1;e.speed_multiplier=1;f.entities={e};
+        MechanismFrame m;m.loaded=m.valid=true;m.room=f.room;m.pid=f.pid;m.clock=f.clock;
+        MonsterGeometryRef model;model.source=e.address;model.kind="projectile";
+        model.source_state=4;model.source_animation="Shoot";
+        model.trigger_animation_frame=54;model.trigger_animation_frame_min=54;
+        model.trigger_animation_frame_max=54;
+        model.pattern="stream";model.pattern_direction="aimed";model.pattern_speed_mode="constant";
+        model.speed=200;model.radius=5;model.duration=30;model.pattern_count=1;
+        model.planning_validated=true;model.pre_spawn_verified=true;model.geometry_verified=true;
+        model.id="unit.aimed";m.geometry_models={model};
+        LookaheadConfig config;config.epochs=2;config.epoch_frames=6;
+        config.simulation_horizon_frames=12;config.simulation_branches=4;
+        TopKJointPlanner planner(config);
+        const auto plan=planner.decide(f,true,&m);
+        CHECK(plan.decision.valid);
+        CHECK(plan.simulated);
+        CHECK(plan.simulation.available);
+        CHECK(!plan.simulation.candidates.empty());
+        CHECK(plan.simulation.best>=0);
+        CHECK(plan.simulation.best<int(plan.simulation.candidates.size()));
+        CHECK(std::isfinite(plan.simulation_score.score));
+        CHECK(plan.decision.reason.find("forward-sim")!=std::string::npos);
+        CHECK(plan.simulation.capabilities.mechanism_behavior);
+        CHECK(!plan.simulation.capabilities.full_internal_state);
+    });
+    test("forward simulation prefers a dodging branch over a damaging one",[]{
+        auto f=frame();f.player.health=6;
+        auto b=bullet({200,280},{300,0});b.damage=1;b.radius=6;f.entities={b};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig config;config.horizon_frames=48;config.max_branches=5;
+        SimulationPlanner planner(config);
+        const std::vector<SimAction> actions{
+            {Move::stay,Fire::none,false},{Move::north,Fire::none,false},
+            {Move::south,Fire::none,false},{Move::east,Fire::none,false},
+            {Move::west,Fire::none,false}};
+        const auto batch=planner.evaluate_actions(snapshot,actions,48);
+        CHECK(batch.available);
+        CHECK(batch.best>0);
+        CHECK(batch.candidates[0].score.damage_taken>=1);
+        CHECK(batch.candidates[size_t(batch.best)].score.damage_taken==0);
+        CHECK(batch.candidates[size_t(batch.best)].first.move!=Move::stay);
+    });
+    test("danger-cell hazards serialize without non-finite JSON",[]{
+        auto f=frame();f.player.health=6;
+        f.grid.cells[5*15+5].danger=true;
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        CHECK(!snapshot.hazards.empty());
+        const auto encoded=snapshot.to_json();
+        const auto copy=WorldStateSnapshot::from_json(encoded);
+        CHECK(copy.hazards.size()==snapshot.hazards.size());
+        CHECK(copy.hazards.front().until>0&&std::isfinite(copy.hazards.front().until));
+    });
+    test("simulation score reports remaining enemy hp and count",[]{
+        auto f=frame();f.player.health=6;
+        auto e=enemy({470,280});e.hp=10;e.max_hp=10;f.entities={e};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig config;config.horizon_frames=12;
+        ForwardSimulator simulator(config);std::string error;
+        CHECK(simulator.restore(snapshot,&error));
+        const auto score=simulator.score();
+        CHECK(score.enemy_count==1);
+        CHECK(std::abs(score.enemy_hp_remaining-10)<1e-9);
+    });
+    test("enemy chase follows each branch player position independently",[]{
+        auto f=frame();f.player.health=6;f.player.body.pos={320,280};
+        auto e=enemy({320,160});e.collision=2;e.damage=1;e.hp=50;e.vel={};
+        f.entities={e};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig config;config.horizon_frames=24;config.player_shoots=false;
+        ForwardSimulator simulator(config);std::string error;
+        CHECK(simulator.restore(snapshot,&error));
+        auto east=simulator.fork();auto west=simulator.fork();
+        east->step(SimAction{Move::east,Fire::none,false},24);
+        west->step(SimAction{Move::west,Fire::none,false},24);
+        CHECK(!east->world().enemies.empty()&&!west->world().enemies.empty());
+        CHECK(east->world().player.pos.x>west->world().player.pos.x);
+        const double east_enemy_x=east->world().enemies.front().pos.x;
+        const double west_enemy_x=west->world().enemies.front().pos.x;
+        CHECK(east_enemy_x>west_enemy_x);
+        CHECK(east->world().enemies.front().chase);
+        CHECK(west->world().enemies.front().chase);
+    });
+    test("boss phase changes in the branch that deals damage",[]{
+        auto f=frame();f.player.health=6;f.player.tear_range=400;f.player.tear_speed=400;
+        auto e=enemy({450,280});e.is_boss=true;e.collision=0;e.damage=1;
+        e.hp=12;e.max_hp=20;f.entities={e};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig config;config.horizon_frames=60;config.tear_damage=3.5;
+        ForwardSimulator simulator(config);std::string error;
+        CHECK(simulator.restore(snapshot,&error));
+        simulator.step(SimAction{Move::stay,Fire::right,true},60);
+        CHECK(!simulator.world().enemies.empty());
+        CHECK(simulator.world().enemies.front().boss_phase>=2);
+        CHECK(simulator.world().player.damage_dealt>0);
+    });
+    test("multiple enemies keep independent attack directions in one branch",[]{
+        auto f=frame();f.player.health=6;f.player.body.pos={320,280};
+        auto north=enemy({320,160});north.collision=0;north.damage=0;
+        north.state=4;north.animation="Shoot";north.animation_frame=48;
+        north.animation_length=60;north.animation_looping=true;north.animation_playing=true;
+        north.animation_speed=1;north.speed_multiplier=1;
+        auto east=enemy({480,280});east.address=0x31000;east.seed=9;east.collision=0;
+        east.damage=0;east.state=4;east.animation="Shoot";east.animation_frame=48;
+        east.animation_length=60;east.animation_looping=true;east.animation_playing=true;
+        east.animation_speed=1;east.speed_multiplier=1;
+        f.entities={north,east};
+        MechanismFrame m;m.loaded=m.valid=true;m.room=f.room;m.pid=f.pid;m.clock=f.clock;
+        auto model=[&](const Entity& source,const std::string& id) {
+            MonsterGeometryRef ref;ref.source=source.address;ref.kind="projectile";
+            ref.source_state=4;ref.source_animation="Shoot";
+            ref.trigger_animation_frame=54;ref.trigger_animation_frame_min=54;
+            ref.trigger_animation_frame_max=54;ref.pattern="stream";
+            ref.pattern_direction="aimed";ref.pattern_center="source";
+            ref.speed=200;ref.radius=5;ref.duration=30;ref.pattern_count=1;
+            ref.planning_validated=true;ref.pre_spawn_verified=true;ref.geometry_verified=true;
+            ref.id=id;return ref;
+        };
+        m.geometry_models={model(north,"unit.north"),model(east,"unit.east")};
+        const auto snapshot=WorldStateBridge::snapshot(f,&m,nullptr);
+        ForwardSimConfig config;config.horizon_frames=24;config.player_shoots=false;
+        ForwardSimulator simulator(config);std::string error;
+        CHECK(simulator.restore(snapshot,&error));
+        simulator.step(SimAction{Move::stay,Fire::none,false},24);
+        CHECK(simulator.world().projectiles.size()==2);
+        const Vec first=simulator.world().projectiles[0].vel.unit();
+        const Vec second=simulator.world().projectiles[1].vel.unit();
+        CHECK(std::abs(first.x-second.x)>0.1||std::abs(first.y-second.y)>0.1);
+    });
+    test("combat intelligence ranks evidence, detects windows and predicts intercepts",[]{
+        auto f=frame();f.player.health=6;f.player.fire_delay=10;f.player.tear_speed=360;
+        auto near=enemy({480,280});near.address=0x30000;near.hp=20;near.collision=2;
+        auto far=enemy({860,280});far.address=0x30010;far.hp=20;far.collision=0;
+        f.entities={near,far};
+        MechanismFrame mechanisms;
+        mechanisms.loaded=mechanisms.valid=mechanisms.semantics_available=true;
+        mechanisms.room=f.room;mechanisms.pid=f.pid;mechanisms.clock=f.clock;
+        MechanismObservation observation;
+        observation.address=near.address;observation.type=near.type;
+        observation.variant=near.variant;observation.subtype=near.subtype;
+        observation.state=4;observation.state_frame=2;observation.boss_phase=-1;
+        observation.predicted_trigger_frame=int64_t(f.clock)+6;
+        observation.predicted_action_end_frame=int64_t(f.clock)+9;
+        observation.attack_timing_verified=true;
+        observation.projectile_delay=30;observation.projectile_cooldown=0;
+        observation.confidence=0.9;
+        mechanisms.enemies={observation};
+        const auto root=WorldStateBridge::snapshot(f,&mechanisms,nullptr);
+        CombatIntelligence combat;
+        const auto context=combat.evaluate(root,true);
+        CHECK(context.valid);
+        CHECK(context.threats.size()==2);
+        const auto* near_threat=context.threat(root.enemies[0].entity.address);
+        CHECK(bool(near_threat));
+        CHECK(near_threat->attack_imminent);
+        CHECK(near_threat->time_to_attack>=0.15&&near_threat->time_to_attack<=0.25);
+        const auto* window=context.window(near.address);
+        CHECK(bool(window));
+        CHECK(window->phase==AttackPhase::windup);
+        CHECK(window->damageable_verified);
+        CHECK(window->window_open);
+        CHECK(window->precision==Precision::exact);
+        CHECK(context.target!=0);
+        CHECK(context.aim.valid);
+        CHECK(context.aim.target_damageable);
+        CHECK(context.aim.predicted_hit);
+        CHECK(context.aim.fire==Fire::right);
+        const uint32_t first_target=context.target;
+        f.clock+=1;
+        const auto again=combat.evaluate(WorldStateBridge::snapshot(f,&mechanisms,nullptr),true);
+        CHECK(again.target==first_target);
+        f.clock+=20;f.entities[0].dead=true;f.entities[0].hp=0;
+        const auto switched=combat.evaluate(WorldStateBridge::snapshot(f,&mechanisms,nullptr),true);
+        CHECK(switched.target!=0);
+        CHECK(switched.target!=first_target);
+    });
+    test("combat aim leads a moving target and scoring is candidate-specific",[]{
+        auto f=frame();f.player.health=6;f.player.tear_speed=360;f.player.tear_range=400;
+        auto moving=enemy({500,280},{60,0});moving.address=0x30000;moving.hp=20;
+        moving.collision=0;moving.friction=1;
+        f.entities={moving};
+        const auto root=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        CombatIntelligence combat;
+        const auto context=combat.evaluate(root,true);
+        CHECK(context.valid);
+        CHECK(context.aim.valid);
+        CHECK(context.aim.predicted_hit);
+        CHECK(context.aim.fire==Fire::right);
+        CHECK(context.aim.intercept_time>0);
+        CHECK(context.aim.target_future_position.x>moving.pos.x+10);
+        ForwardSimConfig sim;sim.horizon_frames=50;sim.player_shoots=true;
+        sim.tear_damage=3.5;sim.early_terminate=false;sim.danger_map=false;
+        ForwardSimulator simulator(sim);std::string error;
+        CHECK(simulator.restore(root,&error));
+        const CombatEnemyHp before=combat_enemy_hp(simulator.world());
+        simulator.step(SimAction{Move::stay,Fire::right,true},40);
+        const auto hit_score=simulator.score();
+        const auto hit_terms=combat.score_delta(context,before,simulator.world(),
+            SimAction{Move::stay,Fire::right,true},hit_score);
+        CHECK(hit_terms.threat_removal>0);
+        CHECK(hit_terms.aim_hit>0);
+        ForwardSimulator miss_simulator(sim);
+        CHECK(miss_simulator.restore(root,&error));
+        const CombatEnemyHp miss_before=combat_enemy_hp(miss_simulator.world());
+        miss_simulator.step(SimAction{Move::stay,Fire::left,true},40);
+        const auto miss_score=miss_simulator.score();
+        const auto miss_terms=combat.score_delta(context,miss_before,miss_simulator.world(),
+            SimAction{Move::stay,Fire::left,true},miss_score);
+        CHECK(miss_terms.aim_hit==0);
+        CHECK(miss_terms.threat_removal==0);
+    });
+    test("native tear inherits player velocity at launch",[]{
+        auto f=frame();f.player.body.pos={320,280};
+        f.player.body.vel={240,0};
+        f.player.tear_speed=360;f.player.tear_range=400;
+        auto e=enemy({500,280});e.collision=0;e.damage=0;
+        f.entities={e};
+        const auto root=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig sim;sim.horizon_frames=30;sim.player_shoots=true;
+        sim.early_terminate=false;sim.danger_map=false;
+        ForwardSimulator inherited(sim);std::string error;
+        CHECK(inherited.restore(root,&error));
+        inherited.step(SimAction{Move::stay,Fire::right,true},1);
+        CHECK(!inherited.world().projectiles.empty());
+        const auto& tear=inherited.world().projectiles.front();
+        const double launch=360+0.6*inherited.world().player.vel.x;
+        CHECK(std::abs(tear.vel.x-launch)<1.0);
+        CHECK(std::abs(tear.vel.y)<1.0);
+        sim.tear_inheritance=0;
+        ForwardSimulator plain(sim);
+        CHECK(plain.restore(root,&error));
+        plain.step(SimAction{Move::stay,Fire::right,true},1);
+        CHECK(!plain.world().projectiles.empty());
+        CHECK(std::abs(plain.world().projectiles.front().vel.x-360)<1.0);
+    });
+    test("predictive aim matches the native inherited tear model",[]{
+        auto simulate_hit=[&](const WorldStateSnapshot& root,Fire fire) {
+            ForwardSimConfig sim;sim.horizon_frames=120;sim.player_shoots=true;
+            sim.early_terminate=false;sim.danger_map=false;
+            sim.tear_inheritance=native_tear_inheritance;
+            ForwardSimulator simulator(sim);std::string error;
+            if(!simulator.restore(root,&error))return false;
+            simulator.step(SimAction{Move::stay,fire,true},120);
+            for(const auto& enemy:simulator.world().enemies)
+                if(enemy.id==0x30000)return enemy.hp<20-1e-9;
+            return true;
+        };
+        // Straight-up target while the player moves right. The native tear
+        // drifts right by 0.6*player_vel and misses; the old no-inheritance
+        // aim reported a hit.
+        {
+            auto f=frame();f.player.body.pos={320,280};
+            f.player.body.vel={200,0};
+            f.player.tear_speed=360;f.player.tear_range=400;
+            auto e=enemy({300,200});e.collision=0;e.damage=0;e.hp=20;
+            f.entities={e};
+            const auto root=WorldStateBridge::snapshot(f,nullptr,nullptr);
+            CombatConfig old_config;old_config.tear_inheritance=0;
+            const auto old_aim=PredictiveAimer(old_config).solve(root,e.address);
+            CHECK(old_aim.valid);
+            CHECK(old_aim.fire==Fire::up);
+            CHECK(old_aim.predicted_hit);
+            CHECK(!simulate_hit(root,old_aim.fire));
+            const auto new_aim=PredictiveAimer(CombatConfig{}).solve(root,e.address);
+            CHECK(new_aim.valid);
+            CHECK(new_aim.predicted_hit==simulate_hit(root,new_aim.fire));
+        }
+        // Target on the inherited drift line: the new aim accepts a hit that
+        // the old straight-line aim rejected.
+        {
+            auto f=frame();f.player.body.pos={320,280};
+            f.player.body.vel={200,0};
+            f.player.tear_speed=360;f.player.tear_range=400;
+            auto e=enemy({350,220});e.collision=0;e.damage=0;e.hp=20;
+            f.entities={e};
+            const auto root=WorldStateBridge::snapshot(f,nullptr,nullptr);
+            CombatConfig old_config;old_config.tear_inheritance=0;
+            const auto old_aim=PredictiveAimer(old_config).solve(root,e.address);
+            CHECK(old_aim.valid);
+            CHECK(!old_aim.predicted_hit);
+            const auto new_aim=PredictiveAimer(CombatConfig{}).solve(root,e.address);
+            CHECK(new_aim.valid);
+            CHECK(new_aim.predicted_hit);
+            CHECK(simulate_hit(root,new_aim.fire));
+        }
+    });
+    test("progress tracker attributes real projectiles to HP drops",[]{
+        auto snapshot=[](uint32_t clock,double hp,bool tear,Vec position) {
+            WorldStateSnapshot s;
+            s.frame.valid=true;s.frame.clock=clock;s.frame.room=1;
+            s.player.health=6;
+            EnemyState enemy_state;
+            auto e=enemy({400,280});e.hp=hp;e.collision=0;e.damage=0;
+            enemy_state.entity=e;
+            s.enemies.push_back(enemy_state);
+            if(tear) {
+                ProjectileState projectile;
+                projectile.role=ProjectileRole::friendly;
+                projectile.real=true;
+                projectile.entity.type=9;
+                projectile.entity.address=0x90001;
+                projectile.entity.friendly=true;
+                projectile.entity.pos=position;
+                projectile.entity.vel={360,0};
+                projectile.entity.radius=6;
+                s.projectiles.push_back(projectile);
+            }
+            return s;
+        };
+        CombatProgressObservation observation;
+        observation.combat_valid=true;observation.attack_enabled=true;
+        observation.fire=Fire::right;observation.target=0x30000;
+        observation.target_damageable=true;
+        observation.player_position={320,280};
+        CombatProgressTracker tracker;
+        tracker.observe(snapshot(100,20,false,{}),observation);
+        tracker.observe(snapshot(101,20,true,{380,280}),observation);
+        CHECK(tracker.state().projectile_spawns==1);
+        CHECK(tracker.state().last_shot.contains("target_id"));
+        CHECK(tracker.state().last_shot.value("target_id",0u)==0x30000u);
+        tracker.observe(snapshot(102,16.5,true,{400,280}),observation);
+        tracker.observe(snapshot(103,16.5,false,{}),observation);
+        CHECK(tracker.state().projectile_hits==1);
+        CHECK(tracker.state().projectile_misses==0);
+        CHECK(std::abs(tracker.state().attributed_damage-3.5)<1e-9);
+        CHECK(tracker.state().damage_per_second>0);
+        tracker.observe(snapshot(104,16.5,true,{340,300}),observation);
+        tracker.observe(snapshot(105,16.5,false,{}),observation);
+        CHECK(tracker.state().projectile_hits==1);
+        CHECK(tracker.state().projectile_misses==1);
+        CHECK(tracker.state().projectile_hit_rate>0.49);
+        CHECK(tracker.state().projectile_hit_rate<0.51);
+    });
+    test("attack window rejects animation-only invulnerability claims",[]{
+        auto f=frame();f.player.health=6;
+        auto e=enemy({500,280});e.hp=20;e.collision=0;
+        e.animation="Shoot";e.animation_state_known=true;e.animation_frame=12;
+        f.entities={e};
+        AttackWindowDetector detector;
+        auto window=detector.detect(WorldStateBridge::snapshot(f,nullptr,nullptr).enemies[0],f.clock);
+        CHECK(window.damageable);
+        CHECK(window.damageable_verified);
+        CHECK(!window.window_open);
+        CHECK(window.phase==AttackPhase::idle);
+        e.invulnerable=true;f.entities={e};
+        window=detector.detect(WorldStateBridge::snapshot(f,nullptr,nullptr).enemies[0],f.clock);
+        CHECK(!window.damageable);
+        CHECK(window.phase==AttackPhase::invulnerable);
+    });
+    test("branch objective recomputes target and hp from its own simulated world",[]{
+        auto f=frame();f.player.health=6;f.player.tear_speed=360;f.player.tear_range=400;
+        auto near=enemy({480,280});near.address=0x30000;near.hp=2;near.collision=2;
+        auto far=enemy({160,280});far.address=0x30010;far.hp=20;far.collision=0;
+        f.entities={near,far};
+        const auto root=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        CombatIntelligence combat;
+        const auto context=combat.evaluate(root,true);
+        CHECK(context.valid);
+        CHECK(context.target==near.address);
+        ForwardSimConfig sim;sim.horizon_frames=40;sim.player_shoots=true;
+        sim.tear_damage=3.5;sim.early_terminate=false;sim.danger_map=false;
+        ForwardSimulator hit(sim),idle(sim);
+        std::string error;
+        CHECK(hit.restore(root,&error));
+        CHECK(idle.restore(root,&error));
+        hit.step(SimAction{Move::stay,Fire::right,true},40);
+        idle.step(SimAction{Move::stay,Fire::none,false},40);
+        const auto hit_branch=combat.evaluate_branch(context,hit.world(),{},context.target);
+        const auto idle_branch=combat.evaluate_branch(context,idle.world(),{},context.target);
+        CHECK(hit_branch.valid);
+        CHECK(idle_branch.valid);
+        CHECK(hit_branch.enemy_count<idle_branch.enemy_count);
+        CHECK(hit_branch.target==far.address);
+        CHECK(idle_branch.target==near.address);
+        CHECK(hit_branch.objective.branch_specific);
+        CHECK(hit_branch.objective.target==hit_branch.target);
+        CHECK(hit_branch.to_json().contains("objective"));
+    });
+    test("branch scoring exposes kill sequence positioning and exposure",[]{
+        auto f=frame();f.player.health=6;f.player.tear_speed=360;f.player.tear_range=400;
+        auto e=enemy({480,280});e.hp=20;e.collision=0;f.entities={e};
+        const auto root=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        CombatIntelligence combat;
+        const auto context=combat.evaluate(root,true);
+        ForwardSimConfig sim;sim.horizon_frames=30;sim.player_shoots=true;
+        sim.tear_damage=3.5;sim.early_terminate=false;sim.danger_map=false;
+        ForwardSimulator simulator(sim);
+        std::string error;
+        CHECK(simulator.restore(root,&error));
+        const CombatEnemyHp before=combat_enemy_hp(simulator.world());
+        simulator.step(SimAction{Move::stay,Fire::right,true},30);
+        const auto after_score=simulator.score();
+        BranchCombatContext branch;
+        const auto terms=combat.score_delta(context,before,simulator.world(),
+            SimAction{Move::stay,Fire::right,true},after_score,{},&branch);
+        CHECK(branch.valid);
+        CHECK(terms.branch_target==branch.target);
+        CHECK(terms.aim_hit>0);
+        CHECK(terms.positioning>0);
+        CHECK(terms.kill_sequence>0);
+        CHECK(terms.exposure>=0);
+        CHECK(terms.to_json().contains("kill_sequence"));
+        CHECK(terms.total(CombatConfig{})>0);
+    });
+    test("branch attack window uses simulator counters without claiming verification",[]{
+        AttackWindowDetector detector;
+        SimEnemy e;e.id=7;e.hp=10;e.max_hp=10;e.damage=1;
+        e.windup=15;e.cooldown=0;e.active=0;
+        auto window=detector.detect(e,100);
+        CHECK(window.phase==AttackPhase::windup);
+        CHECK(window.damageable);
+        CHECK(window.damageable_verified);
+        CHECK(window.window_open);
+        CHECK(window.precision==Precision::estimated);
+        e.windup=0;e.cooldown=30;
+        window=detector.detect(e,100);
+        CHECK(window.phase==AttackPhase::recovery);
+        CHECK(window.window_open);
+        CHECK(window.time_to_attack>0.4&&window.time_to_attack<0.6);
+        e.cooldown=0;e.invulnerable=true;
+        window=detector.detect(e,100);
+        CHECK(window.phase==AttackPhase::invulnerable);
+        CHECK(!window.damageable);
+        CHECK(window.precision==Precision::exact);
+        SimWorld world;world.enemies={e};
+        CHECK(detector.detect_all(world).size()==1);
+    });
+    test("mpc combat layer exposes its objective and uses it in the beam",[]{
+        auto f=frame();f.player.health=6;f.player.tear_range=400;
+        auto e=enemy({480,280});e.hp=20;e.collision=0;f.entities={e};
+        LookaheadConfig look;look.epochs=2;look.epoch_frames=6;
+        look.simulation_horizon_frames=12;look.simulation_branches=4;
+        MpcConfig config;config.horizon_frames=24;config.segment_frames=6;
+        config.beam_width=3;config.min_beam_width=2;config.max_beam_width=4;
+        config.root_candidates=16;config.full_root_actions=false;
+        config.max_simulations=64;config.time_budget_ms=200;
+        MpcCombatPlanner planner(config,look);
+        const auto plan=planner.decide(f,true,nullptr);
+        CHECK(plan.available);
+        CHECK(plan.combat.valid);
+        CHECK(plan.combat.target==e.address);
+        CHECK(plan.combat.aim.valid);
+        CHECK(plan.combat.objective.target==plan.combat.target);
+        CHECK(plan.to_json().contains("combat"));
+        CHECK(plan.to_json()["combat"].contains("targets"));
+        CHECK(plan.branch.valid);
+        CHECK(plan.stats.branch_evaluations>0);
+        CHECK(!plan.stats.tier_b_used);
+        CHECK(!plan.arbitration.value("tier_b_used",true));
+        CHECK(plan.to_json()["branch"].contains("mode"));
+        if(!plan.candidates.empty())
+            CHECK(plan.candidates.front().to_json().contains("branch"));
+    });
+    test("target selector holds a target then switches after the hold window",[]{
+        TargetSelector selector;
+        WorldStateSnapshot root;root.frame.clock=100;
+        std::vector<TargetAssessment> ranked(2);
+        ranked[0].id=1;ranked[0].score=0.50;ranked[0].damageable=true;
+        ranked[1].id=2;ranked[1].score=0.40;ranked[1].damageable=true;
+        CHECK(selector.select(root,ranked)==1);
+        ranked[0].id=2;ranked[0].score=0.70;ranked[0].damageable=true;
+        ranked[1].id=1;ranked[1].score=0.50;ranked[1].damageable=true;
+        root.frame.clock=105;
+        CHECK(selector.select(root,ranked)==1);
+        CHECK(!ranked[0].selected);
+        CHECK(ranked[1].selected);
+        root.frame.clock=120;
+        CHECK(selector.select(root,ranked)==2);
+        CHECK(ranked[0].selected);
+        CHECK(selector.switches()==1);
+    });
+    test("mpc beam returns a joint sequence that saves, loads and compares",[]{
+        auto f=frame();f.player.health=6;f.player.tear_range=340;
+        auto e=enemy({500,280});e.hp=10;e.collision=0;f.entities={e};
+        LookaheadConfig look;look.epochs=2;look.epoch_frames=6;
+        look.simulation_horizon_frames=12;look.simulation_branches=4;
+        MpcConfig config;config.horizon_frames=18;config.segment_frames=6;
+        config.beam_width=3;config.min_beam_width=2;config.max_beam_width=4;
+        config.root_candidates=12;config.full_root_actions=false;
+        config.max_simulations=48;config.time_budget_ms=80;
+        config.reuse_sequences=2;
+        MpcCombatPlanner planner(config,look);
+        const auto plan=planner.decide(f,true,nullptr);
+        CHECK(plan.available);
+        CHECK(plan.decision.valid);
+        CHECK(!plan.sequence.segments.empty());
+        CHECK(plan.sequence.total_frames()>0);
+        CHECK(plan.stats.nodes>0);
+        CHECK(plan.stats.simulations>0);
+        CHECK(std::isfinite(plan.value));
+        CHECK(plan.decision.planning_ms>=plan.stats.elapsed_ms);
+        CHECK(plan.first.move==plan.sequence.segments.front().action.move);
+        CHECK(plan.to_json().contains("sequence"));
+        const auto path=std::filesystem::current_path()/"mpc-sequence-test.json";
+        std::string error;
+        if(!plan.sequence.save(path,&error))
+            throw std::runtime_error("save failed: "+error+" path="+path.string());
+        const auto loaded=MpcSequence::load(path,&error);
+        CHECK(bool(loaded));
+        CHECK(loaded->total_frames()==plan.sequence.total_frames());
+        CHECK(loaded->segments.size()==plan.sequence.segments.size());
+        const auto comparison=compare_mpc_sequences(plan.sequence,*loaded);
+        CHECK(comparison.same_segments);
+        CHECK(!comparison.first_better);
+        std::filesystem::remove(path);
+    });
+    test("mpc reuses a consistent previous root and rejects changed health",[]{
+        auto f=frame();f.player.health=6;
+        auto e=enemy({500,280});e.hp=10;e.collision=0;f.entities={e};
+        LookaheadConfig look;look.epochs=1;look.epoch_frames=6;
+        look.simulation_horizon_frames=6;look.simulation_branches=2;
+        MpcConfig config;config.horizon_frames=12;config.segment_frames=6;
+        config.beam_width=2;config.root_candidates=8;
+        config.full_root_actions=false;config.max_simulations=24;
+        config.time_budget_ms=60;
+        MpcCombatPlanner planner(config,look);
+        const auto first=planner.decide(f,true,nullptr);
+        CHECK(first.available);
+        CHECK(!planner.previous_sequences().empty());
+        f.clock+=1;
+        const auto second=planner.decide(f,true,nullptr);
+        CHECK(second.reused);
+        CHECK(second.stats.previous_used>0);
+        f.clock+=1;f.player.health=5;
+        const auto third=planner.decide(f,true,nullptr);
+        CHECK(!third.reused);
+    });
+    test("mpc times out to the existing joint action instead of blocking",[]{
+        auto f=frame();f.player.health=6;
+        auto e=enemy({500,280});e.hp=10;e.collision=0;f.entities={e};
+        LookaheadConfig look;look.epochs=1;look.epoch_frames=6;
+        look.simulation_horizon_frames=6;look.simulation_branches=2;
+        MpcConfig config;config.time_budget_ms=0.0001;
+        config.horizon_frames=12;config.segment_frames=6;
+        MpcCombatPlanner planner(config,look);
+        const auto plan=planner.decide(f,true,nullptr);
+        CHECK(plan.used_fallback);
+        CHECK(plan.stats.fallback);
+        CHECK(plan.decision.valid);
+        CHECK(plan.decision.move==plan.joint.decision.move);
+        CHECK(plan.decision.fire==plan.joint.decision.fire);
+    });
+    test("safety gate measures boundary and local density separately from attack score",[]{
+        auto f=frame();
+        SimWorld world;
+        world.room.grid=f.grid;
+        world.player.pos={320,280};
+        world.player.radius=10;
+        world.player.max_speed=260;
+        world.player.flying=false;
+        SafetyGateConfig config;
+        config.clearance_radius=96;
+        config.boundary_margin=56;
+        const auto center=evaluate_safety(world,config);
+        CHECK(center.safe);
+        CHECK(center.escape_directions>0);
+        world.player.pos={70,150};
+        const auto corner=evaluate_safety(world,config);
+        CHECK(corner.available_area<center.available_area);
+        CHECK(corner.boundary_clearance<center.boundary_clearance);
+        world.player.pos={320,280};
+        SimProjectile projectile;
+        projectile.pos={330,280};
+        projectile.vel={0,0};
+        projectile.radius=6;
+        projectile.hostile=true;
+        world.projectiles={projectile};
+        const auto danger=evaluate_safety(world,config);
+        CHECK(danger.in_danger);
+        CHECK(danger.local_density>0);
+        CHECK(!danger.safe);
+    });
+    test("safety reachability stays connected in an empty open room",[]{
+        const auto world=simulation_world(frame());
+        const auto metrics=evaluate_safety(world,SafetyGateConfig{});
+        CHECK(metrics.evaluated);
+        CHECK(metrics.reachable_cells>0);
+        CHECK(metrics.reachable_cells==metrics.local_walkable_cells);
+        CHECK(metrics.reachable_area>0.99);
+        CHECK(metrics.mobility_routes>0);
+        CHECK(metrics.safe);
+    });
+    test("a moving enemy does not break static room connectivity",[]{
+        const auto empty=simulation_world(frame());
+        auto occupied=empty;
+        occupied.enemies.push_back(safety_enemy({360,280},0x30001));
+        const auto base=evaluate_safety(empty,SafetyGateConfig{});
+        const auto threat=evaluate_safety(occupied,SafetyGateConfig{});
+        CHECK(threat.reachable_cells==base.reachable_cells);
+        CHECK(threat.local_walkable_cells==base.local_walkable_cells);
+        CHECK(std::abs(threat.reachable_area-base.reachable_area)<1e-9);
+        CHECK(threat.local_density>base.local_density);
+        CHECK(threat.encirclement_risk>base.encirclement_risk);
+        CHECK(threat.escape_directions<=base.escape_directions);
+        CHECK(threat.safe);
+    });
+    test("one moving enemy cannot disconnect a narrow static corridor",[]{
+        auto empty=simulation_world(frame());
+        empty.room.grid=narrow_corridor_grid();
+        auto occupied=empty;
+        occupied.enemies.push_back(safety_enemy({360,280},0x30002));
+        const auto base=evaluate_safety(empty,SafetyGateConfig{});
+        const auto threat=evaluate_safety(occupied,SafetyGateConfig{});
+        CHECK(base.reachable_area>0.99);
+        CHECK(base.reachable_cells==base.local_walkable_cells);
+        CHECK(threat.reachable_cells==base.reachable_cells);
+        CHECK(threat.local_walkable_cells==base.local_walkable_cells);
+        CHECK(std::abs(threat.reachable_area-base.reachable_area)<1e-9);
+        CHECK(threat.escape_directions<=base.escape_directions);
+    });
+    test("two moving enemies on both sides do not permanently block a corridor",[]{
+        auto empty=simulation_world(frame());
+        empty.room.grid=narrow_corridor_grid();
+        auto occupied=empty;
+        occupied.enemies.push_back(safety_enemy({280,280},0x30003));
+        occupied.enemies.push_back(safety_enemy({360,280},0x30004));
+        const auto base=evaluate_safety(empty,SafetyGateConfig{});
+        const auto threat=evaluate_safety(occupied,SafetyGateConfig{});
+        CHECK(base.reachable_area>0.99);
+        CHECK(threat.reachable_cells==base.reachable_cells);
+        CHECK(threat.local_walkable_cells==base.local_walkable_cells);
+        CHECK(std::abs(threat.reachable_area-base.reachable_area)<1e-9);
+        CHECK(threat.mobility_routes==base.mobility_routes);
+        CHECK(std::abs(threat.dead_end_risk-base.dead_end_risk)<1e-9);
+        // The two bodies are still visible to the local escape probe.
+        CHECK(threat.escape_directions<=base.escape_directions);
+    });
+    test("zero escape directions alone does not fail the hard safety gate",[]{
+        auto world=simulation_world(frame(),{65,280});
+        SafetyGateConfig config;
+        const auto metrics=evaluate_safety(world,config);
+        CHECK(metrics.escape_directions==0);
+        CHECK(!metrics.in_danger);
+        CHECK(metrics.first_hit_frame<0);
+        CHECK(metrics.safe);
+        SafetyGate gate(config);
+        CHECK(gate.passed(metrics,config.collision_horizon_frames));
+    });
+    test("imminent collision still fails the hard safety gate",[]{
+        auto world=simulation_world(frame());
+        SimProjectile projectile;
+        projectile.id=0x50001;
+        projectile.pos={330,280};
+        projectile.radius=6;
+        projectile.hostile=true;
+        world.projectiles.push_back(projectile);
+        SafetyGateConfig config;
+        const auto metrics=evaluate_safety(world,config);
+        CHECK(metrics.in_danger);
+        CHECK(!metrics.safe);
+        SafetyGate gate(config);
+        CHECK(!gate.passed(metrics,config.collision_horizon_frames));
+        const auto clean=simulation_world(frame());
+        const auto damaged=evaluate_safety(clean,config,{},
+            config.collision_horizon_frames,1.0);
+        CHECK(!damaged.safe);
+        CHECK(!gate.passed(damaged,config.collision_horizon_frames));
+        SimEvent hit;
+        hit.kind="projectile-hit";
+        hit.target=0;
+        hit.frame=clean.frame;
+        const auto event_hit=evaluate_safety(clean,config,{hit},
+            config.collision_horizon_frames,0.0);
+        CHECK(event_hit.first_hit_frame>=0);
+        CHECK(!event_hit.safe);
+        CHECK(!gate.passed(event_hit,config.collision_horizon_frames));
+    });
+    test("player already in a danger region keeps the old protection",[]{
+        auto f=frame();
+        f.grid.cells[4*f.grid.width+7].danger=true;
+        const auto world=simulation_world(f);
+        SafetyGateConfig config;
+        const auto metrics=evaluate_safety(world,config);
+        CHECK(metrics.in_danger);
+        CHECK(!metrics.safe);
+        SafetyGate gate(config);
+        CHECK(!gate.passed(metrics,config.collision_horizon_frames));
+    });
+    test("static walls still block the mobility BFS",[]{
+        const auto open=simulation_world(frame());
+        auto walled=open;
+        for(int y=0;y<walled.room.grid.height;++y)
+            walled.room.grid.cells[y*walled.room.grid.width+8].collision=2;
+        const auto open_metrics=evaluate_safety(open,SafetyGateConfig{});
+        const auto wall_metrics=evaluate_safety(walled,SafetyGateConfig{});
+        CHECK(wall_metrics.local_walkable_cells<open_metrics.local_walkable_cells);
+        CHECK(wall_metrics.reachable_cells<open_metrics.reachable_cells);
+        CHECK(wall_metrics.reachable_area<open_metrics.reachable_area);
+    });
+    test("emergency ordering still carries mobility scores",[]{
+        auto f=frame();
+        auto b=bullet({320,280},{0,0});
+        b.radius=40;
+        b.damage=1;
+        f.entities={b};
+        LookaheadConfig look;
+        look.epochs=1;
+        look.epoch_frames=6;
+        look.simulation_horizon_frames=6;
+        look.simulation_branches=2;
+        MpcConfig config;
+        config.horizon_frames=18;
+        config.segment_frames=6;
+        config.beam_width=3;
+        config.min_beam_width=2;
+        config.max_beam_width=4;
+        config.root_candidates=12;
+        config.full_root_actions=false;
+        config.max_simulations=64;
+        config.time_budget_ms=200;
+        config.safety.collision_horizon_frames=6;
+        MpcCombatPlanner planner(config,look);
+        const auto plan=planner.decide(f,true,nullptr);
+        CHECK(plan.available);
+        CHECK(plan.emergency);
+        CHECK(plan.stats.emergency);
+        CHECK(plan.decision.strategy_mode=="Emergency");
+        bool saw_mobility=false;
+        for(const auto& candidate:plan.candidates) {
+            if(!candidate.safety.evaluated)continue;
+            const auto safety=candidate.safety.to_json();
+            CHECK(safety.contains("reachable_area"));
+            CHECK(safety.contains("escape_directions"));
+            CHECK(safety.contains("maneuverability"));
+            CHECK(candidate.safety.maneuverability>=0.0);
+            CHECK(candidate.safety.maneuverability<=1.0);
+            if(candidate.safety.reachable_cells>0&&
+               candidate.safety.local_walkable_cells>0)saw_mobility=true;
+        }
+        CHECK(saw_mobility);
+    });
+    test("temporal danger keeps a future laser as warning until active",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,31,[&](SimWorld& world,int){
+            world.hazards.push_back(temporal_hazard(center,12,0.2,0.3));
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=8;
+        const auto danger=build_temporal_danger(frames,config);
+        CHECK(danger.valid);
+        CHECK(!danger.danger_at(cell,0.1));
+        CHECK(danger.warning_at(cell,0.1));
+        CHECK(danger.danger_at(cell,0.25));
+        CHECK(!danger.warning_at(cell,0.25));
+        CHECK(danger.confidence_at(cell,0.25)==danger_confidence_exact);
+        CHECK(!danger.danger_at(cell,0.4));
+        CHECK(!danger.warning_at(cell,0.4));
+    });
+    test("temporal danger sweeps a projectile between slice endpoints",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,2,[&](SimWorld& world,int frame){
+            const Vec pos=frame==0?Vec{center.x-80,center.y}:Vec{center.x+80,center.y};
+            world.projectiles={temporal_projectile(pos,{4800,0},1)};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=4;
+        const auto danger=build_temporal_danger(frames,config);
+        CHECK(danger.valid);
+        CHECK(danger.danger_at_cell(cell,0));
+        CHECK(danger.danger_at_cell(cell,1));
+        CHECK(!danger.static_blocked_at(cell));
+    });
+    test("temporal danger follows curved projectile frames instead of endpoints",[]{
+        auto base=simulation_world(frame());
+        const int cell=6*base.room.grid.width+4;
+        const Vec center=base.room.grid.center(cell);
+        const std::array<Vec,5> path{{
+            {200,160},{200,360},{320,360},{440,360},{440,160}
+        }};
+        const auto frames=temporal_sequence(base,5,[&](SimWorld& world,int frame){
+            world.projectiles={temporal_projectile(path[size_t(frame)],{0,0},2)};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=2;
+        const auto danger=build_temporal_danger(frames,config);
+        CHECK(danger.valid);
+        // Endpoints are on the top row; the curve passes through this cell.
+        CHECK(danger.danger_at_cell(cell,0.0));
+        CHECK(center.y>180.0);
+    });
+    test("temporal danger recovers after a projectile has passed",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,31,[&](SimWorld& world,int frame){
+            const Vec pos=frame<2?center:Vec{700,600};
+            world.projectiles={temporal_projectile(pos,{0,0},3)};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=8;
+        const auto danger=build_temporal_danger(frames,config);
+        CHECK(danger.danger_at(cell,0.0));
+        CHECK(!danger.danger_at(cell,0.5));
+    });
+    test("temporal danger clears an enemy that leaves and returns",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,41,[&](SimWorld& world,int frame){
+            auto e=safety_enemy(frame<6||frame>=24?center:Vec{600,280},7);
+            world.enemies={e};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=8;
+        const auto danger=build_temporal_danger(frames,config);
+        CHECK(danger.danger_at(cell,0.0));
+        CHECK(!danger.danger_at(cell,0.2));
+        CHECK(danger.danger_at(cell,0.5));
+    });
+    test("temporal danger marks a charge only during its active window",[]{
+        auto base=simulation_world(frame());
+        const int cell=6*base.room.grid.width+6;
+        const auto frames=temporal_sequence(base,31,[&](SimWorld& world,int frame){
+            SimEnemy e=safety_enemy(frame<=5?Vec{200.0+40.0*frame,360}:Vec{400,360},8);
+            e.contact=false;
+            e.chase=false;
+            e.charging=frame<=5;
+            e.charge_remaining=frame<=5?6.0:0.0;
+            world.enemies={e};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=8;
+        const auto danger=build_temporal_danger(frames,config);
+        CHECK(danger.danger_at(cell,0.05));
+        CHECK(!danger.danger_at(cell,0.5));
+    });
+    test("temporal danger marks jump landing only in its landing window",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,31,[&](SimWorld& world,int){
+            world.hazards.push_back(temporal_hazard(center,24,0.18,0.28,
+                HazardKind::explosion,Precision::estimated));
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=8;
+        const auto danger=build_temporal_danger(frames,config);
+        // Slice 1 spans 0.10-0.18 s, so query the unambiguous pre-window slice.
+        CHECK(!danger.danger_at(cell,0.05));
+        CHECK(danger.warning_at(cell,0.05));
+        CHECK(danger.danger_at(cell,0.2));
+        CHECK(!danger.warning_at(cell,0.2));
+        CHECK(!danger.danger_at(cell,0.4));
+    });
+    test("temporal danger keeps unknown attacks conservative without a path",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,31,[&](SimWorld& world,int){
+            world.hazards.push_back(temporal_hazard(center,30,0.1,0.4,
+                HazardKind::unknown,Precision::unknown));
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=8;
+        const auto danger=build_temporal_danger(frames,config);
+        CHECK(danger.danger_at(cell,0.2));
+        CHECK(danger.confidence_at(cell,0.2)==danger_confidence_unknown);
+        CHECK(danger.warning_at(cell,0.05));
+        CHECK(!danger.danger_at(cell,0.5));
+    });
+    test("temporal danger keeps static terrain separate from dynamic danger",[]{
+        auto base=simulation_world(frame());
+        const int wall=4*base.room.grid.width+6;
+        const int free=4*base.room.grid.width+7;
+        base.room.grid.cells[size_t(wall)].collision=2;
+        const auto frames=temporal_sequence(base,1,[](SimWorld&,int){});
+        const auto danger=build_temporal_danger(frames,TemporalDangerConfig{});
+        CHECK(danger.valid);
+        CHECK(danger.static_blocked_at(wall));
+        CHECK(!danger.danger_at_cell(wall,0));
+        CHECK(!danger.static_blocked_at(free));
+    });
+    test("temporal danger separates active danger and warning sources",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+6;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,2,[&](SimWorld& world,int){
+            world.projectiles={temporal_projectile(center,{0,0},61)};
+            world.hazards={temporal_hazard(center,8,0.2,0.4)};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=4;
+        const auto danger=build_temporal_danger(frames,config);
+        CHECK(danger.valid);
+        CHECK((danger.category_at(cell,0.0)&danger_source_projectile)!=0);
+        CHECK((danger.category_at(cell,0.0)&danger_source_hazard)==0);
+        CHECK((danger.warning_category_at(cell,0.0)&danger_source_hazard)!=0);
+        CHECK((danger.warning_category_at(cell,0.0)&
+            danger_source_projectile)==0);
+    });
+    test("temporal danger does not mix separate branch sequences",[]{
+        auto base=simulation_world(frame());
+        const int left=4*base.room.grid.width+5;
+        const int right=4*base.room.grid.width+9;
+        const Vec left_center=base.room.grid.center(left);
+        const Vec right_center=base.room.grid.center(right);
+        const auto left_frames=temporal_sequence(base,10,[&](SimWorld& world,int){
+            world.enemies={safety_enemy(left_center,11)};
+        });
+        const auto right_frames=temporal_sequence(base,10,[&](SimWorld& world,int){
+            world.enemies={safety_enemy(right_center,12)};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=4;
+        const auto left_map=build_temporal_danger(left_frames,config);
+        const auto right_map=build_temporal_danger(right_frames,config);
+        CHECK(left_map.danger_at_cell(left,0));
+        CHECK(!left_map.danger_at_cell(right,0));
+        CHECK(right_map.danger_at_cell(right,0));
+        CHECK(!right_map.danger_at_cell(left,0));
+    });
+    test("temporal danger capture follows each explicit simulator branch",[]{
+        auto f=frame();
+        f.player.health=6;
+        auto e=enemy({500,280},{260,0});
+        e.collision=2;
+        f.entities={e};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig sim;
+        sim.horizon_frames=30;
+        sim.early_terminate=false;
+        sim.danger_map=false;
+        ForwardSimulator root(sim);
+        std::string error;
+        CHECK(root.restore(snapshot,&error));
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=16;
+        const auto east=capture_temporal_danger(root,
+            {SimActionSegment{SimAction{Move::east,Fire::none,false},30}},config);
+        const auto west=capture_temporal_danger(root,
+            {SimActionSegment{SimAction{Move::west,Fire::none,false},30}},config);
+        CHECK(east.valid);
+        CHECK(west.valid);
+        CHECK(east.root_signature==west.root_signature);
+        bool different=false;
+        for(size_t slice=0;slice<east.slices.size()&&!different;++slice)
+            if(slice<west.slices.size())
+                different=east.slices[slice].cell_danger!=west.slices[slice].cell_danger;
+        CHECK(different);
+    });
+    test("temporal danger build is deterministic",[]{
+        auto base=simulation_world(frame());
+        const auto frames=temporal_sequence(base,20,[&](SimWorld& world,int frame){
+            world.enemies={safety_enemy({320.0+frame*4.0,280},21)};
+            world.projectiles={temporal_projectile({200.0+frame*6.0,200},{80,20},22)};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=4;
+        config.max_slices=6;
+        const auto first=build_temporal_danger(frames,config);
+        const auto second=build_temporal_danger(frames,config);
+        CHECK(first.valid&&second.valid);
+        CHECK(first.to_json()==second.to_json());
+        CHECK(first.static_blocked==second.static_blocked);
+        CHECK(first.slices.size()==second.slices.size());
+        for(size_t i=0;i<first.slices.size();++i) {
+            CHECK(first.slices[i].cell_danger==second.slices[i].cell_danger);
+            CHECK(first.slices[i].cell_warning==second.slices[i].cell_warning);
+            CHECK(first.slices[i].cell_confidence==second.slices[i].cell_confidence);
+        }
+    });
+    test("temporal danger max room build is measured and bounded",[]{
+        SimWorld world;
+        world.room.grid.width=28;
+        world.room.grid.height=16;
+        world.room.grid.valid=true;
+        world.room.grid.cells.resize(28*16);
+        world.player.pos={640,360};
+        world.player.radius=10;
+        world.player.max_speed=260;
+        for(int i=0;i<64;++i) {
+            world.projectiles.push_back(temporal_projectile(
+                {100.0+double(i%14)*70.0,140.0+double(i/14)*90.0},
+                {30.0+double(i%5)*10.0,0},uint32_t(1000+i)));
+        }
+        for(int i=0;i<16;++i)
+            world.enemies.push_back(safety_enemy(
+                {120.0+double(i%8)*120.0,180.0+double(i/8)*240.0},
+                uint32_t(2000+i)));
+        for(int i=0;i<16;++i)
+            world.hazards.push_back(temporal_hazard(
+                {120.0+double(i%8)*120.0,160.0+double(i/8)*280.0},
+                12,0,2));
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=16;
+        double total_ms=0;
+        TemporalDanger result;
+        for(int run=0;run<5;++run) {
+            const auto started=std::chrono::steady_clock::now();
+            TemporalDangerBuilder builder(config);
+            for(int frame=0;frame<96;++frame) {
+                world.time=double(frame)/60.0;
+                for(auto& projectile:world.projectiles) {
+                    projectile.pos.x+=6;
+                    if(projectile.pos.x>1080)projectile.pos.x-=800;
+                }
+                for(auto& enemy:world.enemies) {
+                    enemy.pos.x+=2;
+                    if(enemy.pos.x>1080)enemy.pos.x-=800;
+                }
+                if(!builder.observe(world))break;
+            }
+            result=builder.finish();
+            total_ms+=std::chrono::duration<double,std::milli>(
+                std::chrono::steady_clock::now()-started).count();
+        }
+        const double average_ms=total_ms/5.0;
+        const size_t bytes=result.static_blocked.size()+
+            sizeof(Grid)+result.static_grid.cells.size()*sizeof(Cell)+
+            result.slices.size()*(result.cell_count()*3);
+        std::cout<<"temporal_max_room_ms="<<average_ms
+                 <<" temporal_max_room_bytes="<<bytes<<'\n';
+        CHECK(result.valid);
+        CHECK(result.slices.size()==16);
+        CHECK(average_ms<100.0);
+        CHECK(bytes<2*1024*1024);
+    });
+    test("temporal path is warning-only before a laser activates",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,31,[&](SimWorld& world,int){
+            world.hazards.push_back(temporal_hazard(center,12,0.2,0.3));
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=8;
+        const auto danger=build_temporal_danger(frames,config);
+        std::vector<TemporalTrajectorySample> samples;
+        for(int frame=0;frame<=9;++frame)samples.push_back(temporal_sample(frame,center));
+        const auto assessment=assess_temporal_path(danger,samples);
+        CHECK(assessment.evaluated);
+        CHECK(assessment.status==TemporalPathStatus::warning);
+        CHECK(assessment.temporal_danger_frames==0);
+        CHECK(assessment.temporal_warning_frames>0);
+        CHECK(assessment.temporal_coverage>0.99);
+    });
+    test("temporal path is dangerous while a laser is active",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,31,[&](SimWorld& world,int){
+            world.hazards.push_back(temporal_hazard(center,12,0.2,0.3));
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=8;
+        const auto danger=build_temporal_danger(frames,config);
+        std::vector<TemporalTrajectorySample> samples;
+        for(int frame=12;frame<=17;++frame)samples.push_back(temporal_sample(frame,center));
+        const auto assessment=assess_temporal_path(danger,samples);
+        CHECK(assessment.evaluated);
+        CHECK(assessment.status==TemporalPathStatus::danger);
+        CHECK(assessment.temporal_danger_frames>0);
+        CHECK(assessment.temporal_first_risk_frame>=0);
+    });
+    test("temporal path is safe after a projectile has passed",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,31,[&](SimWorld& world,int frame){
+            const Vec pos=frame<2?center:Vec{700,600};
+            world.projectiles={temporal_projectile(pos,{0,0},31)};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=8;
+        const auto danger=build_temporal_danger(frames,config);
+        std::vector<TemporalTrajectorySample> samples;
+        for(int frame=20;frame<=25;++frame)samples.push_back(temporal_sample(frame,center));
+        const auto assessment=assess_temporal_path(danger,samples);
+        CHECK(assessment.evaluated);
+        CHECK(assessment.status==TemporalPathStatus::safe);
+        CHECK(assessment.temporal_danger_frames==0);
+        CHECK(assessment.temporal_coverage>0.99);
+    });
+    test("temporal path intersects a high-speed projectile between slices",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,2,[&](SimWorld& world,int frame){
+            const Vec pos=frame==0?Vec{center.x-80,center.y}:Vec{center.x+80,center.y};
+            world.projectiles={temporal_projectile(pos,{4800,0},32)};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=4;
+        const auto danger=build_temporal_danger(frames,config);
+        const std::vector<TemporalTrajectorySample> samples{temporal_sample(0,center)};
+        const auto assessment=assess_temporal_path(danger,samples);
+        CHECK(assessment.evaluated);
+        CHECK(assessment.status==TemporalPathStatus::danger);
+        CHECK(assessment.temporal_danger_frames>0);
+    });
+    test("temporal path intersects a curved projectile",[]{
+        auto base=simulation_world(frame());
+        const int cell=6*base.room.grid.width+4;
+        const Vec center=base.room.grid.center(cell);
+        const std::array<Vec,5> path{{
+            {200,160},{200,360},{320,360},{440,360},{440,160}
+        }};
+        const auto frames=temporal_sequence(base,5,[&](SimWorld& world,int frame){
+            world.projectiles={temporal_projectile(path[size_t(frame)],{0,0},33)};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=2;
+        const auto danger=build_temporal_danger(frames,config);
+        const std::vector<TemporalTrajectorySample> samples{temporal_sample(1,center)};
+        const auto assessment=assess_temporal_path(danger,samples);
+        CHECK(assessment.evaluated);
+        CHECK(assessment.status==TemporalPathStatus::danger);
+    });
+    test("temporal path accounts for the player collision radius",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,1,[&](SimWorld& world,int){
+            world.projectiles={temporal_projectile({center.x+39,center.y},{0,0},34)};
+        });
+        TemporalDangerConfig wide_config;
+        wide_config.player_radius=10;
+        TemporalDangerConfig narrow_config;
+        narrow_config.player_radius=0;
+        const auto wide_map=build_temporal_danger(frames,wide_config);
+        const auto narrow_map=build_temporal_danger(frames,narrow_config);
+        const auto wide=assess_temporal_path(wide_map,
+            {temporal_sample(0,center,10)});
+        const auto narrow=assess_temporal_path(narrow_map,
+            {temporal_sample(0,center,0)});
+        CHECK(wide.status==TemporalPathStatus::danger);
+        CHECK(narrow.status==TemporalPathStatus::safe);
+    });
+    test("temporal path reports danger in the middle even with safe endpoints",[]{
+        auto base=simulation_world(frame());
+        const int middle=4*base.room.grid.width+7;
+        const Vec middle_center=base.room.grid.center(middle);
+        const Vec left=base.room.grid.center(4*base.room.grid.width+4);
+        const Vec right=base.room.grid.center(4*base.room.grid.width+10);
+        const auto frames=temporal_sequence(base,7,[&](SimWorld& world,int){
+            world.hazards.push_back(temporal_hazard(middle_center,5,0,1));
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=4;
+        const auto danger=build_temporal_danger(frames,config);
+        std::vector<TemporalTrajectorySample> samples;
+        for(int frame=0;frame<=6;++frame) {
+            const double fraction=double(frame)/6.0;
+            samples.push_back(temporal_sample(frame,left+(right-left)*fraction));
+        }
+        const auto assessment=assess_temporal_path(danger,samples);
+        CHECK(assessment.status==TemporalPathStatus::danger);
+        CHECK(assessment.temporal_first_risk_frame>0);
+        CHECK(assessment.temporal_first_risk_frame<6);
+    });
+    test("temporal path risk differs between branch enemy trajectories",[]{
+        auto base=simulation_world(frame());
+        const int left_cell=4*base.room.grid.width+5;
+        const int right_cell=4*base.room.grid.width+9;
+        const Vec left=base.room.grid.center(left_cell);
+        const Vec right=base.room.grid.center(right_cell);
+        const auto left_frames=temporal_sequence(base,10,[&](SimWorld& world,int){
+            world.enemies={safety_enemy(left,41)};
+        });
+        const auto right_frames=temporal_sequence(base,10,[&](SimWorld& world,int){
+            world.enemies={safety_enemy(right,42)};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=4;
+        const auto left_map=build_temporal_danger(left_frames,config);
+        const auto right_map=build_temporal_danger(right_frames,config);
+        std::vector<TemporalTrajectorySample> path;
+        for(int frame=0;frame<6;++frame)path.push_back(temporal_sample(frame,left));
+        const auto left_risk=assess_temporal_path(left_map,path);
+        const auto right_risk=assess_temporal_path(right_map,path);
+        CHECK(left_risk.status==TemporalPathStatus::danger);
+        CHECK(right_risk.status==TemporalPathStatus::safe);
+    });
+    test("temporal branch signature rejects a swapped danger map",[]{
+        auto f=frame();
+        f.player.health=6;
+        auto e=enemy({500,280},{260,0});
+        e.collision=2;
+        f.entities={e};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig sim;
+        sim.horizon_frames=30;
+        sim.early_terminate=false;
+        sim.danger_map=false;
+        ForwardSimulator root(sim);
+        std::string error;
+        CHECK(root.restore(snapshot,&error));
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=16;
+        const auto east=capture_temporal_trajectory(root,
+            {SimActionSegment{SimAction{Move::east,Fire::none,false},30}},config);
+        const auto west=capture_temporal_trajectory(root,
+            {SimActionSegment{SimAction{Move::west,Fire::none,false},30}},config);
+        CHECK(east.valid&&west.valid);
+        CHECK(east.root_signature==west.root_signature);
+        CHECK(east.branch_signature!=west.branch_signature);
+        auto swapped=west;
+        swapped.danger=east.danger;
+        const auto assessment=assess_temporal_trajectory(swapped);
+        CHECK(assessment.status==TemporalPathStatus::unknown);
+        CHECK(assessment.reason=="branch-signature-mismatch");
+    });
+    test("temporal path uses the exact arrival slice with one-frame slices",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,11,[&](SimWorld& world,int frame){
+            if(frame==5)
+                world.hazards.push_back(temporal_hazard(
+                    center,5,5.0/60.0,5.5/60.0));
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=1;
+        config.max_slices=12;
+        const auto danger=build_temporal_danger(frames,config);
+        CHECK(danger.danger_at(cell,5.0/60.0));
+        CHECK(!danger.danger_at(cell,4.0/60.0));
+        CHECK(!danger.danger_at(cell,6.0/60.0));
+        const auto before=assess_temporal_path(danger,
+            {temporal_sample(4,center)});
+        const auto during=assess_temporal_path(danger,
+            {temporal_sample(5,center)});
+        const auto after=assess_temporal_path(danger,
+            {temporal_sample(6,center)});
+        CHECK(before.status==TemporalPathStatus::safe);
+        CHECK(during.status==TemporalPathStatus::danger);
+        CHECK(after.status==TemporalPathStatus::safe);
+    });
+    test("temporal path in the next slice does not inherit previous danger",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,31,[&](SimWorld& world,int){
+            world.hazards.push_back(temporal_hazard(center,5,6.0/60.0,11.5/60.0));
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=8;
+        const auto danger=build_temporal_danger(frames,config);
+        std::vector<TemporalTrajectorySample> previous_slice;
+        for(int frame=6;frame<=11;++frame)
+            previous_slice.push_back(temporal_sample(frame,center));
+        std::vector<TemporalTrajectorySample> next_slice;
+        for(int frame=12;frame<=17;++frame)
+            next_slice.push_back(temporal_sample(frame,center));
+        const auto previous=assess_temporal_path(danger,previous_slice);
+        const auto next=assess_temporal_path(danger,next_slice);
+        CHECK(previous.status==TemporalPathStatus::danger);
+        CHECK(next.status==TemporalPathStatus::safe);
+    });
+    test("temporal path unknown at an uncovered middle sample",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,5,[](SimWorld&,int){});
+        const auto danger=build_temporal_danger(frames,TemporalDangerConfig{});
+        const std::vector<TemporalTrajectorySample> samples{
+            temporal_sample(0,center),
+            temporal_sample(1,{-100,280}),
+            temporal_sample(2,center)};
+        const auto assessment=assess_temporal_path(danger,samples);
+        CHECK(assessment.status==TemporalPathStatus::unknown);
+        CHECK(assessment.unknown_frames>0);
+        CHECK(assessment.temporal_coverage<1.0);
+        CHECK(assessment.reason=="outside-coverage");
+    });
+    test("temporal path static collision uses the player body radius",[]{
+        auto base=simulation_world(frame());
+        const int wall=4*base.room.grid.width+6;
+        base.room.grid.cells[size_t(wall)].collision=2;
+        const auto frames=temporal_sequence(base,2,[](SimWorld&,int){});
+        const auto danger=build_temporal_danger(frames,TemporalDangerConfig{});
+        const std::vector<TemporalTrajectorySample> graze{
+            temporal_sample(0,{200,260}),
+            temporal_sample(1,{360,260})};
+        const std::vector<TemporalTrajectorySample> clear{
+            temporal_sample(0,{200,240}),
+            temporal_sample(1,{360,240})};
+        const auto graze_assessment=assess_temporal_path(danger,graze);
+        const auto clear_assessment=assess_temporal_path(danger,clear);
+        CHECK(graze_assessment.status==TemporalPathStatus::static_blocked);
+        CHECK(graze_assessment.static_blocked_frames>0);
+        CHECK(clear_assessment.status==TemporalPathStatus::safe);
+    });
+    test("temporal path reports unknown outside its coverage",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,20,[](SimWorld&,int){});
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=2;
+        const auto danger=build_temporal_danger(frames,config);
+        CHECK(danger.truncated);
+        const auto inside=assess_temporal_path(danger,{temporal_sample(11,center)});
+        const auto outside=assess_temporal_path(danger,{temporal_sample(30,center)});
+        CHECK(inside.status==TemporalPathStatus::unknown);
+        CHECK(inside.reason=="truncated-danger-map");
+        CHECK(outside.status==TemporalPathStatus::unknown);
+        CHECK(outside.reason=="outside-coverage");
+        CHECK(outside.temporal_coverage==0.0);
+    });
+    test("temporal path assessment agrees with real simulator hit events",[]{
+        auto f=frame();
+        f.player.health=6;
+        auto b=bullet({320,280},{0,0});
+        b.radius=40;
+        b.damage=1;
+        f.entities={b};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig sim;
+        sim.horizon_frames=12;
+        sim.early_terminate=false;
+        sim.danger_map=false;
+        ForwardSimulator root(sim);
+        std::string error;
+        CHECK(root.restore(snapshot,&error));
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=4;
+        config.player_radius=10;
+        const auto trajectory=capture_temporal_trajectory(root,
+            {SimActionSegment{SimAction{Move::stay,Fire::none,false},12}},config);
+        CHECK(trajectory.valid);
+        const auto assessment=assess_temporal_trajectory(trajectory);
+        CHECK(assessment.status==TemporalPathStatus::danger);
+        bool hit=false;
+        for(const auto& event:trajectory.events)
+            if(event.target==0&&(event.kind=="projectile-hit"||
+               event.kind=="contact-hit"||event.kind=="hazard-hit"))
+                hit=true;
+        CHECK(hit);
+    });
+    test("temporal path assessment is deterministic",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,20,[&](SimWorld& world,int frame){
+            world.hazards.push_back(temporal_hazard(center,10,0.1,0.5));
+            world.projectiles={temporal_projectile({200.0+frame*6.0,200},{80,20},43)};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=4;
+        config.max_slices=6;
+        const auto danger=build_temporal_danger(frames,config);
+        std::vector<TemporalTrajectorySample> samples;
+        for(int frame=0;frame<12;++frame)
+            samples.push_back(temporal_sample(frame,{280.0+frame*4.0,280}));
+        const auto first=assess_temporal_path(danger,samples);
+        const auto second=assess_temporal_path(danger,samples);
+        CHECK(first.to_json()==second.to_json());
+        CHECK(first.status==second.status);
+        CHECK(first.temporal_danger_frames==second.temporal_danger_frames);
+    });
+    test("temporal danger ignores a projectile that cannot damage the player",[]{
+        auto base=simulation_world(frame());
+        const int cell=4*base.room.grid.width+7;
+        const Vec center=base.room.grid.center(cell);
+        const auto frames=temporal_sequence(base,1,[&](SimWorld& world,int){
+            auto projectile=temporal_projectile(center,{0,0},61);
+            projectile.damageable=false;
+            world.projectiles={projectile};
+        });
+        const auto danger=build_temporal_danger(frames,TemporalDangerConfig{});
+        const auto assessment=assess_temporal_path(danger,
+            {temporal_sample(0,center)});
+        CHECK(assessment.evaluated);
+        CHECK(assessment.status==TemporalPathStatus::safe);
+        CHECK(assessment.temporal_danger_frames==0);
+    });
+    test("temporal danger matches reordered identical hazards by position",[]{
+        auto base=simulation_world(frame());
+        const int left_cell=4*base.room.grid.width+5;
+        const int right_cell=4*base.room.grid.width+9;
+        const int middle_cell=4*base.room.grid.width+7;
+        const Vec left=base.room.grid.center(left_cell);
+        const Vec right=base.room.grid.center(right_cell);
+        auto first=temporal_hazard(left,8,0,1);
+        auto second=temporal_hazard(right,8,0,1);
+        first.spec.source=77;
+        second.spec.source=77;
+        first.spec.label="same-hazard";
+        second.spec.label="same-hazard";
+        const auto frames=temporal_sequence(base,3,[&](SimWorld& world,int frame){
+            if(frame%2==0)world.hazards={first,second};
+            else world.hazards={second,first};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=2;
+        const auto danger=build_temporal_danger(frames,config);
+        CHECK(danger.danger_at(left_cell,0.0));
+        CHECK(danger.danger_at(right_cell,0.0));
+        CHECK(!danger.danger_at(middle_cell,0.0));
+    });
+    test("temporal reachability expands in an open room",[]{
+        auto f=frame();
+        f.player.health=6;
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig sim;
+        sim.horizon_frames=12;
+        sim.early_terminate=false;
+        sim.danger_map=false;
+        ForwardSimulator root(sim);
+        std::string error;
+        CHECK(root.restore(snapshot,&error));
+        TemporalReachabilityConfig config;
+        config.horizon_frames=12;
+        config.step_frames=3;
+        config.max_layers=4;
+        config.max_states_per_layer=12;
+        config.max_total_states=300;
+        config.max_seconds=0.5;
+        config.max_memory_bytes=4u*1024u*1024u;
+        config.max_representative_paths=2;
+        config.danger.max_slices=8;
+        const auto result=search_temporal_reachability(root,config);
+        CHECK(result.valid);
+        CHECK(result.layers.size()>=2);
+        CHECK(result.total_states>1);
+        CHECK(result.expanded_states>0);
+        CHECK(result.layers[0].reachable_states>0);
+        CHECK(result.layers.back().reachable_cells>0);
+        CHECK(int(result.static_only_cell_list.size())==result.static_only_cells);
+        CHECK(int(result.temporal_only_cell_list.size())==result.temporal_only_cells);
+        CHECK(result.static_only_cells>0);
+        CHECK(result.temporal_only_cells==0);
+    });
+    test("trajectory diagnostics compare small large outward and MPC routes",[]{
+        auto f=frame();
+        f.player.health=6;
+        f.player.tear_speed=360;
+        f.player.tear_range=400;
+        auto e=enemy({500,280},{60,0});
+        e.hp=20;
+        e.collision=2;
+        auto b=bullet({620,160},{-80,40});
+        b.radius=6;
+        f.entities={e,b};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig sim;
+        sim.horizon_frames=48;
+        sim.early_terminate=false;
+        sim.danger_map=false;
+        ForwardSimulator root(sim);
+        std::string error;
+        CHECK(root.restore(snapshot,&error));
+
+        auto make_plan=[](const std::array<Move,4>& moves,int frames,int cycles) {
+            std::vector<SimActionSegment> plan;
+            for(int cycle=0;cycle<cycles;++cycle)
+                for(Move move:moves)
+                    plan.push_back({SimAction{move,Fire::right,true},frames});
+            return plan;
+        };
+        const std::array<Move,4> loop{{Move::east,Move::north,Move::west,
+            Move::south}};
+        const auto small=analyze_trajectory(root,make_plan(loop,6,2));
+        const auto large=analyze_trajectory(root,make_plan(loop,12,1));
+        std::vector<SimActionSegment> outward;
+        for(int i=0;i<8;++i)
+            outward.push_back({SimAction{Move::west,Fire::right,true},6});
+        const auto escape=analyze_trajectory(root,outward);
+
+        LookaheadConfig look;
+        look.epochs=1;
+        look.epoch_frames=6;
+        look.simulation_horizon_frames=6;
+        look.simulation_branches=2;
+        MpcConfig mpc;
+        mpc.horizon_frames=24;
+        mpc.segment_frames=6;
+        mpc.beam_width=3;
+        mpc.min_beam_width=2;
+        mpc.max_beam_width=4;
+        mpc.root_candidates=12;
+        mpc.full_root_actions=false;
+        mpc.max_simulations=512;
+        mpc.time_budget_ms=1000;
+        mpc.max_total_ms=0;
+        mpc.safety.collision_horizon_frames=6;
+        MpcCombatPlanner planner(mpc,look);
+        const auto plan=planner.decide(f,true,nullptr);
+        CHECK(plan.available);
+        const auto autonomous=analyze_trajectory(root,plan.sequence.segments);
+        auto print=[&](const char* name,const TrajectoryDiagnostics& d) {
+            std::cout<<"trajectory_route="<<name
+                <<" frames="<<d.frames<<" length="<<d.trajectory_length
+                <<" net="<<d.net_displacement
+                <<" ratio="<<d.net_displacement_ratio
+                <<" turns="<<d.heading_change_count
+                <<" curvature="<<d.trajectory_curvature
+                <<" orbit="<<d.orbit_radius
+                <<" sep_mean="<<d.enemy_separation_mean
+                <<" min_clear="<<d.minimum_clearance
+                <<" damage_events="<<d.damage_events
+                <<" damage="<<d.damage_taken
+                <<" hp_drop="<<d.enemy_hp_drop
+                <<" reach_growth="<<d.reachable_area_growth
+                <<" repeats="<<d.repeat_visit_count<<'\n';
+        };
+        print("small",small);
+        print("large",large);
+        print("outward",escape);
+        print("autonomous",autonomous);
+        CHECK(small.valid&&large.valid&&escape.valid&&autonomous.valid);
+        CHECK(small.trajectory_length>0.0);
+        CHECK(large.trajectory_length>0.0);
+        CHECK(escape.trajectory_length>0.0);
+        CHECK(autonomous.frames>0);
+        CHECK(large.trajectory_length!=small.trajectory_length);
+        CHECK(autonomous.enemy_hp_end<=autonomous.enemy_hp_start+1e-9);
+        CHECK(small.minimum_clearance<=1e8);
+        CHECK(small.heading_change_count>0);
+        CHECK(large.heading_change_count>0);
+        CHECK(small.trajectory_curvature>escape.trajectory_curvature);
+        CHECK(escape.net_displacement_ratio>small.net_displacement_ratio);
+        CHECK(escape.dominant_move_share>small.dominant_move_share);
+        CHECK(escape.max_same_move_run>=48);
+        CHECK(autonomous.damage_events>=0);
+    });
+    test("trajectory diagnostics compare routes with fifteen type 222.0.0 enemies",[]{
+        auto f=frame();
+        f.player.health=6;
+        f.player.tear_speed=360;
+        f.player.tear_range=400;
+        const std::array<Vec,15> positions{{
+            {80,160},{200,160},{320,160},{440,160},{560,160},
+            {80,260},{200,260},{480,260},{560,260},
+            {80,380},{200,380},{320,380},{440,380},{560,380},
+            {400,280}}};
+        const std::array<Vec,15> velocities{{
+            {30,0},{20,30},{-20,10},{0,20},{10,-20},
+            {20,10},{-15,20},{25,0},{-10,15},
+            {10,20},{-20,10},{15,-15},{0,25},{-15,-10},
+            {-25,0}}};
+        const std::array<double,15> health{{
+            20,15,12,18,14,16,13,17,11,
+            19,15,21,12,18,24}};
+        for(int i=0;i<15;++i) {
+            auto e=enemy(positions[size_t(i)],velocities[size_t(i)]);
+            e.type=222;
+            e.variant=0;
+            e.subtype=0;
+            e.seed=uint32_t(100+i);
+            e.hp=health[size_t(i)];
+            e.address=uint32_t(0x30000+i*0x10);
+            e.collision=2;
+            f.entities.push_back(e);
+        }
+        auto b=bullet({600,120},{-80,40});
+        b.radius=6;
+        f.entities.push_back(b);
+        int type_222_0_0=0;
+        for(const auto& entity:f.entities)
+            if(entity.type==222&&entity.variant==0&&entity.subtype==0)
+                ++type_222_0_0;
+        CHECK(type_222_0_0==15);
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig sim;
+        sim.horizon_frames=48;
+        sim.early_terminate=false;
+        sim.danger_map=false;
+        ForwardSimulator root(sim);
+        std::string error;
+        CHECK(root.restore(snapshot,&error));
+        auto make_plan=[](const std::array<Move,4>& moves,int frames,int cycles) {
+            std::vector<SimActionSegment> plan;
+            for(int cycle=0;cycle<cycles;++cycle)
+                for(Move move:moves)
+                    plan.push_back({SimAction{move,Fire::right,true},frames});
+            return plan;
+        };
+        const std::array<Move,4> loop{{Move::east,Move::north,Move::west,
+            Move::south}};
+        const auto small=analyze_trajectory(root,make_plan(loop,6,2));
+        const auto large=analyze_trajectory(root,make_plan(loop,12,1));
+        std::vector<SimActionSegment> outward;
+        for(int i=0;i<8;++i)
+            outward.push_back({SimAction{Move::west,Fire::right,true},6});
+        const auto escape=analyze_trajectory(root,outward);
+        LookaheadConfig look;
+        look.epochs=1;
+        look.epoch_frames=6;
+        look.simulation_horizon_frames=6;
+        look.simulation_branches=2;
+        MpcConfig mpc;
+        mpc.horizon_frames=24;
+        mpc.segment_frames=6;
+        mpc.beam_width=3;
+        mpc.min_beam_width=2;
+        mpc.max_beam_width=4;
+        mpc.root_candidates=12;
+        mpc.full_root_actions=false;
+        mpc.max_simulations=512;
+        mpc.time_budget_ms=1000;
+        mpc.max_total_ms=0;
+        mpc.safety.collision_horizon_frames=6;
+        MpcCombatPlanner planner(mpc,look);
+        const auto plan=planner.decide(f,true,nullptr);
+        CHECK(plan.available);
+        const auto autonomous=analyze_trajectory(root,plan.sequence.segments);
+        auto print=[&](const char* name,const TrajectoryDiagnostics& d) {
+            std::cout<<"trajectory_multi_route="<<name
+                <<" frames="<<d.frames<<" length="<<d.trajectory_length
+                <<" net="<<d.net_displacement
+                <<" ratio="<<d.net_displacement_ratio
+                <<" turns="<<d.heading_change_count
+                <<" curvature="<<d.trajectory_curvature
+                <<" orbit="<<d.orbit_radius
+                <<" sep_mean="<<d.enemy_separation_mean
+                <<" min_clear="<<d.minimum_clearance
+                <<" damage_events="<<d.damage_events
+                <<" damage="<<d.damage_taken
+                <<" hp_drop="<<d.enemy_hp_drop
+                <<" reach_growth="<<d.reachable_area_growth
+                <<" repeats="<<d.repeat_visit_count<<'\n';
+        };
+        print("small",small);
+        print("large",large);
+        print("outward",escape);
+        print("autonomous",autonomous);
+        CHECK(small.valid&&large.valid&&escape.valid&&autonomous.valid);
+        CHECK(small.enemy_hp_start>0);
+        CHECK(large.enemy_hp_start>0);
+        CHECK(escape.enemy_hp_start>0);
+        CHECK(autonomous.enemy_hp_start>0);
+        CHECK(large.trajectory_length!=small.trajectory_length);
+        CHECK(small.minimum_clearance<=1e8);
+        CHECK(autonomous.enemy_hp_end<=autonomous.enemy_hp_start+1e-9);
+        CHECK(autonomous.damage_events>=0);
+    });
+    test("temporal reachability performance and static comparison is measured",[]{
+        const std::array<std::pair<int,int>,3> scenarios{{
+            {0,0},{4,16},{8,32}}};
+        for(const auto&[enemies,projectiles]:scenarios) {
+            const auto f=reachability_frame(enemies,projectiles);
+            const auto started=std::chrono::steady_clock::now();
+            auto config=reachability_config(24,6,4,12);
+            config.max_total_states=1024;
+            config.max_seconds=2.0;
+            const auto result=reachability_of(f,config);
+            const double ms=std::chrono::duration<double,std::milli>(
+                std::chrono::steady_clock::now()-started).count();
+            std::cout<<"reachability_scan enemies="<<enemies
+                <<" projectiles="<<projectiles<<" ms="<<ms
+                <<" valid="<<result.valid<<" states="<<result.total_states
+                <<" expanded="<<result.expanded_states
+                <<" pruned="<<result.pruned_states
+                <<" merged="<<result.merged_states
+                <<" static="<<result.static_reachable_cells
+                <<" temporal="<<result.temporal_reachable_cells
+                <<" temporal_only="<<result.temporal_only_cells
+                <<" static_only="<<result.static_only_cells
+                <<" bytes="<<result.estimated_memory_bytes<<'\n';
+            for(const auto& layer:result.layers)
+                std::cout<<"reachability_layer enemies="<<enemies
+                    <<" projectiles="<<projectiles<<" layer="<<layer.layer
+                    <<" expanded="<<layer.expanded_states
+                    <<" reachable="<<layer.reachable_states
+                    <<" warning="<<layer.warning_states
+                    <<" danger="<<layer.blocked_by_dynamic_danger
+                    <<" static="<<layer.blocked_by_static_terrain
+                    <<" unknown="<<layer.unknown_states
+                    <<" dead="<<layer.dead_end_states<<'\n';
+            CHECK(result.valid);
+            CHECK(ms<5000.0);
+            CHECK(result.estimated_memory_bytes<4u*1024u*1024u);
+        }
+    });
+    test("temporal reachability cannot cross static walls",[]{
+        auto f=frame();
+        f.player.health=6;
+        const int wall=4*f.grid.width+5;
+        f.grid.cells[size_t(wall)].collision=2;
+        const auto result=reachability_of(f,reachability_config(9,3,3,9));
+        CHECK(result.valid);
+        CHECK(result.static_walkable_cells<f.grid.width*f.grid.height);
+        bool wall_safe=false;
+        for(const auto& state:result.states)
+            if(state.safe&&grid_cell(f.grid,state.position)==wall)wall_safe=true;
+        CHECK(!wall_safe);
+        CHECK(result.static_only_cells>0);
+    });
+    test("temporal reachability keeps branch-conditioned enemy futures",[]{
+        auto f=frame();
+        f.player.health=6;
+        auto e=enemy({500,280},{120,0});
+        e.collision=2;
+        f.entities={e};
+        const auto result=reachability_of(f,reachability_config(9,3,3,9));
+        CHECK(result.valid);
+        const TemporalReachabilityState* east=nullptr;
+        const TemporalReachabilityState* west=nullptr;
+        for(const auto& state:result.states) {
+            if(state.layer!=1)continue;
+            if(state.first_action==int(Move::east))east=&state;
+            if(state.first_action==int(Move::west))west=&state;
+        }
+        CHECK(east!=nullptr);
+        CHECK(west!=nullptr);
+        CHECK(east->world_signature!=west->world_signature);
+    });
+    test("temporal reachability reopens a cell after a charging enemy leaves",[]{
+        auto world=simulation_world(frame());
+        SimEnemy enemy_state=safety_enemy({240,280},71);
+        enemy_state.contact=false;
+        enemy_state.chase=false;
+        enemy_state.charging=true;
+        enemy_state.charge_direction={1,0};
+        enemy_state.charge_remaining=24;
+        world.enemies={enemy_state};
+        ForwardSimConfig sim;
+        sim.horizon_frames=96;
+        sim.early_terminate=false;
+        sim.danger_map=false;
+        ForwardSimulator root(sim);
+        std::string error;
+        CHECK(root.restore_world(world,&error));
+        auto config=reachability_config(96,6,16,12);
+        config.max_total_states=2048;
+        config.max_seconds=2.0;
+        const auto result=search_temporal_reachability(root,config);
+        CHECK(result.valid);
+        std::map<int,bool> early_danger;
+        std::map<int,bool> later_safe;
+        for(const auto& state:result.states) {
+            const int cell=grid_cell(world.room.grid,state.position);
+            if(cell<0)continue;
+            if(state.layer<=2&&state.danger)early_danger[cell]=true;
+            if(state.layer>=6&&state.safe)later_safe[cell]=true;
+        }
+        bool reopened=false;
+        for(const auto&[cell,was_danger]:early_danger)
+            if(was_danger&&later_safe[cell])reopened=true;
+        CHECK(reopened);
+    });
+    test("temporal reachability reopens a cell after a temporary contact blocker",[]{
+        auto f=frame();
+        f.player.health=6;
+        auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        HazardState blocker=temporal_hazard_state(
+            f.grid.center(4*f.grid.width+6),5,0.0,0.25);
+        blocker.kind=HazardKind::contact;
+        blocker.damage_class=DamageClass::contact;
+        blocker.damage_timing=DamageTiming::window;
+        snapshot.hazards.push_back(blocker);
+        ForwardSimConfig sim;
+        sim.horizon_frames=96;
+        sim.early_terminate=false;
+        sim.danger_map=false;
+        ForwardSimulator root(sim);
+        std::string error;
+        CHECK(root.restore(snapshot,&error));
+        auto config=reachability_config(96,6,16,12);
+        config.max_total_states=2048;
+        config.max_seconds=2.0;
+        const auto result=search_temporal_reachability(root,config);
+        CHECK(result.valid);
+        std::map<int,bool> early_danger;
+        std::map<int,bool> later_safe;
+        for(const auto& state:result.states) {
+            const int cell=grid_cell(f.grid,state.position);
+            if(cell<0)continue;
+            if(state.layer<=2&&state.danger)early_danger[cell]=true;
+            if(state.layer>=4&&state.safe)later_safe[cell]=true;
+        }
+        bool reopened=false;
+        for(const auto&[cell,was_danger]:early_danger)
+            if(was_danger&&later_safe[cell])reopened=true;
+        CHECK(reopened);
+    });
+    test("temporal reachability reopens a corridor after a projectile passes",[]{
+        auto f=frame();
+        f.player.health=6;
+        auto b=bullet({280,280},{-600,0});
+        b.radius=8;
+        f.entities={b};
+        const auto result=reachability_of(f,reachability_config(30,6,5,12));
+        CHECK(result.valid);
+        const int cell=grid_cell(f.grid,{280,280});
+        bool later_safe=false;
+        for(const auto& state:result.states)
+            if(state.layer>=2&&state.safe&&grid_cell(f.grid,state.position)==cell)
+                later_safe=true;
+        CHECK(later_safe);
+    });
+    test("temporal reachability distinguishes laser warning danger and end",[]{
+        auto f=frame();
+        f.player.health=6;
+        auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        snapshot.hazards.push_back(temporal_hazard_state(
+            f.grid.center(4*f.grid.width+6),6,0.1,0.2));
+        ForwardSimConfig sim;
+        sim.horizon_frames=30;
+        sim.early_terminate=false;
+        sim.danger_map=false;
+        ForwardSimulator root(sim);
+        std::string error;
+        CHECK(root.restore(snapshot,&error));
+        const auto result=search_temporal_reachability(root,
+            reachability_config(30,6,5,12));
+        CHECK(result.valid);
+        bool warning=false,danger=false,safe_after=false;
+        for(const auto& layer:result.layers) {
+            if(layer.warning_states>0)warning=true;
+            if(layer.blocked_by_dynamic_danger>0)danger=true;
+            if(layer.layer>=3&&layer.reachable_states>0)safe_after=true;
+        }
+        CHECK(result.layers[0].warning_states>0);
+        CHECK(warning);
+        CHECK(danger);
+        CHECK(safe_after);
+    });
+    test("temporal reachability finds escape directions under a pincer",[]{
+        auto f=frame();
+        f.player.health=6;
+        auto left=enemy({240,280},{0,0});
+        auto right=enemy({400,280},{0,0});
+        left.address=0x30000;
+        right.address=0x30010;
+        left.collision=2;
+        right.collision=2;
+        f.entities={left,right};
+        const auto result=reachability_of(f,reachability_config(12,6,2,9));
+        CHECK(result.valid);
+        bool north_or_south=false;
+        for(const auto& state:result.states) {
+            if(state.layer!=1||!state.safe)continue;
+            if(state.first_action==int(Move::north)||
+               state.first_action==int(Move::south))
+                north_or_south=true;
+        }
+        CHECK(north_or_south);
+        CHECK(result.layers.back().mobility_routes>0);
+    });
+    test("temporal reachability finds a wall-corner dead end",[]{
+        auto f=frame();
+        f.player.health=6;
+        const int px=7,py=4;
+        for(const auto& delta:std::array<std::pair<int,int>,4>{{
+            {-1,0},{1,0},{0,-1},{0,1}}}) {
+            const int x=px+delta.first,y=py+delta.second;
+            f.grid.cells[size_t(y*f.grid.width+x)].collision=2;
+        }
+        const auto result=reachability_of(f,reachability_config(9,3,3,9));
+        CHECK(result.valid);
+        bool dead_end=false;
+        for(const auto& layer:result.layers)
+            if(layer.dead_end_states>0)dead_end=true;
+        CHECK(dead_end);
+    });
+    test("temporal reachability preserves player inertia",[]{
+        auto f=frame();
+        f.player.health=6;
+        const auto result=reachability_of(f,reachability_config(1,1,1,9));
+        CHECK(result.valid);
+        const TemporalReachabilityState* east=nullptr;
+        const TemporalReachabilityState* west=nullptr;
+        for(const auto& state:result.states) {
+            if(state.layer!=1)continue;
+            if(state.first_action==int(Move::east))east=&state;
+            if(state.first_action==int(Move::west))west=&state;
+        }
+        CHECK(east!=nullptr);
+        CHECK(west!=nullptr);
+        CHECK(east->velocity.x>0.0);
+        CHECK(west->velocity.x<0.0);
+        CHECK(std::abs(east->velocity.x)<260.0);
+        CHECK(distance(east->position,{320,280})<f.player.max_speed/60.0+1.0);
+    });
+    test("temporal reachability does not count unknown as safe",[]{
+        auto f=frame();
+        f.player.health=6;
+        auto config=reachability_config(9,3,3,9);
+        config.danger.max_slices=1;
+        const auto result=reachability_of(f,config);
+        CHECK(result.valid);
+        bool unknown=false;
+        bool later_safe=false;
+        for(const auto& state:result.states) {
+            if(state.layer>0&&state.unknown)unknown=true;
+            if(state.layer>0&&state.safe)later_safe=true;
+        }
+        CHECK(unknown);
+        CHECK(!later_safe);
+    });
+    test("temporal reachability does not merge same-cell different worlds",[]{
+        auto f=frame();
+        f.player.health=6;
+        auto e=enemy({500,280},{60,0});
+        e.collision=2;
+        f.entities={e};
+        const auto result=reachability_of(f,reachability_config(18,3,6,16));
+        CHECK(result.valid);
+        std::map<std::pair<int,int>,std::set<uint64_t>> signatures;
+        for(const auto& state:result.states) {
+            if(!state.safe)continue;
+            const int cell=grid_cell(f.grid,state.position);
+            if(cell<0)continue;
+            signatures[{state.layer,cell}].insert(state.world_signature);
+        }
+        bool distinct=false;
+        for(const auto&[key,values]:signatures)
+            if(values.size()>1)distinct=true;
+        CHECK(distinct);
+    });
+    test("sim world signature covers branch-future fields",[]{
+        auto base=simulation_world(frame());
+        base.enemies={safety_enemy({300,280},91)};
+        base.projectiles={temporal_projectile({360,240},{40,0},91)};
+        SimHazard hazard=temporal_hazard({400,280},12,0.0,1.0);
+        base.hazards={hazard};
+        const uint64_t base_signature=temporal_world_signature(base);
+        auto enemy_state=base;enemy_state.enemies[0].state_frame=7;
+        CHECK(temporal_world_signature(enemy_state)!=base_signature);
+        auto enemy_charge=base;enemy_charge.enemies[0].charging=true;
+        enemy_charge.enemies[0].charge_remaining=12;
+        CHECK(temporal_world_signature(enemy_charge)!=base_signature);
+        auto enemy_contact=base;enemy_contact.enemies[0].contact=false;
+        CHECK(temporal_world_signature(enemy_contact)!=base_signature);
+        auto projectile_homing=base;projectile_homing.projectiles[0].homing=true;
+        CHECK(temporal_world_signature(projectile_homing)!=base_signature);
+        auto projectile_curve=base;projectile_curve.projectiles[0].change_flags=8;
+        projectile_curve.projectiles[0].curve=0.25;
+        CHECK(temporal_world_signature(projectile_curve)!=base_signature);
+        auto projectile_height=base;
+        projectile_height.projectiles[0].height_velocity=-40;
+        CHECK(temporal_world_signature(projectile_height)!=base_signature);
+        auto hazard_timing=base;
+        hazard_timing.hazards[0].spec.damage_timing=DamageTiming::dot;
+        CHECK(temporal_world_signature(hazard_timing)!=base_signature);
+        auto hazard_label=base;hazard_label.hazards[0].spec.label="changed";
+        CHECK(temporal_world_signature(hazard_label)!=base_signature);
+        auto player_facing=base;player_facing.player.facing=Fire::left;
+        CHECK(temporal_world_signature(player_facing)!=base_signature);
+    });
+    test("temporal reachability separates physical and safe reachability",[]{
+        auto f=frame();
+        f.player.health=6;
+        f.player.body.pos={320,280};
+        auto e=enemy({320,280},{0,0});
+        e.collision=2;
+        f.entities={e};
+        auto config=reachability_config(9,3,3,6);
+        config.max_total_states=256;
+        const auto result=reachability_of(f,config);
+        CHECK(result.valid);
+        CHECK(result.physical_reachable_cells>=result.safe_reachable_cells);
+        CHECK(result.physically_reachable_unsafe_cells>0);
+        CHECK(int(result.physically_reachable_unsafe_cell_list.size())==
+            result.physically_reachable_unsafe_cells);
+        bool physically_unsafe_state=false;
+        for(const auto& state:result.states)
+            if(state.physically_reachable&&!state.safe)
+                physically_unsafe_state=true;
+        CHECK(physically_unsafe_state);
+        for(const auto& layer:result.layers)
+            CHECK(layer.physical_reachable_states>=layer.reachable_states);
+    });
+    test("temporal reachability records danger sources and pruning reasons",[]{
+        auto f=frame();
+        f.player.health=6;
+        f.player.body.pos={320,280};
+        auto b=bullet({320,280},{0,0});
+        b.radius=6;
+        f.entities={b};
+        auto config=reachability_config(9,3,3,1);
+        config.max_total_states=64;
+        config.danger.max_slices=8;
+        const auto result=reachability_of(f,config);
+        CHECK(result.valid);
+        CHECK(result.pruned_states>0);
+        CHECK(result.pruned_safe+result.pruned_warning+result.pruned_danger+
+            result.pruned_static+result.pruned_unknown==result.pruned_states);
+        CHECK(result.pruned_danger>0);
+        CHECK(result.pruned_danger_projectile>0);
+        bool source_seen=false;
+        for(const auto& layer:result.layers) {
+            const int described=layer.danger_enemy_states+
+                layer.danger_projectile_states+layer.danger_hazard_states+
+                layer.danger_unknown_states;
+            CHECK(described>=0);
+            if(layer.danger_projectile_states>0)source_seen=true;
+        }
+        CHECK(source_seen);
+    });
+    test("temporal reachability dedupe never loses a distinct future",[]{
+        const auto f=reachability_frame(1,0);
+        auto config=reachability_config(18,3,6,16);
+        config.max_total_states=1024;
+        const auto result=reachability_of(f,config);
+        CHECK(result.valid);
+        CHECK(result.merged_states==result.merged_same_world_same_route);
+        std::set<std::tuple<int,int,uint64_t>> identities;
+        for(const auto& state:result.states) {
+            if(state.parent<0)continue;
+            const auto key=std::make_tuple(state.layer,state.first_action,
+                state.world_signature);
+            CHECK(identities.insert(key).second);
+        }
+        CHECK(result.distinct_world_same_cell>0);
+    });
+    test("temporal route comparison exposes a long escape and real damage",[]{
+        auto f=frame();
+        f.player.health=6;
+        f.player.body.pos={320,280};
+        auto b=bullet({370,280},{0,0});
+        b.radius=8;
+        f.entities={b};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig sim;
+        sim.horizon_frames=48;
+        sim.early_terminate=false;
+        sim.danger_map=false;
+        ForwardSimulator root(sim);
+        std::string error;
+        CHECK(root.restore(snapshot,&error));
+        std::vector<SimActionSegment> loop;
+        loop.push_back({SimAction{Move::east,Fire::none,false},24});
+        loop.push_back({SimAction{Move::north,Fire::none,false},8});
+        loop.push_back({SimAction{Move::west,Fire::none,false},8});
+        loop.push_back({SimAction{Move::south,Fire::none,false},8});
+        std::vector<SimActionSegment> escape_plan;
+        for(int i=0;i<8;++i)
+            escape_plan.push_back({SimAction{Move::west,Fire::none,false},6});
+        const auto comparison=compare_temporal_routes(root,loop,escape_plan);
+        CHECK(comparison.valid);
+        CHECK(comparison.temporal_available);
+        CHECK(comparison.compared_frames==48);
+        CHECK(comparison.mpc_route_danger);
+        CHECK(comparison.temporal_safe);
+        CHECK(comparison.damage_delta>0.0);
+        CHECK(comparison.danger_frame_delta>0.0);
+        CHECK(comparison.displacement_delta>0.0);
+        CHECK(comparison.escape_outside_mpc);
+        CHECK(comparison.mpc.collision_consistent);
+        CHECK(comparison.temporal.collision_consistent);
+        auto independent=root.fork();
+        int events=0;
+        for(const auto& segment:loop)
+            for(int frame=0;frame<segment.frames;++frame) {
+                independent->step(segment.action,1);
+                for(const auto& event:independent->get_events())
+                    if(event.target==0&&(event.kind=="projectile-hit"||
+                        event.kind=="contact-hit"||event.kind=="hazard-hit"))
+                        ++events;
+            }
+        CHECK(events==comparison.mpc.trajectory.damage_events);
+    });
+    test("temporal diagnostics do not change the MPC decision",[]{
+        auto f=frame();
+        f.player.health=6;
+        auto e=enemy({500,280},{60,0});
+        e.collision=2;
+        auto b=bullet({620,160},{-80,40});
+        b.radius=6;
+        f.entities={e,b};
+        LookaheadConfig look;
+        look.epochs=1;look.epoch_frames=6;
+        look.simulation_horizon_frames=6;look.simulation_branches=2;
+        MpcConfig mpc;
+        mpc.horizon_frames=18;mpc.segment_frames=6;
+        mpc.beam_width=2;mpc.min_beam_width=2;mpc.max_beam_width=3;
+        mpc.root_candidates=9;mpc.max_simulations=256;
+        mpc.time_budget_ms=1000;mpc.max_total_ms=0;
+        MpcCombatPlanner first_planner(mpc,look);
+        MpcCombatPlanner second_planner(mpc,look);
+        const auto first=first_planner.decide(f,true,nullptr);
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig sim;
+        sim.horizon_frames=18;sim.early_terminate=false;sim.danger_map=false;
+        ForwardSimulator root(sim);
+        std::string error;
+        CHECK(root.restore(snapshot,&error));
+        const auto reachability=search_temporal_reachability(root,
+            reachability_config(18,6,4,12));
+        CHECK(reachability.valid);
+        const auto selection=select_temporal_route(reachability,
+            TemporalRoutePolicy::escape);
+        const auto safest=select_temporal_route(reachability,
+            TemporalRoutePolicy::safest);
+        CHECK(selection.found);
+        CHECK(safest.found);
+        CHECK(selection.root_distance>=safest.root_distance);
+        const auto second=second_planner.decide(f,true,nullptr);
+        CHECK(first.available==second.available);
+        CHECK(first.first==second.first);
+        CHECK(first.sequence.segments.size()==second.sequence.segments.size());
+        for(size_t i=0;i<first.sequence.segments.size();++i)
+            CHECK(first.sequence.segments[i].action==
+                second.sequence.segments[i].action);
+    });
+    test("temporal reachability step state matrix is measured",[]{
+        const std::array<std::pair<int,int>,3> scenarios{{
+            {4,16},{8,32},{16,64}}};
+        for(const auto&[enemies,projectiles]:scenarios) {
+            const auto f=reachability_frame(enemies,projectiles);
+            for(int step:std::array<int,3>{3,6,12}) {
+                auto config=reachability_config(36,step,6,12);
+                config.max_seconds=2.0;
+                config.max_memory_bytes=64u*1024u*1024u;
+                const auto started=std::chrono::steady_clock::now();
+                const auto result=reachability_of(f,config);
+                const double ms=std::chrono::duration<double,std::milli>(
+                    std::chrono::steady_clock::now()-started).count();
+                std::cout<<"reachability_matrix enemies="<<enemies
+                    <<" projectiles="<<projectiles<<" step="<<step
+                    <<" ms="<<ms<<" valid="<<result.valid
+                    <<" timed_out="<<result.timed_out
+                    <<" states="<<result.total_states
+                    <<" layers="<<result.layers_completed
+                    <<" physical="<<result.physical_reachable_cells
+                    <<" safe="<<result.safe_reachable_cells
+                    <<" unsafe="<<result.physically_reachable_unsafe_cells
+                    <<" pruned="<<result.pruned_states
+                    <<" bytes="<<result.estimated_memory_bytes<<'\n';
+                CHECK(result.valid);
+                CHECK(!result.memory_limited);
+                CHECK(ms<15000.0);
+                CHECK(result.estimated_memory_bytes<64u*1024u*1024u);
+            }
+        }
+    });
+    test("temporal reachability state caps are measured",[]{
+        const auto f=reachability_frame(16,64);
+        for(int cap:std::array<int,3>{8,24,48}) {
+            auto config=reachability_config(36,6,12,cap);
+            config.max_seconds=2.0;
+            config.max_memory_bytes=64u*1024u*1024u;
+            const auto started=std::chrono::steady_clock::now();
+            const auto result=reachability_of(f,config);
+            const double ms=std::chrono::duration<double,std::milli>(
+                std::chrono::steady_clock::now()-started).count();
+            std::cout<<"reachability_cap cap="<<cap<<" ms="<<ms
+                <<" states="<<result.total_states
+                <<" pruned="<<result.pruned_states
+                <<" layers="<<result.layers_completed
+                <<" bytes="<<result.estimated_memory_bytes<<'\n';
+            CHECK(result.valid);
+            CHECK(!result.memory_limited);
+            CHECK(ms<15000.0);
+        }
+    });
+    test("counterfactual policy validation runs independent closed-loop worlds",[]{
+        PolicyValidationConfig config;
+        config.seeds=1;
+        config.max_steps=8;
+        config.step_frames=6;
+        config.scenario_limit=2;
+        config.mpc.horizon_frames=12;
+        config.mpc.min_horizon_frames=6;
+        config.mpc.segment_frames=6;
+        config.mpc.beam_width=2;
+        config.mpc.min_beam_width=2;
+        config.mpc.max_beam_width=2;
+        config.mpc.root_candidates=9;
+        config.mpc.max_simulations=128;
+        config.temporal.horizon_frames=12;
+        config.temporal.step_frames=6;
+        config.temporal.max_layers=2;
+        config.temporal.max_states_per_layer=6;
+        config.temporal.max_total_states=64;
+        const auto report=run_counterfactual_policy_validation(config);
+        CHECK(report.valid);
+        CHECK(report.runs==6);
+        CHECK(report.comparisons.size()==2);
+        for(const auto& comparison:report.comparisons) {
+            CHECK(comparison.initial_signature_consistent);
+            CHECK(comparison.original_mpc.frames>0);
+            CHECK(comparison.temporal_safest.frames>0);
+            CHECK(comparison.temporal_escape.frames>0);
+            CHECK(comparison.original_mpc.damage_taken>=0.0);
+            CHECK(comparison.temporal_safest.damage_taken>=0.0);
+            CHECK(comparison.temporal_escape.damage_taken>=0.0);
+            CHECK(comparison.original_mpc.damage_dealt>=0);
+            CHECK(comparison.temporal_safest.damage_dealt>=0);
+            CHECK(comparison.temporal_escape.damage_dealt>=0);
+            CHECK(comparison.temporal_safest.fallbacks>=0);
+            CHECK(comparison.temporal_escape.fallbacks>=0);
+        }
+        const auto second=run_counterfactual_policy_validation(config);
+        CHECK(second.valid);
+        CHECK(second.runs==report.runs);
+        for(size_t i=0;i<report.comparisons.size();++i) {
+            const auto& a=report.comparisons[i];
+            const auto& b=second.comparisons[i];
+            CHECK(a.original_mpc.frames==b.original_mpc.frames);
+            CHECK(a.temporal_safest.frames==b.temporal_safest.frames);
+            CHECK(a.temporal_escape.frames==b.temporal_escape.frames);
+            CHECK(std::abs(a.original_mpc.damage_taken-
+                b.original_mpc.damage_taken)<1e-9);
+            CHECK(a.original_mpc.damage_dealt==b.original_mpc.damage_dealt);
+            CHECK(a.temporal_escape.damage_dealt==
+                b.temporal_escape.damage_dealt);
+            CHECK(a.temporal_escape.fallbacks==b.temporal_escape.fallbacks);
+        }
+    });
+    test("movement intent holds a quiet room and preserves MPC fire",[]{
+        auto f=frame();
+        f.player.body.pos={320,280};
+        Decision decision;
+        decision.valid=true;
+        decision.move=Move::east;
+        decision.fire=Fire::right;
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        MovementIntentEvaluator evaluator;
+        MovementIntentInput input;
+        input.frame=&f;
+        input.decision=&decision;
+        input.snapshot=&snapshot;
+        auto evaluation=evaluator.evaluate(input);
+        CHECK(evaluation.intent==MovementIntent::hold);
+        CHECK(evaluation.requested_move==Move::stay);
+        MovementStabilizer stabilizer;
+        evaluation=stabilizer.stabilize(f,evaluation,false);
+        CHECK(evaluation.executed_move==Move::stay);
+        CHECK(decision.fire==Fire::right);
+        CHECK(decision.move==Move::east); // only the caller applies the move
+    });
+    test("movement stabilizer rejects small opposite direction changes",[]{
+        auto f=frame();
+        f.player.body.pos={320,280};
+        MovementStabilizer stabilizer;
+        MovementIntentEvaluation evaluation;
+        evaluation.intent=MovementIntent::reposition;
+        evaluation.requested_move=Move::east;
+        evaluation.predicted_movement_benefit=20.0;
+        auto first=stabilizer.stabilize(f,evaluation,false);
+        CHECK(first.executed_move==Move::east);
+        for(int i=0;i<8;++i) {
+            evaluation.requested_move=Move::east;
+            evaluation.predicted_movement_benefit=20.0;
+            first=stabilizer.stabilize(f,evaluation,false);
+        }
+        evaluation.requested_move=Move::west;
+        evaluation.predicted_movement_benefit=2.0;
+        auto weak=stabilizer.stabilize(f,evaluation,false);
+        CHECK(weak.executed_move==Move::east);
+        CHECK(weak.movement_suppressed);
+        CHECK(weak.suppression_reason=="opposite-switch-margin");
+        evaluation.requested_move=Move::west;
+        evaluation.predicted_movement_benefit=50.0;
+        auto strong=stabilizer.stabilize(f,evaluation,false);
+        CHECK(strong.executed_move==Move::west);
+        CHECK(strong.direction_switch_count>0);
+    });
+    test("movement escape bypasses the stabilizer and clears the lock",[]{
+        auto f=frame();
+        f.player.body.pos={320,280};
+        MovementStabilizer stabilizer;
+        MovementIntentEvaluation evaluation;
+        evaluation.intent=MovementIntent::reposition;
+        evaluation.requested_move=Move::east;
+        evaluation.predicted_movement_benefit=20.0;
+        stabilizer.stabilize(f,evaluation,false);
+        evaluation.intent=MovementIntent::escape;
+        evaluation.requested_move=Move::west;
+        evaluation.predicted_movement_benefit=100.0;
+        auto escaped=stabilizer.stabilize(f,evaluation,true);
+        CHECK(escaped.executed_move==Move::west);
+        CHECK(escaped.suppression_reason=="escape-bypass");
+        evaluation.intent=MovementIntent::hold;
+        evaluation.requested_move=Move::stay;
+        (void)stabilizer.stabilize(f,evaluation,false);
+        evaluation.intent=MovementIntent::reposition;
+        evaluation.requested_move=Move::east;
+        evaluation.predicted_movement_benefit=20.0;
+        auto replanned=stabilizer.stabilize(f,evaluation,false);
+        CHECK(replanned.executed_move==Move::east);
+        CHECK(replanned.suppression_reason=="lock");
+    });
+    test("movement intent detects a warning laser before activation",[]{
+        auto f=frame();
+        f.player.body.pos={320,280};
+        auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        snapshot.hazards.push_back(temporal_hazard_state({340,280},8,0.2,0.4));
+        Decision decision;
+        decision.valid=true;
+        decision.move=Move::stay;
+        MovementIntentEvaluator evaluator;
+        MovementIntentInput input;
+        input.frame=&f;
+        input.decision=&decision;
+        input.snapshot=&snapshot;
+        const auto evaluation=evaluator.evaluate(input);
+        CHECK(evaluation.intent==MovementIntent::preemptive_dodge);
+        CHECK(evaluation.requested_move!=Move::stay);
+        CHECK(!evaluation.danger_now);
+    });
+    test("movement intent escapes an immediate projectile collision",[]{
+        auto f=frame();
+        f.player.body.pos={320,280};
+        auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ProjectileState projectile;
+        projectile.entity.type=9;
+        projectile.entity.address=0x510001;
+        projectile.entity.exists=true;
+        projectile.entity.active=true;
+        projectile.entity.pos=f.player.body.pos;
+        projectile.entity.vel={0,0};
+        projectile.entity.radius=8;
+        projectile.entity.damage=1;
+        projectile.entity.collision=1;
+        // Native damage allows heights above -50. Do not treat every negative
+        // height as a harmless ground projectile.
+        projectile.entity.height=-25;
+        projectile.entity.height_known=true;
+        projectile.entity.projectile_flags=0;
+        projectile.role=ProjectileRole::hostile;
+        projectile.real=true;
+        snapshot.projectiles.push_back(projectile);
+        Decision decision;
+        decision.valid=true;
+        decision.move=Move::stay;
+        MovementIntentEvaluator evaluator;
+        MovementIntentInput input;
+        input.frame=&f;
+        input.decision=&decision;
+        input.snapshot=&snapshot;
+        const auto evaluation=evaluator.evaluate(input);
+        CHECK(evaluation.intent==MovementIntent::escape);
+        CHECK(evaluation.danger_now);
+        CHECK(evaluation.requested_move!=Move::stay);
+        CHECK(evaluator.requires_escape(input));
+    });
+    test("movement intent preempts a charging enemy",[]{
+        auto f=frame();
+        f.player.body.pos={320,280};
+        auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        EnemyState enemy;
+        enemy.entity.type=10;
+        enemy.entity.address=0x310001;
+        enemy.entity.exists=true;
+        enemy.entity.active=true;
+        enemy.entity.pos={400,280};
+        enemy.entity.vel={0,0};
+        enemy.entity.radius=16;
+        enemy.entity.damage=1;
+        enemy.entity.collision=2;
+        EnemyIntent intent;
+        intent.enemy_id=enemy.entity.address;
+        intent.primitive=AttackPrimitive::charge;
+        intent.trigger_time=0.15;
+        intent.length=220;
+        intent.can_instantiate=true;
+        intent.evidence=AttackEvidence::verified;
+        enemy.intents.push_back(intent);
+        snapshot.enemies.push_back(enemy);
+        Decision decision;
+        decision.valid=true;
+        decision.move=Move::stay;
+        MovementIntentEvaluator evaluator;
+        MovementIntentInput input;
+        input.frame=&f;
+        input.decision=&decision;
+        input.snapshot=&snapshot;
+        const auto evaluation=evaluator.evaluate(input);
+        CHECK(evaluation.intent==MovementIntent::preemptive_dodge);
+        CHECK(evaluation.requested_move!=Move::stay);
+    });
+    test("movement intent allows a tactical reposition",[]{
+        auto f=frame();
+        f.player.body.pos={320,280};
+        f.entities={enemy({500,280},{0,0})};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        Decision decision;
+        decision.valid=true;
+        decision.move=Move::stay;
+        MpcPlan plan;
+        plan.available=true;
+        plan.safety.evaluated=true;
+        plan.safety.safe=true;
+        plan.safety.min_clearance=20;
+        plan.safety.reachable_area=0.40;
+        plan.safety.escape_directions=3;
+        plan.safety.maneuverability=0.2;
+        plan.combat.valid=true;
+        plan.combat.target_in_range=false;
+        plan.combat.target_line_clear=false;
+        plan.combat.target_distance=300;
+        plan.combat.objective.attack_reachability=0.10;
+        plan.combat.objective.attack_opportunity=0.10;
+        plan.combat.objective.target_position_gain=0.10;
+        plan.combat.objective.exposure_cost=0.50;
+        plan.combat.objective.need_reposition=true;
+        MpcCandidateSummary candidate;
+        candidate.action=SimAction{Move::east,Fire::right,true};
+        candidate.branch.valid=true;
+        candidate.branch.attack_reachability=0.90;
+        candidate.branch.attack_opportunity=0.90;
+        candidate.branch.target_distance=150;
+        candidate.branch.positioning=0.90;
+        candidate.branch.exposure=0.10;
+        candidate.branch.need_reposition=true;
+        candidate.safety.evaluated=true;
+        candidate.safety.safe=true;
+        candidate.safety.min_clearance=60;
+        candidate.safety.reachable_area=0.70;
+        candidate.safety.escape_directions=6;
+        candidate.safety.maneuverability=0.5;
+        plan.candidates.push_back(candidate);
+        MovementIntentEvaluator evaluator;
+        MovementIntentInput input;
+        input.frame=&f;
+        input.decision=&decision;
+        input.plan=&plan;
+        input.snapshot=&snapshot;
+        const auto evaluation=evaluator.evaluate(input);
+        CHECK(evaluation.intent==MovementIntent::reposition);
+        CHECK(evaluation.requested_move==Move::east);
+        CHECK(evaluation.predicted_movement_benefit>0.0);
+    });
+    test("movement evaluator reuses the temporal escape selection",[]{
+        auto f=frame();
+        const auto reachability=reachability_of(f,reachability_config(9,3,3,9));
+        CHECK(reachability.valid);
+        MovementIntentEvaluator evaluator;
+        MovementIntentEvaluation evaluation;
+        CHECK(evaluator.apply_temporal_escape(reachability,evaluation));
+        CHECK(evaluation.intent==MovementIntent::escape);
+        CHECK(evaluation.temporal_escape_used);
+        CHECK(evaluation.reason=="temporal-escape");
+    });
+    test("temporal path and branch capture performance is measured",[]{
+        auto base=simulation_world(frame());
+        const auto frames=temporal_sequence(base,96,[&](SimWorld& world,int frame){
+            world.projectiles={temporal_projectile(
+                {120.0+double(frame)*8.0,200.0},{80,0},51)};
+            world.enemies={safety_enemy(
+                {320.0+double(frame)*2.0,280.0},52)};
+        });
+        TemporalDangerConfig config;
+        config.slice_frames=6;
+        config.max_slices=16;
+        const auto danger=build_temporal_danger(frames,config);
+        std::vector<TemporalTrajectorySample> samples;
+        for(int frame=0;frame<96;++frame)
+            samples.push_back(temporal_sample(frame,
+                {120.0+double(frame)*4.0,280.0}));
+        double path_total=0;
+        for(int run=0;run<200;++run) {
+            const auto started=std::chrono::steady_clock::now();
+            const auto assessment=assess_temporal_path(danger,samples);
+            path_total+=std::chrono::duration<double,std::milli>(
+                std::chrono::steady_clock::now()-started).count();
+            CHECK(assessment.evaluated);
+        }
+
+        auto f=frame();
+        f.player.health=6;
+        auto e=enemy({500,280},{120,0});
+        e.collision=2;
+        f.entities={e};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig sim;
+        sim.horizon_frames=60;
+        sim.early_terminate=false;
+        sim.danger_map=false;
+        ForwardSimulator root(sim);
+        std::string error;
+        CHECK(root.restore(snapshot,&error));
+        TemporalDangerConfig branch_config;
+        branch_config.slice_frames=6;
+        branch_config.max_slices=16;
+        const std::vector<SimActionSegment> plan{{
+            SimAction{Move::east,Fire::none,false},60}};
+        double branch_total=0;
+        size_t branch_bytes=0;
+        size_t branch_samples=0;
+        for(int run=0;run<10;++run) {
+            const auto started=std::chrono::steady_clock::now();
+            const auto trajectory=capture_temporal_trajectory(root,plan,branch_config);
+            const auto assessment=assess_temporal_trajectory(trajectory);
+            branch_total+=std::chrono::duration<double,std::milli>(
+                std::chrono::steady_clock::now()-started).count();
+            CHECK(assessment.evaluated);
+            branch_bytes=trajectory.danger.static_blocked.size()+
+                sizeof(Grid)+
+                trajectory.danger.static_grid.cells.size()*sizeof(Cell)+
+                trajectory.danger.slices.size()*
+                    size_t(trajectory.danger.cell_count()*3)+
+                trajectory.samples.size()*sizeof(TemporalTrajectorySample);
+            branch_samples=trajectory.samples.size();
+        }
+        const double path_ms=path_total/200.0;
+        const double branch_ms=branch_total/10.0;
+        std::cout<<"temporal_path_assess_ms="<<path_ms
+                 <<" temporal_branch_capture_ms="<<branch_ms
+                 <<" temporal_branch_bytes="<<branch_bytes
+                 <<" temporal_branch_samples="<<branch_samples<<'\n';
+        CHECK(path_ms<50.0);
+        CHECK(branch_ms<200.0);
+    });
+    test("recovered curve and orbit motion use native formulas",[]{
+        auto f=frame();
+        ProjectileMotionContext context;
+        context.grid=&f.grid;
+        context.room_type=0;
+        context.clock=100;
+        context.player_pos=f.player.body.pos;
+        context.player_vel={0,0};
+        context.player=&f.player.body;
+        std::vector<Entity> entities;
+        context.lookup_user=&entities;
+        context.lookup=[](const void* user,uint32_t address)->const Entity* {
+            const auto* list=static_cast<const std::vector<Entity>*>(user);
+            for(const auto& entity:*list)if(entity.address==address)return &entity;
+            return nullptr;
+        };
+        auto make_state=[](const Entity& e) {
+            ProjectileMotionState state;
+            state.entity=e;
+            state.pos=e.pos;
+            state.vel=e.vel;
+            state.height=e.height;
+            state.falling=0;
+            return state;
+        };
+        auto curve=bullet({420,280},{300,0});
+        curve.friction=1;curve.speed_multiplier=1;
+        curve.projectile_flags=1ULL<<19; // CURVE_RIGHT
+        curve.projectile_curve=0.5;
+        curve.height_known=false;
+        auto curve_state=make_state(curve);
+        CHECK(advance_projectile(curve_state,context,1));
+        CHECK(std::abs(curve_state.vel.norm()-300.0)<1.0);
+        CHECK(curve_state.vel.y>0.0);
+        auto orbit=bullet({420,280},{0,120});
+        orbit.friction=1;orbit.speed_multiplier=1;
+        orbit.projectile_flags=1ULL<<11; // ORBIT_CW
+        orbit.projectile_orbit_distance=100;
+        orbit.target_pos={320,280};
+        orbit.height_known=false;
+        auto orbit_state=make_state(orbit);
+        CHECK(advance_projectile(orbit_state,context,1));
+        CHECK(orbit_state.vel.y>0.0);
+        orbit.projectile_flags=1ULL<<12; // ORBIT_CCW
+        auto reverse_state=make_state(orbit);
+        CHECK(advance_projectile(reverse_state,context,1));
+        CHECK(reverse_state.vel.y<0.0);
+    });
+    test("special projectile change fields use the recovered multi-stage model",[]{
+        auto f=frame();
+        auto b=bullet({500,280},{60,0});
+        b.projectile_flags=1ULL<<33;
+        b.projectile_change_flags=1;
+        b.projectile_change_timeout=2;
+        b.projectile_change_velocity=4;
+        f.entities={b};
+        const auto root=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        CHECK(root.projectiles.size()==1);
+        ForwardSimConfig config;
+        config.horizon_frames=6;
+        config.danger_map=true;
+        ForwardSimulator simulator(config);
+        std::string error;
+        CHECK(simulator.restore(root,&error));
+        const SimWorld before=simulator.world();
+        CHECK(before.projectiles.size()==1);
+        CHECK(before.projectiles[0].native_special);
+        CHECK(!before.projectiles[0].maneuver_uncertain);
+        CHECK(before.projectiles[0].maneuver_kind.find("multi-stage")!=std::string::npos);
+        simulator.step(SimAction{},6);
+        const SimWorld after=simulator.world();
+        CHECK(after.projectiles.size()==1);
+        CHECK(after.projectiles[0].maneuver_uncertainty==0.0);
+        CHECK(std::abs(after.projectiles[0].vel.norm()-120.0)<1.0);
+        CHECK((after.projectiles[0].native.projectile_flags&(1ULL<<33))==0);
+        const auto score=simulator.score();
+        CHECK(score.special_projectiles>=1);
+        CHECK(score.uncertain_maneuvers==0);
+    });
+    test("unmodelled projectile motion keeps the uncertainty envelope",[]{
+        auto f=frame();
+        auto b=bullet({500,280},{120,0});
+        b.projectile_flags=1ULL<<6; // BOOMERANG
+        f.entities={b};
+        const auto root=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        ForwardSimConfig config;
+        config.horizon_frames=6;
+        ForwardSimulator simulator(config);
+        std::string error;
+        CHECK(simulator.restore(root,&error));
+        CHECK(simulator.world().projectiles[0].maneuver_uncertain);
+        CHECK(simulator.world().projectiles[0].maneuver_kind.find("unmodelled")!=std::string::npos);
+        simulator.step(SimAction{},6);
+        CHECK(simulator.world().projectiles[0].maneuver_uncertainty>0.0);
+    });
+    test("mpc emergency ranking is used when every first action takes damage",[]{
+        auto f=frame();
+        auto b=bullet({320,280},{0,0});
+        b.radius=40;
+        b.damage=1;
+        f.entities={b};
+        LookaheadConfig look;
+        look.epochs=1;
+        look.epoch_frames=6;
+        look.simulation_horizon_frames=6;
+        look.simulation_branches=2;
+        MpcConfig config;
+        config.horizon_frames=18;
+        config.segment_frames=6;
+        config.beam_width=3;
+        config.min_beam_width=2;
+        config.max_beam_width=4;
+        config.root_candidates=12;
+        config.full_root_actions=false;
+        config.max_simulations=64;
+        config.time_budget_ms=200;
+        config.safety.collision_horizon_frames=6;
+        MpcCombatPlanner planner(config,look);
+        const auto plan=planner.decide(f,true,nullptr);
+        CHECK(plan.available);
+        CHECK(plan.emergency);
+        CHECK(plan.stats.emergency);
+        CHECK(plan.decision.strategy_mode=="Emergency");
+        CHECK(plan.decision.reason.find("emergency-escape")!=std::string::npos);
+    });
+    test("damage-aware tier B keeps the minimum-risk combat set when no safe action exists",[]{
+        auto f=frame();
+        auto b=bullet({320,280},{0,0});b.radius=40;b.damage=1;
+        auto e=enemy({500,280});e.collision=0;e.hp=20;
+        f.entities={b,e};
+        LookaheadConfig look;look.epochs=1;look.epoch_frames=6;
+        look.simulation_horizon_frames=6;look.simulation_branches=2;
+        MpcConfig config;config.horizon_frames=18;config.segment_frames=6;
+        config.beam_width=3;config.min_beam_width=2;config.max_beam_width=4;
+        config.root_candidates=12;config.full_root_actions=false;
+        config.max_simulations=64;config.time_budget_ms=200;
+        config.safety.collision_horizon_frames=6;
+        config.damage_aware_arbitration=true;
+        config.tier_b_damage_tolerance=0.25;
+        MpcCombatPlanner planner(config,look);
+        const auto plan=planner.decide(f,true,nullptr);
+        CHECK(plan.available);
+        CHECK(plan.stats.tier_b_used);
+        CHECK(plan.stats.tier_b_candidates>0);
+        CHECK(plan.stats.tier_b_min_damage>=0);
+        CHECK(plan.arbitration.value("tier_b_used",false));
+        CHECK(plan.to_json().at("arbitration").contains("tier_b_min_damage"));
+        CHECK(plan.sequence.damage_aware);
+        CHECK(plan.sequence.combat_value>0);
+    });
+    test("mpc review reports direction reversals boundary dwell and overlay error",[]{
+        std::vector<json> records;
+        auto record=[&](uint32_t clock,int move,double boundary,bool emergency,
+                        bool safe) {
+            json row;
+            row["clock"]=clock;
+            row["mpc"]={{"first",{{"move",move},{"fire",0}}},
+                {"safety",{{"safe",safe},{"in_danger",emergency},
+                    {"maneuverability",safe?0.8:0.2},
+                    {"boundary_clearance",boundary}}},
+                {"emergency",emergency}};
+            return row;
+        };
+        records.push_back(record(100,3,120,false,true));
+        records.push_back(record(101,3,120,false,true));
+        records.push_back(record(102,7,10,true,false));
+        auto overlay=record(103,7,100,false,true);
+        overlay["closed_loop"]={{"prediction",{{"overlay_valid",true},
+            {"predicted_player",{320,280}},{"actual_player",{323,284}}}}};
+        records.push_back(overlay);
+        const auto review=analyze_mpc_session_records(records);
+        CHECK(review.frames==4);
+        CHECK(review.valid_frames==4);
+        CHECK(review.direction_switches==1);
+        CHECK(review.reversals==1);
+        CHECK(review.boundary_frames==1);
+        CHECK(review.emergency_frames==1);
+        CHECK(review.safety_failures==1);
+        CHECK(review.mean_prediction_error>4.9);
+        CHECK(review.to_json()["timeline"].size()==4);
+    });
+    test("prediction monitor matches a consistent future and flags a mismatch",[]{
+        auto f=frame();f.player.health=6;
+        auto e=enemy({500,280});e.collision=0;e.vel={0,0};e.state=0;e.hp=10;
+        f.entities={e};
+        const auto root=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        PredictionMonitorConfig config;config.actual_hz=30;config.dt=1.0/60;
+        config.smoothing=0;config.fallback_threshold=0.20;config.warn_threshold=0.05;
+        config.trust_smoothing=1.0;config.low_trust_threshold=0.50;
+        const auto dump_dir=std::filesystem::current_path()/"gamebot-prediction-failures";
+        std::filesystem::remove_all(dump_dir);
+        config.dump_failures=true;config.dump_directory=dump_dir;
+        config.dump_cooldown_clock=0;
+        PredictionErrorMonitor monitor(config);
+        const std::vector<SimActionSegment> plan{
+            {SimAction{Move::stay,Fire::none,false},6}};
+        const auto trace=monitor.capture(root,plan,12);
+        CHECK(trace.valid);
+        CHECK(trace.frames.size()==6);
+        monitor.store(trace);
+        f.clock+=1;
+        const auto expected=monitor.observe(WorldStateBridge::snapshot(f,nullptr,nullptr));
+        CHECK(expected.valid);
+        CHECK(!expected.high_error);
+        CHECK(!expected.fallback);
+        CHECK(std::isfinite(expected.reader_error));
+        CHECK(std::isfinite(expected.time_sync_error));
+        CHECK(std::isfinite(expected.model_error));
+        f.clock+=1;f.player.health=4;
+        auto moved=enemy({700,280});moved.address=e.address;moved.seed=e.seed;
+        moved.collision=0;moved.vel={0,0};moved.state=7;moved.hp=10;
+        f.entities={moved};
+        const auto mismatch=monitor.observe(WorldStateBridge::snapshot(f,nullptr,nullptr));
+        CHECK(mismatch.valid);
+        CHECK(mismatch.high_error);
+        CHECK(mismatch.fallback);
+        CHECK(mismatch.health_delta>0);
+        CHECK(mismatch.player_position_error.norm()>=0);
+        CHECK(!mismatch.sources.empty());
+        CHECK(mismatch.sources.front().low_trust);
+        CHECK(!mismatch.low_trust_sources.empty());
+        CHECK(!mismatch.dump_path.empty());
+        CHECK(std::filesystem::exists(mismatch.dump_path));
+        std::filesystem::remove_all(dump_dir);
+    });
+    test("closed loop applies prediction feedback and falls back to joint planning",[]{
+        auto f=frame();f.player.health=6;
+        auto e=enemy({500,280});e.hp=10;e.collision=0;e.vel={0,0};f.entities={e};
+        LookaheadConfig look;look.epochs=1;look.epoch_frames=6;
+        look.simulation_horizon_frames=6;look.simulation_branches=2;
+        MpcConfig config;config.horizon_frames=24;config.segment_frames=6;
+        config.beam_width=2;config.root_candidates=8;config.full_root_actions=false;
+        config.max_simulations=24;config.time_budget_ms=60;
+        ClosedLoopConfig loop;loop.dump_failures=false;loop.actual_hz=30;loop.dt=1.0/60;
+        RealtimeMpcController controller(config,look,loop);
+        PredictionMonitorConfig monitor;monitor.actual_hz=30;monitor.dt=1.0/60;
+        monitor.smoothing=0;monitor.fallback_threshold=0.20;
+        monitor.warn_threshold=0.05;monitor.dump_failures=false;
+        controller.set_monitor_config(monitor);
+        const auto first=controller.step(f,true,nullptr);
+        CHECK(first.mpc_active);
+        CHECK(first.decision.valid);
+        CHECK(!first.report.valid);
+        CHECK(!first.plan.sequence.segments.empty());
+        f.clock+=1;
+        const auto second=controller.step(f,true,nullptr);
+        CHECK(second.report.valid);
+        CHECK(!second.safety_stop);
+        f.clock+=1;f.player.health=4;
+        auto moved=enemy({700,280});moved.address=e.address;moved.seed=e.seed;
+        moved.collision=0;moved.vel={0,0};moved.hp=10;
+        f.entities={moved};
+        const auto third=controller.step(f,true,nullptr);
+        CHECK(third.report.high_error);
+        CHECK(third.feedback.fallback);
+        CHECK(third.plan.used_fallback);
+        CHECK(third.plan.stats.feedback_fallback);
+    });
+    test("discovery candidates compile to a loadable runtime pattern rule",[]{
+        MechanismCandidate candidate;
+        candidate.identity="999.0.0";candidate.primitive="aimed_projectile";
+        candidate.state="4";candidate.animation="Shoot";
+        candidate.evidence_status="inferred";candidate.samples=4;
+        candidate.confidence=0.7;candidate.source_refs="synthetic";
+        candidate.timing={{"trigger_frame",12},{"speed",180},{"duration_frames",20}};
+        candidate.geometry={{"count",1},{"radius",5}};
+        const auto compiled=MechanismModelCompiler::compile(candidate);
+        CHECK(compiled.loadable);
+        CHECK(compiled.pattern_rule.value("target_identity",std::string{})=="999.0.0");
+        CHECK(compiled.runtime_model.value("format",std::string{})==
+            "isaac-gamebot-monster-geometry-patterns-v1");
+        const auto path=std::filesystem::current_path()/"discovered-patterns-test.json";
+        std::ofstream out{path};out<<compiled.runtime_model.dump(2)<<'\n';out.close();
+        MechanismSemantics semantics;
+        CHECK(semantics.load(semantics_path()));
+        CHECK(semantics.load_discovered_patterns(path,true,nullptr));
+        bool found=false;
+        for(const auto& model:semantics.geometry_inventory())
+            if(model.id.find("999.0.0|discovered")!=std::string::npos)found=true;
+        CHECK(found);
+        std::filesystem::remove(path);
+    });
+    test("mpc feedback shortens horizon and expands unknown hazards",[]{
+        MpcConfig config;config.horizon_frames=120;config.min_horizon_frames=24;
+        MpcCombatPlanner planner(config);
+        PredictionFeedback feedback;feedback.horizon_scale=0.50;
+        feedback.unknown_radius_scale=2.0;feedback.fallback=true;
+        planner.apply_feedback(feedback);
+        CHECK(planner.horizon_frames()==60);
+        CHECK(std::abs(planner.unknown_radius_scale()-2.0)<1e-9);
+        CHECK(planner.forced_fallback());
+        planner.clear_feedback();
+        CHECK(planner.horizon_frames()==120);
+        CHECK(std::abs(planner.unknown_radius_scale()-1.0)<1e-9);
+        CHECK(!planner.forced_fallback());
+    });
+    test("runtime performance summary reports percentiles and fallback counts",[]{
+        RuntimePerformanceMonitor monitor;
+        FramePerformance sample;
+        sample.reader_ms=1;sample.bridge_ms=2;sample.monitor_ms=3;
+        sample.mpc_ms=4;sample.action_ms=5;sample.total_ms=15;
+        for(int i=0;i<100;++i) {
+            sample.reader_ms=double(i);
+            sample.total_ms=double(i);
+            sample.timed_out=i%20==0;
+            sample.fallback=i%25==0;
+            monitor.observe(sample);
+        }
+        const auto summary=monitor.summary();
+        CHECK(summary.samples==100);
+        CHECK(summary.reader.p50>=49&&summary.reader.p50<=50);
+        CHECK(summary.reader.p95>=94&&summary.reader.p95<=96);
+        CHECK(summary.reader.p99>=98);
+        CHECK(summary.timeouts==5);
+        CHECK(summary.fallbacks==4);
+        CHECK(summary.to_json().contains("total_ms"));
+    });
+    test("failure analyzer correlates prediction errors by identity and mechanism",[]{
+        json report=json::object();
+        report["valid"]=true;
+        report["error_score"]=0.70;
+        report["high_error"]=true;
+        report["fallback"]=true;
+        report["health_delta"]=1;
+        report["predicted_damage_cause"]="projectile";
+        report["predicted_damage_source"]=0x30000;
+        report["sources"]=json::array({
+            {{"id",0x30000},{"type",10},{"variant",0},{"subtype",0},
+             {"samples",3},{"position",0.8},{"velocity",0.4},
+             {"hp",0.2},{"state",1.0},{"boss_phase",0.0}}});
+        FailureAnalyzer analyzer;
+        analyzer.observe_report(report,100,"synthetic-log");
+        analyzer.observe_report(report,101,"synthetic-log");
+        const auto result=analyzer.finish();
+        CHECK(!result.findings.empty());
+        CHECK(result.reports==2);
+        CHECK(result.high_error_reports==2);
+        bool state=false,motion=false,damage=false;
+        for(const auto& finding:result.findings) {
+            if(finding.identity=="10.0.0"&&finding.kind==FailureKind::state_transition)
+                state=true;
+            if(finding.identity=="10.0.0"&&finding.kind==FailureKind::enemy_movement)
+                motion=true;
+            if(finding.kind==FailureKind::damage_prediction)damage=true;
+        }
+        CHECK(state);
+        CHECK(motion);
+        CHECK(damage);
+        CHECK(result.by_kind.count("state_transition")==1);
+        CHECK(result.to_json().contains("findings"));
+    });
+    test("discovery pipeline discovers behavior, compiles candidates and versions the library",[]{
+        const auto directory=std::filesystem::current_path()/"gamebot-discovery-test";
+        std::filesystem::remove_all(directory);
+        std::filesystem::create_directories(directory/"logs");
+        auto f=frame();f.player.health=6;f.player.body.pos={320,280};
+        auto e=enemy({500,280});e.collision=0;e.hp=10;e.vel={};e.state=4;
+        e.animation="Shoot";e.animation_frame=4;e.animation_playing=true;
+        e.animation_speed=1;e.speed_multiplier=1;
+        auto projectile=bullet({490,280},{-200,0});
+        projectile.spawner=e.address;projectile.parent=e.address;
+        auto projectile2=bullet({490,280},{-200,0});
+        projectile2.address=0x50001;projectile2.spawner=e.address;
+        projectile2.parent=e.address;
+        auto projectile3=bullet({490,280},{-200,0});
+        projectile3.address=0x50002;projectile3.spawner=e.address;
+        projectile3.parent=e.address;
+        std::filesystem::create_directories(directory/"references");
+        std::ofstream reference{directory/"references"/"gamebot_phase4_timing.json"};
+        reference<<json{{"timings",{{"10.0.0:4:Shoot",
+            {{"trigger_animation_frame",8},{"timing_verified",true},
+             {"source","synthetic-decompiled-reference"}}}}}}.dump(2);
+        reference.close();
+        std::ofstream log{directory/"logs"/"frames.jsonl"};
+        for(int clock=100;clock<107;++clock) {
+            f.clock=uint32_t(clock);
+            if(clock==101)e.state=8;
+            if(clock==102)e.state=4;
+            f.entities={e};
+            if(clock>=102)f.entities.push_back(projectile);
+            if(clock>=104)f.entities.push_back(projectile2);
+            if(clock>=105)f.entities.push_back(projectile3);
+            log<<json{{"frame",f}}.dump()<<'\n';
+        }
+        log.close();
+        json failure{{"clock",100},{"report",{{"valid",true},
+            {"error_score",0.8},{"high_error",true},{"fallback",true},
+            {"sources",json::array({{{"id",0x30000},{"type",10},
+                {"variant",0},{"subtype",0},{"position",0.9},
+                {"state",1.0},{"samples",2}}})}}}};
+        std::ofstream failure_file{directory/"logs"/"failure.json"};
+        failure_file<<failure.dump(2)<<'\n';failure_file.close();
+        MechanismReferenceIndex loaded_refs;
+        CHECK(MechanismReferenceLoader::load(directory/"references",loaded_refs,nullptr));
+        CHECK(!loaded_refs.references.empty());
+        CHECK(!loaded_refs.find("10.0.0",4,"Shoot").empty());
+        DiscoveryConfig config;
+        config.reference_directory=directory/"references";
+        config.library_directory=directory/"library";
+        config.write_library=true;
+        DiscoveryPipeline pipeline(config);
+        const auto result=pipeline.run(directory/"logs");
+        CHECK(result.failure.findings.size()>0);
+        CHECK(!result.behavior.profiles.empty());
+        CHECK(result.behavior.attacks>=2);
+        CHECK(result.behavior.transitions>0);
+        CHECK(result.clustering.clusters>=1);
+        CHECK(result.formulas.formulas>=1);
+        bool promotable=false;
+        for(const auto& formula:result.formulas.items)
+            promotable|=formula.can_promote_verified;
+        CHECK(promotable);
+        bool referenced=false;
+        for(const auto& formula:result.formulas.items)
+            referenced|=!formula.source_refs.empty();
+        CHECK(referenced);
+        CHECK(!result.candidates.empty());
+        CHECK(!result.compiled.empty());
+        CHECK(result.compiled.front().pattern_rule.contains("target_identity"));
+        CHECK(result.update.success);
+        CHECK(result.update.new_version>=1);
+        CHECK(std::filesystem::exists(directory/"library"/"current.json"));
+        auto library=MechanismLibrary::load(directory/"library"/"current.json",nullptr);
+        CHECK(bool(library));
+        CHECK(library->version>=1);
+        MechanismLibraryUpdater updater({},directory/"library");
+        std::string error;
+        auto rolled=updater.rollback(result.update.new_version,&error);
+        CHECK(bool(rolled));
+        CHECK(rolled->version==result.update.new_version);
+        auto compiled=MechanismModelCompiler::compile(result.candidates.front());
+        CHECK(compiled.pattern_rule.contains("pattern"));
+        std::filesystem::remove_all(directory);
+    });
+
+    test("projectile motion models join the mechanism library version chain",[]{
+        const auto directory=std::filesystem::current_path()/
+            "gamebot-projectile-library-test";
+        std::error_code ignored;
+        std::filesystem::remove_all(directory,ignored);
+        std::filesystem::create_directories(directory,ignored);
+        const auto models=directory/"projectile_motion_models.json";
+        auto write=[&](int version,bool extra) {
+            json rows=json::array();
+            rows.push_back({{"id","projectile-curve-left-right"},
+                {"status","inferred"},{"runtime_loadable",false}});
+            if(extra)rows.push_back({{"id","projectile-orbit-cw-ccw"},
+                {"status","inferred"},{"runtime_loadable",false}});
+            json value{{"format","isaac-gamebot-projectile-motion-v1"},
+                {"version",version},{"models",rows}};
+            std::ofstream out{models};
+            out<<value.dump(2)<<'\n';
+            out.close();
+            if(!out)throw std::runtime_error("cannot write "+models.string());
+        };
+        write(1,false);
+        MechanismLibrary library;
+        MechanismLibraryUpdater updater({},directory);
+        const auto first=updater.update_projectile_models(library,models,"test import");
+        CHECK(first.success);
+        CHECK(first.new_version==1);
+        CHECK(first.diff.projectile_models_status=="added");
+        auto current=MechanismLibrary::load(directory/"current.json");
+        CHECK(bool(current));
+        CHECK(current->projectile_models.value("version",0)==1);
+        auto index=projectile_motion_model_index(*current);
+        CHECK(index["model_count"]==1);
+        write(2,true);
+        const auto second=updater.update_projectile_models(*current,models,"test update");
+        CHECK(second.success);
+        CHECK(second.new_version==2);
+        CHECK(second.diff.projectile_models_status=="updated");
+        auto old_library=MechanismLibrary::load(directory/"library-v1.json");
+        auto new_library=MechanismLibrary::load(directory/"library-v2.json");
+        CHECK(bool(old_library));
+        CHECK(bool(new_library));
+        const auto diff=compare_mechanism_libraries(*old_library,*new_library);
+        CHECK(diff.projectile_models_status=="updated");
+        auto rolled=updater.rollback(1);
+        CHECK(bool(rolled));
+        CHECK(rolled->version==1);
+        auto reloaded=MechanismLibrary::load(directory/"current.json");
+        CHECK(bool(reloaded));
+        CHECK(reloaded->version==1);
+        const auto reloaded_index=projectile_motion_model_index(*reloaded);
+        CHECK(reloaded_index["model_count"]==1);
+        std::filesystem::remove_all(directory,ignored);
+    });
+
+    test("combat scenario classifier derives tags from observed state, not a type table",[]{
+        auto f=frame();f.player.health=6;
+        auto e=enemy({520,280});e.collision=0;f.entities={e};
+        const auto base_snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        CombatScenarioClassifier classifier;
+        const auto plain=classifier.classify(base_snapshot);
+        CHECK(plain.has(ScenarioTag::normal_room));
+        CHECK(!plain.has(ScenarioTag::dense_projectiles));
+
+        // Dense projectiles from several directions. No entity type is used by
+        // the classifier; only the observed projectile geometry matters.
+        auto dense_frame=frame();dense_frame.player.health=6;
+        std::vector<Entity> bullets;
+        for(int i=0;i<16;++i) {
+            const double angle=double(i)*2.0*3.14159265358979323846/16.0;
+            const Vec pos{320.0+std::cos(angle)*150.0,280.0+std::sin(angle)*150.0};
+            auto b=bullet(pos,Vec{-std::cos(angle)*120.0,-std::sin(angle)*120.0});
+            b.address=0x50000+uint32_t(i);
+            bullets.push_back(b);
+        }
+        dense_frame.entities=bullets;
+        const auto dense_snapshot=WorldStateBridge::snapshot(dense_frame,nullptr,nullptr);
+        const auto dense=classifier.classify(dense_snapshot);
+        CHECK(dense.has(ScenarioTag::dense_projectiles));
+        CHECK(dense.has(ScenarioTag::multi_direction_pressure));
+        CHECK(dense.features.attack_directions>=3);
+
+        // Boss and unknown tags come from flags/mechanism evidence.
+        auto boss_frame=frame();
+        auto boss=enemy({520,280});boss.is_boss=true;boss.collision=0;
+        boss_frame.entities={boss};
+        const auto boss_snapshot=WorldStateBridge::snapshot(boss_frame,nullptr,nullptr);
+        CHECK(classifier.classify(boss_snapshot).has(ScenarioTag::boss_combat));
+
+        auto unknown_frame=frame();unknown_frame.player.health=1;
+        auto u1=enemy({460,240});u1.collision=0;auto u2=u1;u2.address=0x30001;
+        u2.pos={460,320};unknown_frame.entities={u1,u2};
+        auto unknown_snapshot=WorldStateBridge::snapshot(unknown_frame,nullptr,nullptr);
+        for(auto& state:unknown_snapshot.enemies) {
+            state.mechanism_known=false;
+            state.unknown_mechanism=true;
+        }
+        const auto unknown=classifier.classify(unknown_snapshot);
+        CHECK(unknown.has(ScenarioTag::unknown_high_risk));
+        CHECK(unknown.features.low_hp);
+    });
+    test("strategy parameters cannot weaken a hard safety limit or grow the MPC",[]{
+        MpcConfig base;
+        base.horizon_frames=96;base.beam_width=8;base.root_candidates=45;
+        base.safety.collision_horizon_frames=18;
+        base.safety.clearance_radius=96;
+        base.emergency_escape=true;base.hard_safety_gate=true;
+        StrategyParameters parameters;
+        parameters.maneuver_weight=14;
+        parameters.emergency_sensitivity=1.5;
+        parameters.target_hold_frames=20;
+        const MpcConfig effective=strategy_config(parameters,base);
+        CHECK(effective.horizon_frames==base.horizon_frames);
+        CHECK(effective.beam_width==base.beam_width);
+        CHECK(effective.root_candidates==base.root_candidates);
+        CHECK(effective.maneuver_weight==14);
+        CHECK(effective.combat.target_min_hold_frames==20);
+        CHECK(effective.safety.collision_horizon_frames>=base.safety.collision_horizon_frames);
+        CHECK(effective.safety.clearance_radius>=base.safety.clearance_radius);
+        CHECK(strategy_preserves_safety(base,effective));
+        parameters.emergency_sensitivity=0.2; // clamped up to 1.0
+        const MpcConfig weak=strategy_config(parameters,base);
+        CHECK(strategy_preserves_safety(base,weak));
+        CHECK(weak.safety.collision_horizon_frames==base.safety.collision_horizon_frames);
+    });
+    test("strategy runtime holds a scenario then blends instead of flickering",[]{
+        StrategyRuntimeConfig config;
+        config.stable_frames=3;config.blend_frames=4;
+        StrategyProfileRuntime runtime(config,builtin_strategy_profiles());
+        auto normal_frame=frame();
+        auto enemy_entity=enemy({520,280});enemy_entity.collision=0;
+        normal_frame.entities={enemy_entity};
+        auto normal_snapshot=WorldStateBridge::snapshot(normal_frame,nullptr,nullptr);
+        auto first=runtime.update(normal_snapshot);
+        CHECK(!first.active_profile.empty());
+        const std::string initial=first.active_profile;
+
+        auto dense_frame=frame();
+        std::vector<Entity> bullets;
+        for(int i=0;i<16;++i) {
+            const double angle=double(i)*2.0*3.14159265358979323846/16.0;
+            auto b=bullet({320.0+std::cos(angle)*150.0,280.0+std::sin(angle)*150.0},
+                Vec{-std::cos(angle)*120.0,-std::sin(angle)*120.0});
+            b.address=0x51000+uint32_t(i);
+            bullets.push_back(b);
+        }
+        dense_frame.entities=bullets;
+        auto dense_snapshot=WorldStateBridge::snapshot(dense_frame,nullptr,nullptr);
+        auto decision=runtime.update(dense_snapshot);
+        CHECK(decision.active_profile==initial);
+        CHECK(!decision.switched);
+        decision=runtime.update(dense_snapshot);
+        CHECK(decision.active_profile==initial);
+        decision=runtime.update(dense_snapshot);
+        decision=runtime.update(dense_snapshot);
+        CHECK(decision.target_profile=="dense-projectiles"||
+              decision.target_profile=="multi-direction");
+        for(int i=0;i<5;++i)decision=runtime.update(dense_snapshot);
+        CHECK(decision.active_profile!=initial);
+        CHECK(decision.applied_parameters.emergency_sensitivity>=1.0);
+        const MpcConfig effective=runtime.effective_config(MpcConfig{});
+        CHECK(effective.beam_width==MpcConfig{}.beam_width);
+        CHECK(effective.horizon_frames==MpcConfig{}.horizon_frames);
+    });
+    test("strategy memory saves compares and rolls back profiles",[]{
+        const auto directory=std::filesystem::current_path()/
+            "gamebot-strategy-memory-test";
+        std::error_code ignored;
+        std::filesystem::remove_all(directory,ignored);
+        StrategyMemory memory{directory};
+        StrategyProfile profile=builtin_strategy_profiles().at(1);
+        profile.profile_id="memory-test";
+        profile.source="test";
+        profile.parameters.positioning_weight=9;
+        auto update=memory.save_profiles({profile},"test save");
+        CHECK(update.success);
+        CHECK(update.new_version==1);
+        profile.parameters.positioning_weight=13;
+        update=memory.save_profiles({profile},"test update");
+        CHECK(update.success);
+        CHECK(update.new_version==2);
+        auto current=memory.current();
+        CHECK(bool(current));
+        const StrategyProfile* saved=find_strategy_profile(current->profiles,"memory-test");
+        CHECK(saved!=nullptr);
+        CHECK(saved->parameters.positioning_weight==13);
+        const auto versions=memory.versions();
+        CHECK(versions.size()==2);
+        std::string compare_error;
+        const auto version_diff=memory.compare_versions(1,2,&compare_error);
+        CHECK(compare_error.empty());
+        CHECK(version_diff.size()==1);
+        CHECK(!version_diff.front().changed_parameters.empty());
+        auto rolled=memory.rollback(1);
+        CHECK(bool(rolled));
+        const StrategyProfile* old=find_strategy_profile(rolled->profiles,"memory-test");
+        CHECK(old!=nullptr);
+        CHECK(old->parameters.positioning_weight==9);
+        StrategyProfile changed=*old;
+        changed.parameters.positioning_weight=15;
+        const auto diff=compare_strategy_profiles(*old,changed);
+        CHECK(std::find(diff.changed_parameters.begin(),diff.changed_parameters.end(),
+            "positioning_weight")!=diff.changed_parameters.end());
+        std::filesystem::remove_all(directory,ignored);
+    });
+    test("scenario corpus extracts real frame records and keeps a holdout split",[]{
+        const auto file=std::filesystem::current_path()/"gamebot-strategy-corpus-test.jsonl";
+        std::ofstream out{file};
+        CHECK(bool(out));
+        for(int i=0;i<8;++i) {
+            auto f=frame();f.clock=100+uint32_t(i*40);f.room=0x40000+uint32_t(i%3);
+            auto e=enemy({480.0+double(i),280});e.collision=0;f.entities={e};
+            MechanismFrame mechanisms;mechanisms.valid=true;mechanisms.room=f.room;
+            mechanisms.clock=f.clock;
+            out<<json{{"frame",f},{"mechanisms",mechanisms}}.dump()<<'\n';
+        }
+        out.close();
+        ScenarioCorpusConfig config;
+        config.frame_stride=1;config.max_per_scenario=32;config.max_total=32;
+        config.holdout_fraction=0.5;
+        ScenarioCorpusBuilder builder(config);
+        std::string error;
+        const auto corpus=builder.build(file,nullptr,&error);
+        CHECK(error.empty());
+        CHECK(corpus.records.size()==8);
+        CHECK(corpus.stats.train>0);
+        CHECK(corpus.stats.holdout>0);
+        CHECK(corpus.records.front().snapshot.frame.valid);
+        CHECK(!corpus.records.front().entity_relations.empty());
+        CHECK(corpus.stats.to_json().at("seeds").is_object());
+        CHECK(corpus.to_json().contains("evidence_scope"));
+        std::filesystem::remove(file);
+    });
+    test("tactical optimizer is bounded and refuses simulation-only promotion",[]{
+        ScenarioCorpus corpus;
+        auto f=frame();auto e=enemy({500,280});e.collision=0;f.entities={e};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        for(int i=0;i<4;++i) {
+            ReplayScenarioRecord record;
+            record.id="optimizer-"+std::to_string(i);
+            record.scenario_tags={ScenarioTag::normal_room};
+            record.snapshot=snapshot;
+            record.split=i==3?"holdout":"train";
+            record.initial_hp=6;
+            record.real_capture=true;
+            record.mechanism_confidence=0.9;
+            record.unknown_risk=0.1;
+            corpus.records.push_back(record);
+        }
+        corpus.stats.records=4;corpus.stats.train=3;corpus.stats.holdout=1;
+        TacticalOptimizerConfig config;
+        config.max_evaluations=6;config.coordinate_passes=1;config.survivors=2;
+        config.min_train_samples=1;config.min_holdout_samples=1;
+        config.min_confidence=0.0;config.min_verified_fraction=0.0;
+        config.max_prediction_error=1.0;config.require_real_captures=true;
+        OfflineRolloutConfig rollout;rollout.max_decisions=4;rollout.decision_frames=3;
+        TacticalParameterOptimizer optimizer(config,corpus,MpcConfig{},rollout);
+        const auto result=optimizer.optimize({ScenarioTag::normal_room});
+        CHECK(result.evaluations>0);
+        CHECK(result.evaluations<=config.max_evaluations);
+        CHECK(!result.candidates.empty());
+        CHECK(result.baseline.train.scenarios==3);
+        CHECK(result.baseline.holdout.scenarios==1);
+
+        StrategyCandidateEvaluation candidate=result.baseline;
+        candidate.confidence=0.9;
+        candidate.train.mechanism_confidence=0.9;
+        candidate.train.prediction_error=0.1;
+        candidate.holdout.prediction_error=0.1;
+        candidate.profile.parameters=StrategyParameters{};
+        std::string reason;
+        CHECK(strategy_promotion_gate(candidate,config,candidate.profile.parameters,reason));
+        candidate.train.real_captures=0;
+        CHECK(!strategy_promotion_gate(candidate,config,candidate.profile.parameters,reason));
+        candidate.train.real_captures=3;
+        candidate.profile.parameters.emergency_sensitivity=0.5;
+        CHECK(!strategy_promotion_gate(candidate,config,candidate.profile.parameters,reason));
+    });
+    test("mpc injects the selected strategy without changing search width or horizon",[]{
+        auto f=frame();f.player.health=6;f.player.tear_range=400;
+        auto e=enemy({480,280});e.hp=20;e.collision=0;f.entities={e};
+        LookaheadConfig look;look.epochs=2;look.epoch_frames=6;
+        look.simulation_horizon_frames=12;look.simulation_branches=4;
+        MpcConfig config;config.horizon_frames=24;config.segment_frames=6;
+        config.beam_width=3;config.min_beam_width=2;config.max_beam_width=4;
+        config.root_candidates=16;config.full_root_actions=false;
+        config.max_simulations=64;config.time_budget_ms=200;
+        MpcCombatPlanner planner(config,look);
+        planner.set_strategy_enabled(true);
+        const auto plan=planner.decide(f,true,nullptr);
+        CHECK(plan.available);
+        CHECK(!plan.strategy_profile.empty());
+        CHECK(!plan.scenario_tags.empty());
+        CHECK(plan.to_json().at("strategy").contains("profile"));
+        CHECK(plan.stats.beam_width<=config.beam_width);
+        CHECK(plan.stats.horizon_frames==config.horizon_frames);
+        CHECK(planner.strategy_enabled());
+        planner.set_strategy_enabled(false);
+        CHECK(!planner.strategy_enabled());
+    });
+
+    test("real progress tracker distinguishes no hit, unreachable target and HP progress",[]{
+        auto f=frame();auto e=enemy();f.entities={e};
+        auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        CombatProgressConfig config;
+        config.stall_frames=3;config.no_hit_frames=2;config.switch_frames=5;
+        CombatProgressTracker tracker(config);
+        CombatProgressObservation observation;
+        observation.combat_valid=true;observation.attack_enabled=true;
+        observation.fire=Fire::right;observation.target=e.address;
+        observation.target_damageable=true;observation.aim_valid=true;
+        observation.predicted_hit=true;observation.line_clear=true;
+        observation.target_distance=180;observation.tear_range=340;
+        for(int i=0;i<4;++i) {
+            snapshot.frame.clock=100+uint32_t(i);
+            tracker.observe(snapshot,observation);
+        }
+        CHECK(tracker.state().valid);
+        CHECK(tracker.state().shots==4);
+        CHECK(tracker.state().hits==0);
+        CHECK(tracker.state().stalled);
+        CHECK(tracker.state().attack_stalled);
+        CHECK(tracker.state().kind==CombatProgressKind::shot_no_hit);
+
+        observation.predicted_hit=false;
+        snapshot.frame.clock=104;
+        tracker.observe(snapshot,observation);
+        CHECK(tracker.state().kind==CombatProgressKind::no_angle);
+        CHECK(tracker.state().target_unreachable);
+        CHECK(tracker.state().need_reposition);
+
+        observation.predicted_hit=true;
+        snapshot.frame.clock=105;
+        snapshot.enemies.front().entity.hp=9;
+        tracker.observe(snapshot,observation);
+        CHECK(tracker.state().hits>0);
+        CHECK(!tracker.state().stalled);
+        CHECK(tracker.state().kind==CombatProgressKind::progressing);
+
+        observation.target_damageable=false;
+        observation.target_invulnerable=true;
+        observation.predicted_hit=true;
+        snapshot.frame.clock=106;
+        tracker.observe(snapshot,observation);
+        CHECK(tracker.state().kind==CombatProgressKind::invulnerable_target);
+        CHECK(tracker.state().need_target_switch);
+
+        const int confirmed_before=tracker.state().confirmed_kills;
+        snapshot.frame.clock=107;
+        snapshot.enemies.clear();
+        LifecycleTransition lost;lost.id=e.address;lost.kind=LifecycleKind::despawned;
+        snapshot.lifecycle={lost};
+        tracker.observe(snapshot,observation);
+        CHECK(tracker.state().entity_lost>0);
+        CHECK(tracker.state().confirmed_kills==confirmed_before);
+        CHECK(tracker.state().unconfirmed_kills>0);
+
+        ProjectileState friendly;
+        friendly.role=ProjectileRole::friendly;
+        friendly.real=true;
+        friendly.entity=bullet({320,260},{0,-300});
+        friendly.entity.address=0x60000;
+        snapshot.projectiles={friendly};
+        snapshot.frame.clock=108;
+        const int fire_before=tracker.state().fire_commands;
+        const int spawn_before=tracker.state().projectile_spawns;
+        tracker.observe(snapshot,observation);
+        CHECK(tracker.state().fire_commands>fire_before);
+        CHECK(tracker.state().projectile_spawns>spawn_before);
+    });
+    test("anti-stalemate guidance creates reposition intent without bypassing safety",[]{
+        auto f=frame();auto e=enemy({700,280});e.collision=0;f.entities={e};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        CombatIntelligence combat;
+        const auto root=combat.evaluate(snapshot,true);
+        CHECK(root.fallback_fire_valid);
+        CHECK(root.fallback_fire!=Fire::none);
+        CombatProgressState progress;
+        progress.valid=true;progress.stalled=true;
+        progress.target=root.target;progress.target_unreachable=true;
+        progress.kind=CombatProgressKind::no_angle;
+        progress.frames_since_progress=100;
+        combat.set_progress(progress);
+        const auto stalled=combat.evaluate(snapshot,true);
+        CHECK(stalled.objective.anti_stalemate);
+        CHECK(stalled.objective.need_reposition);
+        CHECK(stalled.objective.tactical_mode==TacticalMode::reposition);
+        CHECK(stalled.objective.progress_kind=="no_angle");
+        CHECK(stalled.target_distance>=0);
+    });
+    test("stalled branch scoring values progress and safe approach",[]{
+        auto f=frame();auto e=enemy({500,280});e.collision=0;f.entities={e};
+        const auto snapshot=WorldStateBridge::snapshot(f,nullptr,nullptr);
+        CombatIntelligence combat;
+        const auto root=combat.evaluate(snapshot,true);
+        CombatProgressState progress;
+        progress.valid=true;progress.stalled=true;
+        progress.target=root.target;progress.frames_since_progress=100;
+        progress.kind=CombatProgressKind::out_of_range;
+        combat.set_progress(progress);
+        ForwardSimConfig sim_config;sim_config.horizon_frames=6;
+        ForwardSimulator simulator(sim_config);
+        CHECK(simulator.restore(snapshot));
+        const CombatEnemyHp before=combat_enemy_hp(simulator.world());
+        const SimAction action{Move::east,Fire::right,true};
+        simulator.step(action,6);
+        const auto branch=combat.evaluate_branch(root,simulator.world(),{},root.target);
+        const auto terms=combat.score_branch(root,branch,before,simulator.world(),
+            action,simulator.score(),{});
+        CHECK(branch.valid);
+        CHECK(terms.progress_gain>0||terms.reachability>0||terms.approach>0);
+        CHECK(terms.total(combat.config())>0);
+        CHECK(terms.to_json().contains("approach"));
+    });
+    test("path mobility penalizes a safe-looking dead end",[]{
+        auto open_frame=frame();
+        const auto open_snapshot=WorldStateBridge::snapshot(open_frame,nullptr,nullptr);
+        ForwardSimConfig sim_config;sim_config.horizon_frames=1;
+        ForwardSimulator open_sim(sim_config);
+        CHECK(open_sim.restore(open_snapshot));
+        const auto open=evaluate_safety(open_sim.world(),SafetyGateConfig{});
+
+        auto dead_frame=frame();
+        // Player cell is (7,4). Leave one north exit and wall the rest of the
+        // local pocket so the position is safe now but a dead end.
+        for(int y=3;y<=5;++y)for(int x=6;x<=8;++x) {
+            if(x==7&&y==3)continue;
+            dead_frame.grid.cells[y*dead_frame.grid.width+x].collision=1;
+        }
+        const auto dead_snapshot=WorldStateBridge::snapshot(dead_frame,nullptr,nullptr);
+        ForwardSimulator dead_sim(sim_config);
+        CHECK(dead_sim.restore(dead_snapshot));
+        const auto dead=evaluate_safety(dead_sim.world(),SafetyGateConfig{});
+        CHECK(dead.reachable_area<=open.reachable_area);
+        CHECK(dead.mobility_routes<=open.mobility_routes);
+        CHECK(dead.corner_risk>open.corner_risk);
+        CHECK(dead.to_json().contains("dead_end_risk"));
+    });
+    test("mpc logs real progress and keeps the fallback fire available",[]{
+        auto f=frame();f.player.health=6;f.player.tear_range=400;
+        auto e=enemy({700,280});e.hp=20;e.collision=0;f.entities={e};
+        LookaheadConfig look;look.epochs=1;look.epoch_frames=6;
+        look.simulation_horizon_frames=12;look.simulation_branches=4;
+        MpcConfig config;config.horizon_frames=18;config.segment_frames=6;
+        config.beam_width=2;config.min_beam_width=2;config.max_beam_width=3;
+        config.root_candidates=12;config.full_root_actions=false;
+        config.max_simulations=32;config.time_budget_ms=80;
+        MpcCombatPlanner planner(config,look);
+        const auto plan=planner.decide(f,true,nullptr);
+        CHECK(plan.to_json().contains("progress"));
+        CHECK(plan.progress.contains("kind"));
+        CHECK(plan.combat.fallback_fire_valid);
+        CHECK(plan.combat.fallback_fire!=Fire::none);
+    });
+
     int failed=0;double total_ms=0;
     for(const auto&[name,fn]:cases){auto start=std::chrono::steady_clock::now();try{fn();std::cout<<"PASS "<<name<<'\n';}catch(const std::exception&e){++failed;std::cout<<"FAIL "<<name<<": "<<e.what()<<'\n';}total_ms+=std::chrono::duration<double,std::milli>(std::chrono::steady_clock::now()-start).count();}
     std::cout<<cases.size()-failed<<" passed, "<<failed<<" failed; "<<total_ms<<" ms\n";
     if(argc>1) {std::ofstream out(argv[1]);out<<json{{"tests",cases.size()},{"failed",failed},{"elapsed_ms",total_ms},{"gameplay_evidence",false}}.dump(2);}
     return failed?1:0;
 }
+

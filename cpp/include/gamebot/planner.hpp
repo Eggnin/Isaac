@@ -29,6 +29,9 @@ struct PlannerConfig {
     bool native_laser_geometry{true};
     bool legacy_laser_width{}; // Offline baseline comparison only.
     bool evaluate_candidate_warnings{}; // Isolated offline comparison only; default retains validated fallback.
+    // Expose the final route beam for offline lookahead experiments. This only
+    // records what decide() already computed; it never changes the decision.
+    bool record_candidates{};
     // Keep distance from fast contact bodies before they reach the safety
     // margin. Without this the bot only reacts once a chaser is already close.
     bool contact_spacing{true};
@@ -49,7 +52,7 @@ struct RouteRank {
     double first_hit{10000};
     double margin{10000};
 };
-bool route_rank_less(const RouteRank& a,const RouteRank& b,bool goal_priority,bool escape_priority,bool wide_escape=false,bool wall_escape=false);
+bool route_rank_less(const RouteRank& a,const RouteRank& b,bool goal_priority,bool escape_priority=false,bool wide_escape=false,bool wall_escape=false);
 // Counters for the observed-emission pipeline. They answer "why did no
 // envelope fire" without changing any decision.
 struct EmissionDiagnostics {
@@ -97,6 +100,7 @@ class Planner {
     std::unordered_set<int> known_hazard_cells_;
     std::unordered_set<int> kill_button_done_;
     std::vector<Threat> threats_;
+    std::vector<RouteCandidate> candidates_;
     void build_threats(const Frame& frame,double horizon,const MechanismFrame* mechanisms,Fire intended_fire);
 public:
     explicit Planner(PlannerConfig config={}):config_(config){}
@@ -104,6 +108,13 @@ public:
     Aim aim(const Frame& frame,Vec origin) const;
     Aim aim_at(const Frame& frame,Vec origin,uint32_t target,double time_offset=0) const;
     const std::vector<Threat>& threats() const { return threats_; }
+    // Final route beam from the most recent decide(), best first. Populated
+    // only when PlannerConfig::record_candidates is enabled.
+    const std::vector<RouteCandidate>& candidates() const { return candidates_; }
+    // Tell the planner which movement was actually applied when an outer
+    // policy overrides decide(). The next frame then evaluates its hold and
+    // action-change penalty against the real action instead of its own guess.
+    void observe_applied(Move move,uint32_t clock);
     const EmissionDiagnostics& emission_diagnostics() const { return emission_diagnostics_; }
     void reset();
 };
